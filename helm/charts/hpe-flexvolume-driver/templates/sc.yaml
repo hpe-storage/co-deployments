@@ -1,0 +1,12 @@
+---
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+ name: hpe-flexvolume-sc-test
+ namespace: default
+ labels:
+   plugin: {{ .Release.Name }}
+provisioner: hpe.com/nimble
+parameters:
+  description: {{ .Values.volumeDescription }}
+  mountConflictDelay: {{ .Values.mountConflictDelay | quote }}

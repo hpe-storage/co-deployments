@@ -1,0 +1,53 @@
+# Default values for hpe-csi-storage.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+#sidecar-images
+csiProvisionerImage: quay.io/k8scsi/csi-provisioner
+csiProvisionerTagv0: v0.4.2
+csiProvisionerTagv1: v1.3.0
+csiProvisionerTagv2: v1.3.0
+
+csiSnapshotterImage: quay.io/k8scsi/csi-snapshotter
+csiSnapshotterTagv0: v0.4.1
+csiSnapshotterTagv1: v1.2.0
+csiSnapshotterTagv2: v1.2.0
+
+nodeRegistrarImage: quay.io/k8scsi/csi-node-driver-registrar
+nodeRegistrarTagv0: v0.4.1
+nodeRegistrarTagv1: v1.1.0
+nodeRegistrarTagv2: v1.1.0
+
+csiAttacherImage: quay.io/k8scsi/csi-attacher
+csiAttacherTagv0: v0.4.2
+csiAttacherTagv1: v1.0.1
+csiAttacherTagv2: v1.2.0
+
+csiResizerImage: quay.io/k8scsi/csi-resizer
+csiResizerTag: v0.2.0
+
+# csi-driver tag
+csiDriverImage: hpe/csi-driver
+csiDriverTag: edge
+
+#csp-hpe
+cspImage: hpe/nimble-csp
+cspTag: edge
+
+#parameters
+arrayIp: 10.0.0.1
+username: admin
+password: admin
+port: "8080"
+cspServiceName: csp-service
+
+#storage class parameters
+fsType: xfs
+volumeDescription: "volume created by HPE CSI driver"
+
+#service parameters
+# wait seconds for doryd/csi/csp services to start
+serviceWaitTime: "30"
+
+#flavor
+flavor: kubernetes

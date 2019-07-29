@@ -1,0 +1,23 @@
+---
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+ name: hpe-csi-sc-test
+ namespace: default
+ labels:
+   plugin: {{ .Release.Name }}
+provisioner: csi.hpe.com
+{{- if semverCompare "=1.14.0" .Capabilities.KubeVersion.GitVersion }}
+allowVolumeExpansion: {{ .Values.allowVolumeExpansion }}
+{{- end }}
+parameters:
+   description: {{ .Values.volumeDescription }}
+   csi.storage.k8s.io/fstype: {{ .Values.fsType }}
+   csi.storage.k8s.io/provisioner-secret-name: nimble-secret
+   csi.storage.k8s.io/provisioner-secret-namespace: default
+   csi.storage.k8s.io/controller-publish-secret-name: nimble-secret
+   csi.storage.k8s.io/controller-publish-secret-namespace: default
+   csi.storage.k8s.io/node-stage-secret-name: nimble-secret
+   csi.storage.k8s.io/node-stage-secret-namespace: default
+   csi.storage.k8s.io/node-publish-secret-name: nimble-secret
+   csi.storage.k8s.io/node-publish-secret-namespace: default

@@ -1,0 +1,184 @@
+---
+
+#######################################
+############  Node driver  ############
+#######################################
+
+kind: DaemonSet
+apiVersion: apps/v1beta2
+metadata:
+  name: hpe-csi-node
+  namespace: kube-system
+spec:
+  selector:
+    matchLabels:
+      app: hpe-csi-node
+  template:
+    metadata:
+      labels:
+        app: hpe-csi-node
+        role: hpe-csi
+    spec:
+      priorityClassName: system-node-critical
+      serviceAccount: hpe-csi-node-sa
+      hostNetwork: true
+      dnsPolicy: ClusterFirstWithHostNet
+      containers:
+        - name: csi-node-driver-registrar
+          {{- if semverCompare "=1.12.0" .Capabilities.KubeVersion.GitVersion }}
+          image: {{ .Values.nodeRegistrarImage}}: {{- .Values.nodeRegistrarTagv0}}
+          {{- else if semverCompare "=1.13.0" .Capabilities.KubeVersion.GitVersion }}
+          image: {{ .Values.nodeRegistrarImage}}: {{- .Values.nodeRegistrarTagv1}}
+          {{- else }}
+          image: {{ .Values.nodeRegistrarImage}}: {{- .Values.nodeRegistrarTagv2}}
+          {{- end }}
+          args:
+            - "--csi-address=$(ADDRESS)"
+            - "--kubelet-registration-path=$(DRIVER_REG_SOCK_PATH)"
+            - "--v=5"
+          lifecycle:
+            preStop:
+              exec:
+                command: ["/bin/sh", "-c", "rm -rf /registration/csi.hpe.com /registration/csi.hpe.com-reg.sock"]
+          env:
+            - name: ADDRESS
+              value: /csi/csi.sock
+            - name: DRIVER_REG_SOCK_PATH
+              value: /var/lib/kubelet/plugins/csi.hpe.com/csi.sock
+            {{- if semverCompare "=1.12.0" .Capabilities.KubeVersion.GitVersion }}
+            - name: KUBE_NODE_NAME
+              valueFrom:
+                fieldRef:
+                  apiVersion: v1
+                  fieldPath: spec.nodeName
+            {{- end }}
+          volumeMounts:
+            - name: plugin-dir
+              mountPath: /csi/
+            - name: registration-dir
+              mountPath: /registration
+        - name: hpe-csi-driver
+          image: {{ .Values.csiDriverImage}}: {{- .Values.csiDriverTag}}
+          args :
+            - "--endpoint=$(CSI_ENDPOINT)"
+            - "--node-service"
+            - "--flavor=kubernetes"
+          env:
+            - name: CSI_ENDPOINT
+              value: unix:///csi/csi.sock
+          imagePullPolicy: "Always"
+          securityContext:
+            privileged: true
+            capabilities:
+              add: ["SYS_ADMIN"]
+            allowPrivilegeEscalation: true
+          volumeMounts:
+            - name: plugin-dir
+              mountPath: /csi
+            - name: pods-mount-dir
+              mountPath: /var/lib/kubelet
+              # needed so that any mounts setup inside this container are
+              # propagated back to the host machine.
+              mountPropagation: "Bidirectional"
+            - name: device-dir
+              mountPath: /dev
+            - name: log-dir
+              mountPath: /var/log
+            - name: var-lib-iscsi
+              mountPath: /var/lib/iscsi
+            - name: etc-iscsi
+              mountPath: /etc/iscsi
+            - name: etc-multipath
+              mountPath: /etc/multipath
+            - name: etc-multipath-conf
+              mountPath: /etc/multipath.conf
+            - name: etc-redhat-release
+              mountPath: /etc/redhat-release
+            - name: etc-os-release
+              mountPath: /etc/os-release
+            - name: etc-hpe-storage-dir
+              mountPath: /etc/hpe-storage
+            - name: etc-kubernetes
+              mountPath: /etc/kubernetes
+            - name: sys
+              mountPath: /sys
+            - name: iscsiadm
+              mountPath: /sbin/iscsiadm
+            - name: runlock
+              mountPath: /run/lock
+            - name: lib-modules
+              mountPath: /lib/modules
+            - name: runsystemd
+              mountPath: /run/systemd
+            - name: libsystemd
+              mountPath: /lib/systemd/system
+            - name: usrlocal
+              # required to copy the conform script under host /usr/local/bin
+              mountPath: /usr_local
+      volumes:
+        - name: registration-dir
+          hostPath:
+            path: /var/lib/kubelet/plugins_registry
+        - name: plugin-dir
+          hostPath:
+            path: /var/lib/kubelet/plugins/csi.hpe.com
+        - name: pods-mount-dir
+          hostPath:
+            path: /var/lib/kubelet
+            type: Directory
+        - name: device-dir
+          hostPath:
+            path: /dev
+        - name: log-dir
+          hostPath:
+            path: /var/log
+        - name: var-lib-iscsi
+          hostPath:
+            path: /var/lib/iscsi
+        - name: etc-iscsi
+          hostPath:
+            path: /etc/iscsi
+        - name: etc-multipath
+          hostPath:
+            path: /etc/multipath
+        - name: etc-multipath-conf
+          hostPath:
+            path: /etc/multipath.conf
+            type: FileOrCreate
+        - name: etc-redhat-release
+          hostPath:
+            path: /etc/redhat-release
+            type: FileOrCreate
+        - name: etc-os-release
+          hostPath:
+            path: /etc/os-release
+            type: FileOrCreate
+        - name: etc-hpe-storage-dir
+          hostPath:
+            path: /etc/hpe-storage
+        - name: etc-kubernetes
+          hostPath:
+            path: /etc/kubernetes
+        - name: iscsiadm
+          hostPath:
+            path: /sbin/iscsiadm
+            type: FileOrCreate
+        - name: runlock
+          hostPath:
+            path: /run/lock
+        - name: lib-modules
+          hostPath:
+            path: /lib/modules
+        - name: runsystemd
+          hostPath:
+            path: /run/systemd
+        - name: libsystemd
+          hostPath:
+            # need to copy node conformance service file
+            path: /lib/systemd/system
+        - name: usrlocal
+          hostPath:
+            path: /usr
+        - name: sys
+          hostPath:
+            path: /sys

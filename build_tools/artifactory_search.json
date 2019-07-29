@@ -1,0 +1,34 @@
+{
+    "files": [
+        {
+            "pattern": "dcs-docker-local/hpe/csi-driver/",
+            "sortBy": ["created"],
+            "sortOrder": "desc",
+            "limit": 1
+        },
+        {
+            "pattern": "dcs-docker-local/hpe/nimble-csp/",
+            "sortBy": ["created"],
+            "sortOrder": "desc",
+            "limit": 1
+        },
+        {
+            "pattern": "dcs-docker-local/hpe/csi-node-info-initializer/",
+            "sortBy": ["created"],
+            "sortOrder": "desc",
+            "limit": 1
+        },
+        {
+            "pattern": "dcs-docker-local/hpe/flexvolume-driver/",
+            "sortBy": ["created"],
+            "sortOrder": "desc",
+            "limit": 1
+        },
+        {
+            "pattern": "dcs-docker-local/hpe/k8s-dynamic-provisioner/",
+            "sortBy": ["created"],
+            "sortOrder": "desc",
+            "limit": 1
+        }
+    ]
+}

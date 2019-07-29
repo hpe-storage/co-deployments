@@ -1,0 +1,27 @@
+questions:
+    - variable: arrayIp
+      label: "HPE Nimble Storage array IP address"
+      type: string
+      description: "Please specify HPE Nimble Storage array IP"
+      group: "HPE Array Settings"
+    - variable: username
+      label: "Username"
+      type: string
+      description: "Specify username with storage admin permission"
+      group: "HPE Array Settings"
+    - variable: password
+      label: "Password"
+      type: password
+      description: "Specify password of the user"
+      group: "HPE Array Settings"
+    - variable: conformTo
+      label: "Node OS type for package conformance checks"
+      type: string
+      description: "Please specify node OS type for package conformance checks"
+      group: "HPE Node Settings"
+    - variable: fsType
+      label: "Filesystem"
+      type: enum
+      options: [ "xfs", "ext4", "ext3" "btrfs"]
+      description: "Select the filesystem for the Persistent Volume"
+      group: "HPE Volume Settings"
