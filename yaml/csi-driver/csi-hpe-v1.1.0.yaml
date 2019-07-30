@@ -145,7 +145,7 @@ spec:
     spec:
       containers:
         - name: csp-service
-          image: hpe/nimble-csp:edge
+          image: hpestorage/nimble-csp:edge
           imagePullPolicy: Always
           ports:
           - containerPort: 8080
@@ -233,7 +233,7 @@ spec:
             - name: socket-dir
               mountPath: /var/lib/csi/sockets/pluginproxy/
         - name: hpe-csi-driver
-          image: hpe/csi-driver:v1.0.0-beta
+          image: hpestorage/csi-driver:v1.0.0-beta
           args :
             - "--endpoint=$(CSI_ENDPOINT)"
             - "--flavor=kubernetes"
@@ -543,7 +543,7 @@ spec:
             - name: registration-dir
               mountPath: /registration
         - name: hpe-csi-driver
-          image: hpe/csi-driver:v1.0.0-beta
+          image: hpestorage/csi-driver:v1.0.0-beta
           args :
             - "--endpoint=$(CSI_ENDPOINT)"
             - "--node-service"
