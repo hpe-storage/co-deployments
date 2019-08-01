@@ -1,31 +1,31 @@
 {
     "files": [
         {
-            "pattern": "dcs-docker-local/hpe/csi-driver/",
+            "pattern": "dcs-docker-local/hpestorage/csi-driver/v0.3.0*",
             "sortBy": ["created"],
             "sortOrder": "desc",
             "limit": 1
         },
         {
-            "pattern": "dcs-docker-local/hpe/nimble-csp/",
+            "pattern": "dcs-docker-local/hpestorage/csi-driver/edge*",
             "sortBy": ["created"],
             "sortOrder": "desc",
             "limit": 1
         },
         {
-            "pattern": "dcs-docker-local/hpe/csi-node-info-initializer/",
+            "pattern": "dcs-docker-local/hpestorage/nimble-csp/",
             "sortBy": ["created"],
             "sortOrder": "desc",
             "limit": 1
         },
         {
-            "pattern": "dcs-docker-local/hpe/flexvolume-driver/",
+            "pattern": "dcs-docker-local/hpestorage/flexvolume-driver/",
             "sortBy": ["created"],
             "sortOrder": "desc",
             "limit": 1
         },
         {
-            "pattern": "dcs-docker-local/hpe/k8s-dynamic-provisioner/",
+            "pattern": "dcs-docker-local/hpestorage/k8s-dynamic-provisioner/",
             "sortBy": ["created"],
             "sortOrder": "desc",
             "limit": 1
