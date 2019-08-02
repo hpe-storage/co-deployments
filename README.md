@@ -2,7 +2,7 @@
 This repository contains the source declarations to deploy CO drivers (CSI and FlexVolume) for HPE storage platforms.
 
 ## Using Helm
-[Helm](https://helm.sh) is the recommended way to deploy both the [FlexVolume](helm/charts/flexvolume-driver) and [CSI](helm/charts/csi-driver) driver for HPE storage products.
+[Helm](https://helm.sh) is the recommended way to deploy both the [FlexVolume](helm/charts/hpe-flexvolume-driver) and [CSI](helm/charts/hpe-csi-driver) driver for HPE storage products.
 
 ## DIY with your CO of choice
 We provide the [raw YAML files](yaml) to deploy the [HPE CSI Driver](https://github.com/hpe-storage/csi-driver) with the respective [Container Storage Provider](https://github.com/hpe-storage/container-storage-provider) (CSP). These files are usually referenced elsewhere on how to get a particular setup up and running. We recommend using the [Helm charts](helm/charts) first and foremost.
