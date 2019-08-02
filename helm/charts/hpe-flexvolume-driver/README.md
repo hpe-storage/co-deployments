@@ -67,7 +67,7 @@ helm test hpe-flexvolume --cleanup
 In some cases it's more practical provide the local configuration via the `helm` command directly. Specify each parameter using the `--set key=value[,key=value]` argument to `helm install`. For example:
 ```
 helm install --name hpe-flexvolume hpe/hpe-flexvolume-driver \
---set arrayIp=X.X.X.X --set username=admin --set password=xxxxxxxxx \
+--set backend=X.X.X.X --set username=admin --set password=xxxxxxxxx \
 --set protocol=iscsi --set fsType=xfs --set mountConflictDelay=120
 ```
 
