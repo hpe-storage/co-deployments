@@ -11,12 +11,12 @@ The [HPE CSI Driver for Kubernetes](https://github.com/hpe-storage/csi-driver) l
 ## Configuration & Installation
 The following table lists the configurable parameters of the HPE-CSI chart and their default values.
 
-|  Parameter                |  Description                                                |  Default   |
-|---------------------------|-------------------------------------------------------------|------------|
-| backend                   | HPE Nimble Storage array IP                                 | 192.168.1.1|
-| username                  | name used for the admin role                                | admin      |
-| password                  | password for the admin role                                 | admin      |
-| fsType                    | type of file system you are using (ext4, ext3, xfs, btrfs)  | xfs        |
+|  Parameter                |  Description                                                |  Default    |
+|---------------------------|-------------------------------------------------------------|-------------|
+| backend                   | HPE storage backend hostname or IP address.                 | 192.168.1.1 |
+| username                  | Username for the backend.                                   | admin       |
+| password                  | Password for the backend.                                   | admin       |
+| fsType                    | Type of file system being used (ext4, ext3, xfs, btrfs)     | xfs         |
 
 It's recommended to create a [values.yaml](values.yaml) file and edit it to fit the environment the chart is being deployed to. Download and edit the sample file.
 
@@ -35,7 +35,7 @@ helm delete hpe-csi --purge
 ```
 
 ### Testing the Chart
-To test the chart with name `hpe-csi`:
+To test the chart with the name `hpe-csi`:
 ```
 helm test hpe-csi --cleanup
 ```
