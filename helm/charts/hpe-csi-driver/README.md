@@ -4,7 +4,7 @@ The [HPE CSI Driver for Kubernetes](https://github.com/hpe-storage/csi-driver) l
 ## Prerequisites
 - Upstream Kubernetes version > 1.10
 - Other Kubernetes distributions supported
-  - OpenShift 4.1 in Tech Preview (3.x is not supported, see [FlexVolume Helm chart](../hpe-flexvolume-driver)
+  - OpenShift 4.1 in Tech Preview (3.x is not supported, see [FlexVolume Helm chart](../hpe-flexvolume-driver))
   - More distributions will be listed as tests are ongoing
 - Recent Ubuntu, CentOS or RHEL compute nodes connected to their respective official package repositories
 
