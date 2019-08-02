@@ -38,15 +38,15 @@ The following table lists the configurable parameters of the HPE FlexVolume Driv
 
 |  Parameter                |  Description                                                                                       |  Default    |
 |---------------------------|----------------------------------------------------------------------------------------------------|------------ |
-| backend                   | HPE storage platform API endpoint                                                                  | 192.168.1.1 |
-| username                  | Username for the backend                                                                           | admin       |
-| password                  | Password for the backen                                                                            | admin       |
-| protocol                  | Data plane protocol (`fc`, `iscsi`)                                                                | iscsi       |
-| fsType                    | Type of file to format volumes with (ext4, ext3, xfs, btrfs)                                       | xfs         |
-| mountConflictDelay        | Wait this long (in seconds) before forcefully taking over a volume from an isolated or crashed node| 150         |
+| backend            | HPE storage platform API endpoint.                                                                 | 192.168.1.1 |
+| pluginType         | Backend plugin type to use. Currently only `nimble` is supported.                                  | nimble      |
+| username           | Username for the backend.                                                                          | admin       |
+| password           | Password for the backend.                                                                          | admin       |
+| protocol           | Data plane protocol (`fc`, `iscsi`)                                                                | iscsi       |
+| fsType             | Type of file to format volumes with (ext4, ext3, xfs, btrfs)                                       | xfs         |
+| mountConflictDelay | Wait this long (in seconds) before forcefully taking over a volume from an isolated or crashed node| 150         |
 
-Specify each parameter using the `--set key=value[,key=value]` argument to `helm install`. For example,
-
+Specify each parameter using the `--set key=value[,key=value]` argument to `helm install`. For example:
 ```
 helm install --name hpe-flexvolume hpe/hpe-flexvolume-driver \
 --set arrayIp=X.X.X.X --set username=admin --set password=xxxxxxxxx \
@@ -54,15 +54,16 @@ helm install --name hpe-flexvolume hpe/hpe-flexvolume-driver \
 ```
 
 ## Using
-To enable dynamic provisioning of volumes through the use of `PersistentVolumeClaim` API objects, a `StorageClass` needs to be declared on the cluster. Please see the [HPE FlexVolume Driver for Kubernetes](https://github.com/hpe-storage/flexvolume-driver) repository for the official documentation for this Helm chart. Also, it's helpful for be familar with [persistent storage concepts](https://kubernetes.io/docs/concepts/storage/volumes/) in Kubernetes prior to deploying stateful workloads.
+To enable dynamic provisioning of `PersistentVolume` through the use of `PersistentVolumeClaim` API objects, a `StorageClass` needs to be declared on the cluster. Please see the [HPE FlexVolume Driver for Kubernetes](https://github.com/hpe-storage/flexvolume-driver) repository for the official documentation for this Helm chart. Also, it's helpful for be familar with [persistent storage concepts](https://kubernetes.io/docs/concepts/storage/volumes/) in Kubernetes prior to deploying stateful workloads.
 
 ## Support
 The HPE FlexVolume Driver for Kubernetes Helm chart is supported by the respective platform team. Currently supported platforms:
 
 - HPE Nimble Storage
-- HPE Cloud Volumes
 
-You may also join our Slack community to chat with HPE folks close to this project for inquiries not requring our immediate response. We hang out in `#NimbleStorage` and `#Kubernetes` at [slack.hpedev.io](https://slack.hpedev.io/).
+Please file issues through the regular support channels for the particular platform. Feature requests or general questions to developers may be filed through the [GitHub issue tracker](https://github.com/hpe-storage/co-deployments) for this project.
+
+You may also join our Slack community to chat with HPE folks close to this project for inquiries not requring our immediate response. We hang out in `#NimbleStorage` and `#Kubernetes` at [slack.hpedev.io](https://slack.hpedev.io/). 
 
 ## Contributing
 We value all feedback and contributions. If you find any issues or want to contribute, please feel free to open an issue or file a PR. More details in [CONTRIBUTING.md](CONTRIBUTING.md)
