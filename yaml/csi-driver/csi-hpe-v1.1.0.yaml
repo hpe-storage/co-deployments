@@ -571,7 +571,7 @@ spec:
               mountPath: /var/log
             - name: var-lib-iscsi
               mountPath: /var/lib/iscsi
-           - name: etc-iscsi
+            - name: etc-iscsi
               mountPath: /etc/iscsi
             - name: etc-multipath
               mountPath: /etc/multipath
