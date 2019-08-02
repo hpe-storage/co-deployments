@@ -1,5 +1,13 @@
+# Configuration to deploy the HPE Nimble Storage CSP service
+#
+# example usage: kubectl create -f <this_file>
+
 ---
-### CSP Service ###
+
+#######################################
+############  CSP Service  ############
+#######################################
+
 kind: Service
 apiVersion: v1
 metadata:
@@ -15,11 +23,15 @@ spec:
     app: nimble-csp
 
 ---
-### CSP deployment ###
+
+##########################################
+############  CSP Deployment  ############
+##########################################
+
 kind: Deployment
 apiVersion: apps/v1
 metadata:
-  name: nimble-csp
+  name: csp-service
   namespace: kube-system
 spec:
   selector:
@@ -33,7 +45,7 @@ spec:
     spec:
       containers:
         - name: nimble-csp
-          image: {{ .Values.cspImage}}: {{- .Values.cspTag}}
+          image: hpestorage/nimble-csp:edge
           imagePullPolicy: Always
           ports:
           - containerPort: 8080
