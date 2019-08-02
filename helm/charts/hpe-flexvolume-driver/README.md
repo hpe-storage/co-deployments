@@ -11,7 +11,7 @@ The [HPE FlexVolume Driver for Kubernetes](https://github.com/hpe-storage/flexvo
   - More distributions will be listed as tests are ongoing
 - Recent Ubuntu, CentOS or RHEL compute nodes connected to their respective official package repositories
 
-## Configuration
+## Configuration & Installation
 The following table lists the configurable parameters of the HPE FlexVolume Driver chart and their default values.
 
 |  Parameter                |  Description                                                                                       |  Default    |
@@ -29,13 +29,13 @@ The following table lists the configurable parameters of the HPE FlexVolume Driv
 
 It's recommended to create a [values.yaml](values.yaml) file and edit it to fit the environment the chart is being deployed to. Download and edit the sample file.
 
-## Platform notes
+### Platform notes
 Certain distributions demand certain tweaks to the variables for the driver and dynamic provisioner to operate correctly. See each platform for details.
 
-### Upstream Kubernetes
+#### Upstream Kubernetes
 This is the default operating mode, no tweaks are needed.
 
-### Red Hat OpenShift and OKD
+#### Red Hat OpenShift and OKD
 Applicable to Red Hat OpenShift 3.10 and 3.11. 4.x is not supported.
 
 | Key        | Value                     | Description                                                                        |
