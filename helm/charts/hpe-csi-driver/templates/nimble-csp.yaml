@@ -3,36 +3,36 @@
 kind: Service
 apiVersion: v1
 metadata:
-  name: csp-service
+  name: nimble-csp-svc
   namespace: kube-system
   labels:
-    app: csp-service
+    app: nimble-csp-svc
 spec:
   ports:
   - port: 8080
     protocol: TCP
   selector:
-    app: csp-service
+    app: nimble-csp
 
 ---
 ### CSP deployment ###
 kind: Deployment
 apiVersion: apps/v1
 metadata:
-  name: csp-service
+  name: nimble-csp
   namespace: kube-system
 spec:
   selector:
     matchLabels:
-      app: csp-service
+      app: nimble-csp
   replicas: 1
   template:
     metadata:
       labels:
-        app: csp-service
+        app: nimble-csp
     spec:
       containers:
-        - name: csp-service
+        - name: nimble-csp
           image: {{ .Values.cspImage}}: {{- .Values.cspTag}}
           imagePullPolicy: Always
           ports:
