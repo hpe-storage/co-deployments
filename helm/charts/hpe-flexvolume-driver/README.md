@@ -16,16 +16,16 @@ The following table lists the configurable parameters of the HPE FlexVolume Driv
 
 |  Parameter                |  Description                                                                                       |  Default    |
 |---------------------------|----------------------------------------------------------------------------------------------------|------------ |
-| backend            | HPE storage platform API endpoint.                                                                 | 192.168.1.1 |
-| pluginType         | Backend plugin type to use. Currently only `nimble` is supported.                                  | nimble      |
-| username           | Username for the backend.                                                                          | admin       |
-| password           | Password for the backend.                                                                          | admin       |
-| protocol           | Data plane protocol (`fc`, `iscsi`)                                                                | iscsi       |
-| fsType             | Type of file to format volumes with (ext4, ext3, xfs, btrfs)                                       | xfs         |
-| mountConflictDelay | Wait this long (in seconds) before forcefully taking over a volume from an isolated or crashed node| 150         |
-| flavor             | Kubernetes distribution specific tweaks. Currently only needed for `openshift`.                    | kubernetes           |
-| kubeletPath        | This is the directory where the kubelet lives. May differ between Kubernetes distributions         | /var/lib/kubelet     |
-| flexVolumeExec     | This is the path where the FlexVolume binary gets installed on the host                            | default     |
+| backend            | HPE storage platform API endpoint.                                                                   | 192.168.1.1 |
+| pluginType         | Backend plugin type to use. Currently only `nimble` is supported.                                    | nimble      |
+| username           | Username for the backend.                                                                            | admin       |
+| password           | Password for the backend.                                                                            | admin       |
+| protocol           | Data plane protocol (`fc`, `iscsi`).                                                                 | iscsi       |
+| fsType             | Type of file to format volumes with (ext4, ext3, xfs, btrfs).                                        | xfs         |
+| mountConflictDelay | Wait this long (in seconds) before forcefully taking over a volume from an isolated or crashed node. | 150         |
+| flavor             | Kubernetes distribution specific tweaks. Currently only needed for `openshift`.                      | kubernetes           |
+| kubeletPath        | This is the directory where the kubelet lives. May differ between Kubernetes distributions.          | /var/lib/kubelet     |
+| flexVolumeExec     | This is the path where the FlexVolume binary gets installed on the host.                             | default     |
 
 It's recommended to create a [values.yaml](values.yaml) file and edit it to fit the environment the chart is being deployed to. Download and edit the sample file.
 
@@ -40,7 +40,7 @@ Applicable to Red Hat OpenShift 3.10 and 3.11. 4.x is not supported.
 
 | Key        | Value                     | Description                                                                        |
 |------------|---------------------------|------------------------------------------------------------------------------------|
-| flavor     | openshift                 | nodeSelector tweaks to prevent provisioner to run on an infra node                 |
+| flavor     | openshift                 | nodeSelector tweaks to prevent provisioner to run on an infra node.                |
 
 ## Installing the Chart
 To install the chart with the name `hpe-flexvolume`:
