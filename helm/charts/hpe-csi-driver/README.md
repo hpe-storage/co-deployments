@@ -28,7 +28,7 @@ helm delete hpe-csi --purge
 ## Testing the Chart
 To test the chart with name `hpe-csi`:
 
-```console
+```
 helm test hpe-csi --cleanup
 ```
 
