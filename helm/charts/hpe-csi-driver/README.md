@@ -8,7 +8,7 @@ The [HPE CSI Driver for Kubernetes](https://github.com/hpe-storage/csi-driver) l
   - More distributions will be listed as tests are ongoing
 - Recent Ubuntu, CentOS or RHEL compute nodes connected to their respective official package repositories
 
-Depending on which Container Storage Provider (CSP) is being used, other prerequisites and requirements may apply.
+Depending on which [Container Storage Provider](https://github.com/hpe-storage/container-storage-provider) (CSP) is being used, other prerequisites and requirements may apply.
 
 ### HPE Nimble Storage CSP
 - NimbleOS 3.9 or later
