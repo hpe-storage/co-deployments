@@ -1,7 +1,4 @@
 # HPE FlexVolume Driver for Kubernetes Helm chart
-
-
-## Introduction
 The [HPE FlexVolume Driver for Kubernetes](https://github.com/hpe-storage/flexvolume-driver) leverages HPE storage platforms to provide scalable and persistent storage for stateful applications. This chart also deploys the [HPE Dynamic Provisioner for Kubernetes](https://github.com/hpe-storage/k8s-dynamic-provisioner).
 
 ## Prerequisites
@@ -10,6 +7,11 @@ The [HPE FlexVolume Driver for Kubernetes](https://github.com/hpe-storage/flexvo
   - OpenShift 3.10, 3.11 (4.x will not be supported, see [CSI Helm chart](../hpe-csi-driver)
   - More distributions will be listed as tests are ongoing
 - Recent Ubuntu, CentOS or RHEL compute nodes connected to their respective official package repositories
+
+Depending on which `pluginType` is being used, other prerequisites and requirements may apply.
+
+### HPE Nimble Storage (nimble)
+- NimbleOS 5.0.8 or later
 
 ## Configuration & Installation
 The following table lists the configurable parameters of the HPE FlexVolume Driver chart and their default values.
