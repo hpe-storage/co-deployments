@@ -28,7 +28,7 @@ It's recommended to create a [values.yaml](values.yaml) file and edit it to fit 
 ### Installing the Chart
 To install the chart with the name `hpe-csi`:
 ```
-helm repo add hpe https://github.com/hpe-storage/co-deployments/helm
+helm repo add hpe https://github.com/hpe-storage/co-deployments
 helm install --name hpe-csi hpe/hpe-csi-driver --namespace kube-system
 ```
 **Note:** Omitting the `--name` flag will generate a human readable name.
