@@ -47,7 +47,7 @@ Applicable to Red Hat OpenShift 3.10 and 3.11. 4.x is not supported.
 ## Installing the Chart
 To install the chart with the name `hpe-flexvolume`:
 ```
-helm repo add hpe https://github.com/hpe-storage/co-deployments/helm
+helm repo add hpe https://github.com/hpe-storage/co-deployments
 helm install -f myvalues.yml --name hpe-flexvolume hpe/hpe-flexvolume-driver --namespace kube-system
 ```
 
