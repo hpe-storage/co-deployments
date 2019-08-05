@@ -35,7 +35,7 @@ spec:
           valueFrom:
             secretKeyRef:
               name: nimble-secret
-              key: arrayIp
+              key: backend
         - name: PROVIDER_USERNAME
           valueFrom:
             secretKeyRef:
@@ -63,13 +63,11 @@ spec:
         - name: PLUGIN_TYPE
           value: {{ .Values.pluginType }}
         volumeMounts:
-        - name: podsmountdir
+        - name: pluginmountdir
           mountPath: /var/lib/kubelet
           mountPropagation: Bidirectional
-        {{- if eq .Values.flavor "openshift"}}
-        - name: ocpmountsdir
-          mountPath: /var/lib/origin
-        {{- end }}
+        - name: bindmountdir
+          mountPath: {{ .Values.podsMountDir }}
           mountPropagation: Bidirectional
         - name: legacymounts
           mountPath: /opt/nimble
@@ -117,14 +115,12 @@ spec:
             add: ["SYS_ADMIN"]
           allowPrivilegeEscalation: true
       volumes:
-      - name: podsmountdir
+      - name: pluginmountdir
         hostPath:
           path: /var/lib/kubelet
-      {{- if eq .Values.flavor "openshift"}}
-      - name: ocpmountsdir
+      - name: bindmountdir
         hostPath:
-          path: /var/lib/origin/
-      {{- end }}
+          path: {{ .Values.podsMountDir }}
       # required to handle legacy mounts from NLT based plugin. Remove this for CoreOS
       - name: legacymounts
         hostPath:
@@ -143,7 +139,7 @@ spec:
           path: /var/lib/iscsi/
       - name: exec
         hostPath:
-          path: /usr/libexec/kubernetes/kubelet-plugins/volume/exec
+          path:  {{ .Values.volumePluginDir }}
       - name: runlock
         hostPath:
           path: /run/lock

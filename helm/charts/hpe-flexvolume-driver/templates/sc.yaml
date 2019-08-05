@@ -2,7 +2,7 @@
 apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
- name: hpe-flexvolume-sc-test
+ name: hpe-flexvolume-sc
  namespace: default
  labels:
    plugin: {{ .Release.Name }}

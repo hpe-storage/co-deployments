@@ -1,5 +1,5 @@
 questions:
-    - variable: arrayIp
+    - variable: backend
       label: "HPE Nimble Storage array IP address"
       type: string
       description: "Please specify HPE Nimble Storage array IP"
@@ -14,11 +14,6 @@ questions:
       type: password
       description: "Specify password of the user"
       group: "HPE Array Settings"
-    - variable: conformTo
-      label: "Node OS type for package conformance checks"
-      type: string
-      description: "Please specify node OS type for package conformance checks"
-      group: "HPE Node Settings"
     - variable: fsType
       label: "Filesystem"
       type: enum
