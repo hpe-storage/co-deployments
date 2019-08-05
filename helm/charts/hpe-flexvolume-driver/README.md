@@ -29,7 +29,7 @@ The following table lists the configurable parameters of the HPE FlexVolume Driv
 | podsMountDir       | This is the directory where the kubelet bind mounts the volume for pod. May differ between Kubernetes distributions.          | /var/lib/kubelet/pods     |
 | flexVolumeExec     | This is the path where the FlexVolume binary gets installed on the host.                             | default     |
 | storageClass.name  | The name to assign the created StorageClass .                                          | hpe-standard |
-| storageClass.create | Enabled creation of StorageClass to consume this hpe-flexvolume-driver instance.                              | true        |
+| storageClass.create | Enables creation of StorageClass to consume this hpe-flexvolume-driver instance.                              | true        |
 | storageClass.defaultClass | Whether to set the created StorageClass as the clusters default StorageClass.                                  | false       |
 
 It's recommended to create a [values.yaml](values.yaml) file and edit it to fit the environment the chart is being deployed to. Download and edit the sample file.
