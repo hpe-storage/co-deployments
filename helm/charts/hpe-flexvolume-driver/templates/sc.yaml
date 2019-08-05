@@ -1,12 +1,17 @@
+{{ if .Values.storageClass.create -}}
 ---
 apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
- name: hpe-flexvolume-sc-test
- namespace: default
+ name: {{ .Values.storageClass.name }}
  labels:
    plugin: {{ .Release.Name }}
+ {{- if .Values.storageClass.defaultClass }}
+ annotations:
+   storageclass.kubernetes.io/is-default-class: "true"
+ {{- end }}
 provisioner: hpe.com/nimble
 parameters:
   description: {{ .Values.volumeDescription }}
   mountConflictDelay: {{ .Values.mountConflictDelay | quote }}
+{{- end }}

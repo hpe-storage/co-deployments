@@ -1,1 +1,0 @@
-A HPE storage class and PVC were created

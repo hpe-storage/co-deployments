@@ -1,9 +1,9 @@
 apiVersion: v1
 appVersion: "3.0"
-description: A Helm chart for installing HPE Nimble Storage FlexVolume Driver
+description: A Helm chart for installing the HPE Nimble Storage FlexVolume Driver
 icon: https://avatars0.githubusercontent.com/u/15615575?s=400&v=4
 maintainers:
-- name: hpe-flexvolume-dev@hpe.com
+- name: hpe-containers-dev@hpe.com
 name: hpe-flexvolume-driver
 version: 1.0.0
 keywords:

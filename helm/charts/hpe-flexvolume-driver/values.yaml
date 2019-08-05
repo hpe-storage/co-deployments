@@ -11,7 +11,7 @@ flexVolumeDriverTag: 3.0.0
 flexVolumeDriverImage: hpestorage/flexvolume-driver
 
 #parameters
-arrayIp: 10.0.0.1
+backend: 192.168.1.1
 username: admin
 password: admin
 protocol: iscsi
@@ -30,3 +30,21 @@ flavor: kubernetes
 
 #platform for which plugin is being deployed.i.e nimble or cv
 pluginType: nimble
+
+#bindMountPath where kubelet bindmounts volume to pod namespace
+podsMountDir: /var/lib/kubelet/pods
+
+#volumePluginDir volume plugin directory where kubelet watches for flexvolume plugin
+flexVolumeExec: /usr/libexec/kubernetes/kubelet-plugins/volume/exec
+
+## For creating the StorageClass automatically:
+storageClass:
+  create: true
+
+  ## Set StorageClass as the default StorageClass
+  ## Ignored if storageClass.create is false
+  defaultClass: false
+
+  ## Set a StorageClass name
+  ## Ignored if storageClass.create is false
+  name: hpe-standard
