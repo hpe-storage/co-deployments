@@ -139,7 +139,7 @@ spec:
           path: /var/lib/iscsi/
       - name: exec
         hostPath:
-          path:  {{ .Values.volumePluginDir }}
+          path:  {{ .Values.flexVolumeExec }}
       - name: runlock
         hostPath:
           path: /run/lock

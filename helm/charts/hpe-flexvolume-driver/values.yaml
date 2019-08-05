@@ -35,7 +35,7 @@ pluginType: nimble
 podsMountDir: /var/lib/kubelet/pods
 
 #volumePluginDir volume plugin directory where kubelet watches for flexvolume plugin
-volumePluginDir: /usr/libexec/kubernetes/kubelet-plugins/volume/exec
+flexVolumeExec: /usr/libexec/kubernetes/kubelet-plugins/volume/exec
 
 ## For creating the StorageClass automatically:
 storageClass:
