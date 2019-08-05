@@ -36,3 +36,15 @@ podsMountDir: /var/lib/kubelet/pods
 
 #volumePluginDir volume plugin directory where kubelet watches for flexvolume plugin
 volumePluginDir: /usr/libexec/kubernetes/kubelet-plugins/volume/exec
+
+## For creating the StorageClass automatically:
+storageClass:
+  create: true
+
+  ## Set StorageClass as the default StorageClass
+  ## Ignored if storageClass.create is false
+  defaultClass: false
+
+  ## Set a StorageClass name
+  ## Ignored if storageClass.create is false
+  name: hpe-standard

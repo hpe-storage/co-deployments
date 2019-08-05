@@ -43,7 +43,7 @@ serviceName: nimble-csp-svc
 
 #storage class parameters
 fsType: xfs
-volumeDescription: "Volume created by HPE CSI driver"
+volumeDescription: "Volume created by the HPE CSI driver"
 
 #service parameters
 # wait seconds for doryd/csi/csp services to start
@@ -51,3 +51,15 @@ serviceWaitTime: "10"
 
 #flavor
 flavor: kubernetes
+
+## For creating the StorageClass automatically:
+storageClass:
+  create: true
+
+  ## Set StorageClass as the default StorageClass
+  ## Ignored if storageClass.create is false
+  defaultClass: false
+
+  ## Set a StorageClass name
+  ## Ignored if storageClass.create is false
+  name: hpe-standard
