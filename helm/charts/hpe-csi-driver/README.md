@@ -2,7 +2,7 @@
 The [HPE CSI Driver for Kubernetes](https://github.com/hpe-storage/csi-driver) leverages HPE storage platforms to provide scalable and persistent storage for stateful applications.
 
 ## Prerequisites
-- Upstream Kubernetes version > 1.10
+- Upstream Kubernetes version > 1.12
 - Other Kubernetes distributions supported
   - OpenShift 4.1 in Tech Preview (3.x is not supported, see [FlexVolume Helm chart](../hpe-flexvolume-driver))
   - More distributions will be listed as tests are ongoing
@@ -11,7 +11,7 @@ The [HPE CSI Driver for Kubernetes](https://github.com/hpe-storage/csi-driver) l
 Depending on which [Container Storage Provider](https://github.com/hpe-storage/container-storage-provider) (CSP) is being used, other prerequisites and requirements may apply.
 
 ### HPE Nimble Storage CSP
-- NimbleOS 3.9 or later
+- NimbleOS 4.6 or later
 
 ## Configuration & Installation
 The following table lists the configurable parameters of the HPE-CSI chart and their default values.
@@ -46,14 +46,14 @@ helm test hpe-csi --cleanup
 ```
 
 ### Alternative install method
-In some cases it's more practical provide the local configuration via the `helm` command directly. Specify each parameter using the `--set key=value[,key=value]` argument to `helm install`. For example:
+In some cases it's more practical to provide the local configuration via the `helm` command directly. Specify each parameter using the `--set key=value[,key=value]` argument to `helm install`. For example:
 ```
 helm install --name hpe-csi hpe/hpe-csi-driver \
 --set backend=X.X.X.X --set username=admin --set password=xxxxxxxxx
 ```
 
 ## Using
-To enable dynamic provisioning of volumes through the use of `PersistentVolumeClaim` API objects, a `StorageClass` needs to be declared on the cluster. Please see the [HPE CSI Driver for Kubernetes](https://github.com/hpe-storage/csi-driver) repository for the official documentation for this Helm chart. Also, it's helpful for be familar with [persistent storage concepts](https://kubernetes.io/docs/concepts/storage/volumes/) in Kubernetes prior to deploying stateful workloads.
+To enable dynamic provisioning of volumes through the use of `PersistentVolumeClaim` API objects, a `StorageClass` needs to be declared on the cluster. Please see the [HPE CSI Driver for Kubernetes](https://github.com/hpe-storage/csi-driver) repository for the official documentation for this Helm chart. Also, it's helpful to be familar with [persistent storage concepts](https://kubernetes.io/docs/concepts/storage/volumes/) in Kubernetes prior to deploying stateful workloads.
 
 ## Support
 The HPE CSI Driver for Kubernetes Helm chart is considered beta software and only works with the HPE Nimble Storage CSP. Do not use for production and do not contact HPE for support. Please file any issues, questions or feature requests [here](https://github.com/hpe-storage/co-deployments/issues). You may also join our Slack community to chat with HPE folks close to this project. We hang out in `#NimbleStorage` and `#Kubernetes` at [slack.hpedev.io](https://slack.hpedev.io/).
