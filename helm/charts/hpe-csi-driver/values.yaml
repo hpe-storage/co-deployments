@@ -35,7 +35,7 @@ cspImage: hpestorage/nimble-csp
 cspTag: v1.0.0-beta
 
 #parameters
-backend: 10.0.0.1
+backend: 192.168.1.1
 username: admin
 password: admin
 servicePort: "8080"

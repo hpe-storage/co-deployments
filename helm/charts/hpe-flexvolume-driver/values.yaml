@@ -11,7 +11,7 @@ flexVolumeDriverTag: 3.0.0
 flexVolumeDriverImage: hpestorage/flexvolume-driver
 
 #parameters
-backend: 10.0.0.1
+backend: 192.168.1.1
 username: admin
 password: admin
 protocol: iscsi
