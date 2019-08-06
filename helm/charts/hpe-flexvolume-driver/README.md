@@ -26,9 +26,9 @@ The following table lists the configurable parameters of the HPE FlexVolume Driv
 | fsType             | Type of file to format volumes with (ext4, ext3, xfs, btrfs).                                        | xfs         |
 | mountConflictDelay | Wait this long (in seconds) before forcefully taking over a volume from an isolated or crashed node. | 150         |
 | flavor             | Kubernetes distribution specific tweaks. Currently only needed for `openshift`.                      | kubernetes           |
-| podsMountDir       | This is the directory where the kubelet bind mounts the volume for pod. May differ between Kubernetes distributions.          | /var/lib/kubelet/pods     |
+| podsMountDir       | This is the directory where the kubelet bind mounts the volume for pods. May differ between Kubernetes distributions.          | /var/lib/kubelet/pods     |
 | flexVolumeExec     | This is the path where the FlexVolume binary gets installed on the host.                             | default     |
-| storageClass.name  | The name to assign the created StorageClass .                                          | hpe-standard |
+| storageClass.name  | The name to assign the created StorageClass.                                          | hpe-standard |
 | storageClass.create | Enables creation of StorageClass to consume this hpe-flexvolume-driver instance.                              | true        |
 | storageClass.defaultClass | Whether to set the created StorageClass as the clusters default StorageClass.                                  | false       |
 
@@ -46,7 +46,7 @@ Applicable to Red Hat OpenShift 3.10 and 3.11. 4.x is not supported.
 | Key        | Value                     | Description                                                                        |
 |------------|---------------------------|------------------------------------------------------------------------------------|
 | flavor     | openshift                 | nodeSelector tweaks to prevent provisioner to run on an infra node.                |
-| podsMountDir | /var/lib/origin/openshift.local.volumes       | This is the directory where the kubelet bind mounts the volume for pod.            |
+| podsMountDir | /var/lib/origin/openshift.local.volumes       | This is the directory where the kubelet bind mounts the volume for pods.            |
 
 ## Installing the Chart
 To install the chart with the name `hpe-flexvolume`:
@@ -87,7 +87,7 @@ The HPE FlexVolume Driver for Kubernetes Helm chart is supported by the respecti
 
 Please file issues through the regular support channels for the particular platform. Feature requests or general questions to developers may be filed through the [GitHub issue tracker](https://github.com/hpe-storage/co-deployments) for this project.
 
-You may also join our Slack community to chat with HPE folks close to this project for inquiries not requring our immediate response. We hang out in `#NimbleStorage` and `#Kubernetes` at [slack.hpedev.io](https://slack.hpedev.io/). 
+You may also join our Slack community to chat with HPE folks close to this project for inquiries not requring our immediate response. We hang out in `#NimbleStorage` and `#Kubernetes` at [slack.hpedev.io](https://slack.hpedev.io/).
 
 ## Contributing
 We value all feedback and contributions. If you find any issues or want to contribute, please feel free to open an issue or file a PR. More details in [CONTRIBUTING.md](CONTRIBUTING.md)
