@@ -3,9 +3,9 @@ entries:
   hpe-csi-driver:
   - apiVersion: v1
     appVersion: "1.0"
-    created: "2019-08-06T14:01:46.729486624-07:00"
+    created: "2019-08-06T14:34:14.990768934-07:00"
     description: A Helm chart for installing the HPE CSI Driver
-    digest: 6603f207227bfd07796b34e7f87d46bcf153c9797eac337acb4b50dbe95225e1
+    digest: 1082914ca90264f88d2193dedd2c3728f10f779958e47dd1903185ccba4593f8
     icon: https://avatars0.githubusercontent.com/u/15615575?s=400&v=4
     keywords:
     - HPE
@@ -22,9 +22,9 @@ entries:
   hpe-flexvolume-driver:
   - apiVersion: v1
     appVersion: "3.0"
-    created: "2019-08-06T14:01:46.730035114-07:00"
+    created: "2019-08-06T14:34:14.991408153-07:00"
     description: A Helm chart for installing the HPE Nimble Storage FlexVolume Driver
-    digest: 19a50c4b5fea8ecd581d3b4a7e7b7096df233a1e7d5a8260da773921ec46adfe
+    digest: 8a34f166b18318404b63e636458eda0401ac85756ca3f5aecde4115d6713ebff
     icon: https://avatars0.githubusercontent.com/u/15615575?s=400&v=4
     keywords:
     - HPE
@@ -38,4 +38,4 @@ entries:
     urls:
     - hpe-flexvolume-driver-1.0.0.tgz
     version: 1.0.0
-generated: "2019-08-06T14:01:46.728464525-07:00"
+generated: "2019-08-06T14:34:14.989312769-07:00"
