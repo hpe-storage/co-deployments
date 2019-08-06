@@ -157,6 +157,11 @@ rules:
   - apiGroups: ["snapshot.storage.k8s.io"]
     resources: ["volumesnapshots"]
     verbs: ["create", "update", "delete", "get", "list", "watch"]
+  {{- if semverCompare ">=1.13.0" .Capabilities.KubeVersion.GitVersion }}
+  - apiGroups: ["snapshot.storage.k8s.io"]
+    resources: ["volumesnapshots/status"]
+    verbs: ["update"]
+  {{- end }}
   - apiGroups: ["snapshot.storage.k8s.io"]
     resources: ["volumesnapshotcontents"]
     verbs: ["create", "update", "delete", "get", "list", "watch"]
@@ -165,7 +170,11 @@ rules:
     verbs: ["get", "list", "watch"]
   - apiGroups: ["apiextensions.k8s.io"]
     resources: ["customresourcedefinitions"]
+  {{- if semverCompare ">=1.13.0" .Capabilities.KubeVersion.GitVersion }}
+    verbs: ["get", "list", "watch", "create", "delete", "update"]
+  {{- else }}
     verbs: ["get", "list", "watch", "create", "delete"]
+  {{- end }}
 
 ---
 
