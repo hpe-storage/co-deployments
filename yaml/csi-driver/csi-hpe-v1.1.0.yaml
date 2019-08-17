@@ -56,6 +56,16 @@ status:
 
 ---
 
+################# CSI Driver CRD ###########
+apiVersion: storage.k8s.io/v1beta1
+kind: CSIDriver
+metadata:
+  name: csi.hpe.com
+spec:
+  podInfoOnMount: true
+
+---
+
 #########################################
 ############  Snapshot CRDs  ############
 #########################################
@@ -130,7 +140,7 @@ spec:
       dnsPolicy: ClusterFirstWithHostNet
       containers:
         - name: csi-provisioner
-          image: quay.io/k8scsi/csi-provisioner:v1.3.0
+          image: quay.io/k8scsi/csi-provisioner:v1.4.0-rc1
           args:
             - "--csi-address=$(ADDRESS)"
             - "--v=5"
@@ -440,7 +450,12 @@ rules:
   - apiGroups: ["storage.hpe.com"]
     resources: ["hpenodeinfos"]
     verbs: ["get", "list", "watch", "create", "update", "patch"]
-
+  - apiGroups: [""]
+    resources: ["pods"]
+    verbs: ["get"]
+  - apiGroups: [""]
+    resources: ["secrets"]
+    verbs: ["get"]
 ---
 
 #######################################
