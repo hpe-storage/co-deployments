@@ -1,5 +1,5 @@
 # Configuration to deploy the HPE CSI driver compatible with
-# Kubernetes = v1.14
+# Kubernetes = v1.15
 #
 # example usage: kubectl create -f <this_file>
 
@@ -176,7 +176,7 @@ spec:
             - name: socket-dir
               mountPath: /var/lib/csi/sockets/pluginproxy/
         - name: csi-resizer
-          image: quay.io/k8scsi/csi-resizer:canary
+          image: quay.io/k8scsi/csi-resizer:v0.2.0
           args:
             - "--csi-address=$(ADDRESS)"
             - "--v=5"
