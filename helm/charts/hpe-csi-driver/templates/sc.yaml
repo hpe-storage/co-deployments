@@ -25,7 +25,10 @@ parameters:
    csi.storage.k8s.io/node-stage-secret-namespace: kube-system
    csi.storage.k8s.io/node-publish-secret-name: nimble-secret
    csi.storage.k8s.io/node-publish-secret-namespace: kube-system
-   {{- if semverCompare ">=1.14.0" .Capabilities.KubeVersion.GitVersion }}
+   {{- if semverCompare "=1.14.0" .Capabilities.KubeVersion.GitVersion }}
+   csi.storage.k8s.io/resizer-secret-name: nimble-secret
+   csi.storage.k8s.io/resizer-secret-namespace: nimble-secret
+   {{- else if semverCompare ">=1.15.0" .Capabilities.KubeVersion.GitVersion }}
    csi.storage.k8s.io/controller-expand-secret-name: nimble-secret
    csi.storage.k8s.io/controller-expand-secret-namespace: kube-system
    {{- end }}

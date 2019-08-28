@@ -81,7 +81,11 @@ spec:
               mountPath: /var/lib/csi/sockets/pluginproxy
         {{- if semverCompare ">=1.14.0" .Capabilities.KubeVersion.GitVersion }}
         - name: csi-resizer
-          image: {{ .Values.csiResizerImage}}: {{- .Values.csiResizerTag}}
+          {{- if semverCompare "=1.14.0" .Capabilities.KubeVersion.GitVersion }}
+          image: {{ .Values.csiResizerImage}}: {{- .Values.csiResizerTagv0}}
+          {{- else if semverCompare ">=1.15.0" .Capabilities.KubeVersion.GitVersion }}
+          image: {{ .Values.csiResizerImage}}: {{- .Values.csiResizerTagv1}}
+          {{- end }}
           args:
             - "--csi-address=$(ADDRESS)"
             - "--v=5"
