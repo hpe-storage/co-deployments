@@ -27,6 +27,7 @@ Depending on which [Container Storage Provider](https://github.com/hpe-storage/c
 - NimbleOS 4.6 or later
 
 ## Configuration & Installation
+
 The following table lists the configurable parameters of the HPE-CSI chart and their default values.
 
 |  Parameter                |  Description                                                |  Default    |
@@ -83,6 +84,7 @@ To enable dynamic provisioning of volumes through the use of `PersistentVolumeCl
 The HPE CSI Driver for Kubernetes Helm chart is considered beta software and only works with the HPE Nimble Storage CSP. Do not use for production and do not contact HPE for support. Please file any issues, questions or feature requests [here](https://github.com/hpe-storage/co-deployments/issues). You may also join our Slack community to chat with HPE folks close to this project. We hang out in `#NimbleStorage` and `#Kubernetes` at [slack.hpedev.io](https://slack.hpedev.io/).
 
  ---
+ 
 # HPE FlexVolume Driver for Kubernetes Helm chart
 
 The [HPE FlexVolume Driver for Kubernetes](https://github.com/hpe-storage/flexvolume-driver) leverages HPE storage platforms to provide scalable and persistent storage for stateful applications. This chart also deploys the [HPE Dynamic Provisioner for Kubernetes](https://github.com/hpe-storage/k8s-dynamic-provisioner).
