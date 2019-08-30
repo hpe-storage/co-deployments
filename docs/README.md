@@ -27,20 +27,14 @@ Depending on which [Container Storage Provider](https://github.com/hpe-storage/c
 - NimbleOS 4.6 or later
 
 ## Configuration & Installation
-
 The following table lists the configurable parameters of the HPE-CSI chart and their default values.
 
-| Parameter | Description | Default |
-
+|  Parameter                |  Description                                                |  Default    |
 |---------------------------|-------------------------------------------------------------|-------------|
-
-| backend | HPE storage backend hostname or IP address. | 192.168.1.1 |
-
-| username | Username for the backend. | admin |
-
-| password | Password for the backend. | admin |
-
-| fsType | Type of file system being used (ext4, ext3, xfs, btrfs) | xfs |
+| backend                   | HPE storage backend hostname or IP address.                 | 192.168.1.1 |
+| username                  | Username for the backend.                                   | admin       |
+| password                  | Password for the backend.                                   | admin       |
+| fsType                    | Type of file system being used (ext4, ext3, xfs, btrfs)     | xfs         |
 
 It's recommended to create a [values.yaml](values.yaml) file and edit it to fit the environment the chart is being deployed to. Download and edit the sample file.
 
@@ -125,40 +119,23 @@ Depending on which `pluginType` is being used, other prerequisites and requireme
 - NimbleOS 5.0.8 or later
 
 ## Configuration & Installation
-
 The following table lists the configurable parameters of the HPE FlexVolume Driver chart and their default values.
 
-
-| Parameter | Description | Default |
-
+|  Parameter                |  Description                                                                                       |  Default    |
 |---------------------------|----------------------------------------------------------------------------------------------------|------------ |
-
-| backend | HPE storage platform API endpoint. | 192.168.1.1 |
-
-| pluginType | Backend plugin type to use. Currently only `nimble` is supported. | nimble |
-
-| username | Username for the backend. | admin |
-
-| password | Password for the backend. | admin |
-
-| protocol | Data plane protocol (`fc`, `iscsi`). | iscsi |
-
-| fsType | Type of file to format volumes with (ext4, ext3, xfs, btrfs). | xfs |
-
-| mountConflictDelay | Wait this long (in seconds) before forcefully taking over a volume from an isolated or crashed node. | 150 |
-
-| flavor | Kubernetes distribution specific tweaks. Currently only needed for `openshift`. | kubernetes |
-
-| podsMountDir | This is the directory where the kubelet bind mounts the volume for pods. May differ between Kubernetes distributions. | /var/lib/kubelet/pods |
-
-| flexVolumeExec | This is the path where the FlexVolume binary gets installed on the host. | default |
-
-| storageClass.name | The name to assign the created StorageClass. | hpe-standard |
-
-| storageClass.create | Enables creation of StorageClass to consume this hpe-flexvolume-driver instance. | true |
-
-| storageClass.defaultClass | Whether to set the created StorageClass as the clusters default StorageClass. | false |
-
+| backend            | HPE storage platform API endpoint.                                                                   | 192.168.1.1 |
+| pluginType         | Backend plugin type to use. Currently only `nimble` is supported.                                    | nimble      |
+| username           | Username for the backend.                                                                            | admin       |
+| password           | Password for the backend.                                                                            | admin       |
+| protocol           | Data plane protocol (`fc`, `iscsi`).                                                                 | iscsi       |
+| fsType             | Type of file to format volumes with (ext4, ext3, xfs, btrfs).                                        | xfs         |
+| mountConflictDelay | Wait this long (in seconds) before forcefully taking over a volume from an isolated or crashed node. | 150         |
+| flavor             | Kubernetes distribution specific tweaks. Currently only needed for `openshift`.                      | kubernetes           |
+| podsMountDir       | This is the directory where the kubelet bind mounts the volume for pods. May differ between Kubernetes distributions.          | /var/lib/kubelet/pods     |
+| flexVolumeExec     | This is the path where the FlexVolume binary gets installed on the host.                             | default     |
+| storageClass.name  | The name to assign the created StorageClass.                                          | hpe-standard |
+| storageClass.create | Enables creation of StorageClass to consume this hpe-flexvolume-driver instance.                              | true        |
+| storageClass.defaultClass | Whether to set the created StorageClass as the clusters default StorageClass.                                  | false       |
 
 It's recommended to create a [values.yaml](values.yaml) file and edit it to fit the environment the chart is being deployed to. Download and edit the sample file.
 
@@ -171,17 +148,15 @@ Certain distributions demand certain tweaks to the variables for the driver and 
 
 This is the default operating mode, no tweaks are needed.
 
+
 #### Red Hat OpenShift and OKD
+Applicable to Red Hat OpenShift 3.10 and 3.11. 4.x is not supported.
 
-Applicable to Red Hat OpenShift 3.10 and 3.11. 4.1, 4.2.
-
-| Key | Value | Description |
-
+| Key        | Value                     | Description                                                                        |
 |------------|---------------------------|------------------------------------------------------------------------------------|
+| flavor     | openshift                 | nodeSelector tweaks to prevent provisioner to run on an infra node.                |
+| podsMountDir | /var/lib/origin/openshift.local.volumes       | This is the directory where the kubelet bind mounts the volume for pods.            |
 
-| flavor | openshift | nodeSelector tweaks to prevent provisioner to run on an infra node. |
-
-| podsMountDir | /var/lib/origin/openshift.local.volumes | This is the directory where the kubelet bind mounts the volume for pods. |
 
 ## Installing the Chart
 
