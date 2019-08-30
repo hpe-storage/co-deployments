@@ -14,7 +14,7 @@ The [HPE CSI Driver for Kubernetes](https://github.com/hpe-storage/csi-driver) l
 
 - Other Kubernetes distributions supported
 
-- OpenShift 4.1 in Tech Preview (3.x is not supported, see [FlexVolume Helm chart](../hpe-flexvolume-driver))
+- OpenShift 4.1 in Tech Preview (3.x is not supported, see [FlexVolume Helm chart](../helm/charts/hpe-flexvolume-driver))
 
 - More distributions will be listed as tests are ongoing
 
@@ -112,7 +112,7 @@ The [HPE FlexVolume Driver for Kubernetes](https://github.com/hpe-storage/flexvo
 
 - Other Kubernetes distributions supported
 
-- OpenShift 3.10, 3.11 (4.x will not be supported, see [CSI Helm chart](../hpe-csi-driver)
+- OpenShift 3.10, 3.11 (4.x will not be supported, see [CSI Helm chart](../helm/charts/hpe-csi-driver)
 
 - More distributions will be listed as tests are ongoing
 
