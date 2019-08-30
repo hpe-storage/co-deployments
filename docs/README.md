@@ -37,7 +37,7 @@ The following table lists the configurable parameters of the HPE-CSI chart and t
 | password                  | Password for the backend.                                   | admin       |
 | fsType                    | Type of file system being used (ext4, ext3, xfs, btrfs)     | xfs         |
 
-It's recommended to create a [values.yaml](values.yaml) file and edit it to fit the environment the chart is being deployed to. Download and edit the sample file.
+It's recommended to create a [values.yaml](../helm/charts/hpe-csi-driver/values.yaml) file and edit it to fit the environment the chart is being deployed to. Download and edit the sample file.
 
 ### Installing the Chart
 
@@ -84,7 +84,7 @@ To enable dynamic provisioning of volumes through the use of `PersistentVolumeCl
 The HPE CSI Driver for Kubernetes Helm chart is considered beta software and only works with the HPE Nimble Storage CSP. Do not use for production and do not contact HPE for support. Please file any issues, questions or feature requests [here](https://github.com/hpe-storage/co-deployments/issues). You may also join our Slack community to chat with HPE folks close to this project. We hang out in `#NimbleStorage` and `#Kubernetes` at [slack.hpedev.io](https://slack.hpedev.io/).
 
  ---
- 
+
 # HPE FlexVolume Driver for Kubernetes Helm chart
 
 The [HPE FlexVolume Driver for Kubernetes](https://github.com/hpe-storage/flexvolume-driver) leverages HPE storage platforms to provide scalable and persistent storage for stateful applications. This chart also deploys the [HPE Dynamic Provisioner for Kubernetes](https://github.com/hpe-storage/k8s-dynamic-provisioner).
@@ -127,7 +127,7 @@ The following table lists the configurable parameters of the HPE FlexVolume Driv
 | storageClass.create | Enables creation of StorageClass to consume this hpe-flexvolume-driver instance.                              | true        |
 | storageClass.defaultClass | Whether to set the created StorageClass as the clusters default StorageClass.                                  | false       |
 
-It's recommended to create a [values.yaml](values.yaml) file and edit it to fit the environment the chart is being deployed to. Download and edit the sample file.
+It's recommended to create a [values.yaml](../helm/charts/hpe-flexvolume-driver/values.yaml) file and edit it to fit the environment the chart is being deployed to. Download and edit the sample file.
 
 ### Platform notes
 
