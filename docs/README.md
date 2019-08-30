@@ -43,11 +43,8 @@ It's recommended to create a [values.yaml](values.yaml) file and edit it to fit 
 To install the chart with the name `hpe-csi`:
 
 ```
-
 helm repo add hpe https://hpe-storage.github.io/co-deployments
-
 helm install --name hpe-csi hpe/hpe-csi-driver --namespace kube-system -f myvalues.yaml
-
 ```
 
 **Note:** Omitting the `--name` flag will generate a human readable name.
@@ -57,9 +54,7 @@ helm install --name hpe-csi hpe/hpe-csi-driver --namespace kube-system -f myvalu
 To uninstall/delete the `hpe-csi` deployment:
 
 ```
-
 helm delete hpe-csi --purge
-
 ```
 
 ### Testing the Chart
@@ -67,9 +62,7 @@ helm delete hpe-csi --purge
 To test the chart with the name `hpe-csi`:
 
 ```
-
 helm test hpe-csi --cleanup
-
 ```
 
 ### Alternative install method
@@ -77,23 +70,17 @@ helm test hpe-csi --cleanup
 In some cases it's more practical to provide the local configuration via the `helm` command directly. Specify each parameter using the `--set key=value[,key=value]` argument to `helm install`. For example:
 
 ```
-
 helm install --name hpe-csi hpe/hpe-csi-driver \
-
 --set backend=X.X.X.X --set username=admin --set password=xxxxxxxxx
-
 ```
 
 ## Using
 
 To enable dynamic provisioning of volumes through the use of `PersistentVolumeClaim` API objects, a `StorageClass` needs to be declared on the cluster. Please see the [HPE CSI Driver for Kubernetes](https://github.com/hpe-storage/csi-driver) repository for the official documentation for this Helm chart. Also, it's helpful to be familar with [persistent storage concepts](https://kubernetes.io/docs/concepts/storage/volumes/) in Kubernetes prior to deploying stateful workloads.
 
-
-
 ## Support
 
 The HPE CSI Driver for Kubernetes Helm chart is considered beta software and only works with the HPE Nimble Storage CSP. Do not use for production and do not contact HPE for support. Please file any issues, questions or feature requests [here](https://github.com/hpe-storage/co-deployments/issues). You may also join our Slack community to chat with HPE folks close to this project. We hang out in `#NimbleStorage` and `#Kubernetes` at [slack.hpedev.io](https://slack.hpedev.io/).
-
 
  ---
 # HPE FlexVolume Driver for Kubernetes Helm chart
@@ -163,11 +150,8 @@ Applicable to Red Hat OpenShift 3.10 and 3.11. 4.x is not supported.
 To install the chart with the name `hpe-flexvolume`:
 
 ```
-
 helm repo add hpe https://hpe-storage.github.io/co-deployments
-
 helm install -f myvalues.yml --name hpe-flexvolume hpe/hpe-flexvolume-driver --namespace kube-system
-
 ```
 
 **Note:** Omitting the `--name` flag will generate a human readable name.
@@ -177,9 +161,7 @@ helm install -f myvalues.yml --name hpe-flexvolume hpe/hpe-flexvolume-driver --n
 To check status of the `hpe-flexvolume` deployment:
 
 ```
-
 helm status hpe-flexvolume
-
 ```
 
 ## Uninstalling the Chart
@@ -187,9 +169,7 @@ helm status hpe-flexvolume
 To uninstall/delete the `hpe-flexvolume` deployment:
 
 ```
-
 helm delete hpe-flexvolume --purge
-
 ```
 
 ## Alternative install method
@@ -197,13 +177,9 @@ helm delete hpe-flexvolume --purge
 In some cases it's more practical provide the local configuration via the `helm` command directly. Specify each parameter using the `--set key=value[,key=value]` argument to `helm install`. For example:
 
 ```
-
 helm install --name hpe-flexvolume hpe/hpe-flexvolume-driver \
-
 --set backend=X.X.X.X --set username=admin --set password=xxxxxxxxx \
-
 --set protocol=iscsi --set fsType=xfs --set mountConflictDelay=120
-
 ```
 
 ## Using the HPE FlexVolume Driver for Kubernetes
