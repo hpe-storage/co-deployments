@@ -46,6 +46,7 @@ serviceName: nimble-csp-svc
 #storage class parameters
 fsType: xfs
 volumeDescription: "Volume created by the HPE CSI driver"
+accessProtocol: "iscsi"
 
 #service parameters
 # wait seconds for doryd/csi/csp services to start
