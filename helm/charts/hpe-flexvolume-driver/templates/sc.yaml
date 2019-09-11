@@ -13,5 +13,4 @@ metadata:
 provisioner: hpe.com/nimble
 parameters:
   description: {{ .Values.volumeDescription }}
-  mountConflictDelay: {{ .Values.mountConflictDelay | quote }}
 {{- end }}

@@ -46,7 +46,7 @@ spec:
             secretKeyRef:
               name: nimble-secret
               key: password
-        {{- if eq .Values.flavor "nimble"}}
+        {{- if eq .Values.pluginType "nimble"}}
         - name: PROTOCOL
           valueFrom:
             secretKeyRef:

@@ -10,7 +10,7 @@ The [HPE CSI Driver for Kubernetes](https://github.com/hpe-storage/csi-driver) l
 
 - Upstream Kubernetes version > 1.12
 - Other Kubernetes distributions supported
-- OpenShift 4.1 in Tech Preview (3.x is not supported, see [FlexVolume Helm chart](../helm/charts/hpe-flexvolume-driver))
+- OpenShift 4.1 in Tech Preview (3.x is not supported, see [FlexVolume Driver Helm chart](https://github.com/hpe-storage/co-deployments/tree/master/helm/charts/hpe-flexvolume-driver))
 - More distributions will be listed as tests are ongoing
 - Recent Ubuntu, CentOS or RHEL compute nodes connected to their respective official package repositories
 
@@ -29,7 +29,7 @@ The following table lists the configurable parameters of the HPE-CSI chart and t
 | password                  | Password for the backend.                                   | admin       |
 | fsType                    | Type of file system being used (ext4, ext3, xfs, btrfs)     | xfs         |
 
-It's recommended to create a [values.yaml](../helm/charts/hpe-csi-driver/values.yaml) file and edit it to fit the environment the chart is being deployed to. Download and edit the sample file.
+It's recommended to create a [values.yaml](https://github.com/hpe-storage/co-deployments/tree/master/helm/charts/hpe-csi-driver/values.yaml) file and edit it to fit the environment the chart is being deployed to. Download and edit the sample file.
 
 #### Installing the Chart
 To install the chart with the name `hpe-csi`:
@@ -78,7 +78,7 @@ The [HPE FlexVolume Driver for Kubernetes](https://github.com/hpe-storage/flexvo
 
 - Upstream Kubernetes version > 1.10
 - Other Kubernetes distributions supported
-- OpenShift 3.10, 3.11 (4.x will not be supported, see [CSI Helm chart](../helm/charts/hpe-csi-driver)
+- OpenShift 3.10, 3.11 (4.x will not be supported, see [CSI Driver Helm chart](https://github.com/hpe-storage/co-deployments/tree/master/helm/charts/hpe-csi-driver)
 - More distributions will be listed as tests are ongoing
 - Recent Ubuntu, CentOS or RHEL compute nodes connected to their respective official package repositories
 
@@ -107,7 +107,7 @@ The following table lists the configurable parameters of the HPE FlexVolume Driv
 | storageClass.create | Enables creation of StorageClass to consume this hpe-flexvolume-driver instance.                              | true        |
 | storageClass.defaultClass | Whether to set the created StorageClass as the clusters default StorageClass.                                  | false       |
 
-It's recommended to create a [values.yaml](../helm/charts/hpe-flexvolume-driver/values.yaml) file and edit it to fit the environment the chart is being deployed to. Download and edit the sample file.
+It's recommended to create a [values.yaml](https://github.com/hpe-storage/co-deployments/tree/master/helm/charts/hpe-flexvolume-driver/values.yaml) file and edit it to fit the environment the chart is being deployed to. Download and edit the sample file.
 
 #### Platform notes
 Certain distributions demand certain tweaks to the variables for the driver and dynamic provisioner to operate correctly. See each platform for details.
@@ -120,7 +120,6 @@ Applicable to Red Hat OpenShift 3.10 and 3.11. 4.x is not supported.
 
 | Key        | Value                     | Description                                                                        |
 |------------|---------------------------|------------------------------------------------------------------------------------|
-| flavor     | openshift                 | nodeSelector tweaks to prevent provisioner to run on an infra node.                |
 | podsMountDir | /var/lib/origin/openshift.local.volumes       | This is the directory where the kubelet bind mounts the volume for pods.            |
 
 ### Installing the Chart

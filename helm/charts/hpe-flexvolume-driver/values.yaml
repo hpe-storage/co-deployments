@@ -18,8 +18,7 @@ protocol: iscsi
 
 #storage class parameters
 fsType: xfs
-volumeDescription: "volume created by HPE CSI driver"
-mountConflictDelay: "150"
+volumeDescription: "volume created by HPE FlexVolume driver"
 
 #service parameters
 # wait seconds for doryd/flexvolume node plugins to start

@@ -16,6 +16,7 @@ allowVolumeExpansion: {{ .Values.allowVolumeExpansion }}
 {{- end }}
 parameters:
    description: {{ .Values.volumeDescription }}
+   accessProtocol: {{ .Values.accessProtocol }}
    csi.storage.k8s.io/fstype: {{ .Values.fsType }}
    csi.storage.k8s.io/provisioner-secret-name: nimble-secret
    csi.storage.k8s.io/provisioner-secret-namespace: kube-system

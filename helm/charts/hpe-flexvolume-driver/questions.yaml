@@ -1,22 +1,61 @@
 questions:
-    - variable: backend
-      label: "HPE Nimble Storage array IP address"
-      type: string
-      description: "Please specify HPE Nimble Storage array IP"
-      group: "HPE Array Settings"
-    - variable: username
-      label: "Username"
-      type: string
-      description: "Specify username with storage admin permission"
-      group: "HPE Array Settings"
-    - variable: password
-      label: "Password"
-      type: password
-      description: "Specify password of the user"
-      group: "HPE Array Settings"
-    - variable: fsType
-      label: "Filesystem"
-      type: enum
-      options: [ "xfs", "ext4", "ext3" "btrfs"]
-      description: "Select the filesystem for the Persistent Volume"
-      group: "HPE Volume Settings"
+- variable: pluginType
+  label: "HPE platform type for the deployment"
+  type: enum
+  options:
+    - "nimble"
+    - "cv"
+    - "simplivity"
+  default: "nimble"
+  description: "HPE platform type for this deployment"
+- variable: backend
+  label: "HPE backend IP address"
+  type: string
+  required: true
+  description: "Please specify HPE backend IP"
+  group: "HPE Backend Settings"
+- variable: username
+  label: "Username"
+  type: string
+  required: true
+  description: "Specify username with backend storage admin permission"
+  group: "HPE Backend Settings"
+- variable: password
+  label: "Password"
+  type: password
+  required: true
+  description: "Specify password for the backend user"
+  group: "HPE Backend Settings"
+- variable: protocol
+  label: "HPE Backend Protocol"
+  type: enum
+  default: "iscsi"
+  options:
+    - "iscsi"
+    - "fc"
+  description: "Specify storage protocol for HPE backend connectivity"
+  group: "HPE Backend Settings"
+- variable: fsType
+  label: "Filesystem"
+  default: "xfs"
+  type: enum
+  options:
+    - "xfs"
+    - "ext4"
+    - "ext3"
+    - "btrfs"
+  description: "Select the filesystem for the Persistent Volume, default is xfs"
+  group: "HPE Volume Settings"
+- variable: storageClass.create
+  label: "Create a StorageClass"
+  type: boolean
+  default: true
+  required: true
+  description: "If specified as true, a StorageClass(hpe-standard) will be created with HPE FlexVolume Driver as provisioner"
+  group: "HPE Volume Settings"
+- variable: storageClass.defaultClass
+  label: "Make StorageClass(hpe-standard) as Default"
+  type: boolean
+  default: false
+  description: "If specified as true, hpe-standard StorageClass will be made as Default. This option is ignored if storageClass.create is set to false"
+  group: "HPE Volume Settings"
