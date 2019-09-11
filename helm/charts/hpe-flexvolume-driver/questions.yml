@@ -1,3 +1,5 @@
+categories:
+- storage
 questions:
 - variable: pluginType
   label: "HPE platform type for the deployment"
