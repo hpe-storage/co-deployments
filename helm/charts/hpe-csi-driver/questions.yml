@@ -1,3 +1,5 @@
+categories:
+- storage
 questions:
 - variable: backend
   label: "HPE backend IP address"
