@@ -3,9 +3,9 @@ entries:
   hpe-csi-driver:
   - apiVersion: v1
     appVersion: "1.0"
-    created: "2019-09-04T14:32:22.645445289-07:00"
+    created: "2019-09-11T10:07:56.326146904-07:00"
     description: A Helm chart for installing the HPE CSI Driver
-    digest: 63b0d3b7fb9d71f0f530908d4b3ff5988c4f559cd72b41055cac8502fdcf5cda
+    digest: ec99b89228f1246fae7bf9e403dbe0c202ece550ba1b1a10a3ae4d41407dbdf6
     icon: https://avatars0.githubusercontent.com/u/15615575?s=400&v=4
     keywords:
     - HPE
@@ -22,7 +22,7 @@ entries:
   hpe-flexvolume-driver:
   - apiVersion: v1
     appVersion: "3.0"
-    created: "2019-09-04T14:32:22.646148335-07:00"
+    created: "2019-09-11T10:07:56.327498698-07:00"
     description: A Helm chart for installing the HPE Nimble Storage FlexVolume Driver
     digest: dfb3fd259320ea2b47d9d3d683d2932cd5b42ef067e183fcacaa93b1ed1d1019
     icon: https://avatars0.githubusercontent.com/u/15615575?s=400&v=4
@@ -38,4 +38,22 @@ entries:
     urls:
     - hpe-flexvolume-driver-3.0.0.tgz
     version: 3.0.0
-generated: "2019-09-04T14:32:22.643739043-07:00"
+  - apiVersion: v1
+    appVersion: "3.0"
+    created: "2019-09-11T10:07:56.326826432-07:00"
+    description: A Helm chart for installing the HPE Nimble Storage FlexVolume Driver
+    digest: eaf2467f4c419acab37d1ad4d18e799d300b225ebd40b86c87dc293b7f82a7cc
+    icon: https://avatars0.githubusercontent.com/u/15615575?s=400&v=4
+    keywords:
+    - HPE
+    - Storage
+    - StorageClass
+    - CentOS
+    - Ubuntu
+    maintainers:
+    - name: hpe-containers-dev@hpe.com
+    name: hpe-flexvolume-driver
+    urls:
+    - hpe-flexvolume-driver-1.0.0.tgz
+    version: 1.0.0
+generated: "2019-09-11T10:07:56.324472604-07:00"
