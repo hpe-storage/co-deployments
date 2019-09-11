@@ -5,7 +5,7 @@ icon: https://avatars0.githubusercontent.com/u/15615575?s=400&v=4
 maintainers:
 - name: hpe-containers-dev@hpe.com
 name: hpe-flexvolume-driver
-version: 1.0.0
+version: 3.0.0
 keywords:
   - HPE
   - Storage
