@@ -20,7 +20,7 @@ nodeRegistrarTagv2: v1.1.0
 
 csiAttacherImage: quay.io/k8scsi/csi-attacher
 csiAttacherTagv0: v0.4.2
-csiAttacherTagv1: v1.0.1
+csiAttacherTagv1: v1.1.0
 csiAttacherTagv2: v1.2.0
 
 csiResizerImage: quay.io/k8scsi/csi-resizer
