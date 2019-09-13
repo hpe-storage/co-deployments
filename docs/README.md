@@ -5,7 +5,7 @@ This is the official Helm chart repository for HPE storage.
 - [FlexVolume Driver](https://github.com/hpe-storage/co-deployments/blob/master/helm/charts/hpe-flexvolume-driver/README.md)
 
 # Contributing and support
-Please the official [co-deployments](https://github.com/hpe-storage/co-deployments) repository.
+Please see the official [co-deployments](https://github.com/hpe-storage/co-deployments) repository.
 
 # License
 This is open source software licensed using the Apache License 2.0. Please see [LICENSE](LICENSE) for details.
