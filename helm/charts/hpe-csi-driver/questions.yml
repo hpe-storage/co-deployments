@@ -28,7 +28,7 @@ questions:
     - "ext4"
     - "ext3"
     - "btrfs"
-  description: "Select the filesystem for Persistent Volumes, defaults to xfs"
+  description: "Select the filesystem for Persistent Volumes, defaults to xfs."
   group: "HPE StorageClass and volume settings"
 - variable: accessProtocol
   label: "HPE storage protocol"
@@ -44,7 +44,7 @@ questions:
   type: boolean
   default: true
   required: true
-  description: "If specified as true, a StorageClass named 'hpe-standard' will be created with the HPE Volume Driver for Kubernetes FlexVolume Plugin as provisioner."
+  description: "If specified as 'true', a StorageClass named 'hpe-standard' will be created with the HPE Volume Driver for Kubernetes FlexVolume Plugin as provisioner."
   group: "HPE StorageClass and volume settings"
 - variable: storageClass.defaultClass
   label: "Mark StorageClass 'hpe-standard' as 'default'."
