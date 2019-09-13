@@ -8,4 +8,4 @@ This is the official Helm chart repository for HPE storage.
 Please see the official [co-deployments](https://github.com/hpe-storage/co-deployments) repository.
 
 # License
-This is open source software licensed using the Apache License 2.0. Please see [LICENSE](LICENSE) for details.
+This is open source software licensed using the Apache License 2.0. Please see [LICENSE](https://github.com/hpe-storage/co-deployments/blob/master/helm/charts/hpe-csi-driver/README.md) for details.
