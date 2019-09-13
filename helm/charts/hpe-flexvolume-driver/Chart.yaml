@@ -1,6 +1,6 @@
 apiVersion: v1
 appVersion: "3.0"
-description: A Helm chart for installing the HPE Nimble Storage FlexVolume Driver
+description: A Helm chart for installing the HPE Volume Driver for Kubernetes FlexVolume plugin
 icon: https://avatars0.githubusercontent.com/u/15615575?s=400&v=4
 maintainers:
 - name: hpe-containers-dev@hpe.com
