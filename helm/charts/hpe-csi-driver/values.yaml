@@ -45,7 +45,7 @@ serviceName: nimble-csp-svc
 
 #storage class parameters
 fsType: xfs
-volumeDescription: "Volume created by the HPE CSI driver"
+volumeDescription: "Volume created by the HPE CSI Driver for Kubernetes"
 accessProtocol: "iscsi"
 
 #service parameters
