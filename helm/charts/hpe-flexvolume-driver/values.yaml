@@ -18,7 +18,7 @@ protocol: iscsi
 
 #storage class parameters
 fsType: xfs
-volumeDescription: "volume created by HPE FlexVolume driver"
+volumeDescription: "Volume created by HPE Volume Driver for Kubernetes FlexVolume Plugin"
 
 #service parameters
 # wait seconds for doryd/flexvolume node plugins to start
