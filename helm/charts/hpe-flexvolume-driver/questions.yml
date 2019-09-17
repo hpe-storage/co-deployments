@@ -10,6 +10,7 @@ questions:
     - "simplivity"
   default: "nimble"
   description: "HPE platform type for the deployment."
+  group: "HPE backend settings"
 - variable: backend
   label: "IP address"
   type: string
