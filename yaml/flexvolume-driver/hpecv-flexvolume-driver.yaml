@@ -137,17 +137,17 @@ spec:
         - name: PROVIDER_IP
           valueFrom:
             secretKeyRef:
-              name: nimble-secret
-              key: ip
+              name: hpe-secret
+              key: backend
         - name: PROVIDER_USERNAME
           valueFrom:
             secretKeyRef:
-              name: nimble-secret
+              name: hpe-secret
               key: username
         - name: PROVIDER_PASSWORD
           valueFrom:
             secretKeyRef:
-              name: nimble-secret
+              name: hpe-secret
               key: password
         - name: PROTOCOL
           value: iscsi
@@ -268,7 +268,7 @@ spec:
           type: FileOrCreate
       - name: config-file
         configMap:
-          name: nimble-config
+          name: hpe-config
       - name: runsystemd
         hostPath:
           path: /run/systemd
