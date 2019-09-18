@@ -2,7 +2,7 @@
 kind: ClusterRole
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
-  name: doryd-role
+  name: hpe-dynamic-provisioner-role
   namespace: kube-system
 rules:
   - apiGroups: ["storage.k8s.io"]
@@ -15,9 +15,6 @@ rules:
     resources: ["persistentvolumes"]
     verbs: ["get", "list", "watch", "create", "delete", "update"]
   - apiGroups: [""]
-    resources: ["namespaces"]
-    verbs: ["get", "list", "watch"]
-  - apiGroups: [""]
     resources: ["events"]
     verbs: ["list", "watch", "create", "update", "patch"]
 
@@ -25,14 +22,14 @@ rules:
 kind: ClusterRoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
-  name: doryd-binding
+  name: hpe-dynamic-provisioner-binding
 subjects:
   - kind: ServiceAccount
     name: hpe-flexvolume-sa
     namespace: kube-system
 roleRef:
   kind: ClusterRole
-  name: doryd-role
+  name: hpe-dynamic-provisioner-role
   apiGroup: rbac.authorization.k8s.io
 
 ---
