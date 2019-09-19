@@ -114,7 +114,7 @@ spec:
           mountPath: /etc/hpe-storage/volume-driver.json
           subPath: volume-driver.json
         {{- if eq .Values.flavor "rancher"}}
-        - name: driver-file
+        - name: config-file
           mountPath: /etc/hpe-storage/{{ .Values.pluginType }}.json
           subPath: {{ .Values.pluginType }}.json
         {{- end }}
@@ -189,11 +189,6 @@ spec:
       - name: config-file
         configMap:
           name: hpe-config
-      {{- if eq .Values.flavor "rancher"}}
-      - name: driver-file
-        configMap:
-          name: hpe-config
-      {{- end }}
       - name: runsystemd
         hostPath:
           path: /run/systemd
