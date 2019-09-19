@@ -30,10 +30,14 @@ spec:
                mountPath: /etc/kubernetes
              - name: flexvolumedriver
                mountPath: /usr/libexec/kubernetes/kubelet-plugins/volume/exec
-             - name: hpeconfig
-               mountPath: /etc/hpe-storage
              - name: varlog
                mountPath: /var/log
+             - name: hpeconfig
+               mountPath: /etc/hpe-storage
+             {{- if eq .Values.flavor "rancher"}}
+             - name: hpeconfig
+               mountPath: /host/etc/hpe-storage
+             {{- end }}
           securityContext:
             privileged: true
       volumes:
@@ -42,7 +46,7 @@ spec:
              path: /etc/kubernetes
         - name: flexvolumedriver
           hostPath:
-             path: /usr/libexec/kubernetes/kubelet-plugins/volume/exec
+             path: {{ .Values.flexVolumeExec }}
         - name: hpeconfig
           hostPath:
               path: /etc/hpe-storage

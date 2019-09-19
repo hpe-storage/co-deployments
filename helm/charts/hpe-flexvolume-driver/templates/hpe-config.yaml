@@ -44,3 +44,10 @@ data:
       "overrides":{}
     }
     {{- end }}
+
+  {{- if eq .Values.flavor "rancher"}}
+  {{ .Values.pluginType }}.json: |-
+    {
+      "dockerVolumePluginSocketPath": "/host/etc/hpe-storage/{{ .Values.pluginType }}.sock"
+    }
+  {{- end }}
