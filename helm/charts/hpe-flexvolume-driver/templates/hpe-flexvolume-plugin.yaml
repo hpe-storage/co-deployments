@@ -28,6 +28,12 @@ spec:
             # create empty file to let plugin signal handler to perform cleanup of config/cert/dory files
             exec:
               command: [ "/bin/sh", "-c", "touch /etc/hpe-storage/remove" ]
+        {{- if eq .Values.flavor "rancher"}}
+          postStart:
+            exec:
+              command: [ "/bin/cp", "-a", "/etc/hpe-storage/{{ .Values.pluginType }}.json", 
+                       "{{ .Values.flexVolumeExec }}/hpe.com~{{ .Values.pluginType }}/{{ .Values.pluginType }}.json" ]
+        {{- end }}
         env:
         - name: LOG_LEVEL
           value: info
@@ -96,6 +102,10 @@ spec:
           mountPath: /etc/os-release
         - name: etc-hpe-storage-dir
           mountPath: /etc/hpe-storage
+        {{- if eq .Values.flavor "rancher"}}
+        - name: etc-hpe-storage-dir
+          mountPath: /host/etc/hpe-storage
+        {{- end }}
         - name: sys
           mountPath: /sys
         - name: iscsiadm
@@ -103,6 +113,11 @@ spec:
         - name: config-file
           mountPath: /etc/hpe-storage/volume-driver.json
           subPath: volume-driver.json
+        {{- if eq .Values.flavor "rancher"}}
+        - name: driver-file
+          mountPath: /etc/hpe-storage/{{ .Values.pluginType }}.json
+          subPath: {{ .Values.pluginType }}.json
+        {{- end }}
         - name: runsystemd
           mountPath: /run/systemd
         - name: libsystemd
@@ -139,7 +154,7 @@ spec:
           path: /var/lib/iscsi/
       - name: exec
         hostPath:
-          path:  {{ .Values.flexVolumeExec }}
+          path: {{ .Values.flexVolumeExec }}
       - name: runlock
         hostPath:
           path: /run/lock
@@ -174,6 +189,11 @@ spec:
       - name: config-file
         configMap:
           name: hpe-config
+      {{- if eq .Values.flavor "rancher"}}
+      - name: driver-file
+        configMap:
+          name: hpe-config
+      {{- end }}
       - name: runsystemd
         hostPath:
           path: /run/systemd
