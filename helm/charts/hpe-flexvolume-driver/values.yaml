@@ -4,11 +4,11 @@
 
 #doryd image
 dynamicProvisionerTag: v3.0.0
-dynamicProvisionerImage: hpestorage/k8s-dynamic-provisioner
+dynamicProvisionerImage: store/hpestorage/k8s-dynamic-provisioner
 
 #flexvolume plugin image
 flexVolumeDriverTag: v3.0.0
-flexVolumeDriverImage: hpestorage/flexvolume-driver
+flexVolumeDriverImage: store/hpestorage/flexvolume-driver
 
 #parameters
 backend: 192.168.1.1
