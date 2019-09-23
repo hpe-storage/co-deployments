@@ -13,7 +13,7 @@ The [HPE CSI Driver for Kubernetes](https://github.com/hpe-storage/csi-driver) l
 Depending on which [Container Storage Provider](https://github.com/hpe-storage/container-storage-provider) (CSP) is being used, other prerequisites and requirements may apply.
 
 ### HPE Nimble Storage CSP
-- NimbleOS 4.6 or later
+- NimbleOS 4.5.x or later
 
 ## Configuration & Installation
 The following table lists the configurable parameters of the HPE-CSI chart and their default values.
