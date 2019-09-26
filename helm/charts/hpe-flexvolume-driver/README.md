@@ -3,7 +3,7 @@ The [HPE FlexVolume Driver for Kubernetes](https://github.com/hpe-storage/flexvo
 
 ## Prerequisites
 
-- Upstream Kubernetes version > 1.10
+- Upstream Kubernetes version 1.11 or later
 - Other Kubernetes distributions supported
 - Rancher 2.x
 - OpenShift 3.10, 3.11 (4.x will not be supported, see [CSI Driver Helm chart](https://github.com/hpe-storage/co-deployments/tree/master/helm/charts/hpe-csi-driver)
