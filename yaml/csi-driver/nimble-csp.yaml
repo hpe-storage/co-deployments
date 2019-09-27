@@ -45,7 +45,7 @@ spec:
     spec:
       containers:
         - name: nimble-csp
-          image: hpestorage/nimble-csp:edge
+          image: hpestorage/nimble-csp:v1.0.0-beta
           imagePullPolicy: Always
           ports:
           - containerPort: 8080
