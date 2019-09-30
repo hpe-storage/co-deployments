@@ -36,6 +36,10 @@ csiDriverTag: v1.0.0-beta
 cspImage: hpestorage/nimble-csp
 cspTag: v1.0.0-beta
 
+# post-install
+postInstallImage: 'alpine'
+postInstallTag: '3.3'
+
 #parameters
 backend: 192.168.1.1
 username: admin
