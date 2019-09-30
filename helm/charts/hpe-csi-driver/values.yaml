@@ -47,6 +47,7 @@ serviceName: nimble-csp-svc
 fsType: xfs
 volumeDescription: "Volume created by the HPE CSI Driver for Kubernetes"
 accessProtocol: "iscsi"
+allowVolumeExpansion: true
 
 #service parameters
 # wait seconds for doryd/csi/csp services to start
