@@ -34,7 +34,7 @@ spec:
       containers:
         - name: nimble-csp
           image: {{ .Values.cspImage}}: {{- .Values.cspTag}}
-          imagePullPolicy: Always
+          imagePullPolicy: {{ .Values.imagePullPolicy | quote }}
           ports:
           - containerPort: 8080
           volumeMounts:
