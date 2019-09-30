@@ -1,4 +1,4 @@
-{{- if semverCompare "=1.13.0" .Capabilities.KubeVersion.GitVersion }}
+{{- if semverCompare "^1.13.0" .Capabilities.KubeVersion.GitVersion }}
 ---
 #############################################
 ############  CSI Node Info CRD  ############
