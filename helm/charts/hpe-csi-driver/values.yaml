@@ -40,6 +40,8 @@ cspTag: v1.0.0-beta
 postInstallImage: 'alpine'
 postInstallTag: '3.3'
 
+imagePullPolicy: 'Always'
+
 #parameters
 backend: 192.168.1.1
 username: admin
