@@ -34,6 +34,8 @@ spec:
                mountPath: /usr/libexec/kubernetes/kubelet-plugins/volume/exec
              - name: hpeconfig
                mountPath: /etc/hpe-storage
+             - name: varlog
+               mountPath: /var/log
           securityContext:
             privileged: true
       volumes:
@@ -46,6 +48,9 @@ spec:
         - name: hpeconfig
           hostPath:
               path: /etc/hpe-storage
+        - name: varlog
+          hostPath:
+              path: /var/log
 
 ---
 
@@ -77,6 +82,9 @@ rules:
     verbs: ["list", "watch", "create", "update", "patch"]
   - apiGroups: [""]
     resources: ["namespaces"]
+    verbs: ["get", "list"]
+  - apiGroups: [""]
+    resources: ["secrets"]
     verbs: ["get", "list"]
   - apiGroups: ["storage.k8s.io"]
     resources: ["volumeattachments"]
