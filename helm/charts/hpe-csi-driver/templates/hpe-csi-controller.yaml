@@ -28,14 +28,15 @@ spec:
         - name: csi-provisioner
           {{- if semverCompare "^1.12.0" .Capabilities.KubeVersion.GitVersion }}
           image: {{ .Values.csiProvisionerImage}}: {{- .Values.csiProvisionerTagv0}}
-          {{- else if semverCompare "^1.13.0" .Capabilities.KubeVersion.GitVersion }}
-          image: {{ .Values.csiProvisionerImage}}: {{- .Values.csiProvisionerTagv1}}
           {{- else }}
-          image: {{ .Values.csiProvisionerImage}}: {{- .Values.csiProvisionerTagv2}}
+          image: {{ .Values.csiProvisionerImage}}: {{- .Values.csiProvisionerTagv1}}
           {{- end }}
           args:
             - "--csi-address=$(ADDRESS)"
             - "--v=5"
+            {{- if semverCompare ">= 1.13.0" .Capabilities.KubeVersion.GitVersion }}}
+            - "--timeout=30s"
+            {{- end }}}
           env:
             - name: ADDRESS
               value: /var/lib/csi/sockets/pluginproxy/csi.sock
