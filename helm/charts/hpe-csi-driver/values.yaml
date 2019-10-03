@@ -5,8 +5,7 @@
 #sidecar-images
 csiProvisionerImage: quay.io/k8scsi/csi-provisioner
 csiProvisionerTagv0: v0.4.2
-csiProvisionerTagv1: v1.3.0
-csiProvisionerTagv2: v1.4.0-rc1
+csiProvisionerTagv1: v1.4.0-rc1
 
 csiSnapshotterImage: quay.io/k8scsi/csi-snapshotter
 csiSnapshotterTagv0: v0.4.1
