@@ -11,16 +11,16 @@
 kind: Service
 apiVersion: v1
 metadata:
-  name: nimble-cp-svc
+  name: cv-cp-svc
   namespace: kube-system
   labels:
-    app: nimble-cp-svc
+    app: cv-cp-svc
 spec:
   ports:
   - port: 8080
     protocol: TCP
   selector:
-    app: nimble-cp
+    app: cv-cp
 ​
 ---
 ​
@@ -31,20 +31,20 @@ spec:
 kind: Deployment
 apiVersion: apps/v1
 metadata:
-  name: cp-service
+  name: cv-cp
   namespace: kube-system
 spec:
   selector:
     matchLabels:
-      app: nimble-cp
+      app: cv-cp
   replicas: 1
   template:
     metadata:
       labels:
-        app: nimble-cp
+        app: cv-cp
     spec:
       containers:
-        - name: nimble-cp
+        - name: cv-cp
           image: hpestorage/cv-cp:canary
           imagePullPolicy: Always
           args:

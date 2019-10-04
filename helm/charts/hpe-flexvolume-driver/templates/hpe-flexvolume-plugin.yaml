@@ -31,7 +31,7 @@ spec:
         {{- if eq .Values.flavor "rancher"}}
           postStart:
             exec:
-              command: [ "/bin/cp", "-a", "/etc/hpe-storage/{{ .Values.pluginType }}.json", 
+              command: [ "/bin/cp", "-a", "/etc/hpe-storage/{{ .Values.pluginType }}.json",
                        "{{ .Values.flexVolumeExec }}/hpe.com~{{ .Values.pluginType }}/{{ .Values.pluginType }}.json" ]
         {{- end }}
         env:
@@ -61,6 +61,18 @@ spec:
         {{- else }}
         - name: PROTOCOL
           value: iscsi
+        {{- end }}
+        {{- if eq .Values.pluginType "cv"}}
+        - name: PROVIDER_PORT
+          valueFrom:
+            secretKeyRef:
+              name: hpe-secret
+              key: servicePort
+        - name: SERVICE_NAME
+          valueFrom:
+            secretKeyRef:
+              name: hpe-secret
+              key: serviceName
         {{- end }}
         - name: INSECURE
           value: "false"

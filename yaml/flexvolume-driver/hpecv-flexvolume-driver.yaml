@@ -157,10 +157,18 @@ spec:
             secretKeyRef:
               name: hpe-secret
               key: password
+        - name: PROVIDER_PORT
+          valueFrom:
+            secretKeyRef:
+              name: hpe-secret
+              key: servicePort
+        - name: SERVICE_NAME
+          valueFrom:
+            secretKeyRef:
+              name: hpe-secret
+              key: serviceName
         - name: PROTOCOL
           value: iscsi
-        - name: INSECURE
-          value: "true"
         - name: SCOPE
           value: global
         - name: PLUGIN_TYPE
