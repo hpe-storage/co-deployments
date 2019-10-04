@@ -49,7 +49,10 @@ spec:
           imagePullPolicy: Always
           env:
             - name: CLOUDVOLUMES_PORTAL_SERVER
-              value: cloudvolumes.hpe.com
+              valueFrom:
+                secretKeyRef:
+                  name: hpe-secret
+                  key: backend
             - name: CLOUDVOLUMES_PORT
               value: "8090"
             - name: LOG_LEVEL
