@@ -24,7 +24,7 @@ spec:
       dnsPolicy: ClusterFirstWithHostNet
       containers:
         -
-          image: hpestorage/k8s-dynamic-provisioner:edge
+          image: hpestorage/k8s-dynamic-provisioner:canary
           imagePullPolicy: Always
           name: hpe-dynamic-provisioner
           volumeMounts:
@@ -132,7 +132,7 @@ spec:
       dnsPolicy: ClusterFirstWithHostNet
       containers:
       - name: nimblevolumed
-        image: hpestorage/flexvolume-driver:edge
+        image: hpestorage/flexvolume-driver:canary
         imagePullPolicy: "Always"
         lifecycle:
           preStop:
@@ -160,7 +160,7 @@ spec:
         - name: PROTOCOL
           value: iscsi
         - name: INSECURE
-          value: "false"
+          value: "true"
         - name: SCOPE
           value: global
         - name: PLUGIN_TYPE
