@@ -142,11 +142,11 @@ spec:
         env:
         - name: LOG_LEVEL
           value: debug
-        - name: PROVIDER_IP
+        - name: PROVIDER_SERVICE
           valueFrom:
             secretKeyRef:
               name: hpe-secret
-              key: backend
+              key: serviceName
         - name: PROVIDER_USERNAME
           valueFrom:
             secretKeyRef:
