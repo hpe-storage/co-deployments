@@ -26,7 +26,7 @@ spec:
       containers:
         - name: csi-node-driver-registrar
           {{- if semverCompare "~1.12.0" .Capabilities.KubeVersion.GitVersion }}
-          image: {{ .Values.nodeRegistrarImage}}: {{- .Values.nodeRegistrarTagv0}}
+          image: {{ .Values.nodeRegistrarImagev0}}: {{- .Values.nodeRegistrarTagv0}}
           {{- else if semverCompare "~1.13.0" .Capabilities.KubeVersion.GitVersion }}
           image: {{ .Values.nodeRegistrarImage}}: {{- .Values.nodeRegistrarTagv1}}
           {{- else }}
