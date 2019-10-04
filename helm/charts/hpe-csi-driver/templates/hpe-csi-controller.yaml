@@ -26,7 +26,7 @@ spec:
       dnsPolicy: ClusterFirstWithHostNet
       containers:
         - name: csi-provisioner
-          {{- if semverCompare "^1.12.0" .Capabilities.KubeVersion.GitVersion }}
+          {{- if semverCompare "~1.12.0" .Capabilities.KubeVersion.GitVersion }}
           image: {{ .Values.csiProvisionerImage}}: {{- .Values.csiProvisionerTagv0}}
           {{- else }}
           image: {{ .Values.csiProvisionerImage}}: {{- .Values.csiProvisionerTagv1}}
@@ -34,9 +34,9 @@ spec:
           args:
             - "--csi-address=$(ADDRESS)"
             - "--v=5"
-            {{- if semverCompare ">= 1.13.0" .Capabilities.KubeVersion.GitVersion }}}
+            {{- if semverCompare ">= 1.13.0" .Capabilities.KubeVersion.GitVersion }}
             - "--timeout=30s"
-            {{- end }}}
+            {{- end }}
           env:
             - name: ADDRESS
               value: /var/lib/csi/sockets/pluginproxy/csi.sock
@@ -45,9 +45,9 @@ spec:
             - name: socket-dir
               mountPath: /var/lib/csi/sockets/pluginproxy
         - name: csi-attacher
-          {{- if semverCompare "^1.12.0" .Capabilities.KubeVersion.GitVersion }}
+          {{- if semverCompare "~1.12.0" .Capabilities.KubeVersion.GitVersion }}
           image: {{ .Values.csiAttacherImage}}: {{- .Values.csiAttacherTagv0}}
-          {{- else if semverCompare "^1.13.0" .Capabilities.KubeVersion.GitVersion }}
+          {{- else if semverCompare "~1.13.0" .Capabilities.KubeVersion.GitVersion }}
           image: {{ .Values.csiAttacherImage}}: {{- .Values.csiAttacherTagv1}}
           {{- else }}
           image: {{ .Values.csiAttacherImage}}: {{- .Values.csiAttacherTagv2}}
@@ -63,9 +63,9 @@ spec:
             - name: socket-dir
               mountPath: /var/lib/csi/sockets/pluginproxy
         - name: csi-snapshotter
-          {{- if semverCompare "^1.12.0" .Capabilities.KubeVersion.GitVersion }}
+          {{- if semverCompare "~1.12.0" .Capabilities.KubeVersion.GitVersion }}
           image: {{ .Values.csiSnapshotterImage}}: {{- .Values.csiSnapshotterTagv0}}
-          {{- else if semverCompare "^1.13.0" .Capabilities.KubeVersion.GitVersion }}
+          {{- else if semverCompare "~1.13.0" .Capabilities.KubeVersion.GitVersion }}
           image: {{ .Values.csiSnapshotterImage}}: {{- .Values.csiSnapshotterTagv1}}
           {{- else }}
           image: {{ .Values.csiSnapshotterImage}}: {{- .Values.csiSnapshotterTagv2}}
@@ -82,7 +82,7 @@ spec:
               mountPath: /var/lib/csi/sockets/pluginproxy
         {{- if semverCompare ">=1.14.0" .Capabilities.KubeVersion.GitVersion }}
         - name: csi-resizer
-          {{- if semverCompare "^1.14.0" .Capabilities.KubeVersion.GitVersion }}
+          {{- if semverCompare "~1.14.0" .Capabilities.KubeVersion.GitVersion }}
           image: {{ .Values.csiResizerImage}}: {{- .Values.csiResizerTagv0}}
           {{- else if semverCompare ">=1.15.0" .Capabilities.KubeVersion.GitVersion }}
           image: {{ .Values.csiResizerImage}}: {{- .Values.csiResizerTagv1}}

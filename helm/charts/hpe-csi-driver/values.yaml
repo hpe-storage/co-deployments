@@ -12,8 +12,10 @@ csiSnapshotterTagv0: v0.4.1
 csiSnapshotterTagv1: v1.2.0
 csiSnapshotterTagv2: v1.2.0
 
-nodeRegistrarImage: quay.io/k8scsi/csi-node-driver-registrar
+nodeRegistrarImagev0: quay.io/k8scsi/driver-registrar
 nodeRegistrarTagv0: v0.4.1
+
+nodeRegistarImage: quay.io/k8scsi/csi-node-driver-registrar
 nodeRegistrarTagv1: v1.1.0
 nodeRegistrarTagv2: v1.1.0
 

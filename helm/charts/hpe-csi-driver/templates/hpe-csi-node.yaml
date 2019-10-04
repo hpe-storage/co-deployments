@@ -25,9 +25,9 @@ spec:
       dnsPolicy: ClusterFirstWithHostNet
       containers:
         - name: csi-node-driver-registrar
-          {{- if semverCompare "^1.12.0" .Capabilities.KubeVersion.GitVersion }}
-          image: {{ .Values.nodeRegistrarImage}}: {{- .Values.nodeRegistrarTagv0}}
-          {{- else if semverCompare "^1.13.0" .Capabilities.KubeVersion.GitVersion }}
+          {{- if semverCompare "~1.12.0" .Capabilities.KubeVersion.GitVersion }}
+          image: {{ .Values.nodeRegistrarImagev0}}: {{- .Values.nodeRegistrarTagv0}}
+          {{- else if semverCompare "~1.13.0" .Capabilities.KubeVersion.GitVersion }}
           image: {{ .Values.nodeRegistrarImage}}: {{- .Values.nodeRegistrarTagv1}}
           {{- else }}
           image: {{ .Values.nodeRegistrarImage}}: {{- .Values.nodeRegistrarTagv2}}
@@ -45,7 +45,7 @@ spec:
               value: /csi/csi.sock
             - name: DRIVER_REG_SOCK_PATH
               value: /var/lib/kubelet/plugins/csi.hpe.com/csi.sock
-            {{- if semverCompare "^1.12.0" .Capabilities.KubeVersion.GitVersion }}
+            {{- if semverCompare "~1.12.0" .Capabilities.KubeVersion.GitVersion }}
             - name: KUBE_NODE_NAME
               valueFrom:
                 fieldRef:
