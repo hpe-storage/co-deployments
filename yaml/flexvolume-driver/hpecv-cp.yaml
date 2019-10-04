@@ -47,9 +47,6 @@ spec:
         - name: cv-cp
           image: hpestorage/cv-cp:canary
           imagePullPolicy: Always
-          args:
-            - "--csi-address=$(ADDRESS)"
-            - "--v=5"
           env:
             - name: CLOUDVOLUMES_PORTAL_SERVER
               value: cloudvolumes.hpe.com
