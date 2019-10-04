@@ -10,11 +10,17 @@ dynamicProvisionerImage: store/hpestorage/k8s-dynamic-provisioner
 flexVolumeDriverTag: v3.0.0
 flexVolumeDriverImage: store/hpestorage/flexvolume-driver
 
+#container-provider image
+containerProviderTag: canary
+containerProviderImage: hpestorage/cv-cp
+
 #parameters
 backend: 192.168.1.1
 username: admin
 password: admin
 protocol: iscsi
+servicePort: "8080"
+serviceName: cv-cp-svc
 
 #storage class parameters
 fsType: xfs

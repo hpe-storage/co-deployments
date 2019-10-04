@@ -24,7 +24,7 @@ spec:
       dnsPolicy: ClusterFirstWithHostNet
       containers:
         -
-          image: hpestorage/k8s-dynamic-provisioner:edge
+          image: hpestorage/k8s-dynamic-provisioner:canary
           imagePullPolicy: Always
           name: hpe-dynamic-provisioner
           volumeMounts:
@@ -132,7 +132,7 @@ spec:
       dnsPolicy: ClusterFirstWithHostNet
       containers:
       - name: nimblevolumed
-        image: hpestorage/flexvolume-driver:edge
+        image: hpestorage/flexvolume-driver:canary
         imagePullPolicy: "Always"
         lifecycle:
           preStop:
@@ -142,11 +142,11 @@ spec:
         env:
         - name: LOG_LEVEL
           value: debug
-        - name: PROVIDER_IP
+        - name: PROVIDER_SERVICE
           valueFrom:
             secretKeyRef:
               name: hpe-secret
-              key: backend
+              key: serviceName
         - name: PROVIDER_USERNAME
           valueFrom:
             secretKeyRef:
@@ -157,10 +157,18 @@ spec:
             secretKeyRef:
               name: hpe-secret
               key: password
+        - name: PROVIDER_PORT
+          valueFrom:
+            secretKeyRef:
+              name: hpe-secret
+              key: servicePort
+        - name: SERVICE_NAME
+          valueFrom:
+            secretKeyRef:
+              name: hpe-secret
+              key: serviceName
         - name: PROTOCOL
           value: iscsi
-        - name: INSECURE
-          value: "false"
         - name: SCOPE
           value: global
         - name: PLUGIN_TYPE
