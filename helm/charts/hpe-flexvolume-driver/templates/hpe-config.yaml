@@ -6,36 +6,11 @@ metadata:
   namespace: kube-system
 data:
   volume-driver.json: |-
-    {{- if eq .Values.pluginType "nimble"}}
-    {
-      "global":   {},
-      "defaults": {
-                 "sizeInGiB": 10,
-                 "limitIOPS": -1,
-                 "limitMBPS": -1,
-                 "perfPolicy": "DockerDefault",
-                 "mountConflictDelay": 120
-                },
-      "overrides":{}
-    }
-    {{- else if eq .Values.pluginType "cv"}}
-    {
-      "global": {
-                "nameSuffix": ".docker",
-                "snapPrefix": "BaseFor",
-                "automatedConnection": true
-                },
-      "defaults": {
-                "sizeInGiB": 10,
-                "limitIOPS": 1000,
-                "description": "persistent volume for container",
-                "perfPolicy": "Other",
-                "destroyOnRm": true,
-                "mountConflictDelay": 120
-                  },
-      "overrides": {}
-    }
-    {{- else }}
+  {{- if eq .Values.pluginType "nimble"}}
+    {{ .Values.nimble.config | toJson | b64enc | quote }}
+  {{- else if eq .Values.pluginType "cv"}}
+    {{ .Values.cv.config | toJson | b64enc | quote }}
+  {{- else }}
     {
       "global":   {},
       "defaults": {
@@ -43,7 +18,7 @@ data:
                 },
       "overrides":{}
     }
-    {{- end }}
+  {{- end }}
 
   {{- if eq .Values.flavor "rancher"}}
   {{ .Values.pluginType }}.json: |-

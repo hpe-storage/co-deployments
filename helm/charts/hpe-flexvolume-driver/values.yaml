@@ -53,3 +53,46 @@ storageClass:
   ## Set a StorageClass name
   ## Ignored if storageClass.create is false
   name: hpe-standard
+
+## Nimble Storage Config Parameters
+nimble:
+  config: |-
+    {
+      "global": {},
+      "defaults": {
+                "sizeInGiB": 10,
+                "limitIOPS": -1,
+                "limitMBPS": -1,
+                "perfPolicy": "DockerDefault",
+                "mountConflictDelay": 120
+                },
+      "overrides": {}
+    }
+
+## Cloud Volumes Config Parameters
+cv:
+  config: |-
+    {
+      "global": {
+                "snapPrefix": "BaseFor",
+                "initiators": ["10.128.0.14", "10.1.0.8", "10.1.0.7"],
+                "automatedConnection": true,
+                "existingCloudSubnet": "10.1.0.0/24",
+                "region": "us-east-1",
+                "privateCloud": "vpc-data",
+                "cloudComputeProvider": "Google Cloud Platform"
+      },
+      "defaults": {
+                "sizeInGiB": 10,
+                "limitIOPS": 1000,
+                "description": "Volume provisioned by the HPE Volume Driver for Kubernetes FlexVolume Plugin",
+                "perfPolicy": "Other",
+                "protectionTemplate": "twicedaily:4",
+                "encryption": true,
+                "volumeType": "PF",
+                "destroyOnRm": true,
+                "mountConflictDelay": 120
+      },
+      "overrides": {
+      }
+    }

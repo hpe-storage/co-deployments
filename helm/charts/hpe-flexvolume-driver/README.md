@@ -34,7 +34,9 @@ The following table lists the configurable parameters of the HPE FlexVolume Driv
 | flexVolumeExec     | This is the path where the FlexVolume binary gets installed on the host.                             | default     |
 | storageClass.name  | The name to assign the created StorageClass.                                          | hpe-standard |
 | storageClass.create | Enables creation of StorageClass to consume this hpe-flexvolume-driver instance.                              | true        |
-| storageClass.defaultClass | Whether to set the created StorageClass as the clusters default StorageClass.                                  | false       |
+| storageClass.defaultClass | Whether to set the created StorageClass as the clusters default StorageClass.                                | false       |
+| nimble.config      | HPE Nimble Storage volume config parameters.                                                                        | -           |
+| cv.config      | HPE Cloud Volumes volume config parameters.                                                                             | -           |
 
 It's recommended to create a [values.yaml](https://github.com/hpe-storage/co-deployments/tree/master/helm/charts/hpe-flexvolume-driver/values.yaml) file and edit it to fit the environment the chart is being deployed to. Download and edit the sample file.
 
