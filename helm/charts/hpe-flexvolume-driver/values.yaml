@@ -60,11 +60,9 @@ nimble:
     {
       "global": {},
       "defaults": {
-                "sizeInGiB": 10,
                 "limitIOPS": -1,
                 "limitMBPS": -1,
-                "perfPolicy": "DockerDefault",
-                "mountConflictDelay": 120
+                "perfPolicy": "DockerDefault"
                 },
       "overrides": {}
     }
@@ -85,7 +83,7 @@ cv:
       "defaults": {
                 "limitIOPS": 1000,
                 "description": "Volume provisioned by the HPE Volume Driver for Kubernetes FlexVolume Plugin",
-                "perfPolicy": "Oracle",
+                "perfPolicy": "Other",
                 "protectionTemplate": "twicedaily:4",
                 "encryption": true,
                 "volumeType": "PF",
