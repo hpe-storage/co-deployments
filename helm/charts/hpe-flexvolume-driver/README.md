@@ -40,6 +40,55 @@ The following table lists the configurable parameters of the HPE FlexVolume Driv
 
 It's recommended to create a [values.yaml](https://github.com/hpe-storage/co-deployments/tree/master/helm/charts/hpe-flexvolume-driver/values.yaml) file and edit it to fit the environment the chart is being deployed to. Download and edit the sample file.
 
+Example volume config parameters for HPE Nimble Storage:
+
+```
+nimble:
+  config: |-
+    {
+      "global": {},
+      "defaults": {
+                "sizeInGiB": 10,
+                "limitIOPS": -1,
+                "limitMBPS": -1,
+                "perfPolicy": "DockerDefault",
+                "mountConflictDelay": 120
+                },
+      "overrides": {}
+    }
+```
+
+Example volume config parameters for HPE Cloud Volumes:
+
+```
+cv:
+  config: |-
+    {
+      "global": {
+                "snapPrefix": "BaseFor",
+                "initiators": ["eth0"],
+                "automatedConnection": true,
+                "existingCloudSubnet": "10.1.0.0/24",
+                "region": "us-east-1",
+                "privateCloud": "vpc-data",
+                "cloudComputeProvider": "Amazon AWS"
+      },
+      "defaults": {
+                "limitIOPS": 1000,
+                "description": "Volume provisioned by the HPE Volume Driver for Kubernetes FlexVolume Plugin",
+                "perfPolicy": "Oracle",
+                "protectionTemplate": "twicedaily:4",
+                "encryption": true,
+                "volumeType": "PF",
+                "destroyOnRm": true
+      },
+      "overrides": {
+      }
+    }
+```
+
+**Note:** Storage class parameters will override the settings in `defaults` and `global` section.
+
 ### Platform notes
 Certain distributions demand certain tweaks to the variables for the driver and dynamic provisioner to operate correctly. See each platform for details.
 
