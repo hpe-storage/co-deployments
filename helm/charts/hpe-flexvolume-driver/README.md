@@ -38,9 +38,26 @@ The following table lists the configurable parameters of the HPE FlexVolume Driv
 | nimble.config      | HPE Nimble Storage volume config parameters.                                                                        | -           |
 | cv.config      | HPE Cloud Volumes volume config parameters.                                                                             | -           |
 
-It's recommended to create a [values.yaml](https://github.com/hpe-storage/co-deployments/tree/master/helm/charts/hpe-flexvolume-driver/values.yaml) file and edit it to fit the environment the chart is being deployed to. Download and edit the sample file.
+It's recommended to create a `values.yaml` file and edit it to fit the environment the chart is being deployed to.
 
-Example volume config parameters for HPE Nimble Storage:
+Example `values.yaml` using a Nimble backend:
+
+```
+---
+backend: 192.168.1.1
+username: admin
+password: admin
+pluginType: nimble
+fsType: xfs
+storageClass:
+  defaultClass: true
+```
+
+This will connect the driver to a Nimble based backend with management IP address of `192.168.1.1` and format new volumes with a XFS filesystem.
+
+The `nimble.config` or `cv.config` stanza will be hosted in a `ConfigMap` and can be used to tweak default parmaters and also override `StorageClass` parameters. More information on these stanzas can be found in the [ADVANCED.md](https://github.com/hpe-storage/flexvolume-driver/blob/master/ADVANCED.md) documentation.
+
+Example `nimble.config` stanza:
 
 ```
 nimble:
@@ -56,7 +73,7 @@ nimble:
     }
 ```
 
-Example volume config parameters for HPE Cloud Volumes:
+Example `cv.config` stanza:
 
 ```
 cv:
@@ -112,8 +129,8 @@ Applicable to installing the Helm Chart via the Rancher catalog system.
 To install the chart with the name `hpe-flexvolume`:
 
 ```
-helm repo add hpe https://hpe-storage.github.io/co-deployments
-helm install -f myvalues.yml --name hpe-flexvolume hpe/hpe-flexvolume-driver --namespace kube-system
+helm repo add hpe-storage https://hpe-storage.github.io/co-deployments/
+helm install hpe-storage/hpe-flexvolume-driver --namespace kube-system --name hpe-flexvolume -f values.yaml
 ```
 
 **Note:** Omitting the `--name` flag will generate a human readable name.
