@@ -1,5 +1,5 @@
-# HPE FlexVolume Driver for Kubernetes Helm chart
-The [HPE FlexVolume Driver for Kubernetes](https://github.com/hpe-storage/flexvolume-driver) leverages HPE storage platforms to provide scalable and persistent storage for stateful applications. This chart also deploys the [HPE Dynamic Provisioner for Kubernetes](https://github.com/hpe-storage/k8s-dynamic-provisioner).
+# HPE Volume Driver for Kubernetes FlexVolume Plugin Helm chart
+The [HPE Volume Driver for Kubernetes FlexVolume Plugin](https://github.com/hpe-storage/flexvolume-driver) leverages HPE storage platforms to provide scalable and persistent storage for stateful applications. This chart also deploys the [HPE Dynamic Provisioner for Kubernetes](https://github.com/hpe-storage/k8s-dynamic-provisioner).
 
 ## Prerequisites
 
@@ -18,7 +18,7 @@ Depending on which `pluginType` is being used, other prerequisites and requireme
 - NimbleOS 5.1.3 or later
 
 ## Configuration & Installation
-The following table lists the configurable parameters of the HPE FlexVolume Driver chart and their default values.
+The following table lists the configurable parameters of the FlexVolume driver chart and their default values.
 
 |  Parameter                |  Description                                                                                       |  Default    |
 |---------------------------|----------------------------------------------------------------------------------------------------|------------ |
@@ -158,11 +158,11 @@ helm install --name hpe-flexvolume hpe/hpe-flexvolume-driver \
 --set protocol=iscsi --set fsType=xfs --set mountConflictDelay=120
 ```
 
-## Using the HPE FlexVolume Driver for Kubernetes
-To enable dynamic provisioning of `PersistentVolume` through the use of `PersistentVolumeClaim` API objects, a `StorageClass` needs to be declared on the cluster. Please see the [HPE FlexVolume Driver for Kubernetes](https://github.com/hpe-storage/flexvolume-driver) repository for the official documentation for this Helm chart. Also, it's helpful to be familar with [persistent storage concepts](https://kubernetes.io/docs/concepts/storage/volumes/) in Kubernetes prior to deploying stateful workloads.
+## Using the HPE Volume Driver for Kubernetes FlexVolume Plugin
+To enable dynamic provisioning of `PersistentVolume` through the use of `PersistentVolumeClaim` API objects, a `StorageClass` needs to be declared on the cluster. Please see the [HPE Volume Driver for Kubernetes FlexVolume Plugin](https://github.com/hpe-storage/flexvolume-driver) repository for the official documentation for this Helm chart. Also, it's helpful to be familar with [persistent storage concepts](https://kubernetes.io/docs/concepts/storage/volumes/) in Kubernetes prior to deploying stateful workloads.
 
 ## Support
-The HPE FlexVolume Driver for Kubernetes Helm chart is supported by the respective platform team. Currently supported platforms:
+The HPE Volume Driver for Kubernetes FlexVolume Plugin Helm chart is supported by the respective platform team. Currently supported platforms:
 
 - HPE Nimble Storage
 
