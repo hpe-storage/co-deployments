@@ -6,7 +6,7 @@ The [HPE Volume Driver for Kubernetes FlexVolume Plugin](https://github.com/hpe-
 - Upstream Kubernetes version 1.11 or later
 - Other Kubernetes distributions supported
 - Rancher 2.x
-- OpenShift 3.10, 3.11 (4.x will not be supported, see [CSI Driver Helm chart](https://github.com/hpe-storage/co-deployments/tree/master/helm/charts/hpe-csi-driver)
+- OpenShift 3.10, 3.11 (4.x will not be supported, see [CSI Driver Helm chart](https://github.com/hpe-storage/co-deployments/tree/master/helm/charts/hpe-csi-driver))
 - More distributions will be listed as tests are ongoing
 - Recent Ubuntu, CentOS or RHEL compute nodes connected to their respective official package repositories
 
@@ -111,11 +111,13 @@ Certain distributions demand certain tweaks to the variables for the driver and 
 This is the default operating mode, no tweaks are needed.
 
 #### Red Hat OpenShift and OKD
-Applicable to Red Hat OpenShift 3.10 and 3.11. 4.x is not supported.
+Applicable to Red Hat OpenShift 3.10 and 3.11. 4.x is not supported<sup>*</sup>.
 
 | Key        | Value                     | Description                                                                        |
 |------------|---------------------------|------------------------------------------------------------------------------------|
 | podsMountDir | /var/lib/origin/openshift.local.volumes       | This is the directory where the kubelet bind mounts the volume for pods.            |
+
+<sup>*</sup> = If experimentation is desirable with OpenShift 4.x. Do not set either `flavor` or `podsMountDir`. Set `flexVolumeExec` to `/etc/kubernetes/kubelet-plugins/volume/exec`. The driver will only work on RHEL 7.x nodes.
 
 #### Rancher
 Applicable to installing the Helm Chart via the Rancher catalog system.
