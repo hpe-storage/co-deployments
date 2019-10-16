@@ -7,9 +7,9 @@ metadata:
 data:
   volume-driver.json: |-
   {{- if eq .Values.pluginType "nimble"}}
-    {{ .Values.nimble.config | toJson | b64enc | quote }}
+    {{ .Values.nimble.config | toJson }}
   {{- else if eq .Values.pluginType "cv"}}
-    {{ .Values.cv.config | toJson | b64enc | quote }}
+    {{ .Values.cv.config | toJson }}
   {{- else }}
     {
       "global":   {},
