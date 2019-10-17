@@ -158,7 +158,10 @@ spec:
               name: hpe-secret
               key: password
         - name: PROTOCOL
-          value: iscsi
+          valueFrom:
+            secretKeyRef:
+              name: hpe-secret
+              key: protocol
         - name: INSECURE
           value: "false"
         - name: SCOPE
