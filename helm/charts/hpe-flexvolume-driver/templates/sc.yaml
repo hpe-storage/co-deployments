@@ -10,7 +10,7 @@ metadata:
  annotations:
    storageclass.kubernetes.io/is-default-class: "true"
  {{- end }}
-provisioner: hpe.com/nimble
+provisioner: hpe.com/{{ .Values.pluginType }}
 parameters:
   description: {{ .Values.volumeDescription }}
 {{- end }}

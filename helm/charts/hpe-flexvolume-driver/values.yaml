@@ -3,11 +3,11 @@
 # Declare variables to be passed into your templates.
 
 #doryd image
-dynamicProvisionerTag: v3.0.0
+dynamicProvisionerTag: canary
 dynamicProvisionerImage: store/hpestorage/k8s-dynamic-provisioner
 
 #flexvolume plugin image
-flexVolumeDriverTag: v3.0.0
+flexVolumeDriverTag: canary
 flexVolumeDriverImage: store/hpestorage/flexvolume-driver
 
 #container-provider image
@@ -54,41 +54,26 @@ storageClass:
   ## Ignored if storageClass.create is false
   name: hpe-standard
 
-## Nimble Storage Config Parameters
 nimble:
-  config: |-
-    {
-      "global": {},
-      "defaults": {
-                "limitIOPS": -1,
-                "limitMBPS": -1,
-                "perfPolicy": "DockerDefault"
-                },
-      "overrides": {}
-    }
+  config:
+    limitIOPS: "-1"
+    limitMBPS: "-1"
+    perfPolicy: DockerDefault
 
-## Cloud Volumes Config Parameters
 cv:
-  config: |-
-    {
-      "global": {
-                "snapPrefix": "BaseFor",
-                "initiators": ["eth0"],
-                "automatedConnection": true,
-                "existingCloudSubnet": "10.1.0.0/24",
-                "region": "us-east-1",
-                "privateCloud": "vpc-data",
-                "cloudComputeProvider": "Amazon AWS"
-      },
-      "defaults": {
-                "limitIOPS": 1000,
-                "description": "Volume provisioned by the HPE Volume Driver for Kubernetes FlexVolume Plugin",
-                "perfPolicy": "Other",
-                "protectionTemplate": "twicedaily:4",
-                "encryption": true,
-                "volumeType": "PF",
-                "destroyOnRm": true
-      },
-      "overrides": {
-      }
-    }
+  config:
+    snapPrefix: BaseFor
+    automatedConnection: true
+    existingCloudSubnet: 10.1.0.0/24
+    region: us-east-1
+    privateCloud: vpc-data
+    cloudComputeProvider: "Amazon AWS"
+    perfPolicy: Other
+    volumeType: PF
+    encryption: true
+    protectionTemplate: twicedaily:4
+    destroyOnRm: true
+    limitIOPS: "1000"
+    initiators:
+      - '"eth0"'
+    privateCloudResourceGroup: ""

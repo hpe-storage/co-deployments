@@ -35,8 +35,6 @@ The following table lists the configurable parameters of the FlexVolume driver c
 | storageClass.name  | The name to assign the created StorageClass.                                          | hpe-standard |
 | storageClass.create | Enables creation of StorageClass to consume this hpe-flexvolume-driver instance.                              | true        |
 | storageClass.defaultClass | Whether to set the created StorageClass as the clusters default StorageClass.                                | false       |
-| nimble.config      | HPE Nimble Storage volume config parameters.                                                                        | -           |
-| cv.config      | HPE Cloud Volumes volume config parameters.                                                                             | -           |
 
 It's recommended to create a `values.yaml` file and edit it to fit the environment the chart is being deployed to.
 
@@ -54,55 +52,6 @@ storageClass:
 ```
 
 This will connect the driver to a Nimble based backend with management IP address of `192.168.1.1` and format new volumes with a XFS filesystem.
-
-The `nimble.config` or `cv.config` stanza will be hosted in a `ConfigMap` and can be used to tweak default parmaters and also override `StorageClass` parameters. More information on these stanzas can be found in the [ADVANCED.md](https://github.com/hpe-storage/flexvolume-driver/blob/master/ADVANCED.md) documentation.
-
-Example `nimble.config` stanza:
-
-```
-nimble:
-  config: |-
-    {
-      "global": {},
-      "defaults": {
-                "limitIOPS": -1,
-                "limitMBPS": -1,
-                "perfPolicy": "DockerDefault"
-                },
-      "overrides": {}
-    }
-```
-
-Example `cv.config` stanza:
-
-```
-cv:
-  config: |-
-    {
-      "global": {
-                "snapPrefix": "BaseFor",
-                "initiators": ["eth0"],
-                "automatedConnection": true,
-                "existingCloudSubnet": "10.1.0.0/24",
-                "region": "us-east-1",
-                "privateCloud": "vpc-data",
-                "cloudComputeProvider": "Amazon AWS"
-      },
-      "defaults": {
-                "limitIOPS": 1000,
-                "description": "Volume provisioned by the HPE Volume Driver for Kubernetes FlexVolume Plugin",
-                "perfPolicy": "Other",
-                "protectionTemplate": "twicedaily:4",
-                "encryption": true,
-                "volumeType": "PF",
-                "destroyOnRm": true
-      },
-      "overrides": {
-      }
-    }
-```
-
-**Note:** Storage class parameters will override the settings in `defaults` and `global` section.
 
 ### Platform notes
 Certain distributions demand certain tweaks to the variables for the driver and dynamic provisioner to operate correctly. See each platform for details.
