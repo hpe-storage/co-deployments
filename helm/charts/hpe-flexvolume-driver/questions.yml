@@ -87,7 +87,7 @@ questions:
   type: string
   default: ""
   required: true
-  description: "Cloud subnet of the instance for connection provisioning"
+  description: "Cloud subnet of the cluster for connection provisioning"
   group: "Cloud instance settings"
 - variable: cv.config.privateCloud
   show_if: "pluginType=cv"
@@ -114,7 +114,7 @@ questions:
   description: "Public cloud provider name"
   group: "Cloud instance settings"
 - variable: cv.config.privateCloudResourceGroup
-  show_if: "pluginType=cv"
+  show_if: "cv.config.cloudComputeProvider=Microsoft Azure"
   label: "Azure Resource Group"
   type: string
   required: true
