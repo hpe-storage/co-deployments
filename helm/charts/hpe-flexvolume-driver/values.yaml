@@ -4,11 +4,11 @@
 
 #doryd image
 dynamicProvisionerTag: canary
-dynamicProvisionerImage: store/hpestorage/k8s-dynamic-provisioner
+dynamicProvisionerImage: hpestorage/k8s-dynamic-provisioner
 
 #flexvolume plugin image
 flexVolumeDriverTag: canary
-flexVolumeDriverImage: store/hpestorage/flexvolume-driver
+flexVolumeDriverImage: hpestorage/flexvolume-driver
 
 #container-provider image
 containerProviderTag: canary
