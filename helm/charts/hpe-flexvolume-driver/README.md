@@ -17,13 +17,18 @@ Depending on which `pluginType` is being used, other prerequisites and requireme
 - NimbleOS 5.0.8 or later
 - NimbleOS 5.1.3 or later
 
+### HPE Cloud Volumes
+
+- Amazon EKS 1.13.x/1.14.x
+- Microsoft AKS 1.13.x/1.14.x
+
 ## Configuration & Installation
 The following table lists the configurable parameters of the FlexVolume driver chart and their default values.
 
 |  Parameter                |  Description                                                                                       |  Default    |
 |---------------------------|----------------------------------------------------------------------------------------------------|------------ |
 | backend            | HPE storage platform API endpoint.                                                                   | 192.168.1.1 |
-| pluginType         | Backend plugin type to use. Currently only `nimble` is supported.                                    | nimble      |
+| pluginType         | Backend plugin type to use. Currently `nimble` and `cv` are supported.                                    | nimble      |
 | username           | Username for the backend.                                                                            | admin       |
 | password           | Password for the backend.                                                                            | admin       |
 | protocol           | Data plane protocol (`fc`, `iscsi`).                                                                 | iscsi       |
@@ -154,6 +159,7 @@ To enable dynamic provisioning of `PersistentVolume` through the use of `Persist
 The HPE Volume Driver for Kubernetes FlexVolume Plugin Helm chart is supported by the respective platform team. Currently supported platforms:
 
 - HPE Nimble Storage
+- HPE Cloud Volumes
 
 Please file issues through the regular support channels for the particular platform. Feature requests or general questions to developers may be filed through the [GitHub issue tracker](https://github.com/hpe-storage/co-deployments) for this project.
 
