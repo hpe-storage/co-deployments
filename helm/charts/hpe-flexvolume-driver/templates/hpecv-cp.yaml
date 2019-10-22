@@ -2,13 +2,12 @@
 # Configuration to deploy the HPE Nimble Storage Container Provider service
 #
 # example usage: kubectl create -f <this_file>
-​
+
 ---
-​
+
 #######################################
 ############  CP Service  ############
 #######################################
-​
 kind: Service
 apiVersion: v1
 metadata:
@@ -18,17 +17,16 @@ metadata:
     app: {{ .Values.serviceName }}
 spec:
   ports:
-  - port: {{ .Values.servicePort | quote }}
+  - port: {{ .Values.servicePort }}
     protocol: TCP
   selector:
     app: cv-cp
-​
+
 ---
-​
+
 ##########################################
 ############  CP Deployment  ############
 ##########################################
-​
 kind: Deployment
 apiVersion: apps/v1
 metadata:
@@ -46,7 +44,7 @@ spec:
     spec:
       containers:
         - name: cv-cp
-          image: image: {{ .Values.containerProviderImage}}: {{- .Values.containerProviderTag}}
+          image: {{ .Values.containerProviderImage}}: {{- .Values.containerProviderTag}}
           imagePullPolicy: Always
           env:
             - name: CLOUDVOLUMES_PORTAL_SERVER
@@ -56,7 +54,7 @@ spec:
             - name: LOG_LEVEL
               value: debug
           ports:
-          - containerPort: {{ .Values.servicePort | quote }}
+          - containerPort: {{ .Values.servicePort }}
           volumeMounts:
             - name: log-dir
               mountPath: /var/log

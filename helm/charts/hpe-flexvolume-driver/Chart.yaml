@@ -1,5 +1,5 @@
 apiVersion: v1
-appVersion: "3.0"
+appVersion: "3.1"
 description: A Helm chart for installing the HPE Volume Driver for Kubernetes FlexVolume plugin
 icon: https://raw.githubusercontent.com/hpe-storage/co-deployments/master/docs/assets/hpedev.png
 maintainers:
@@ -8,7 +8,7 @@ maintainers:
 sources:
 - https://github.com/hpe-storage/flexvolume-driver
 name: hpe-flexvolume-driver
-version: 3.0.0
+version: 3.1.0
 home: https://hpe.com/storage/containers
 keywords:
   - HPE
@@ -16,4 +16,5 @@ keywords:
   - StorageClass
   - CentOS
   - Ubuntu
+  - CloudVolumes
 

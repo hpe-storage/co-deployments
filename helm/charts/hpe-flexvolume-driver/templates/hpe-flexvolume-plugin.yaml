@@ -99,8 +99,10 @@ spec:
           mountPath: /etc/iscsi
         - name: etc-multipath
           mountPath: /etc/multipath
+        {{- if ne .Values.flavor "rancher"}}
         - name: etc-multipath-conf
           mountPath: /etc/multipath.conf
+        {{- end }}
         - name: etc-redhat-release
           mountPath: /etc/redhat-release
         - name: etc-os-release
@@ -169,10 +171,12 @@ spec:
       - name: etc-multipath
         hostPath:
           path: /etc/multipath/
+      {{- if ne .Values.flavor "rancher"}}
       - name: etc-multipath-conf
         hostPath:
           path: /etc/multipath.conf
           type: FileOrCreate
+      {{- end }}
       - name: etc-redhat-release
         hostPath:
           path: /etc/redhat-release
