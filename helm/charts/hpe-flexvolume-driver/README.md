@@ -21,6 +21,7 @@ Depending on which `pluginType` is being used, other prerequisites and requireme
 
 - Amazon EKS 1.13.x/1.14.x
 - Microsoft AKS 1.13.x/1.14.x
+- US Regions Only
 
 ## Configuration & Installation
 The following table lists the configurable parameters of the FlexVolume driver chart and their default values.
@@ -29,14 +30,14 @@ The following table lists the configurable parameters of the FlexVolume driver c
 |---------------------------|----------------------------------------------------------------------------------------------------|------------ |
 | backend            | HPE storage platform API endpoint.                                                                   | 192.168.1.1 |
 | pluginType         | Backend plugin type to use. Currently `nimble` and `cv` are supported.                                    | nimble      |
-| username           | Username for the backend.                                                                            | admin       |
-| password           | Password for the backend.                                                                            | admin       |
+| username           | Username for the backend. Access key for HPE Cloud Volumes.                                                                            | admin       |
+| password           | Password for the backend. Access secret for HPE Cloud Volumes.                                                                            | admin       |
 | protocol           | Data plane protocol (`fc`, `iscsi`).                                                                 | iscsi       |
 | fsType             | Type of file to format volumes with (ext4, ext3, xfs, btrfs).                                        | xfs         |
-| mountConflictDelay | Wait this long (in seconds) before forcefully taking over a volume from an isolated or crashed node. | 150         |
-| flavor             | Kubernetes distribution specific tweaks. Supported flavors include `rancher` and `openshift`.                      | kubernetes           |
+| logLevel             | Log level. Can be one of `info`, `debug`, `trace`, `warn` and `error`                                        | info         |
+| mountConflictDelay | Wait this long (in seconds) before forcefully taking over a volume from an isolated or crashed node. | 120         |
+| flavor             | Kubernetes distribution specific tweaks. Supported flavors include `k8s`, `ocp`, `eks`, `aks` and `rke`.                      | k8s           |
 | podsMountDir       | This is the directory where the kubelet bind mounts the volume for pods. May differ between Kubernetes distributions.          | /var/lib/kubelet/pods     |
-| flexVolumeExec     | This is the path where the FlexVolume binary gets installed on the host.                             | default     |
 | storageClass.name  | The name to assign the created StorageClass.                                          | hpe-standard |
 | storageClass.create | Enables creation of StorageClass to consume this hpe-flexvolume-driver instance.                              | true        |
 | storageClass.defaultClass | Whether to set the created StorageClass as the clusters default StorageClass.                                | false       |
@@ -109,14 +110,14 @@ Applicable to Red Hat OpenShift 3.10 and 3.11. 4.x is not supported<sup>*</sup>.
 |------------|---------------------------|------------------------------------------------------------------------------------|
 | podsMountDir | /var/lib/origin/openshift.local.volumes       | This is the directory where the kubelet bind mounts the volume for pods.            |
 
-<sup>*</sup> = If experimentation is desirable with OpenShift 4.x. Do not set either `flavor` or `podsMountDir`. Set `flexVolumeExec` to `/etc/kubernetes/kubelet-plugins/volume/exec`. The driver will only work on RHEL 7.x nodes.
+<sup>*</sup> = If experimentation is desirable with OpenShift 4.x, set `flexVolumeExec` default path for ocp to `/etc/kubernetes/kubelet-plugins/volume/exec`. The driver will only work on RHEL 7.x nodes.
 
 #### Rancher
 Applicable to installing the Helm Chart via the Rancher catalog system.
 
 | Key        | Value                     | Description                                                                        |
 |------------|---------------------------|------------------------------------------------------------------------------------|
-| flavor     | rancher                   | Required and prepopulated by default.                                              |
+| flavor     | rke                   | Required and prepopulated by default.                                              |
 | podsMountDir | /var/lib/kubelet/volumeplugins       | This is the directory where the kubelet bind mounts the volume for pods. Required and prepopulated by default.|
 
 ## Installing the Chart
@@ -149,7 +150,7 @@ In some cases it's more practical provide the local configuration via the `helm`
 ```
 helm install --name hpe-flexvolume hpe/hpe-flexvolume-driver \
 --set backend=X.X.X.X --set username=admin --set password=xxxxxxxxx \
---set protocol=iscsi --set fsType=xfs --set mountConflictDelay=120
+--set protocol=iscsi --set fsType=xfs
 ```
 
 ## Using the HPE Volume Driver for Kubernetes FlexVolume Plugin
