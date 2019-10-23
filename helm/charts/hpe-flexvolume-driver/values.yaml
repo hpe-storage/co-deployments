@@ -31,7 +31,7 @@ volumeDescription: "Volume created by HPE Volume Driver for Kubernetes FlexVolum
 serviceWaitTime: "10"
 
 #flavor
-flavor: kubernetes
+flavor: k8s
 
 #platform for which plugin is being deployed.i.e nimble or cv
 pluginType: nimble
@@ -40,7 +40,24 @@ pluginType: nimble
 podsMountDir: /var/lib/kubelet/pods
 
 #volumePluginDir volume plugin directory where kubelet watches for flexvolume plugin
-flexVolumeExec: /usr/libexec/kubernetes/kubelet-plugins/volume/exec
+flexVolumeExec:
+  - name: aks
+    value: /usr/libexec/kubernetes/kubelet-plugins/volume/exec
+  - name: k8s
+    value: /usr/libexec/kubernetes/kubelet-plugins/volume/exec
+  - name: ocp
+    value: /etc/kubernetes/kubelet-plugins/volume/exec
+  - name: gkeop
+    value: /usr/libexec/kubernetes/kubelet-plugins/volume/exec
+  - name: gke
+    value: /home/kubernetes/flexvolume
+  - name: aks
+    value: /etc/kubernetes/volumeplugins
+  - name: rke
+    value: /var/lib/kubelet/volumeplugins
+
+#log level for flexvolume driver and dynamic provisioner
+logLevel: info
 
 ## For creating the StorageClass automatically:
 storageClass:
@@ -74,6 +91,7 @@ cv:
     protectionTemplate: twicedaily:4
     destroyOnRm: true
     limitIOPS: "1000"
+    # In case of multiple initiators, add one per line and escape double quotes as below
     initiators:
       - '"eth0"'
     privateCloudResourceGroup: ""

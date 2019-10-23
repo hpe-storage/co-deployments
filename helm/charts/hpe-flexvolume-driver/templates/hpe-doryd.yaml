@@ -28,6 +28,9 @@ spec:
           image: {{ .Values.dynamicProvisionerImage}}: {{- .Values.dynamicProvisionerTag}}
           imagePullPolicy: Always
           name: hpe-dynamic-provisioner
+          env:
+          - name: LOG_LEVEL
+            value: {{ .Values.logLevel }}
           volumeMounts:
              - name: k8s
                mountPath: /etc/kubernetes
@@ -49,7 +52,12 @@ spec:
              path: /etc/kubernetes
         - name: flexvolumedriver
           hostPath:
-             path: {{ .Values.flexVolumeExec }}
+          {{- $flavor := .Values.flavor -}}
+          {{- range .Values.flexVolumeExec }}
+            {{- if eq .name $flavor }}
+             path: {{ .value }}
+            {{- end }}
+          {{- end }}
         - name: hpeconfig
           hostPath:
               path: /etc/hpe-storage
