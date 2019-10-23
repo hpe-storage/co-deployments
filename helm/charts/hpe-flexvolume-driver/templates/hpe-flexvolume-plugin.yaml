@@ -163,8 +163,12 @@ spec:
           path: /var/lib/iscsi/
       - name: exec
         hostPath:
-          {{- $flexVolumeExecByFlavor := printf "%s.%s" ".Values.flexVolumeExec" .Values.flavor }}
-          path: {{- $flexVolumeExecByFlavor }}
+        {{- $flavor := .Values.flavor -}}
+        {{- range .Values.flexVolumeExec }}
+          {{- if eq .name $flavor }}
+          path: {{ .value }}
+          {{- end }}
+        {{- end }}
       - name: runlock
         hostPath:
           path: /run/lock

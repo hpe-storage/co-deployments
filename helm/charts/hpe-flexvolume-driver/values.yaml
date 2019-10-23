@@ -41,13 +41,20 @@ podsMountDir: /var/lib/kubelet/pods
 
 #volumePluginDir volume plugin directory where kubelet watches for flexvolume plugin
 flexVolumeExec:
-  aks: /usr/libexec/kubernetes/kubelet-plugins/volume/exec
-  k8s: /usr/libexec/kubernetes/kubelet-plugins/volume/exec
-  ocp: /etc/kubernetes/kubelet-plugins/volume/exec
-  gkeop: /usr/libexec/kubernetes/kubelet-plugins/volume/exec
-  gke: /home/kubernetes/flexvolume
-  aks: /etc/kubernetes/volumeplugins
-  rke: /var/lib/kubelet/volumeplugins
+  - name: aks
+    value: /usr/libexec/kubernetes/kubelet-plugins/volume/exec
+  - name: k8s
+    value: /usr/libexec/kubernetes/kubelet-plugins/volume/exec
+  - name: ocp
+    value: /etc/kubernetes/kubelet-plugins/volume/exec
+  - name: gkeop
+    value: /usr/libexec/kubernetes/kubelet-plugins/volume/exec
+  - name: gke
+    value: /home/kubernetes/flexvolume
+  - name: aks
+    value: /etc/kubernetes/volumeplugins
+  - name: rke
+    value: /var/lib/kubelet/volumeplugins
 
 #log level for flexvolume driver and dynamic provisioner
 logLevel: info

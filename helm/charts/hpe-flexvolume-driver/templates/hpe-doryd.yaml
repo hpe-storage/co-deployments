@@ -52,7 +52,12 @@ spec:
              path: /etc/kubernetes
         - name: flexvolumedriver
           hostPath:
-             path: {{ .Values.flexVolumeExec }}
+          {{- $flavor := .Values.flavor -}}
+          {{- range .Values.flexVolumeExec }}
+            {{- if eq .name $flavor }}
+             path: {{ .value }}
+            {{- end }}
+          {{- end }}
         - name: hpeconfig
           hostPath:
               path: /etc/hpe-storage
