@@ -8,17 +8,18 @@ labels:
 questions:
 - variable: flavor
   label: "Kubernetes flavor"
-  type: string
-  default: "rancher"
+  type: enum
+  default: "rke"
   required: true
+  options:
+    - "rke"
+    - "eks"
+    - "ocp"
+    - "aks"
+    - "gke"
+    - "gkeop"
+    - "k8s"
   description: "Tweak Helm chart behavior."
-  group: "Rancher specific settings"
-- variable: flexVolumeExec
-  label: "FlexVolume driver directory"
-  type: string
-  default: "/var/lib/kubelet/volumeplugins"
-  required: true
-  description: "The FlexVolume driver will be installed here."
   group: "Rancher specific settings"
 - variable: pluginType
   label: "HPE platform"

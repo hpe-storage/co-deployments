@@ -28,11 +28,11 @@ spec:
             # create empty file to let plugin signal handler to perform cleanup of config/cert/dory files
             exec:
               command: [ "/bin/sh", "-c", "touch /etc/hpe-storage/remove" ]
-        {{- if eq .Values.flavor "rancher"}}
+        {{- if eq .Values.flavor "rke"}}
           postStart:
             exec:
               command: [ "/bin/cp", "-a", "/etc/hpe-storage/{{ .Values.pluginType }}.json",
-                       "{{ .Values.flexVolumeExec }}/hpe.com~{{ .Values.pluginType }}/{{ .Values.pluginType }}.json" ]
+                       "{{ .Values.flexVolumeExec.rke }}/hpe.com~{{ .Values.pluginType }}/{{ .Values.pluginType }}.json" ]
         {{- end }}
         env:
         - name: LOG_LEVEL
@@ -101,7 +101,7 @@ spec:
           mountPath: /etc/iscsi
         - name: etc-multipath
           mountPath: /etc/multipath
-        {{- if ne .Values.flavor "rancher"}}
+        {{- if ne .Values.flavor "rke"}}
         - name: etc-multipath-conf
           mountPath: /etc/multipath.conf
         {{- end }}
@@ -111,7 +111,7 @@ spec:
           mountPath: /etc/os-release
         - name: etc-hpe-storage-dir
           mountPath: /etc/hpe-storage
-        {{- if eq .Values.flavor "rancher"}}
+        {{- if eq .Values.flavor "rke"}}
         - name: etc-hpe-storage-dir
           mountPath: /host/etc/hpe-storage
         {{- end }}
@@ -122,7 +122,7 @@ spec:
         - name: config-file
           mountPath: /etc/hpe-storage/volume-driver.json
           subPath: volume-driver.json
-        {{- if eq .Values.flavor "rancher"}}
+        {{- if eq .Values.flavor "rke"}}
         - name: config-file
           mountPath: /etc/hpe-storage/{{ .Values.pluginType }}.json
           subPath: {{ .Values.pluginType }}.json
@@ -163,7 +163,8 @@ spec:
           path: /var/lib/iscsi/
       - name: exec
         hostPath:
-          path: {{ .Values.flexVolumeExec }}
+          {{- $flexVolumeExecByFlavor := printf "%s.%s" ".Values.flexVolumeExec" .Values.flavor }}
+          path: {{- $flexVolumeExecByFlavor }}
       - name: runlock
         hostPath:
           path: /run/lock
@@ -173,7 +174,7 @@ spec:
       - name: etc-multipath
         hostPath:
           path: /etc/multipath/
-      {{- if ne .Values.flavor "rancher"}}
+      {{- if ne .Values.flavor "rke"}}
       - name: etc-multipath-conf
         hostPath:
           path: /etc/multipath.conf

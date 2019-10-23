@@ -31,7 +31,7 @@ volumeDescription: "Volume created by HPE Volume Driver for Kubernetes FlexVolum
 serviceWaitTime: "10"
 
 #flavor
-flavor: kubernetes
+flavor: k8s
 
 #platform for which plugin is being deployed.i.e nimble or cv
 pluginType: nimble
@@ -40,7 +40,14 @@ pluginType: nimble
 podsMountDir: /var/lib/kubelet/pods
 
 #volumePluginDir volume plugin directory where kubelet watches for flexvolume plugin
-flexVolumeExec: /usr/libexec/kubernetes/kubelet-plugins/volume/exec
+flexVolumeExec:
+  aks: /usr/libexec/kubernetes/kubelet-plugins/volume/exec
+  k8s: /usr/libexec/kubernetes/kubelet-plugins/volume/exec
+  ocp: /etc/kubernetes/kubelet-plugins/volume/exec
+  gkeop: /usr/libexec/kubernetes/kubelet-plugins/volume/exec
+  gke: /home/kubernetes/flexvolume
+  aks: /etc/kubernetes/volumeplugins
+  rke: /var/lib/kubelet/volumeplugins
 
 #log level for flexvolume driver and dynamic provisioner
 logLevel: info
