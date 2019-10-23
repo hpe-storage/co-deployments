@@ -19,8 +19,8 @@ Depending on which `pluginType` is being used, other prerequisites and requireme
 
 ### HPE Cloud Volumes
 
-- Amazon EKS 1.13.x/1.14.x
-- Microsoft AKS 1.13.x/1.14.x
+- Amazon EKS 1.12.x/1.13.x
+- Microsoft AKS 1.12.x/1.13.x
 - US Regions Only
 
 ## Configuration & Installation
