@@ -42,6 +42,9 @@ podsMountDir: /var/lib/kubelet/pods
 #volumePluginDir volume plugin directory where kubelet watches for flexvolume plugin
 flexVolumeExec: /usr/libexec/kubernetes/kubelet-plugins/volume/exec
 
+#log level for flexvolume driver and dynamic provisioner
+logLevel: info
+
 ## For creating the StorageClass automatically:
 storageClass:
   create: true
@@ -74,6 +77,7 @@ cv:
     protectionTemplate: twicedaily:4
     destroyOnRm: true
     limitIOPS: "1000"
+    # In case of multiple initiators, add one per line and escape double quotes as below
     initiators:
       - '"eth0"'
     privateCloudResourceGroup: ""

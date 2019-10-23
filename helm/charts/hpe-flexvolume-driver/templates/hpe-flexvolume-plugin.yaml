@@ -36,7 +36,9 @@ spec:
         {{- end }}
         env:
         - name: LOG_LEVEL
-          value: info
+          value: {{ .Values.logLevel }}
+        - name: FLAVOR
+          value: {{ .Values.flavor }}
         - name: PROVIDER_IP
           valueFrom:
             secretKeyRef:

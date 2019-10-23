@@ -26,7 +26,7 @@ data:
           "existingCloudSubnet": {{ .Values.cv.config.existingCloudSubnet | quote }},
           "region": {{ .Values.cv.config.region | quote }},
           "privateCloud": {{ .Values.cv.config.privateCloud | quote }},
-          {{- if ne .Values.cv.config.privateCloudResourceGroup "" }}
+          {{- if and .Values.cv.config.privateCloudResourceGroup (ne .Values.cv.config.privateCloudResourceGroup "") }}
           "privateCloudResourceGroup": {{ .Values.cv.config.privateCloudResourceGroup | quote }},
           {{- end }}
           "cloudComputeProvider": {{ .Values.cv.config.cloudComputeProvider | quote }}
