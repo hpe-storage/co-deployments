@@ -517,119 +517,64 @@ spec:
           env:
             - name: CSI_ENDPOINT
               value: unix:///csi/csi.sock
+            - name: NODE_ID
+              valueFrom:
+                fieldRef:
+                  fieldPath: spec.nodeName
+            - name: iSCSI_INITIATOR_NAME_PREFIX
+              value: "iqn.2019-06.com.hpe-csi-driver.nimble"
+            - name: iSCSI_INITIATOR_NAME
+              value: "$(iSCSI_INITIATOR_NAME_PREFIX):$(NODE_ID)"
           imagePullPolicy: "Always"
           securityContext:
             privileged: true
             capabilities:
               add: ["SYS_ADMIN"]
-            allowPrivilegeEscalation: true
           volumeMounts:
             - name: plugin-dir
               mountPath: /csi
             - name: pods-mount-dir
-              mountPath: /var/lib/kubelet
+              mountPath: /var/lib/kubelet/pods
               # needed so that any mounts setup inside this container are
               # propagated back to the host machine.
               mountPropagation: "Bidirectional"
-            - name: device-dir
+            - name: dev
               mountPath: /dev
-            - name: log-dir
-              mountPath: /var/log
-            - name: var-lib-iscsi
-              mountPath: /var/lib/iscsi
-            - name: etc-iscsi
-              mountPath: /etc/iscsi
-            - name: etc-multipath
-              mountPath: /etc/multipath
-            - name: etc-multipath-conf
-              mountPath: /etc/multipath.conf
-            - name: etc-redhat-release
-              mountPath: /etc/redhat-release
-            - name: etc-os-release
-              mountPath: /etc/os-release
             - name: etc-hpe-storage-dir
               mountPath: /etc/hpe-storage
-            - name: etc-kubernetes
-              mountPath: /etc/kubernetes
             - name: sys
               mountPath: /sys
-            - name: iscsiadm
-              mountPath: /sbin/iscsiadm
-            - name: runlock
-              mountPath: /run/lock
             - name: lib-modules
               mountPath: /lib/modules
-            - name: runsystemd
-              mountPath: /run/systemd
-            - name: libsystemd
-              mountPath: /lib/systemd/system
-            - name: usrlocal
-              mountPath: /usr_local
       volumes:
         - name: registration-dir
           hostPath:
             path: /var/lib/kubelet/plugins_registry/
+            type: Directory
         - name: plugin-dir
           hostPath:
             path: /var/lib/kubelet/plugins/csi.hpe.com/
+            type: DirectoryOrCreate
         - name: pods-mount-dir
           hostPath:
-            path: /var/lib/kubelet
-        - name: device-dir
-          hostPath:
-            path: /dev
-        - name: log-dir
-          hostPath:
-            path: /var/log
-        - name: var-lib-iscsi
-          hostPath:
-            path: /var/lib/iscsi
-        - name: etc-iscsi
-          hostPath:
-            path: /etc/iscsi/
-        - name: etc-multipath
-          hostPath:
-            path: /etc/multipath
-        - name: etc-multipath-conf
-          hostPath:
-            path: /etc/multipath.conf
-            type: FileOrCreate
-        - name: etc-redhat-release
-          hostPath:
-            path: /etc/redhat-release
-            type: FileOrCreate
-        - name: etc-os-release
-          hostPath:
-            path: /etc/os-release
-            type: FileOrCreate
+            path: /var/lib/kubelet/pods
+            type: Directory
         - name: etc-hpe-storage-dir
           hostPath:
             path: /etc/hpe-storage
-        - name: etc-kubernetes
-          hostPath:
-            path: /etc/kubernetes
-        - name: iscsiadm
-          hostPath:
-            path: /sbin/iscsiadm
-            type: FileOrCreate
-        - name: runlock
-          hostPath:
-            path: /run/lock
+            type: DirectoryOrCreate
         - name: lib-modules
           hostPath:
             path: /lib/modules
-        - name: runsystemd
-          hostPath:
-            path: /run/systemd
-        - name: libsystemd
-          hostPath:
-            path: /lib/systemd/system
-        - name: usrlocal
-          hostPath:
-            path: /usr
+            type: Directory
         - name: sys
           hostPath:
             path: /sys
+            type: Directory
+        - name: dev
+          hostPath:
+            path: /dev
+            type: Directory
 
 ---
 
