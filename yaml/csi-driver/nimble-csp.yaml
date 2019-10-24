@@ -49,10 +49,3 @@ spec:
           imagePullPolicy: Always
           ports:
           - containerPort: 8080
-          volumeMounts:
-            - name: log-dir
-              mountPath: /var/log
-      volumes:
-        - name: log-dir
-          hostPath:
-            path: /var/log
