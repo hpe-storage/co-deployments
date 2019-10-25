@@ -41,7 +41,7 @@ podsMountDir: /var/lib/kubelet/pods
 
 #volumePluginDir volume plugin directory where kubelet watches for flexvolume plugin
 flexVolumeExec:
-  - name: aks
+  - name: eks
     value: /usr/libexec/kubernetes/kubelet-plugins/volume/exec
   - name: k8s
     value: /usr/libexec/kubernetes/kubelet-plugins/volume/exec
