@@ -31,6 +31,7 @@ spec:
       labels:
         app: nimble-csp
     spec:
+      priorityClassName: system-cluster-critical
       containers:
         - name: nimble-csp
           image: {{ .Values.cspImage}}: {{- .Values.cspTag}}
