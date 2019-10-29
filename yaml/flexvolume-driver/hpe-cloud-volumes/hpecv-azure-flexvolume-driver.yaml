@@ -18,6 +18,7 @@ spec:
         daemon: hpe-dynamic-provisioner-daemon
       name: hpe-dynamic-provisioner
     spec:
+      priorityClassName: system-cluster-critical
       restartPolicy: Always
       serviceAccountName: hpe-dynamic-provisioner-sa
       hostNetwork: true

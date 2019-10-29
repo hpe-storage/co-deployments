@@ -43,6 +43,7 @@ spec:
       labels:
         app: nimble-csp
     spec:
+      priorityClassName: system-cluster-critical
       containers:
         - name: nimble-csp
           image: hpestorage/nimble-csp:edge

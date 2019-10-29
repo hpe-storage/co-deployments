@@ -42,6 +42,7 @@ spec:
       labels:
         app: cv-cp
     spec:
+      priorityClassName: system-cluster-critical
       containers:
         - name: cv-cp
           image: {{ .Values.containerProviderImage}}: {{- .Values.containerProviderTag}}
