@@ -3,15 +3,15 @@
 # Declare variables to be passed into your templates.
 
 #doryd image
-dynamicProvisionerTag: canary
+dynamicProvisionerTag: v3.1.0
 dynamicProvisionerImage: hpestorage/k8s-dynamic-provisioner
 
 #flexvolume plugin image
-flexVolumeDriverTag: canary
+flexVolumeDriverTag: v3.1.0
 flexVolumeDriverImage: hpestorage/flexvolume-driver
 
 #container-provider image
-containerProviderTag: canary
+containerProviderTag: v3.1.0
 containerProviderImage: hpestorage/cv-cp
 
 #parameters
