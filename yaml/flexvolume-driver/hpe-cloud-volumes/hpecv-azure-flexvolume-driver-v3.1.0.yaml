@@ -25,7 +25,7 @@ spec:
       dnsPolicy: ClusterFirstWithHostNet
       containers:
         -
-          image: hpestorage/k8s-dynamic-provisioner:edge
+          image: hpestorage/k8s-dynamic-provisioner:v3.1.0
           imagePullPolicy: Always
           name: hpe-dynamic-provisioner
           volumeMounts:
@@ -45,7 +45,7 @@ spec:
              path: /etc/kubernetes
         - name: flexvolumedriver
           hostPath:
-             path: /usr/libexec/kubernetes/kubelet-plugins/volume/exec
+             path: /etc/kubernetes/volumeplugins
         - name: hpeconfig
           hostPath:
               path: /etc/hpe-storage
@@ -121,7 +121,7 @@ spec:
       dnsPolicy: ClusterFirstWithHostNet
       containers:
       - name: nimblevolumed
-        image: hpestorage/flexvolume-driver:edge
+        image: hpestorage/flexvolume-driver:v3.1.0
         imagePullPolicy: "Always"
         lifecycle:
           preStop:
@@ -165,12 +165,6 @@ spec:
         volumeMounts:
         - name: podsmountdir
           mountPath: /var/lib/kubelet
-          mountPropagation: Bidirectional
-        - name: ocpmountsdir
-          mountPath: /var/lib/origin
-          mountPropagation: Bidirectional
-        - name: legacymounts
-          mountPath: /opt/nimble
           mountPropagation: Bidirectional
         - name: dev
           mountPath: /dev
@@ -218,13 +212,6 @@ spec:
       - name: podsmountdir
         hostPath:
           path: /var/lib/kubelet
-      - name: ocpmountsdir
-        hostPath:
-          path: /var/lib/origin
-      # required to handle legacy mounts from NLT based plugin. Remove this for CoreOS
-      - name: legacymounts
-        hostPath:
-          path: /opt/nimble
       - name: dev
         hostPath:
           path: /dev
@@ -239,7 +226,7 @@ spec:
           path: /var/lib/iscsi
       - name: exec
         hostPath:
-          path: /usr/libexec/kubernetes/kubelet-plugins/volume/exec
+          path: /etc/kubernetes/volumeplugins
       - name: runlock
         hostPath:
           path: /run/lock
