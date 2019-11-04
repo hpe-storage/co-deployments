@@ -25,7 +25,7 @@ spec:
       dnsPolicy: ClusterFirstWithHostNet
       containers:
         -
-          image: hpestorage/k8s-dynamic-provisioner:edge
+          image: store/hpestorage/k8s-dynamic-provisioner:edge
           imagePullPolicy: Always
           name: hpe-dynamic-provisioner
           volumeMounts:
@@ -121,7 +121,7 @@ spec:
       dnsPolicy: ClusterFirstWithHostNet
       containers:
       - name: nimblevolumed
-        image: hpestorage/flexvolume-driver:edge
+        image: store/hpestorage/flexvolume-driver:edge
         imagePullPolicy: "Always"
         lifecycle:
           preStop:

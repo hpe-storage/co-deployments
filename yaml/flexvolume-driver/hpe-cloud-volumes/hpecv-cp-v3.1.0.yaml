@@ -46,7 +46,7 @@ spec:
       priorityClassName: system-cluster-critical
       containers:
         - name: cv-cp
-          image: hpestorage/cv-cp:v3.1.0
+          image: store/hpestorage/cv-cp:v3.1.0
           imagePullPolicy: Always
           env:
             - name: CLOUDVOLUMES_PORTAL_SERVER
