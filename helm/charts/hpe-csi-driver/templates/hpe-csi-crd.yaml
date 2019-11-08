@@ -1,4 +1,4 @@
-{{- if semverCompare "~1.13.0" .Capabilities.KubeVersion.GitVersion }}
+{{- if or (semverCompare "~1.12.0" .Capabilities.KubeVersion.GitVersion) (semverCompare "~1.13.0" .Capabilities.KubeVersion.GitVersion) }}
 ---
 #############################################
 ############  CSI Node Info CRD  ############
@@ -43,7 +43,7 @@ status:
   storedVersions: []
 {{- end }}
 
-{{- if semverCompare ">=1.13.0" .Capabilities.KubeVersion.GitVersion }}
+{{- if semverCompare ">=1.12.0" .Capabilities.KubeVersion.GitVersion }}
 ---
 
 #############################################
@@ -99,6 +99,7 @@ status:
     plural: ""
   conditions: []
   storedVersions: []
+{{- end }}
 
 {{- if semverCompare "~1.13.0" .Capabilities.KubeVersion.GitVersion }}
 ---
@@ -135,7 +136,7 @@ spec:
                 information (like podName, podUID, etc.) during mount operations.
               type: string
   version: v1alpha1
-{{- else }}
+{{- else if semverCompare "^1.14.0" .Capabilities.KubeVersion.GitVersion }}
 ---
 
 ################# CSI Driver CRD ###########
@@ -152,6 +153,7 @@ spec:
   {{- end }}
 {{- end }}
 
+{{- if semverCompare ">=1.12.0" .Capabilities.KubeVersion.GitVersion }}
 ---
 
 #########################################
@@ -199,5 +201,4 @@ spec:
   version: v1alpha1
   subresources:
     status: {}
-
 {{- end }}
