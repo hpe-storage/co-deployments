@@ -1,4 +1,4 @@
-{{- if semverCompare "^1.13.0" .Capabilities.KubeVersion.GitVersion }}
+{{- if semverCompare "~1.13.0" .Capabilities.KubeVersion.GitVersion }}
 ---
 #############################################
 ############  CSI Node Info CRD  ############
@@ -100,6 +100,7 @@ status:
   conditions: []
   storedVersions: []
 
+{{- if semverCompare "~1.13.0" .Capabilities.KubeVersion.GitVersion }}
 ---
 
 #############################################
@@ -134,6 +135,22 @@ spec:
                 information (like podName, podUID, etc.) during mount operations.
               type: string
   version: v1alpha1
+{{- else }}
+---
+
+################# CSI Driver CRD ###########
+apiVersion: storage.k8s.io/v1beta1
+kind: CSIDriver
+metadata:
+  name: csi.hpe.com
+spec:
+  podInfoOnMount: true
+  {{- if semverCompare ">=1.16.0" .Capabilities.KubeVersion.GitVersion }}
+  volumeLifecycleModes:
+  - Persistent
+  - Ephemeral
+  {{- end }}
+{{- end }}
 
 ---
 
