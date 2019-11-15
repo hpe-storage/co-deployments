@@ -200,7 +200,7 @@ roleRef:
   name: hpe-csi-snapshotter-role
   apiGroup: rbac.authorization.k8s.io
 
-{{- if semverCompare ">=1.14.0" .Capabilities.KubeVersion.GitVersion }}
+{{- if semverCompare ">=1.15.0" .Capabilities.KubeVersion.GitVersion }}
 ---
 # Resizer must be able to work with PVCs, PVs, SCs.
 kind: ClusterRole
