@@ -146,7 +146,7 @@ spec:
       dnsPolicy: ClusterFirstWithHostNet
       containers:
         - name: csi-provisioner
-          image: quay.io/k8scsi/csi-provisioner:v1.4.0-rc1
+          image: quay.io/k8scsi/csi-provisioner:v1.4.0
           args:
             - "--csi-address=$(ADDRESS)"
             - "--v=5"
@@ -171,7 +171,7 @@ spec:
             - name: socket-dir
               mountPath: /var/lib/csi/sockets/pluginproxy/
         - name: csi-snapshotter
-          image: quay.io/k8scsi/csi-snapshotter:v1.2.0
+          image: quay.io/k8scsi/csi-snapshotter:v1.2.2
           args:
             - "--csi-address=$(ADDRESS)"
             - "--v=5"
@@ -183,7 +183,7 @@ spec:
             - name: socket-dir
               mountPath: /var/lib/csi/sockets/pluginproxy/
         - name: csi-resizer
-          image: quay.io/k8scsi/csi-resizer:v0.2.0
+          image: quay.io/k8scsi/csi-resizer:v0.3.0
           args:
             - "--csi-address=$(ADDRESS)"
             - "--v=5"

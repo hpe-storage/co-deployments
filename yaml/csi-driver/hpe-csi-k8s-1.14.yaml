@@ -146,7 +146,7 @@ spec:
       dnsPolicy: ClusterFirstWithHostNet
       containers:
         - name: csi-provisioner
-          image: quay.io/k8scsi/csi-provisioner:v1.4.0-rc1
+          image: quay.io/k8scsi/csi-provisioner:v1.4.0
           args:
             - "--csi-address=$(ADDRESS)"
             - "--v=5"
@@ -171,19 +171,7 @@ spec:
             - name: socket-dir
               mountPath: /var/lib/csi/sockets/pluginproxy/
         - name: csi-snapshotter
-          image: quay.io/k8scsi/csi-snapshotter:v1.2.0
-          args:
-            - "--csi-address=$(ADDRESS)"
-            - "--v=5"
-          env:
-            - name: ADDRESS
-              value: /var/lib/csi/sockets/pluginproxy/csi.sock
-          imagePullPolicy: "Always"
-          volumeMounts:
-            - name: socket-dir
-              mountPath: /var/lib/csi/sockets/pluginproxy/
-        - name: csi-resizer
-          image: quay.io/k8scsi/csi-resizer:v0.1.0
+          image: quay.io/k8scsi/csi-snapshotter:v1.2.2
           args:
             - "--csi-address=$(ADDRESS)"
             - "--v=5"
@@ -382,77 +370,6 @@ subjects:
 roleRef:
   kind: ClusterRole
   name: hpe-csi-snapshotter-role
-  apiGroup: rbac.authorization.k8s.io
-
----
-# Resizer must be able to work with PVCs, PVs, SCs.
-kind: ClusterRole
-apiVersion: rbac.authorization.k8s.io/v1
-metadata:
-  name: external-resizer-role
-rules:
-  - apiGroups: [""]
-    resources: ["secrets"]
-    verbs: ["get", "list", "watch"]
-  - apiGroups: [""]
-    resources: ["persistentvolumes"]
-    verbs: ["get", "list", "watch", "update", "patch"]
-  - apiGroups: [""]
-    resources: ["persistentvolumeclaims"]
-    verbs: ["get", "list", "watch"]
-  - apiGroups: [""]
-    resources: ["persistentvolumeclaims/status"]
-    verbs: ["update", "patch"]
-  - apiGroups: ["storage.k8s.io"]
-    resources: ["storageclasses"]
-    verbs: ["get", "list", "watch"]
-  - apiGroups: [""]
-    resources: ["events"]
-    verbs: ["list", "watch", "create", "update", "patch"]
-
----
-
-kind: ClusterRoleBinding
-apiVersion: rbac.authorization.k8s.io/v1
-metadata:
-  name: csi-resizer-role
-subjects:
-  - kind: ServiceAccount
-    name: hpe-csi-controller-sa
-    namespace: kube-system
-roleRef:
-  kind: ClusterRole
-  name: external-resizer-role
-  apiGroup: rbac.authorization.k8s.io
-
----
-
-# Resizer must be able to work with end point in current namespace
-# if (and only if) leadership election is enabled
-kind: Role
-apiVersion: rbac.authorization.k8s.io/v1
-metadata:
-  namespace: kube-system
-  name: external-resizer-cfg
-rules:
-  - apiGroups: ["coordination.k8s.io"]
-    resources: ["leases"]
-    verbs: ["get", "watch", "list", "delete", "update", "create"]
-
----
-
-kind: RoleBinding
-apiVersion: rbac.authorization.k8s.io/v1
-metadata:
-  name: csi-resizer-role-cfg
-  namespace: kube-system
-subjects:
-  - kind: ServiceAccount
-    name: hpe-csi-controller-sa
-    namespace: kube-system
-roleRef:
-  kind: Role
-  name: external-resizer-cfg
   apiGroup: rbac.authorization.k8s.io
 
 ---
