@@ -8,7 +8,7 @@ kind: Deployment
 apiVersion: apps/v1
 metadata:
   name: hpe-csi-controller
-  namespace: kube-system
+  namespace: {{ .Release.Namespace }}
 spec:
   replicas: 1
   selector:
@@ -20,7 +20,6 @@ spec:
         app: hpe-csi-controller
         role: hpe-csi
     spec:
-      priorityClassName: system-cluster-critical
       serviceAccount: hpe-csi-controller-sa
       hostNetwork: true
       dnsPolicy: ClusterFirstWithHostNet
