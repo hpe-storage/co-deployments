@@ -31,10 +31,7 @@ spec:
       labels:
         app: nimble-csp
     spec:
-<<<<<<< HEAD
       serviceAccount: hpe-csp-sa
-=======
->>>>>>> operators: Add support to deploy CSI driver as an operator
       containers:
         - name: nimble-csp
           image: {{ .Values.cspImage}}: {{- .Values.cspTag}}
