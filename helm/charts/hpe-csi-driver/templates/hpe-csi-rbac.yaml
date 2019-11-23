@@ -345,3 +345,11 @@ roleRef:
   kind: ClusterRole
   name: hpe-csi-driver-role
   apiGroup: rbac.authorization.k8s.io
+
+---
+
+kind: ServiceAccount
+apiVersion: v1
+metadata:
+  name: hpe-csp-sa
+  namespace: {{ .Release.Namespace }}

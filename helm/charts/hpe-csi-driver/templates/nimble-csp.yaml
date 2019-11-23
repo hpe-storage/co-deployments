@@ -31,6 +31,7 @@ spec:
       labels:
         app: nimble-csp
     spec:
+      serviceAccount: hpe-csp-sa
       containers:
         - name: nimble-csp
           image: {{ .Values.cspImage}}: {{- .Values.cspTag}}
