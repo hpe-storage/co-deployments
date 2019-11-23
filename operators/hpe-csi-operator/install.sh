@@ -1,6 +1,6 @@
 #!/bin/bash
-IMAGE=quay.io/shivamerla/hpe-csi-operator:latest
-NAMESPACE=hpe-csi-operator
+IMAGE=quay.io/hpestorage/hpe-csi-operator:latest
+NAMESPACE=hpe-csi
 KUBECTL=kubectl
 FLAVOR=k8s
 SVC_ACCNT_CONTROLLER=hpe-csi-controller-sa
@@ -8,7 +8,7 @@ SVC_ACCNT_NODE=hpe-csi-node-sa
 
 usage()
 {
-    echo "Usage : $0 --image=<imagename> --namespace=<namespace> --flavor=<co flavor> --values=<values.yaml>"
+    echo "Usage : $0 --image=<imagename> --namespace=<namespace> --flavor=<co flavor> --values=<values.yaml file path>"
 }
 
 if [[ "$1" == "-h" || "$1" == "--help" ]]; then
