@@ -18,13 +18,13 @@ git clone https://github.com/hpe-storage/co-deployments
 cd operators/hpe-flexvolume-operator
 ```
 
-Create your own `values.yaml`. The easiest way is to copy the default [./values.yaml](../../helm/charts/hpe-flexvolume-driver/values.yaml) with `wget` and change parameters like `backend` as necessary.
+Create your own `values.yaml`. The easiest way is to copy the default [values.yaml](../../helm/charts/hpe-flexvolume-driver/values.yaml) with `wget` and change parameters like `backend` as necessary.
 
 Run the install script to set up the HPE FlexVolume Driver Operator.
 ```install.sh --image=<image> --namespace=<namespace> --flavor=<co flavor> --values=<values.yaml file path>```
 
 Parameter list:<br/>
-1. ``image`` is the HPE FlexVolume Driver Operator image. If unspecified ``image`` resolves to the released version at [docker.io/hpestorage/flexvolume-driver-operator](https://docker.io/hpestorage/flexvolume-driver-operator).
+1. ``image`` is the HPE FlexVolume Driver Operator image. If unspecified ``image`` resolves to the released version at [hpestorage/flexvolume-driver-operator](https://hub.docker.com/repository/docker/hpestorage/flexvolume-driver-operator).
 2. ``namespace`` is the namespace/project in which the HPE FlexVolume Driver Operator and its entities will be installed. If unspecified, the operator creates and installs in  the ``hpe-flexvolume`` namespace.
 **HPE FlexVolume Driver Operator MUST be installed in a new project with no other pods. Otherwise an uninstall may delete pods that are not related to the HPE FlexVolume Driver Operator.**
 3. ``flavor`` defaults to ``k8s``. Options are ``k8s``, ``ocp``, ``rke`` ``aks`` ``eks`` ``gke`` or ``gkeop``.
