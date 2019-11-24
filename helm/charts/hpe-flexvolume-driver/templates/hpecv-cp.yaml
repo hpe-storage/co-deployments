@@ -12,7 +12,7 @@ kind: Service
 apiVersion: v1
 metadata:
   name: {{ .Values.serviceName }}
-  namespace: kube-system
+  namespace: {{ .Release.Namespace }}
   labels:
     app: {{ .Values.serviceName }}
 spec:
@@ -31,7 +31,7 @@ kind: Deployment
 apiVersion: apps/v1
 metadata:
   name: cv-cp
-  namespace: kube-system
+  namespace: {{ .Release.Namespace }}
 spec:
   selector:
     matchLabels:
@@ -42,7 +42,7 @@ spec:
       labels:
         app: cv-cp
     spec:
-      priorityClassName: system-cluster-critical
+      serviceAccountName: hpe-flexvolume-sa
       containers:
         - name: cv-cp
           image: {{ .Values.containerProviderImage}}: {{- .Values.containerProviderTag}}

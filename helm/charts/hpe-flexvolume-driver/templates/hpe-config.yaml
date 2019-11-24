@@ -3,7 +3,7 @@ kind: ConfigMap
 apiVersion: v1
 metadata:
   name: hpe-config
-  namespace: kube-system
+  namespace: {{ .Release.Namespace }}
 data:
   volume-driver.json: |-
     {{- if eq .Values.pluginType "nimble"}}

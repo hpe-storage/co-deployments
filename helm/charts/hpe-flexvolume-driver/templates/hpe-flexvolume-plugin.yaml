@@ -4,7 +4,7 @@ apiVersion: apps/v1
 kind: DaemonSet
 metadata:
   name: hpe-flexvolume-driver
-  namespace: kube-system
+  namespace: {{ .Release.Namespace }}
   labels:
     k8s-app: hpe-flexvolume-driver
 spec:
