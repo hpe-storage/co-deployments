@@ -24,7 +24,7 @@ Run the install script to set up the HPE CSI Operator.
 ```install.sh --image=<image> --namespace=<namespace> --flavor=<co flavor> --values=<values.yaml file path>```
 
 Parameter list:<br/>
-1. ``image`` is the HPE CSI Operator image. If unspecified ``image`` resolves to the released version at [docker.io/hpestorage/hpe-csi-operator](https://docker.io/hpestorage/hpe-csi-operator).
+1. ``image`` is the HPE CSI Operator image. If unspecified ``image`` resolves to the released version at [hpestorage/hpe-csi-operator](https://hub.docker.com/repository/docker/hpestorage/csi-driver-operator).
 2. ``namespace`` is the namespace/project in which the HPE CSI Operator and its entities will be installed. If unspecified, the operator creates and installs in  the ``hpe-csi`` namespace.
 **HPE CSI Operator MUST be installed in a new project with no other pods. Otherwise an uninstall may delete pods that are not related to the HPE CSI Operator.**
 3. ``flavor`` defaults to ``k8s``. Options are ``k8s``, ``kubernetes``, ``ocp`` or ``openshift``.
