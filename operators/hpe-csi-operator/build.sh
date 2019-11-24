@@ -4,9 +4,9 @@
 set -xe
 
 # images
-REPO_NAME=${REPO_NAME:-quay.io/hpestorage}
-HPE_CSI_OPERATOR_IMAGE=${HPE_CSI_OPERATOR_IMAGE:-hpe-csi-operator}
-HPE_CSI_OPERATOR_TAG=${HPE_CSI_OPERATOR_TAG:-latest}
+REPO_NAME=${REPO_NAME:-hpestorage}
+HPE_CSI_OPERATOR_IMAGE=${HPE_CSI_OPERATOR_IMAGE:-csi-driver-operator}
+HPE_CSI_OPERATOR_TAG=${HPE_CSI_OPERATOR_TAG:-edge}
 
 # stage directory for build
 IMG_DIR=$(dirname $0)
