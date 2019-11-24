@@ -1,10 +1,11 @@
 #!/bin/bash
-IMAGE=quay.io/hpestorage/hpe-csi-operator:latest
+IMAGE=hpestorage/csi-driver-operator:edge
 NAMESPACE=hpe-csi
 KUBECTL=kubectl
 FLAVOR=k8s
 SVC_ACCNT_CONTROLLER=hpe-csi-controller-sa
 SVC_ACCNT_NODE=hpe-csi-node-sa
+SVC_ACCNT_CSP=hpe-csp-sa
 
 usage()
 {
@@ -71,6 +72,7 @@ else
     # Grant this SCC to the service account creating the csi driver
     $KUBECTL adm policy add-scc-to-user hpe-csi-scc -n ${NAMESPACE} -z ${SVC_ACCNT_CONTROLLER}
     $KUBECTL adm policy add-scc-to-user hpe-csi-scc -n ${NAMESPACE} -z ${SVC_ACCNT_NODE}
+    $KUBECTL adm policy add-scc-to-user hpe-csi-scc -n ${NAMESPACE} -z ${SVC_ACCNT_CSP}
 fi
 
 # 2. Create CRD and wait until TIMEOUT seconds for the CRD to be established.
