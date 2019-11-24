@@ -109,4 +109,4 @@ cat deploy/rbac.yaml | sed "s|REPLACE_NAMESPACE|${NAMESPACE}|" | ${KUBECTL_NS} -
 cat deploy/operator.yaml| sed "s|REPLACE_IMAGE|${IMAGE}|" | ${KUBECTL_NS} -
 
 # 5. Use the values.yaml file to create a customized HPE FlexVolume operator instance
-(cat deploy/cr.yaml | sed "s|REPLACE_NAMESPACE|${NAMESPACE}|"; sed 's/.*/  &/' ${VALUESFILE}; sed "s/flavor:.*/flavor: ${FLAVOR}/" ${VALUESFILE}) | ${KUBECTL_NS} -
+(cat deploy/cr.yaml | sed "s|REPLACE_NAMESPACE|${NAMESPACE}|"; sed 's/.*/  &/' ${VALUESFILE} | sed "s/flavor:.*/flavor: ${FLAVOR}/") | ${KUBECTL_NS} -
