@@ -4,7 +4,7 @@ kind: ServiceAccount
 apiVersion: v1
 metadata:
   name: hpe-csi-controller-sa
-  namespace: kube-system
+  namespace: {{ .Release.Namespace }}
 
 ---
 
@@ -57,7 +57,7 @@ metadata:
 subjects:
   - kind: ServiceAccount
     name: hpe-csi-controller-sa
-    namespace: kube-system
+    namespace: {{ .Release.Namespace }}
 roleRef:
   kind: ClusterRole
   name: hpe-csi-provisioner-role
@@ -135,7 +135,7 @@ metadata:
 subjects:
   - kind: ServiceAccount
     name: hpe-csi-controller-sa
-    namespace: kube-system
+    namespace: {{ .Release.Namespace }}
 roleRef:
   kind: ClusterRole
   name: hpe-csi-attacher-role
@@ -194,7 +194,7 @@ metadata:
 subjects:
   - kind: ServiceAccount
     name: hpe-csi-controller-sa
-    namespace: kube-system
+    namespace: {{ .Release.Namespace }}
 roleRef:
   kind: ClusterRole
   name: hpe-csi-snapshotter-role
@@ -236,7 +236,7 @@ metadata:
 subjects:
   - kind: ServiceAccount
     name: hpe-csi-controller-sa
-    namespace: kube-system
+    namespace: {{ .Release.Namespace }}
 roleRef:
   kind: ClusterRole
   name: external-resizer-role
@@ -249,7 +249,7 @@ roleRef:
 kind: Role
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
-  namespace: kube-system
+  namespace: {{ .Release.Namespace }}
   name: external-resizer-cfg
 rules:
   - apiGroups: ["coordination.k8s.io"]
@@ -262,11 +262,11 @@ kind: RoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
   name: csi-resizer-role-cfg
-  namespace: kube-system
+  namespace: {{ .Release.Namespace }}
 subjects:
   - kind: ServiceAccount
     name: hpe-csi-controller-sa
-    namespace: kube-system
+    namespace: {{ .Release.Namespace }}
 roleRef:
   kind: Role
   name: external-resizer-cfg
@@ -278,7 +278,7 @@ kind: ClusterRole
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
   name: hpe-csi-driver-role
-  namespace: kube-system
+  namespace: {{ .Release.Namespace }}
 rules:
   - apiGroups: ["storage.hpe.com"]
     resources: ["hpenodeinfos"]
@@ -299,7 +299,7 @@ apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: hpe-csi-node-sa
-  namespace: kube-system
+  namespace: {{ .Release.Namespace }}
 
 ---
 
@@ -307,7 +307,7 @@ kind: ClusterRole
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
   name: hpe-csi-driver-registrar-role
-  namespace: kube-system
+  namespace: {{ .Release.Namespace }}
 rules:
   - apiGroups: [""]
     resources: ["events"]
@@ -322,7 +322,7 @@ metadata:
 subjects:
   - kind: ServiceAccount
     name: hpe-csi-node-sa
-    namespace: kube-system
+    namespace: {{ .Release.Namespace }}
 roleRef:
   kind: ClusterRole
   name: hpe-csi-driver-registrar-role
@@ -337,11 +337,19 @@ metadata:
 subjects:
   - kind: ServiceAccount
     name: hpe-csi-controller-sa
-    namespace: kube-system
+    namespace: {{ .Release.Namespace }}
   - kind: ServiceAccount
     name: hpe-csi-node-sa
-    namespace: kube-system
+    namespace: {{ .Release.Namespace }}
 roleRef:
   kind: ClusterRole
   name: hpe-csi-driver-role
   apiGroup: rbac.authorization.k8s.io
+
+---
+
+kind: ServiceAccount
+apiVersion: v1
+metadata:
+  name: hpe-csp-sa
+  namespace: {{ .Release.Namespace }}

@@ -4,7 +4,7 @@ kind: Service
 apiVersion: v1
 metadata:
   name: nimble-csp-svc
-  namespace: kube-system
+  namespace: {{ .Release.Namespace }}
   labels:
     app: nimble-csp-svc
 spec:
@@ -20,7 +20,7 @@ kind: Deployment
 apiVersion: apps/v1
 metadata:
   name: nimble-csp
-  namespace: kube-system
+  namespace: {{ .Release.Namespace }}
 spec:
   selector:
     matchLabels:
@@ -31,7 +31,7 @@ spec:
       labels:
         app: nimble-csp
     spec:
-      priorityClassName: system-cluster-critical
+      serviceAccount: hpe-csp-sa
       containers:
         - name: nimble-csp
           image: {{ .Values.cspImage}}: {{- .Values.cspTag}}

@@ -19,15 +19,15 @@ parameters:
    accessProtocol: {{ .Values.accessProtocol }}
    csi.storage.k8s.io/fstype: {{ .Values.fsType }}
    csi.storage.k8s.io/provisioner-secret-name: nimble-secret
-   csi.storage.k8s.io/provisioner-secret-namespace: kube-system
+   csi.storage.k8s.io/provisioner-secret-namespace: {{ .Release.Namespace }}
    csi.storage.k8s.io/controller-publish-secret-name: nimble-secret
-   csi.storage.k8s.io/controller-publish-secret-namespace: kube-system
+   csi.storage.k8s.io/controller-publish-secret-namespace: {{ .Release.Namespace }}
    csi.storage.k8s.io/node-stage-secret-name: nimble-secret
-   csi.storage.k8s.io/node-stage-secret-namespace: kube-system
+   csi.storage.k8s.io/node-stage-secret-namespace: {{ .Release.Namespace }}
    csi.storage.k8s.io/node-publish-secret-name: nimble-secret
-   csi.storage.k8s.io/node-publish-secret-namespace: kube-system
+   csi.storage.k8s.io/node-publish-secret-namespace: {{ .Release.Namespace }}
    {{- if semverCompare ">=1.15.0" .Capabilities.KubeVersion.GitVersion }}
    csi.storage.k8s.io/controller-expand-secret-name: nimble-secret
-   csi.storage.k8s.io/controller-expand-secret-namespace: kube-system
+   csi.storage.k8s.io/controller-expand-secret-namespace: {{ .Release.Namespace }}
    {{- end }}
 {{- end }}

@@ -25,5 +25,5 @@ spec:
       - name: post-install-job
         image: {{ .Values.postInstallImage }}: {{- .Values.postInstallTag }}
         imagePullPolicy: {{ .Values.imagePullPolicy | quote }}
-        command: ["/bin/sleep","{{default "10" .Values.serviceWaitTime}}"] 
+        command: ["/bin/sleep","{{default "10" .Values.serviceWaitTime}}"]
 
