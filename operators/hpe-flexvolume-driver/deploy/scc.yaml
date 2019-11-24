@@ -1,0 +1,18 @@
+---
+kind: SecurityContextConstraints
+apiVersion: v1
+metadata:
+  name: hpe-flexvolume-scc
+allowPrivilegedContainer: true
+allowHostDirVolumePlugin: true
+allowHostNetwork: true
+allowedCapabilities:
+- '*'
+runAsUser:
+  type: RunAsAny
+seLinuxContext:
+  type: RunAsAny
+fsGroup:
+  type: RunAsAny
+supplementalGroups:
+  type: RunAsAny

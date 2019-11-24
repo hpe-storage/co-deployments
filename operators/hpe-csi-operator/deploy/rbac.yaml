@@ -125,7 +125,7 @@ rules:
     resources: ["deployments", "daemonsets", "statefulsets", "replicasets"]
     verbs: ["*"]
   - apiGroups: ["extensions"]
-    resources: ["daemonsets"]
+    resources: ["deployments", "daemonsets", "replicasets"]
     verbs: ["*"]
   - apiGroups: ["rbac.authorization.k8s.io"]
     resources: ["roles", "rolebindings"]

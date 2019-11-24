@@ -1,0 +1,5 @@
+---
+- version: v1
+  group: storage.hpe.com
+  kind: HPEFlexVolumeDriver
+  chart: /opt/helm/helm-charts/hpe-flexvolume-driver
