@@ -443,6 +443,7 @@ spec:
                 fieldRef:
                   apiVersion: v1
                   fieldPath: spec.nodeName
+          imagePullPolicy: "Always"
           volumeMounts:
             - name: plugin-dir
               mountPath: /csi/

@@ -520,6 +520,7 @@ spec:
               value: /csi/csi.sock
             - name: DRIVER_REG_SOCK_PATH
               value: /var/lib/kubelet/plugins/csi.hpe.com/csi.sock
+          imagePullPolicy: "Always"
           volumeMounts:
             - name: plugin-dir
               mountPath: /csi/
