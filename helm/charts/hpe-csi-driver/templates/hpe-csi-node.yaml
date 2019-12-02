@@ -51,6 +51,7 @@ spec:
                   apiVersion: v1
                   fieldPath: spec.nodeName
             {{- end }}
+          imagePullPolicy: "Always"
           volumeMounts:
             - name: plugin-dir
               mountPath: /csi/
