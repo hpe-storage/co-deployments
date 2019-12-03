@@ -65,6 +65,8 @@ spec:
           env:
             - name: CSI_ENDPOINT
               value: unix:///csi/csi.sock
+            - name: LOG_LEVEL
+              value: {{ .Values.logLevel }}
           imagePullPolicy: {{ .Values.imagePullPolicy | quote }}
           securityContext:
             privileged: true
@@ -114,6 +116,9 @@ spec:
             - name: usrlocal
               # required to copy the conform script under host /usr/local/bin
               mountPath: /usr_local
+            - name: linux-config-file
+              mountPath: /opt/hpe-storage/nimbletune/config.json
+              subPath: config.json
       volumes:
         - name: registration-dir
           hostPath:
@@ -181,3 +186,6 @@ spec:
         - name: sys
           hostPath:
             path: /sys
+        - name: linux-config-file
+          configMap:
+            name: hpe-linux-config

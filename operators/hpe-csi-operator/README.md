@@ -31,6 +31,8 @@ Parameter list:<br/>
 4. ``values.yaml`` is the customized helm-chart configuration parameters. This is a **required parameter** and must contain a valid backend HPE storage system. All parameters that need a non-default value must be specified in this file.
 Refer to [Configuration for values.yaml.](https://github.com/hpe-storage/co-deployments/tree/master/helm/charts/hpe-csi-driver#configuration--installation) for details about various parameters.
 
+**Note:** HPE CSI Driver for Kubernetes automatically configures Linux iSCSI/Disk/Multipath settings based from [config.json](https://raw.githubusercontent.com/hpe-storage/co-deployments/master/helm/charts/hpe-csi-driver/files/config.json). In order to tune these values, edit the config map with `kubectl edit configmap hpe-linux-config -n hpe-csi` and restart node plugin using `kubectl delete pod -l app=hpe-csi-node` to apply.
+
 ### Install script steps:
 The install script will do the following:
 1. Create New Project.<br/>

@@ -565,6 +565,9 @@ spec:
               mountPath: /lib/systemd/system
             - name: usrlocal
               mountPath: /usr_local
+            - name: linux-config-file
+              mountPath: /opt/hpe-storage/nimbletune/config.json
+              subPath: config.json
       volumes:
         - name: registration-dir
           hostPath:
@@ -630,6 +633,9 @@ spec:
         - name: sys
           hostPath:
             path: /sys
+        - name: linux-config-file
+          configMap:
+            name: hpe-linux-config
 
 ---
 
