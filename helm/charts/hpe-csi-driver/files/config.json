@@ -1,54 +1,5 @@
 [
     {
-        "category": "disk",
-        "severity": "warning",
-        "description": "Reduce latency by disabling contribution to randomness entroy pool for disk operations. Can be tuned by UDEV using 99-nimble-tune.rules",
-        "parameter": "add_random",
-        "recommendation": "0"
-    },
-    {
-        "category": "disk",
-        "severity": "warning",
-        "description": "Request affinity of 2 is recommended to allow I/O completions on different CPU than submission CPU. Can be tuned by UDEV using 99-nimble-tune.rules",
-        "parameter": "rq_affinity",
-        "recommendation": "2"
-    },
-    {
-        "category": "disk",
-        "severity": "warning",
-        "description": "Scheduler noop is recommended to remove I/O request sorting overhead for SSD disks. Can be tuned by UDEV using 99-nimble-tune.rules",
-        "parameter": "scheduler",
-        "recommendation": "noop"
-    },
-    {
-        "category": "disk",
-        "severity": "warning",
-        "description": "Set rotational to 0 to indicate SSD disks. Can be tuned by UDEV using 99-nimble-tune.rules",
-        "parameter": "rotational",
-        "recommendation": "0"
-    },
-    {
-        "category": "disk",
-        "severity": "warning",
-        "description": "Set minimum I/O request allocations to 512. Can be tuned by UDEV using 99-nimble-tune.rules",
-        "parameter": "nr_requests",
-        "recommendation": "512"
-    },
-    {
-        "category": "disk",
-        "severity": "warning",
-        "description": "Set maximum I/O request size to 4MB in case of sequential I/O. Can be tuned by UDEV using 99-nimble-tune.rules",
-        "parameter": "max_sectors_kb",
-        "recommendation": "4096"
-    },
-    {
-        "category": "disk",
-        "severity": "warning",
-        "description": "Set the maximum number of kilobytes that the operating system may read ahead during a sequential read operation. Can be tuned by UDEV using 99-nimble-tune.rules",
-        "parameter": "read_ahead_kb",
-        "recommendation": "128"
-    },
-    {
         "category": "iscsi",
         "severity": "warning",
         "description": "Manual startup of iSCSI nodes on boot. Can be set in /etc/iscsi/iscsid.conf",
