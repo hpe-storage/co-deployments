@@ -27,6 +27,8 @@ The following table lists the configurable parameters of the HPE-CSI chart and t
 
 It's recommended to create a [values.yaml](https://github.com/hpe-storage/co-deployments/blob/master/helm/charts/hpe-csi-driver/values.yaml) file and edit it to fit the environment the chart is being deployed to. Download and edit the sample file.
 
+**Note:** HPE CSI Driver for Kubernetes automatically configures Linux iSCSI/Multipath settings based on [config.json](https://raw.githubusercontent.com/hpe-storage/co-deployments/master/helm/charts/hpe-csi-driver/files/config.json). In order to tune these values, edit the config map with `kubectl edit configmap hpe-linux-config -n kube-system` and restart node plugin using `kubectl delete pod -l app=hpe-csi-node` to apply.
+
 ### Installing the Chart
 To install the chart with the name `hpe-csi`:
 
@@ -42,13 +44,6 @@ To uninstall/delete the `hpe-csi` deployment:
 
 ```
 helm delete hpe-csi --purge
-```
-
-### Testing the Chart
-To test the chart with the name `hpe-csi`:
-
-```
-helm test hpe-csi --cleanup
 ```
 
 ### Alternative install method

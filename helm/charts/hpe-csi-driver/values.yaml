@@ -62,6 +62,9 @@ serviceWaitTime: "10"
 # flavor
 flavor: kubernetes
 
+# log level for all csi driver components
+logLevel: info
+
 ## For creating the StorageClass automatically:
 storageClass:
   create: true
