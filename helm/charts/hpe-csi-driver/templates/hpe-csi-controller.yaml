@@ -61,24 +61,27 @@ spec:
           volumeMounts:
             - name: socket-dir
               mountPath: /var/lib/csi/sockets/pluginproxy
+        {{- if semverCompare ">=1.17.0" .Capabilities.KubeVersion.GitVersion }}
         - name: csi-snapshotter
-          {{- if semverCompare "~1.12.0" .Capabilities.KubeVersion.GitVersion }}
-          image: {{ .Values.csiSnapshotterImage}}: {{- .Values.csiSnapshotterTagv0}}
-          {{- else if semverCompare "~1.13.0" .Capabilities.KubeVersion.GitVersion }}
-          image: {{ .Values.csiSnapshotterImage}}: {{- .Values.csiSnapshotterTagv1}}
-          {{- else }}
-          image: {{ .Values.csiSnapshotterImage}}: {{- .Values.csiSnapshotterTagv2}}
-          {{- end }}
+          image: quay.io/k8scsi/csi-snapshotter:v2.0.0-rc2
           args:
-            - "--csi-address=$(ADDRESS)"
             - "--v=5"
+            - "--leader-election=false"
+            - "--csi-address=$(ADDRESS)"
           env:
             - name: ADDRESS
               value: /var/lib/csi/sockets/pluginproxy/csi.sock
-          imagePullPolicy: {{ .Values.imagePullPolicy | quote }}
+          imagePullPolicy: "Always"
           volumeMounts:
             - name: socket-dir
-              mountPath: /var/lib/csi/sockets/pluginproxy
+              mountPath: /var/lib/csi/sockets/pluginproxy/
+        - name: snapshot-controller
+          image: quay.io/k8scsi/snapshot-controller:v2.0.0-rc2
+          args:
+            - "--v=5"
+            - "--leader-election=false"
+          imagePullPolicy: Always
+        {{- end }}
         {{- if semverCompare ">=1.15.0" .Capabilities.KubeVersion.GitVersion }}
         - name: csi-resizer
           image: {{ .Values.csiResizerImage}}: {{- .Values.csiResizerTag}}

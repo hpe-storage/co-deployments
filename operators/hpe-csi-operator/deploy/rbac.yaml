@@ -79,6 +79,9 @@ rules:
     resources: ["volumesnapshotcontents"]
     verbs: ["create", "update", "delete", "get", "list", "watch"]
   - apiGroups: ["snapshot.storage.k8s.io"]
+    resources: ["volumesnapshotcontents/status"]
+    verbs: ["create", "get", "list", "watch", "update", "delete"]
+  - apiGroups: ["snapshot.storage.k8s.io"]
     resources: ["volumesnapshotclasses"]
     verbs: ["get", "list", "watch"]
 # Need the same permissions as driver-registrar clusterrole to be able to create it.
