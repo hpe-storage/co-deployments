@@ -63,10 +63,9 @@ spec:
               mountPath: /var/lib/csi/sockets/pluginproxy
         {{- if semverCompare ">=1.17.0" .Capabilities.KubeVersion.GitVersion }}
         - name: csi-snapshotter
-          image: quay.io/k8scsi/csi-snapshotter:v2.0.0-rc2
+          image: quay.io/k8scsi/csi-snapshotter:v2.0.0-rc4
           args:
             - "--v=5"
-            - "--leader-election=false"
             - "--csi-address=$(ADDRESS)"
           env:
             - name: ADDRESS
@@ -76,10 +75,9 @@ spec:
             - name: socket-dir
               mountPath: /var/lib/csi/sockets/pluginproxy/
         - name: snapshot-controller
-          image: quay.io/k8scsi/snapshot-controller:v2.0.0-rc2
+          image: quay.io/k8scsi/snapshot-controller:v2.0.0-rc4
           args:
             - "--v=5"
-            - "--leader-election=false"
           imagePullPolicy: Always
         {{- end }}
         {{- if semverCompare ">=1.15.0" .Capabilities.KubeVersion.GitVersion }}
