@@ -159,7 +159,7 @@ spec:
   {{- end }}
 {{- end }}
 
-{{- if semverCompare ">=1.12.0" .Capabilities.KubeVersion.GitVersion }}
+{{- if semverCompare ">=1.17.0" .Capabilities.KubeVersion.GitVersion }}
 ---
 
 #########################################
@@ -178,7 +178,7 @@ spec:
     kind: VolumeSnapshotClass
     plural: volumesnapshotclasses
   scope: Cluster
-  version: v1alpha1
+  version: v1beta1
 
 ---
 
@@ -194,7 +194,9 @@ spec:
     kind: VolumeSnapshotContent
     plural: volumesnapshotcontents
   scope: Cluster
-  version: v1alpha1
+  version: v1beta1
+  subresources:
+    status: {}
 
 ---
 
@@ -210,7 +212,7 @@ spec:
     kind: VolumeSnapshot
     plural: volumesnapshots
   scope: Namespaced
-  version: v1alpha1
+  version: v1beta1
   subresources:
     status: {}
 {{- end }}
