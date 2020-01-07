@@ -108,24 +108,33 @@ rules:
     verbs: ["get", "list", "watch", "create", "update", "patch"]
   {{- else }}
   - apiGroups: [""]
-    resources: ["persistentvolumes"]
-    verbs: ["get", "list", "watch", "update"]
-  - apiGroups: [""]
     resources: ["nodes"]
     verbs: ["get", "list", "watch"]
   - apiGroups: ["storage.k8s.io"]
     resources: ["csinodes"]
     verbs: ["get", "list", "watch"]
   - apiGroups: ["storage.k8s.io"]
-    resources: ["volumeattachments"]
-    verbs: ["get", "list", "watch", "update"]
-  - apiGroups: ["storage.k8s.io"]
     resources: ["volumeattachments/status"]
     verbs: ["get", "list", "watch", "update", "create", "delete"]
   - apiGroups: [""]
     resources: ["secrets"]
     verbs: ["get", "watch", "list"]
+{{- if semverCompare ">=1.17.0" .Capabilities.KubeVersion.GitVersion }}
+  - apiGroups: [""]
+    resources: ["persistentvolumes"]
+    verbs: ["get", "list", "watch", "update", "patch"]
+   - apiGroups: ["storage.k8s.io"]
+    resources: ["volumeattachments"]
+    verbs: ["get", "list", "watch", "update", "patch"]
+ {{- else }}
+   - apiGroups: [""]
+    resources: ["persistentvolumes"]
+    verbs: ["get", "list", "watch", "update"]
+   - apiGroups: ["storage.k8s.io"]
+    resources: ["volumeattachments"]
+    verbs: ["get", "list", "watch", "update"]
   {{- end }}
+{{- end }}
 
 ---
 
