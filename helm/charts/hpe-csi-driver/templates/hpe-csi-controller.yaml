@@ -35,6 +35,7 @@ spec:
             - "--v=5"
             {{- if semverCompare ">= 1.13.0" .Capabilities.KubeVersion.GitVersion }}
             - "--timeout=30s"
+            - "--worker-threads=4"
             {{- end }}
           env:
             - name: ADDRESS
