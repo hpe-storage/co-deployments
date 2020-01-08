@@ -103,6 +103,7 @@ spec:
             - "--csi-address=$(ADDRESS)"
             - "--v=5"
             - "--timeout=30s"
+            - "--worker-threads=4"
           env:
             - name: ADDRESS
               value: /var/lib/csi/sockets/pluginproxy/csi.sock
