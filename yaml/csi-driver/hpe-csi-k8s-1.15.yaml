@@ -365,7 +365,7 @@ rules:
 #######################################
 
 kind: DaemonSet
-apiVersion: apps/v1beta2
+apiVersion: apps/v1
 metadata:
   name: hpe-csi-node
   namespace: kube-system
@@ -383,6 +383,11 @@ spec:
       serviceAccount: hpe-csi-node-sa
       hostNetwork: true
       dnsPolicy: ClusterFirstWithHostNet
+      tolerations:
+        - effect: NoExecute
+          operator: Exists
+        - effect: NoSchedule
+          operator: Exists
       containers:
         - name: csi-node-driver-registrar
           image: quay.io/k8scsi/csi-node-driver-registrar:v1.1.0
@@ -541,33 +546,6 @@ kind: ServiceAccount
 metadata:
   name: hpe-csi-node-sa
   namespace: kube-system
-
----
-
-kind: ClusterRole
-apiVersion: rbac.authorization.k8s.io/v1
-metadata:
-  name: hpe-csi-driver-registrar-role
-  namespace: kube-system
-rules:
-  - apiGroups: [""]
-    resources: ["events"]
-    verbs: ["get", "list", "watch", "create", "update", "patch"]
-
----
-
-kind: ClusterRoleBinding
-apiVersion: rbac.authorization.k8s.io/v1
-metadata:
-  name: hpe-csi-driver-registrar-binding
-subjects:
-  - kind: ServiceAccount
-    name: hpe-csi-node-sa
-    namespace: kube-system
-roleRef:
-  kind: ClusterRole
-  name: hpe-csi-driver-registrar-role
-  apiGroup: rbac.authorization.k8s.io
 
 ---
 
