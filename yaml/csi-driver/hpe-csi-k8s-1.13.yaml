@@ -114,7 +114,7 @@ spec:
             - name: socket-dir
               mountPath: /var/lib/csi/sockets/pluginproxy/
         - name: hpe-csi-driver
-          image: hpestorage/csi-driver:v1.0.0-beta
+          image: hpestorage/csi-driver:v1.0.0
           args :
             - "--endpoint=$(CSI_ENDPOINT)"
             - "--flavor=kubernetes"
@@ -320,7 +320,7 @@ spec:
             - name: registration-dir
               mountPath: /registration
         - name: hpe-csi-driver
-          image: hpestorage/csi-driver:v1.0.0-beta
+          image: hpestorage/csi-driver:v1.0.0
           args :
             - "--endpoint=$(CSI_ENDPOINT)"
             - "--node-service"
