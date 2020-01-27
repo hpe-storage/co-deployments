@@ -1,0 +1,54 @@
+---
+### CSP Service ###
+kind: Service
+apiVersion: v1
+metadata:
+  name: hpe3parprimera-csp-svc
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app: hpe3parprimera-csp-svc
+spec:
+  ports:
+  - port: 10000
+    protocol: TCP
+  selector:
+    app: hpe3parprimera-csp
+
+---
+### CSP deployment ###
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: hpe3parprimera-csp
+  namespace: {{ .Release.Namespace }}
+spec:
+  selector:
+    matchLabels:
+      app: hpe3parprimera-csp
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: hpe3parprimera-csp
+    spec:
+      serviceAccount: hpe-csp-sa
+      hostNetwork: true
+      containers:
+        - name: hpe3parprimera-csp
+          image: {{ .Values.cspImage}}: {{- .Values.cspTag}}
+          imagePullPolicy: {{ .Values.imagePullPolicy | quote }}
+          ports:
+          - containerPort: 10000
+          volumeMounts:
+            - name: log-dir
+              mountPath: /var/log
+            - name: etc-dir
+              mountPath: /etc
+      volumes:
+        - name: log-dir
+          hostPath:
+            path: /var/log
+        - name: etc-dir
+          hostPath:
+            path: /etc
+
