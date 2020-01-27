@@ -30,6 +30,7 @@ The following table lists the configurable parameters of the HPE-CSI chart and t
 | storageClass.name  | The name to assign the created StorageClass.                                          | hpe-standard |
 | storageClass.create | Enables creation of StorageClass to consume this hpe-csi-driver instance.                              | true        |
 | storageClass.defaultClass | Whether to set the created StorageClass as the clusters default StorageClass.                                | false       |
+| CRD.create                | Create CRDs required by HPE CSI driver                      | true        |
 
 It's recommended to create a [values.yaml](https://github.com/hpe-storage/co-deployments/blob/master/helm/charts/hpe-csi-driver/values.yaml) file and edit it to fit the environment the chart is being deployed to. Download and edit the sample file.
 

@@ -76,3 +76,6 @@ storageClass:
   ## Set a StorageClass name
   ## Ignored if storageClass.create is false
   name: hpe-standard
+
+CRD:
+  create: true
