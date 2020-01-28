@@ -30,11 +30,11 @@ csiResizerTag: v0.3.0
 
 # csi-driver tag
 csiDriverImage: hpestorage/csi-driver
-csiDriverTag: edge
+csiDriverTag: 1.1.0-beta
 
 # csp-hpe
 cspImage: hpestorage/nimble-csp
-cspTag: edge
+cspTag: 1.1.0-beta
 
 # post-install
 postInstallImage: 'alpine'
