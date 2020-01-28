@@ -18,12 +18,17 @@ Depending on which [Container Storage Provider](https://github.com/hpe-storage/c
 ## Configuration & Installation
 The following table lists the configurable parameters of the HPE-CSI chart and their default values.
 
-|  Parameter                |  Description                                                |  Default    |
-|---------------------------|-------------------------------------------------------------|-------------|
-| backend                   | HPE storage backend hostname or IP address.                 | 192.168.1.1 |
-| username                  | Username for the backend.                                   | admin       |
-| password                  | Password for the backend.                                   | admin       |
-| fsType                    | Type of file system being used (ext4, ext3, xfs, btrfs)     | xfs         |
+|  Parameter                |  Description                                                           |  Default    |
+|---------------------------|------------------------------------------------------------------------|-------------|
+| backend                   | HPE storage backend hostname or IP address.                            | 192.168.1.1 |
+| username                  | Username for the backend.                                              | admin       |
+| password                  | Password for the backend.                                              | admin       |
+| fsType                    | Type of file system being used (ext4, ext3, xfs, btrfs)                | xfs         |
+| protocol                  | Data plane protocol (`fc`, `iscsi`).                                   | iscsi       |
+| logLevel                  | Log level. Can be one of `info`, `debug`, `trace`, `warn` and `error`  | info        |
+| storageClass.name  | The name to assign the created StorageClass.                                          | hpe-standard |
+| storageClass.create | Enables creation of StorageClass to consume this hpe-csi-driver instance.                              | true        |
+| storageClass.defaultClass | Whether to set the created StorageClass as the clusters default StorageClass.                                | false       |
 
 It's recommended to create a [values.yaml](https://github.com/hpe-storage/co-deployments/blob/master/helm/charts/hpe-csi-driver/values.yaml) file and edit it to fit the environment the chart is being deployed to. Download and edit the sample file.
 

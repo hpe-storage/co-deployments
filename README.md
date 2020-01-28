@@ -7,8 +7,6 @@ This repository contains the source declarations to deploy CO drivers (CSI and F
 - Deploy the [HPE FlexVolume Driver for Kubernetes](helm/charts/hpe-flexvolume-driver)
 - Deploy the [HPE CSI Driver for Kubernetes](helm/charts/hpe-csi-driver)
 
-**Note:** Helm 3.x is currently not supported.
-
 ## Using Helm Operator
 Deploy both the FlexVolume and CSI driver for HPE storage products using Helm Operators
 
