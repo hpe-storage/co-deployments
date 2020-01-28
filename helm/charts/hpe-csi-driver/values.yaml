@@ -78,4 +78,7 @@ storageClass:
   name: hpe-standard
 
 CRD:
-  create: true
+  nodeInfo:
+    ## For helm v3+ CRD's are handled automatically without this flag.
+    ## This flag should be enabled for helm v2+
+    create: false

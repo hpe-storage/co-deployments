@@ -1,29 +1,5 @@
-
-{{ if .Values.CRD.create -}}
+{{ if .Values.CRD.nodeInfo.create -}}
 ################ HPE NodeInfo CRD ##########
 {{ .Files.Get "crds/hpe-nodeinfo-crd.yaml" }}
 ---
-
-{{- if semverCompare ">=1.14.0" .Capabilities.KubeVersion.GitVersion }}
----
-
-################# CSI Driver CRD ###########
-apiVersion: storage.k8s.io/v1beta1
-kind: CSIDriver
-metadata:
-  name: csi.hpe.com
-spec:
-  podInfoOnMount: true
-  {{- if semverCompare ">=1.16.0" .Capabilities.KubeVersion.GitVersion }}
-  volumeLifecycleModes:
-  - Persistent
-  - Ephemeral
-  {{- end }}
-{{- end }}
-
-################# Snapshot CRDs ############
-{{- if semverCompare ">=1.17.0" .Capabilities.KubeVersion.GitVersion }}
-{{ .Files.Get "crds/snapshots-crd.yaml"}}
----
-{{- end }}
 {{- end }}
