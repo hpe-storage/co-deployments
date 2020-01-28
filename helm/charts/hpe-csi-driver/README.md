@@ -9,6 +9,7 @@ The [HPE CSI Driver for Kubernetes](https://github.com/hpe-storage/csi-driver) l
 - OpenShift 4.2 in Tech Preview (3.x is not supported, see [FlexVolume Driver Helm chart](https://github.com/hpe-storage/co-deployments/tree/master/helm/charts/hpe-flexvolume-driver))
 - More distributions will be listed as tests are ongoing
 - Recent Ubuntu, CentOS or RHEL compute nodes connected to their respective official package repositories
+- Helm 3.x is not supported with v1.0.0 release.
 
 Depending on which [Container Storage Provider](https://github.com/hpe-storage/container-storage-provider) (CSP) is being used, other prerequisites and requirements may apply.
 
