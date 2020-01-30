@@ -3,42 +3,42 @@
 kind: Service
 apiVersion: v1
 metadata:
-  name: hpe3parprimera-csp-svc
+  name: {{ .Values.serviceName }}
   namespace: {{ .Release.Namespace }}
   labels:
-    app: hpe3parprimera-csp-svc
+    app: {{ .Values.serviceName }}
 spec:
   ports:
-  - port: 10000
+  - port: {{ .Values.servicePort }}
     protocol: TCP
   selector:
-    app: hpe3parprimera-csp
+    app: {{ .Values.cspName }}
 
 ---
 ### CSP deployment ###
 kind: Deployment
 apiVersion: apps/v1
 metadata:
-  name: hpe3parprimera-csp
+  name: {{ .Values.cspName }}
   namespace: {{ .Release.Namespace }}
 spec:
   selector:
     matchLabels:
-      app: hpe3parprimera-csp
+      app: {{ .Values.cspName }}
   replicas: 1
   template:
     metadata:
       labels:
-        app: hpe3parprimera-csp
+        app: {{ .Values.cspName }}
     spec:
       serviceAccount: hpe-csp-sa
       hostNetwork: true
       containers:
-        - name: hpe3parprimera-csp
+        - name: {{ .Values.cspName }}
           image: {{ .Values.cspImage}}: {{- .Values.cspTag}}
           imagePullPolicy: {{ .Values.imagePullPolicy | quote }}
           ports:
-          - containerPort: 10000
+          - containerPort: {{ .Values.servicePort }}
           volumeMounts:
             - name: log-dir
               mountPath: /var/log
@@ -51,4 +51,3 @@ spec:
         - name: etc-dir
           hostPath:
             path: /etc
-

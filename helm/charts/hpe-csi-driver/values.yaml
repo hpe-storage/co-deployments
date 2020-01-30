@@ -29,12 +29,18 @@ csiResizerTag: v0.3.0
 
 
 # csi-driver tag
-csiDriverImage: hpestorage/csi-driver
-csiDriverTag: 1.1.0-beta
+csiDriverImage: sandanar/csi-driver
+csiDriverTag: test
 
 # csp-hpe
-cspImage: hpestorage/nimble-csp
-cspTag: 1.1.0-beta
+#cspImage: hpestorage/nimble-csp
+#cspTag: 1.1.0-beta
+
+# csp-hpe for 3par
+cspImage: hpestorage/csp_3par_primera
+cspTag: v0.1
+cspName: hpe3parprimera-csp
+
 
 # post-install
 postInstallImage: 'alpine'
@@ -43,17 +49,19 @@ postInstallTag: '3.3'
 imagePullPolicy: 'Always'
 
 # parameters
-backend: 192.168.1.1
-username: admin
-password: admin
-servicePort: "8080"
-serviceName: nimble-csp-svc
+backend: 192.168.67.7
+username: 3paradm
+password: M3BhcmRhdGE=
+servicePort: "10000"
+serviceName: hpe3parprimera-csp-svc
+secretName: hpe3parprimera-secret
 
 # storage class parameters
-fsType: xfs
+#fsType: xfs
+fsType: ext4  
 volumeDescription: "Volume created by the HPE CSI Driver for Kubernetes"
 accessProtocol: "iscsi"
-allowVolumeExpansion: true
+#allowVolumeExpansion: true
 
 # service parameters
 # wait seconds for doryd/csi/csp services to start
@@ -67,15 +75,15 @@ logLevel: info
 
 ## For creating the StorageClass automatically:
 storageClass:
-  create: true
+  create: false
 
   ## Set StorageClass as the default StorageClass
   ## Ignored if storageClass.create is false
-  defaultClass: false
+  #defaultClass: false
 
   ## Set a StorageClass name
   ## Ignored if storageClass.create is false
-  name: hpe-standard
+  #name: hpe-standard
 
 CRD:
   nodeInfo:
