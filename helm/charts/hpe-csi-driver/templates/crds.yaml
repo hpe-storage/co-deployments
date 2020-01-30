@@ -1,0 +1,5 @@
+{{ if .Values.CRD.nodeInfo.create -}}
+################ HPE NodeInfo CRD ##########
+{{ .Files.Get "crds/hpe-nodeinfo-crd.yaml" }}
+---
+{{- end }}

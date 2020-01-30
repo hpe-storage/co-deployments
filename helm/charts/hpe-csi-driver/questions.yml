@@ -52,3 +52,9 @@ questions:
   default: false
   description: "If specified as 'true', the 'hpe-standard' StorageClass will be annotated as 'default'. This option is ignored if 'Create a StorageClass' is set to 'false'."
   group: "HPE StorageClass and volume settings"
+- variable: CRD.nodeInfo.create
+  label: "Create HPE NodeInfo CRD."
+  type: boolean
+  default: false
+  description: "For helm v3.x required CRD's are automatically created without this flag. This flag should be explicitly enabled only for helm v2.x"
+  group: "HPE CSI Driver settings"

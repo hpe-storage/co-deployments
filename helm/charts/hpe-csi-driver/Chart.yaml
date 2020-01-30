@@ -1,5 +1,5 @@
 apiVersion: v1
-appVersion: "1.0"
+appVersion: "1.1.0-beta"
 description: A Helm chart for installing the HPE CSI Driver for Kubernetes
 icon: https://raw.githubusercontent.com/hpe-storage/co-deployments/master/docs/assets/hpedev.png
 maintainers:
@@ -9,7 +9,7 @@ sources:
 - https://github.com/hpe-storage/csi-driver
 name: hpe-csi-driver
 home: https://hpe.com/storage/containers
-version: 1.0.0
+version: 1.1.0-beta
 keywords:
   - HPE
   - Storage
