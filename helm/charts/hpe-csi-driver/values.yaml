@@ -37,12 +37,6 @@ cspImage: hpestorage/nimble-csp
 cspTag: v1.0.0-beta
 cspName: nimble-csp
 
-# csp-hpe for 3par
-cspImage: hpestorage/csp_3par_primera
-cspTag: v0.1
-cspName: hpe3parprimera-csp
-
-
 # post-install
 postInstallImage: 'alpine'
 postInstallTag: '3.3'
