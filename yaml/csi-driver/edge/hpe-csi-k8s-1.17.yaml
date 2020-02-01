@@ -507,6 +507,7 @@ spec:
               mountPropagation: "Bidirectional"
             - name: root-dir
               mountPath: /host
+              mountPropagation: "Bidirectional"
             - name: device-dir
               mountPath: /dev
             - name: log-dir
