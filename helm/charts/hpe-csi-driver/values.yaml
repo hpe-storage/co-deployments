@@ -27,14 +27,13 @@ csiAttacherTagv2: v1.2.0
 csiResizerImage: quay.io/k8scsi/csi-resizer
 csiResizerTag: v0.3.0
 
-
 # csi-driver tag
 csiDriverImage: hpestorage/csi-driver
-csiDriverTag: 1.1.0-beta
+csiDriverTag: v1.1.0-beta
 
 # csp-hpe
 cspImage: hpestorage/nimble-csp
-cspTag: 1.1.0-beta
+cspTag: v1.1.0-beta
 
 # post-install
 postInstallImage: 'alpine'
