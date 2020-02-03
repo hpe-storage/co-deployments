@@ -27,7 +27,6 @@ csiAttacherTagv2: v1.2.0
 csiResizerImage: quay.io/k8scsi/csi-resizer
 csiResizerTag: v0.3.0
 
-
 # csi-driver tag
 csiDriverImage: hpestorage/csi-driver
 csiDriverTag: v1.0.0-beta
