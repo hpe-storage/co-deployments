@@ -3,45 +3,51 @@
 kind: Service
 apiVersion: v1
 metadata:
-  name: nimble-csp-svc
+  name: {{ .Values.serviceName }}
   namespace: {{ .Release.Namespace }}
   labels:
-    app: nimble-csp-svc
+    app: {{ .Values.serviceName }}
 spec:
   ports:
-  - port: 8080
+  - port: {{ .Values.servicePort }}
     protocol: TCP
   selector:
-    app: nimble-csp
+    app: {{ .Values.cspName }}
 
 ---
 ### CSP deployment ###
 kind: Deployment
 apiVersion: apps/v1
 metadata:
-  name: nimble-csp
+  name: {{ .Values.cspName }}
   namespace: {{ .Release.Namespace }}
 spec:
   selector:
     matchLabels:
-      app: nimble-csp
+      app: {{ .Values.cspName }}
   replicas: 1
   template:
     metadata:
       labels:
-        app: nimble-csp
+        app: {{ .Values.cspName }}
     spec:
       serviceAccount: hpe-csp-sa
+      hostNetwork: true
       containers:
-        - name: nimble-csp
+        - name: {{ .Values.cspName }}
           image: {{ .Values.cspImage}}: {{- .Values.cspTag}}
           imagePullPolicy: {{ .Values.imagePullPolicy | quote }}
           ports:
-          - containerPort: 8080
+          - containerPort: {{ .Values.servicePort }}
           volumeMounts:
             - name: log-dir
               mountPath: /var/log
+            - name: etc-dir
+              mountPath: /etc
       volumes:
         - name: log-dir
           hostPath:
             path: /var/log
+        - name: etc-dir
+          hostPath:
+            path: /etc
