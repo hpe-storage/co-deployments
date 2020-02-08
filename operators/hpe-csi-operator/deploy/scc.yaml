@@ -6,6 +6,7 @@ metadata:
 allowPrivilegedContainer: true
 allowHostDirVolumePlugin: true
 allowHostNetwork: true
+allowHostPorts: true
 allowedCapabilities:
 - '*'
 runAsUser:
