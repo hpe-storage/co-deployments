@@ -12,4 +12,4 @@ LABEL name="csi-driver-operator" \
 
 COPY helm-charts/ ${HOME}/helm-charts/
 COPY watches.yaml ${HOME}/watches.yaml
-COPY LICENSE /licenses
+COPY LICENSE /licenses/

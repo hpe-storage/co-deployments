@@ -1,0 +1,54 @@
+apiVersion: storage.hpe.com/v1
+kind: HPECSIDriver
+metadata:
+  name: csi-driver
+spec:
+  # Default values copied from <project_dir>/helm-charts/hpe-csi-driver/values.yaml
+
+  CRD:
+    nodeInfo:
+      create: false
+  accessProtocol: iscsi
+  allowVolumeExpansion: true
+  backend: 192.168.1.1
+  csiAttacherImage: quay.io/k8scsi/csi-attacher
+  csiAttacherTagv0: v0.4.2
+  csiAttacherTagv1: v1.1.0
+  csiAttacherTagv2: v1.2.0
+  csiDriverImage: hpestorage/csi-driver
+  csiDriverTag: v1.1.0-beta
+  csiProvisionerImage: quay.io/k8scsi/csi-provisioner
+  csiProvisionerTagv0: v0.4.3
+  csiProvisionerTagv1: v1.4.0
+  csiResizerImage: quay.io/k8scsi/csi-resizer
+  csiResizerTag: v0.3.0
+  csiSnapshotterImage: quay.io/k8scsi/csi-snapshotter
+  csiSnapshotterTagv0: v0.4.2
+  csiSnapshotterTagv1: v1.2.2
+  csiSnapshotterTagv2: v1.2.2
+  cspImage: hpestorage/nimble-csp
+  cspName: nimble-csp
+  cspTag: v1.1.0-beta
+  flavor: kubernetes
+  fsType: xfs
+  imagePullPolicy: Always
+  logLevel: info
+  nodeRegistrarImage: quay.io/k8scsi/csi-node-driver-registrar
+  nodeRegistrarImagev0: quay.io/k8scsi/driver-registrar
+  nodeRegistrarTagv0: v0.4.1
+  nodeRegistrarTagv1: v1.1.0
+  nodeRegistrarTagv2: v1.1.0
+  password: admin
+  postInstallImage: alpine
+  postInstallTag: "3.3"
+  secretName: nimble-secret
+  serviceName: nimble-csp-svc
+  servicePort: "8080"
+  serviceWaitTime: "10"
+  storageClass:
+    create: true
+    defaultClass: false
+    name: hpe-standard
+  username: admin
+  volumeDescription: Volume created by the HPE CSI Driver for Kubernetes
+
