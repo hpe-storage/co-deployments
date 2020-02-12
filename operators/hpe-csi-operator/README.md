@@ -14,26 +14,26 @@ For platform dependencies for HPE CSI driver please refer to [prerequisites](htt
 
 For OCP create SecurityContextConstraints with privileges required for CSI driver
 ```
-oc deploy -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/operators/hpe-csi-operator/deploy/scc.yaml -n hpe-csi
+oc apply -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/operators/hpe-csi-operator/deploy/scc.yaml -n hpe-csi
 ```
 
 *** NOTE *** If you are using OpenShift, replace `kubectl` with `oc` below.
 
 Deploy Operator/RBAC and CRD's required
 ```
-kubectl deploy -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/operators/hpe-csi-operator/deploy/rbac.yaml -n hpe-csi
-kubectl deploy -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/operators/hpe-csi-operator/deploy/operator.yaml -n hpe-csi
-kubectl deploy -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/operators/hpe-csi-operator/deploy/crds/storage.hpe.com_hpecsidrivers_crd.yaml -n hpe-csi
+kubectl apply -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/operators/hpe-csi-operator/deploy/rbac.yaml -n hpe-csi
+kubectl apply -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/operators/hpe-csi-operator/deploy/operator.yaml -n hpe-csi
+kubectl apply -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/operators/hpe-csi-operator/deploy/crds/storage.hpe.com_hpecsidrivers_crd.yaml -n hpe-csi
 ```
 
 Fetch and update CustomResource of type `HPECSIDriver` with required values
 ```
-curl -sL https://raw.githubusercontent.com/hpe-storage/co-deployments/master/operators/hpe-csi-operator/deploy/crds/storage.hpe.com_hpecsidrivers_cr.yaml
+curl -sL https://raw.githubusercontent.com/hpe-storage/co-deployments/master/operators/hpe-csi-operator/deploy/crds/storage.hpe.com_v1_hpecsidriver_cr.yaml > storage.hpe.com_v1_hpecsidriver_cr.yaml
 ```
 
 Deploy above updated CustomResource `csi-driver`
 ```
-kubectl deploy -f storage.hpe.com_hpecsidrivers_cr.yaml -n hpe-csi
+kubectl apply -f storage.hpe.com_v1_hpecsidriver_cr.yaml -n hpe-csi
 ```
 
 where ``hpe-csi`` is the project/namespace in which the HPE CSI Operator is installed. It is **strongly recommended** to install the HPE CSI Operator in a new project and not add any other pods to this project/namespace. Any pods in this project will be cleaned up on an uninstall.
@@ -42,12 +42,12 @@ where ``hpe-csi`` is the project/namespace in which the HPE CSI Operator is inst
 
 Fetch and update CustomResource of type `HPECSIDriver` with required values
 ```
-curl -sL https://raw.githubusercontent.com/hpe-storage/co-deployments/master/operators/hpe-csi-operator/deploy/crds/storage.hpe.com_hpecsidrivers_cr.yaml
+curl -sL https://raw.githubusercontent.com/hpe-storage/co-deployments/master/operators/hpe-csi-operator/deploy/crds/storage.hpe.com_v1_hpecsidriver_cr.yaml > storage.hpe.com_v1_hpecsidriver_cr.yaml
 ```
 
 Deploy updated CustomResource `csi-driver`
 ```
-kubectl deploy -f storage.hpe.com_hpecsidrivers_cr.yaml -n hpe-csi
+kubectl deploy -f storage.hpe.com_v1_hpecsidriver_cr.yaml -n hpe-csi
 ```
 
 ### How to upgrade from helm install to HPE CSI Operator
@@ -62,7 +62,7 @@ Once the helm chart has been uninstalled, follow the install instructions [above
 
 1. Delete the HPE CSI Driver custom resource, this will cause our CSI plugin resources to be cleaned up.
 ```
-kubectl delete -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/operators/hpe-csi-operator/deploy/crds/storage.hpe.com_hpecsidrivers_cr.yaml -n hpe-csi
+kubectl delete -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/operators/hpe-csi-operator/deploy/crds/storage.hpe.com_v1_hpecsidriver_cr.yaml -n hpe-csi
 
 kubectl delete -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/operators/hpe-csi-operator/deploy/crds/storage.hpe.com_hpecsidrivers_crd.yaml -n hpe-csi
 ```
@@ -79,7 +79,7 @@ kubectl delete -f https://raw.githubusercontent.com/hpe-storage/co-deployments/m
 
 For OpenShift, delete SecurityContextConstraints created
 ```
-kubectl delete -f -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/operators/hpe-csi-operator/deploy/scc.yaml -n hpe-csi
+kubectl delete -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/operators/hpe-csi-operator/deploy/scc.yaml -n hpe-csi
 ```
 
 3. Delete operator deployment itself

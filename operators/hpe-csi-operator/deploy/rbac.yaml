@@ -107,7 +107,7 @@ metadata:
 subjects:
 - kind: ServiceAccount
   name: default
-  namespace: REPLACE_NAMESPACE
+  namespace: hpe-csi
 roleRef:
   kind: ClusterRole
   name: hpe-csi-operator
