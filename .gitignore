@@ -18,3 +18,4 @@ build/
 
 # helm-charts to build an operator
 operators/*/helm-charts
+operators/*/LICENSE

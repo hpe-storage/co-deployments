@@ -6,6 +6,7 @@ metadata:
 allowPrivilegedContainer: true
 allowHostDirVolumePlugin: true
 allowHostNetwork: true
+allowHostPorts: true
 allowedCapabilities:
 - '*'
 runAsUser:
@@ -16,3 +17,9 @@ fsGroup:
   type: RunAsAny
 supplementalGroups:
   type: RunAsAny
+users:
+- system:serviceaccount:hpe-csi:hpe-csi-controller-sa
+- system:serviceaccount:hpe-csi:hpe-csi-node-sa
+- system:serviceaccount:hpe-csi:hpe-csp-sa
+volumes:
+- '*'

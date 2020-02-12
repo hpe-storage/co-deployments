@@ -13,6 +13,8 @@ IMG_DIR=$(dirname $0)
 HELM_DIR=${IMG_DIR}/../../helm
 mkdir -p ${IMG_DIR}/helm-charts
 
+cp ${IMG_DIR}/../../LICENSE ${IMG_DIR}/
+
 # Copy helm charts to staging directory
 cp -r ${HELM_DIR}/charts/hpe-csi-driver ${IMG_DIR}/helm-charts
 
