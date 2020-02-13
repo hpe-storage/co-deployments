@@ -31,13 +31,7 @@ spec:
       {{- end }}
       containers:
         - name: csi-node-driver-registrar
-          {{- if semverCompare "~1.12.0" .Capabilities.KubeVersion.GitVersion }}
-          image: {{ .Values.nodeRegistrarImagev0}}: {{- .Values.nodeRegistrarTagv0}}
-          {{- else if semverCompare "~1.13.0" .Capabilities.KubeVersion.GitVersion }}
-          image: {{ .Values.nodeRegistrarImage}}: {{- .Values.nodeRegistrarTagv1}}
-          {{- else }}
-          image: {{ .Values.nodeRegistrarImage}}: {{- .Values.nodeRegistrarTagv2}}
-          {{- end }}
+          image: {{ .Values.nodeRegistrarImage}}: {{- .Values.nodeRegistrarTag}}
           args:
             - "--csi-address=$(ADDRESS)"
             - "--kubelet-registration-path=$(DRIVER_REG_SOCK_PATH)"

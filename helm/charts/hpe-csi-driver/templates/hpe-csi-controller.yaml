@@ -25,7 +25,7 @@ spec:
       dnsPolicy: ClusterFirstWithHostNet
       containers:
         - name: csi-provisioner
-          {{- if semverCompare "~1.12.0" .Capabilities.KubeVersion.GitVersion }}
+          {{- if semverCompare "<=1.16.0" .Capabilities.KubeVersion.GitVersion }}
           image: {{ .Values.csiProvisionerImage}}: {{- .Values.csiProvisionerTagv0}}
           {{- else }}
           image: {{ .Values.csiProvisionerImage}}: {{- .Values.csiProvisionerTagv1}}
@@ -45,12 +45,10 @@ spec:
             - name: socket-dir
               mountPath: /var/lib/csi/sockets/pluginproxy
         - name: csi-attacher
-          {{- if semverCompare "~1.12.0" .Capabilities.KubeVersion.GitVersion }}
+          {{- if semverCompare "~1.13.0" .Capabilities.KubeVersion.GitVersion }}
           image: {{ .Values.csiAttacherImage}}: {{- .Values.csiAttacherTagv0}}
-          {{- else if semverCompare "~1.13.0" .Capabilities.KubeVersion.GitVersion }}
-          image: {{ .Values.csiAttacherImage}}: {{- .Values.csiAttacherTagv1}}
           {{- else }}
-          image: {{ .Values.csiAttacherImage}}: {{- .Values.csiAttacherTagv2}}
+          image: {{ .Values.csiAttacherImage}}: {{- .Values.csiAttacherTagv1}}
           {{- end }}
           args:
             - "--v=5"
@@ -64,7 +62,7 @@ spec:
               mountPath: /var/lib/csi/sockets/pluginproxy
         {{- if semverCompare ">=1.17.0" .Capabilities.KubeVersion.GitVersion }}
         - name: csi-snapshotter
-          image: quay.io/k8scsi/csi-snapshotter:v2.0.0-rc4
+          image: {{ .Values.csiSnapshotterImage}}: {{- .Values.csiSnapshotterTag}}
           args:
             - "--v=5"
             - "--csi-address=$(ADDRESS)"
