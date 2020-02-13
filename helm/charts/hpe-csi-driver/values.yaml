@@ -4,25 +4,18 @@
 
 # sidecar-images
 csiProvisionerImage: quay.io/k8scsi/csi-provisioner
-csiProvisionerTagv0: v0.4.3
-csiProvisionerTagv1: v1.4.0
+csiProvisionerTagv0: v1.4.0
+csiProvisionerTagv1: v1.5.0
 
 csiSnapshotterImage: quay.io/k8scsi/csi-snapshotter
-csiSnapshotterTagv0: v0.4.2
-csiSnapshotterTagv1: v1.2.2
-csiSnapshotterTagv2: v1.2.2
-
-nodeRegistrarImagev0: quay.io/k8scsi/driver-registrar
-nodeRegistrarTagv0: v0.4.1
+csiSnapshotterTag: v2.0.1
 
 nodeRegistrarImage: quay.io/k8scsi/csi-node-driver-registrar
-nodeRegistrarTagv1: v1.1.0
-nodeRegistrarTagv2: v1.1.0
+nodeRegistrarTag: v1.1.0
 
 csiAttacherImage: quay.io/k8scsi/csi-attacher
-csiAttacherTagv0: v0.4.2
-csiAttacherTagv1: v1.1.0
-csiAttacherTagv2: v1.2.0
+csiAttacherTagv0: v1.1.0
+csiAttacherTagv1: v1.2.0
 
 csiResizerImage: quay.io/k8scsi/csi-resizer
 csiResizerTag: v0.3.0

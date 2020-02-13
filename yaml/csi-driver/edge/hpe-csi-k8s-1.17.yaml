@@ -101,7 +101,7 @@ spec:
       dnsPolicy: ClusterFirstWithHostNet
       containers:
         - name: csi-provisioner
-          image: quay.io/k8scsi/csi-provisioner:v1.5.0-rc1
+          image: quay.io/k8scsi/csi-provisioner:v1.5.0
           args:
             - "--csi-address=$(ADDRESS)"
             - "--v=5"
@@ -481,7 +481,7 @@ spec:
             - name: registration-dir
               mountPath: /registration
         - name: hpe-csi-driver
-          image: hpestorage/csi-driver:edge
+          image: hpestorage/csi-driver:v1.1.0-beta
           args :
             - "--endpoint=$(CSI_ENDPOINT)"
             - "--node-service"
