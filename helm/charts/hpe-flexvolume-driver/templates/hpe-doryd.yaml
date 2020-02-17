@@ -38,11 +38,12 @@ spec:
                mountPath: /usr/libexec/kubernetes/kubelet-plugins/volume/exec
              - name: varlog
                mountPath: /var/log
-             - name: hpeconfig
-               mountPath: /etc/hpe-storage
-             {{- if eq .Values.flavor "rancher"}}
+             {{- if eq .Values.flavor "rke"}}
              - name: hpeconfig
                mountPath: /host/etc/hpe-storage
+             {{- else }}
+             - name: hpeconfig
+               mountPath: /etc/hpe-storage
              {{- end }}
           securityContext:
             privileged: true
