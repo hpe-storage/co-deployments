@@ -347,7 +347,7 @@ metadata:
 rules:
   - apiGroups: ["storage.hpe.com"]
     resources: ["hpenodeinfos"]
-    verbs: ["get", "list", "watch", "create", "update", "patch"]
+    verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
   - apiGroups: [""]
     resources: ["pods"]
     verbs: ["get"]
