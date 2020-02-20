@@ -12,6 +12,15 @@ For platform dependencies for HPE CSI driver please refer to [prerequisites](htt
 
 ## Installation
 
+Create a new namespace/project called hpe-csi
+```
+kubectl create namespace hpe-csi
+```
+or for OCP
+```
+oc new-project hpe-csi
+```
+
 For OCP create SecurityContextConstraints with privileges required for CSI driver
 ```
 oc apply -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/operators/hpe-csi-operator/deploy/scc.yaml -n hpe-csi
@@ -21,22 +30,24 @@ oc apply -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/
 
 Deploy Operator/RBAC and CRD's required
 ```
-kubectl apply -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/operators/hpe-csi-operator/deploy/rbac.yaml -n hpe-csi
-kubectl apply -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/operators/hpe-csi-operator/deploy/operator.yaml -n hpe-csi
-kubectl apply -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/operators/hpe-csi-operator/deploy/crds/storage.hpe.com_hpecsidrivers_crd.yaml -n hpe-csi
+kubectl apply -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/operators/hpe-csi-operator/deploy/role.yaml
+kubectl apply -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/operators/hpe-csi-operator/deploy/role_binding.yaml
+kubectl apply -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/operators/hpe-csi-operator/deploy/service_account.yaml
+kubectl apply -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/operators/hpe-csi-operator/deploy/operator.yaml
+kubectl apply -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/operators/hpe-csi-operator/deploy/crds/storage.hpe.com_hpecsidrivers_crd.yaml
 ```
 
-Fetch and update CustomResource of type `HPECSIDriver` with required values
+Fetch and update CustomResource of type `HPECSIDriver` with required values like `backend`, `username`, `password` etc.
 ```
 curl -sL https://raw.githubusercontent.com/hpe-storage/co-deployments/master/operators/hpe-csi-operator/deploy/crds/storage.hpe.com_v1_hpecsidriver_cr.yaml > storage.hpe.com_v1_hpecsidriver_cr.yaml
 ```
 
 Deploy above updated CustomResource `csi-driver`
 ```
-kubectl apply -f storage.hpe.com_v1_hpecsidriver_cr.yaml -n hpe-csi
+kubectl apply -f storage.hpe.com_v1_hpecsidriver_cr.yaml
 ```
 
-where ``hpe-csi`` is the project/namespace in which the HPE CSI Operator is installed. It is **strongly recommended** to install the HPE CSI Operator in a new project and not add any other pods to this project/namespace. Any pods in this project will be cleaned up on an uninstall.
+The HPE CSI Operator will be installed in `hpe-csi` project/namespace. It is **strongly recommended** to install the HPE CSI Operator in a new project and not add any other pods to this project/namespace. Any pods in this project will be cleaned up on an uninstall.
 
 ## Upgrading
 
@@ -69,25 +80,28 @@ kubectl delete -f https://raw.githubusercontent.com/hpe-storage/co-deployments/m
 
 If the CRD fails to delete you may be experiencing a known issue. Resolve this by running:
 ```
+kubectl patch hpecsidrivers/csi-driver -n hpe-csi -p '{"metadata":{"finalizers":[]}}' --type=merge
 kubectl patch crd/hpecsidrivers.storage.hpe.com -p '{"metadata":{"finalizers":[]}}' --type=merge
 ```
 
 2. Delete all cluster level roles and bindings for operator
 ```
-kubectl delete -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/operators/hpe-csi-operator/deploy/rbac.yaml -n hpe-csi
+kubectl delete -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/operators/hpe-csi-operator/deploy/role.yaml
+kubectl delete -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/operators/hpe-csi-operator/deploy/role_binding.yaml
+kubectl delete -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/operators/hpe-csi-operator/deploy/service_account.yaml
 ```
 
 For OpenShift, delete SecurityContextConstraints created
 ```
-kubectl delete -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/operators/hpe-csi-operator/deploy/scc.yaml -n hpe-csi
+kubectl delete -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/operators/hpe-csi-operator/deploy/scc.yaml
 ```
 
 3. Delete operator deployment itself
 ```
-kubectl delete -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/operators/hpe-csi-operator/deploy/operator.yaml -n hpe-csi
+kubectl delete -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/operators/hpe-csi-operator/deploy/operator.yaml
 ```
 
-where ``hpe-csi`` is the project/namespace in which the HPE CSI Operator is installed. It is **strongly recommended** to install the HPE CSI Operator in a new project and not add any other pods to this project/namespace. Any pods in this project will be cleaned up on an uninstall.
+``hpe-csi`` is the project/namespace in which the HPE CSI Operator will be installed by default. It is **strongly recommended** to install the HPE CSI Operator in a new project and not add any other pods to this project/namespace. Any pods in this project will be cleaned up on an uninstall.
 
 ## License
 This is open source software licensed using the Apache License 2.0. Please see [LICENSE](../../LICENSE) for details.

@@ -1,7 +1,9 @@
+---
 apiVersion: storage.hpe.com/v1
 kind: HPECSIDriver
 metadata:
   name: csi-driver
+  namespace: hpe-csi
 spec:
   # Default values copied from <project_dir>/helm-charts/hpe-csi-driver/values.yaml
 
@@ -63,4 +65,3 @@ spec:
       ## For helm v3+ CRD's are handled automatically without this flag.
       ## This flag should be enabled for helm v2+
       create: false
-

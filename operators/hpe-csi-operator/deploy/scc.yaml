@@ -21,6 +21,6 @@ users:
 - system:serviceaccount:hpe-csi:hpe-csi-controller-sa
 - system:serviceaccount:hpe-csi:hpe-csi-node-sa
 - system:serviceaccount:hpe-csi:hpe-csp-sa
-- system:serviceaccount:hpe-csi:default
+- system:serviceaccount:hpe-csi:hpe-csi-operator-sa
 volumes:
 - '*'
