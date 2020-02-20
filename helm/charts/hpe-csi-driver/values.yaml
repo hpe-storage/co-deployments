@@ -29,17 +29,20 @@ csiResizerTag: v0.3.0
 
 
 # csi-driver tag
+#csiDriverImage: sandanar/csi-driver
 csiDriverImage: hpestorage/csi-driver
-csiDriverTag: v1.0.0-beta
+#csiDriverTag: test
+csiDriverTag: v1.0.0
 
 # csp-hpe
-cspImage: hpestorage/nimble-csp
-cspTag: v1.0.0-beta
-cspName: nimble-csp
+#cspImage: hpestorage/csp_3par_primera
+#cspTag: v0.1
+#cspName: nimble-csp
 
 # csp-hpe for 3par
-cspImage: hpestorage/csp_3par_primera
-cspTag: v0.1
+cspImage: dockerciuser/hpe_3par_primera_csp
+#cspImage: hpestorage/csp_3par_primera
+cspTag: test
 cspName: hpe3parprimera-csp
 
 
@@ -50,12 +53,12 @@ postInstallTag: '3.3'
 imagePullPolicy: 'Always'
 
 # parameters for nimble
-backend: 192.168.1.1
-username: admin
-password: admin
-servicePort: "8080"
-serviceName: nimble-csp-svc
-secretName: nimble-secret
+backend: 15.212.195.246
+username: 3paradm
+password: 3pardata
+servicePort: "10000"
+serviceName: hpe3parprimera-csp-svc
+secretName: hpe3parprimera-secret
 
 # storage class parameters
 fsType: xfs
@@ -75,7 +78,7 @@ logLevel: info
 
 ## For creating the StorageClass automatically:
 storageClass:
-  create: true
+  create: false
 
   ## Set StorageClass as the default StorageClass
   ## Ignored if storageClass.create is false
