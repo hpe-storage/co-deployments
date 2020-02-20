@@ -78,16 +78,19 @@ spec:
     ```
 
     oc apply -f
-    https://raw.githubusercontent.com/hpe-storage/co-deployments/master/operators/hpe-csi-operator/deploy/rbac.yaml
-    -n hpe-csi
+    https://raw.githubusercontent.com/hpe-storage/co-deployments/master/operators/hpe-csi-operator/deploy/role.yaml
 
     oc apply -f
-    https://raw.githubusercontent.com/hpe-storage/co-deployments/master/operators/hpe-csi-operator/deploy/operator.yaml
-    -n hpe-csi
+    https://raw.githubusercontent.com/hpe-storage/co-deployments/master/operators/hpe-csi-operator/deploy/role_binding.yaml
+
+    oc apply -f
+    https://raw.githubusercontent.com/hpe-storage/co-deployments/master/operators/hpe-csi-operator/deploy/service_account.yaml
 
     oc apply -f
     https://raw.githubusercontent.com/hpe-storage/co-deployments/master/operators/hpe-csi-operator/deploy/crds/storage.hpe.com_hpecsidrivers_crd.yaml
-    -n hpe-csi
+
+    oc apply -f
+    https://raw.githubusercontent.com/hpe-storage/co-deployments/master/operators/hpe-csi-operator/deploy/operator.yaml
 
     ```
 
@@ -136,7 +139,7 @@ spec:
 
     ```
 
-    oc deploy -f storage.hpe.com_v1_hpecsidriver_cr.yaml -n hpe-csi
+    oc apply -f storage.hpe.com_v1_hpecsidriver_cr.yaml
 
     ```
 
@@ -168,12 +171,10 @@ spec:
 
     oc delete -f
     https://raw.githubusercontent.com/hpe-storage/co-deployments/master/operators/hpe-csi-operator/deploy/crds/storage.hpe.com_v1_hpecsidriver_cr.yaml
-    -n hpe-csi
 
 
     oc delete -f
     https://raw.githubusercontent.com/hpe-storage/co-deployments/master/operators/hpe-csi-operator/deploy/crds/storage.hpe.com_hpecsidrivers_crd.yaml
-    -n hpe-csi
 
     ```
 
@@ -197,8 +198,13 @@ spec:
     ```
 
     oc delete -f
-    https://raw.githubusercontent.com/hpe-storage/co-deployments/master/operators/hpe-csi-operator/deploy/rbac.yaml
-    -n hpe-csi
+    https://raw.githubusercontent.com/hpe-storage/co-deployments/master/operators/hpe-csi-operator/deploy/role.yaml
+
+    oc delete -f
+    https://raw.githubusercontent.com/hpe-storage/co-deployments/master/operators/hpe-csi-operator/deploy/role_binding.yaml
+
+    oc delete -f
+    https://raw.githubusercontent.com/hpe-storage/co-deployments/master/operators/hpe-csi-operator/deploy/service_account.yaml
 
     ```
 
@@ -209,7 +215,6 @@ spec:
 
     oc delete -f
     https://raw.githubusercontent.com/hpe-storage/co-deployments/master/operators/hpe-csi-operator/deploy/scc.yaml
-    -n hpe-csi
 
     ```
 
@@ -220,7 +225,6 @@ spec:
 
     oc delete -f
     https://raw.githubusercontent.com/hpe-storage/co-deployments/master/operators/hpe-csi-operator/deploy/operator.yaml
-    -n hpe-csi
 
     ```
 
@@ -465,8 +469,141 @@ spec:
     spec:
       permissions:
         - serviceAccountName: hpe-csi-operator-sa
+          rules:
+            - apiGroups: ["batch"]
+              resources: ["jobs"]
+              verbs: ["*"]
+            - apiGroups: [""]
+              resources: ["pods", "services", "endpoints", "configmaps", "secrets", "serviceaccounts"]
+              verbs: ["*"]
+            - apiGroups: [""]
+              resources: ["namespaces"]
+              verbs: ["get"]
+            - apiGroups: ["apps"]
+              resources: ["deployments", "daemonsets", "statefulsets", "replicasets"]
+              verbs: ["*"]
+            - apiGroups: ["extensions"]
+              resources: ["deployments", "daemonsets", "replicasets"]
+              verbs: ["*"]
+            - apiGroups: ["rbac.authorization.k8s.io"]
+              resources: ["roles", "rolebindings"]
+              verbs: ["*"]
+            - apiGroups: ["authorization.openshift.io"]
+              resources: ["roles", "rolebindings"]
+              verbs: ["*"]
+            - apiGroups: ["storage.hpe.com"]
+              resources: ["*"]
+              verbs: ["*"]
+            - apiGroups: ["coordination.k8s.io"]
+              resources: ["leases"]
+              verbs: ["get", "watch", "list", "delete", "update", "create"]
       clusterPermissions:
         - serviceAccountName: hpe-csi-operator-sa
+          rules:
+            - apiGroups: ["storage.hpe.com"]
+              resources: ["*"]
+              verbs: ["*"]
+            - apiGroups: [""]
+              resources: ["namespaces", "pods", "services", "endpoints", "configmaps", "secrets", "serviceaccounts"]
+              verbs: ["*"]
+            - apiGroups: ["storage.k8s.io"]
+              resources: ["storageclasses"]
+              verbs: ["create", "delete"]
+          # CSI operator needs to create/delete a ClusterRole and ClusterRoleBinding for provisioning PVs
+            - apiGroups: ["rbac.authorization.k8s.io"]
+              resources: ["clusterrolebindings", "clusterroles", "roles", "rolebindings"]
+              verbs: ["create", "delete", "get", "list"]
+          # On Openshift ClusterRoleBindings belong to a different apiGroup.
+            - apiGroups: ["authorization.openshift.io"]
+              resources: ["clusterrolebindings", "clusterroles"]
+              verbs: ["create", "delete", "get"]
+          # Need the same permissions as external-provisioner to be able to create it
+            - apiGroups: [""]
+              resources: ["secrets"]
+              verbs: ["get", "list"]
+            - apiGroups: [""]
+              resources: ["namespaces"]
+              verbs: ["get", "list", "create"]
+            - apiGroups: [""]
+              resources: ["nodes"]
+              verbs: ["get", "list"]
+            - apiGroups: [""]
+              resources: ["persistentvolumes"]
+              verbs: ["get", "list", "watch", "create", "delete", "update", "patch"]
+            - apiGroups: [""]
+              resources: ["persistentvolumeclaims"]
+              verbs: ["create", "get", "list", "watch", "update", "delete"]
+            - apiGroups: [""]
+              resources: ["services"]
+              verbs: ["create", "get", "list", "watch", "update", "delete"]
+            - apiGroups: ["apps"]
+              resources: ["deployments", "daemonsets"]
+              verbs: ["*"]
+            - apiGroups: ["storage.k8s.io"]
+              resources: ["storageclasses"]
+              verbs: ["get", "list", "watch"]
+            - apiGroups: [""]
+              resources: ["events"]
+              verbs: ["get", "list", "watch", "create", "update", "patch"]
+          # Need the same permissions as external-attacher clusterrole to be able to create it
+            - apiGroups: [""]
+              resources: ["nodes"]
+              verbs: ["get", "list", "watch"]
+            - apiGroups: ["csi.storage.k8s.io"]
+              resources: ["csinodeinfos"]
+              verbs: ["get", "list", "watch"]
+            - apiGroups: ["storage.k8s.io"]
+              resources: ["volumeattachments"]
+              verbs: ["get", "list", "watch", "update", "patch"]
+            - apiGroups: ["storage.k8s.io"]
+              resources: ["volumeattachments/status"]
+              verbs: ["get", "list", "watch", "update", "create", "delete"]
+            - apiGroups: [""]
+              resources: ["secrets"]
+              verbs: ["get", "watch", "list"]
+            - apiGroups: ["storage.k8s.io"]
+              resources: ["csinodes"]
+              verbs: ["get", "list", "watch"]
+          # Need the same permissions as external-snapshotter clusterrole to be able to create it
+            - apiGroups: ["snapshot.storage.k8s.io"]
+              resources: ["volumesnapshots"]
+              verbs: ["create", "update", "delete", "get", "list", "watch"]
+            - apiGroups: ["snapshot.storage.k8s.io"]
+              resources: ["volumesnapshots/status"]
+              verbs: ["update"]
+            - apiGroups: ["snapshot.storage.k8s.io"]
+              resources: ["volumesnapshotcontents"]
+              verbs: ["create", "update", "delete", "get", "list", "watch"]
+            - apiGroups: ["snapshot.storage.k8s.io"]
+              resources: ["volumesnapshotcontents/status"]
+              verbs: ["create", "get", "list", "watch", "update", "delete"]
+            - apiGroups: ["snapshot.storage.k8s.io"]
+              resources: ["volumesnapshotclasses"]
+              verbs: ["get", "list", "watch"]
+          # Need the same permissions as driver-registrar clusterrole to be able to create it.
+            - apiGroups: ["apiextensions.k8s.io"]
+              resources: ["customresourcedefinitions"]
+              verbs: ["*"]
+            - apiGroups: ["csi.storage.k8s.io"]
+              resources: ["csidrivers"]
+              verbs: ["*"]
+            - apiGroups: ["storage.k8s.io"]
+              resources: ["csidrivers"]
+              verbs: ["*"]
+          # Need the same permissions as external-resizer to be able to create it.
+            - apiGroups: [""]
+              resources: ["persistentvolumeclaims/status"]
+              verbs: ["create", "get", "list", "watch", "update", "delete", "patch"]
+          # Need permissions to let csi-driver load/unload/update hpenodeinfos resources
+            - apiGroups: ["storage.hpe.com"]
+              resources: ["hpenodeinfos"]
+              verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+            - apiGroups: ["coordination.k8s.io"]
+              resources: ["leases"]
+              verbs: ["get", "watch", "list", "delete", "update", "create", "patch"]
+            - apiGroups: ["batch"]
+              resources: ["jobs"]
+              verbs: ["*"]
       deployments:
         - name: hpe-csi-driver-operator
           spec:

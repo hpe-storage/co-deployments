@@ -58,7 +58,7 @@ curl -sL https://raw.githubusercontent.com/hpe-storage/co-deployments/master/ope
 
 Deploy updated CustomResource `csi-driver`
 ```
-kubectl deploy -f storage.hpe.com_v1_hpecsidriver_cr.yaml -n hpe-csi
+kubectl apply -f storage.hpe.com_v1_hpecsidriver_cr.yaml -n hpe-csi
 ```
 
 ### How to upgrade from helm install to HPE CSI Operator
@@ -73,9 +73,9 @@ Once the helm chart has been uninstalled, follow the install instructions [above
 
 1. Delete the HPE CSI Driver custom resource, this will cause our CSI plugin resources to be cleaned up.
 ```
-kubectl delete -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/operators/hpe-csi-operator/deploy/crds/storage.hpe.com_v1_hpecsidriver_cr.yaml -n hpe-csi
+kubectl delete -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/operators/hpe-csi-operator/deploy/crds/storage.hpe.com_v1_hpecsidriver_cr.yaml
 
-kubectl delete -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/operators/hpe-csi-operator/deploy/crds/storage.hpe.com_hpecsidrivers_crd.yaml -n hpe-csi
+kubectl delete -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/operators/hpe-csi-operator/deploy/crds/storage.hpe.com_hpecsidrivers_crd.yaml
 ```
 
 If the CRD fails to delete you may be experiencing a known issue. Resolve this by running:
