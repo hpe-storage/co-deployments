@@ -115,10 +115,11 @@ spec:
             - name: socket-dir
               mountPath: /var/lib/csi/sockets/pluginproxy/
         - name: csi-attacher
-          image: quay.io/k8scsi/csi-attacher:v2.0.0
+          image: quay.io/k8scsi/csi-attacher:v2.1.1
           args:
             - "--v=5"
             - "--csi-address=$(ADDRESS)"
+            - "--reconcile-sync=600s"
           env:
             - name: ADDRESS
               value: /var/lib/csi/sockets/pluginproxy/csi.sock
