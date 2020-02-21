@@ -1,0 +1,78 @@
+# Default values for hpe-csi-storage.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+# sidecar-images
+csiProvisionerImage: quay.io/k8scsi/csi-provisioner
+csiProvisionerTagv0: v0.4.3
+csiProvisionerTagv1: v1.4.0
+
+csiSnapshotterImage: quay.io/k8scsi/csi-snapshotter
+csiSnapshotterTagv0: v0.4.2
+csiSnapshotterTagv1: v1.2.2
+csiSnapshotterTagv2: v1.2.2
+
+nodeRegistrarImagev0: quay.io/k8scsi/driver-registrar
+nodeRegistrarTagv0: v0.4.1
+
+nodeRegistrarImage: quay.io/k8scsi/csi-node-driver-registrar
+nodeRegistrarTagv1: v1.1.0
+nodeRegistrarTagv2: v1.1.0
+
+csiAttacherImage: quay.io/k8scsi/csi-attacher
+csiAttacherTagv0: v0.4.2
+csiAttacherTagv1: v1.1.0
+csiAttacherTagv2: v1.2.0
+
+csiResizerImage: quay.io/k8scsi/csi-resizer
+csiResizerTag: v0.3.0
+
+
+# csi-driver tag
+csiDriverImage: hpestorage/csi-driver
+csiDriverTag: v1.0.0
+
+# csp-hpe
+cspImage: hpestorage/nimble-csp
+cspTag: v1.0.0
+
+# post-install
+postInstallImage: 'alpine'
+postInstallTag: '3.3'
+
+imagePullPolicy: 'Always'
+
+# parameters
+backend: 192.168.1.1
+username: admin
+password: admin
+servicePort: "8080"
+serviceName: nimble-csp-svc
+
+# storage class parameters
+fsType: xfs
+volumeDescription: "Volume created by the HPE CSI Driver for Kubernetes"
+accessProtocol: "iscsi"
+allowVolumeExpansion: true
+
+# service parameters
+# wait seconds for doryd/csi/csp services to start
+serviceWaitTime: "10"
+
+# flavor
+flavor: kubernetes
+
+# log level for all csi driver components
+logLevel: info
+
+## For creating the StorageClass automatically:
+storageClass:
+  create: true
+
+  ## Set StorageClass as the default StorageClass
+  ## Ignored if storageClass.create is false
+  defaultClass: false
+
+  ## Set a StorageClass name
+  ## Ignored if storageClass.create is false
+  name: hpe-standard
