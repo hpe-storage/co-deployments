@@ -44,7 +44,7 @@ The following table lists the configurable parameters of the FlexVolume driver c
 | nimble.config      | HPE Nimble Storage volume config parameters.                                                                        | -           |
 | cv.config      | HPE Cloud Volumes volume config parameters.                                                                             | -           |
 
-It's recommended to create a [values.yaml](https://github.com/hpe-storage/co-deployments/blob/master/helm/charts/values/flexvolume-driver) file from corresponding release and edit it to fit the environment the chart is being deployed to. Download and edit the sample file.
+It's recommended to create a [values.yaml](https://github.com/hpe-storage/co-deployments/blob/master/helm/values/flexvolume-driver) file from corresponding release and edit it to fit the environment the chart is being deployed to. Download and edit the sample file.
 
 Example `values.yaml` using a Nimble backend:
 
