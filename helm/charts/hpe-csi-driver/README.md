@@ -31,7 +31,7 @@ The following table lists the configurable parameters of the HPE-CSI chart and t
 | storageClass.create | Enables creation of StorageClass to consume this hpe-csi-driver instance.                              | true        |
 | storageClass.defaultClass | Whether to set the created StorageClass as the clusters default StorageClass.                                | false       |
 
-It's recommended to create a [values.yaml](https://github.com/hpe-storage/co-deployments/blob/master/helm/charts/hpe-csi-driver/values.yaml) file and edit it to fit the environment the chart is being deployed to. Download and edit the sample file.
+It's recommended to create a [values.yaml](https://github.com/hpe-storage/co-deployments/blob/master/helm/charts/values/csi-driver) file from corresponding release and edit it to fit the environment the chart is being deployed to. Download and edit the sample file.
 
 **Note:** HPE CSI Driver for Kubernetes automatically configures Linux iSCSI/Multipath settings based on [config.json](https://raw.githubusercontent.com/hpe-storage/co-deployments/master/helm/charts/hpe-csi-driver/files/config.json). In order to tune these values, edit the config map with `kubectl edit configmap hpe-linux-config -n kube-system` and restart node plugin using `kubectl delete pod -l app=hpe-csi-node` to apply.
 
