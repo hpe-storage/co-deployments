@@ -3,13 +3,13 @@
 kind: Service
 apiVersion: v1
 metadata:
-  name: {{ .Values.serviceName }}
+  name: {{ .Values.secret.serviceName }}
   namespace: {{ .Release.Namespace }}
   labels:
-    app: {{ .Values.serviceName }}
+    app: {{ .Values.secret.serviceName }}
 spec:
   ports:
-  - port: {{ .Values.servicePort }}
+  - port: {{ .Values.secret.servicePort }}
     protocol: TCP
   selector:
     app: {{ .Values.cspName }}
@@ -35,10 +35,10 @@ spec:
       hostNetwork: true
       containers:
         - name: {{ .Values.cspName }}
-          image: {{ .Values.cspImage}}: {{- .Values.cspTag}}
+          image: {{ .Values.images.cspImage}}
           imagePullPolicy: {{ .Values.imagePullPolicy | quote }}
           ports:
-          - containerPort: {{ .Values.servicePort }}
+          - containerPort: {{ .Values.secret.servicePort }}
           volumeMounts:
             - name: log-dir
               mountPath: /var/log

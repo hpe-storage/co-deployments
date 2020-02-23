@@ -1,7 +1,7 @@
 scorecard:
   # Setting a global scorecard option
   # Change below to CSV bundle directory path
-  bundle: /Users/skrishna/hpe-csi-driver-operator.v1.0.0
+  bundle: /Users/skrishna/test-operator/hpe-csi-driver-operator.v1.0.0
   output: json
   plugins:
     # `basic` tests configured to test HPE CSI CR

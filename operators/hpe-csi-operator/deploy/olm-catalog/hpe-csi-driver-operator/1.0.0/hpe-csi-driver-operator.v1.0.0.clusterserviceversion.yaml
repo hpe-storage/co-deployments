@@ -5,9 +5,11 @@ metadata:
   namespace: placeholder
   annotations:
     alm-examples: >-
-      [{"apiVersion":"storage.hpe.com/v1","kind":"HPECSIDriver","metadata":{"name":"csi-driver","namespace":"hpe-csi"},"spec":{"csiProvisionerImage":"quay.io/k8scsi/csi-provisioner","csiProvisionerTagv0":"v1.4.0","csiProvisionerTagv1":"v1.5.0","csiSnapshotterImage":"quay.io/k8scsi/csi-snapshotter","csiSnapshotterTag":"v2.0.1","nodeRegistrarImage":"quay.io/k8scsi/csi-node-driver-registrar","nodeRegistrarTag":"v1.1.0","csiAttacherImage":"quay.io/k8scsi/csi-attacher","csiAttacherTagv0":"v1.1.0","csiAttacherTagv1":"v1.2.0","csiResizerImage":"quay.io/k8scsi/csi-resizer","csiResizerTag":"v0.3.0","csiDriverImage":"hpestorage/csi-driver","csiDriverTag":"v1.1.0-beta","cspImage":"hpestorage/nimble-csp","cspTag":"v1.1.0-beta","cspName":"nimble-csp","postInstallImage":"alpine","postInstallTag":"3.3","imagePullPolicy":"Always","backend":"192.168.1.1","username":"admin","password":"admin","servicePort":"8080","serviceName":"nimble-csp-svc","secretName":"nimble-secret","fsType":"xfs","volumeDescription":"Volume
+      [{"apiVersion":"storage.hpe.com/v1","kind":"HPECSIDriver","metadata":{"name":"csi-driver","namespace":"hpe-csi"},"spec":{"images":{"csiDriverImage":"hpestorage/csi-driver:v1.1.0-beta","cspImage":"hpestorage/nimble-csp:v1.1.0-beta"},"imagePullPolicy":"Always","cspName":"nimble-csp","secret":{"create":true,"backend":"192.168.1.1","username":"admin","password":"admin","servicePort":"8080","serviceName":"nimble-csp-svc","name":"nimble-secret"},"flavor":"kubernetes","logLevel":"info","storageClass":{"create":true,"defaultClass":false,"name":"hpe-standard","allowVolumeExpansion":true,"parameters":{"fsType":"xfs","volumeDescription":"Volume
       created by the HPE CSI Driver for
-      Kubernetes","accessProtocol":"iscsi","allowVolumeExpansion":true,"serviceWaitTime":"10","flavor":"kubernetes","logLevel":"info","storageClass":{"create":true,"defaultClass":false,"name":"hpe-standard"},"CRD":{"nodeInfo":{"create":false}}}},{"apiVersion":"storage.hpe.com/v1","kind":"HPECSIDriver","metadata":{"name":"csi-driver"},"spec":{"csiProvisionerImage":"quay.io/k8scsi/csi-provisioner","csiProvisionerTagv0":"v1.4.0","csiProvisionerTagv1":"v1.5.0","csiSnapshotterImage":"quay.io/k8scsi/csi-snapshotter","csiSnapshotterTag":"v2.0.1","nodeRegistrarImage":"quay.io/k8scsi/csi-node-driver-registrar","nodeRegistrarTag":"v1.1.0","csiAttacherImage":"quay.io/k8scsi/csi-attacher","csiAttacherTagv0":"v1.1.0","csiAttacherTagv1":"v1.2.0","csiResizerImage":"quay.io/k8scsi/csi-resizer","csiResizerTag":"v0.3.0","csiDriverImage":"hpestorage/csi-driver","csiDriverTag":"v1.1.0-beta","cspImage":"hpestorage/nimble-csp","cspTag":"v1.1.0-beta","cspName":"nimble-csp","postInstallImage":"alpine","postInstallTag":"3.3","imagePullPolicy":"Always","backend":"192.168.1.1","username":"admin","password":"admin","servicePort":"8080","serviceName":"nimble-csp-svc","secretName":"nimble-secret","fsType":"xfs","volumeDescription":"Volume
+      Kubernetes","accessProtocol":"iscsi"}},"crd":{"nodeInfo":{"create":false}}}},{"apiVersion":"storage.hpe.com/v1","kind":"HPECSIDriver","metadata":{"name":"csi-driver"},"spec":{"csiProvisionerImage":"quay.io/k8scsi/csi-provisioner","csiProvisionerTagv0":"v1.4.0","csiProvisionerTagv1":"v1.5.0","csiSnapshotterImage":"quay.io/k8scsi/csi-snapshotter","csiSnapshotterTag":"v2.0.1","nodeRegistrarImage":"quay.io/k8scsi/csi-node-driver-registrar","nodeRegistrarTag":"v1.1.0","csiAttacherImage":"quay.io/k8scsi/csi-attacher","csiAttacherTagv0":"v1.1.0","csiAttacherTagv1":"v1.2.0","csiResizerImage":"quay.io/k8scsi/csi-resizer","csiResizerTag":"v0.3.0","csiDriverImage":"hpestorage/csi-driver","csiDriverTag":"v1.1.0-beta","cspImage":"hpestorage/nimble-csp","cspTag":"v1.1.0-beta","cspName":"nimble-csp","postInstallImage":"alpine","postInstallTag":"3.3","imagePullPolicy":"Always","backend":"192.168.1.1","username":"admin","password":"admin","servicePort":"8080","serviceName":"nimble-csp-svc","secretName":"nimble-secret","fsType":"xfs","volumeDescription":"Volume
+      created by the HPE CSI Driver for
+      Kubernetes","accessProtocol":"iscsi","allowVolumeExpansion":true,"serviceWaitTime":"10","flavor":"kubernetes","logLevel":"info","storageClass":{"create":true,"defaultClass":false,"name":"hpe-standard"},"CRD":{"nodeInfo":{"create":false}}}},{"apiVersion":"storage.hpe.com/v1","kind":"HPECSIDriver","metadata":{"name":"csi-driver","namespace":"hpe-csi"},"spec":{"csiProvisionerImage":"quay.io/k8scsi/csi-provisioner","csiProvisionerTagv0":"v1.4.0","csiProvisionerTagv1":"v1.5.0","csiSnapshotterImage":"quay.io/k8scsi/csi-snapshotter","csiSnapshotterTag":"v2.0.1","nodeRegistrarImage":"quay.io/k8scsi/csi-node-driver-registrar","nodeRegistrarTag":"v1.1.0","csiAttacherImage":"quay.io/k8scsi/csi-attacher","csiAttacherTagv0":"v1.1.0","csiAttacherTagv1":"v1.2.0","csiResizerImage":"quay.io/k8scsi/csi-resizer","csiResizerTag":"v0.3.0","csiDriverImage":"hpestorage/csi-driver","csiDriverTag":"v1.1.0-beta","cspImage":"hpestorage/nimble-csp","cspTag":"v1.1.0-beta","cspName":"nimble-csp","postInstallImage":"alpine","postInstallTag":"3.3","imagePullPolicy":"Always","backend":"192.168.1.1","username":"admin","password":"admin","servicePort":"8080","serviceName":"nimble-csp-svc","secretName":"nimble-secret","fsType":"xfs","volumeDescription":"Volume
       created by the HPE CSI Driver for
       Kubernetes","accessProtocol":"iscsi","allowVolumeExpansion":true,"serviceWaitTime":"10","flavor":"kubernetes","logLevel":"info","storageClass":{"create":true,"defaultClass":false,"name":"hpe-standard"},"CRD":{"nodeInfo":{"create":false}}}}]
     categories: Storage
@@ -78,19 +80,16 @@ spec:
     ```
 
     oc apply -f
-    https://raw.githubusercontent.com/hpe-storage/co-deployments/master/operators/hpe-csi-operator/deploy/role.yaml
-
-    oc apply -f
-    https://raw.githubusercontent.com/hpe-storage/co-deployments/master/operators/hpe-csi-operator/deploy/role_binding.yaml
-
-    oc apply -f
-    https://raw.githubusercontent.com/hpe-storage/co-deployments/master/operators/hpe-csi-operator/deploy/service_account.yaml
-
-    oc apply -f
-    https://raw.githubusercontent.com/hpe-storage/co-deployments/master/operators/hpe-csi-operator/deploy/crds/storage.hpe.com_hpecsidrivers_crd.yaml
+    https://raw.githubusercontent.com/hpe-storage/co-deployments/master/operators/hpe-csi-operator/deploy/rbac.yaml
+    -n hpe-csi
 
     oc apply -f
     https://raw.githubusercontent.com/hpe-storage/co-deployments/master/operators/hpe-csi-operator/deploy/operator.yaml
+    -n hpe-csi
+
+    oc apply -f
+    https://raw.githubusercontent.com/hpe-storage/co-deployments/master/operators/hpe-csi-operator/deploy/crds/storage.hpe.com_hpecsidrivers_crd.yaml
+    -n hpe-csi
 
     ```
 
@@ -139,7 +138,7 @@ spec:
 
     ```
 
-    oc apply -f storage.hpe.com_v1_hpecsidriver_cr.yaml
+    oc deploy -f storage.hpe.com_v1_hpecsidriver_cr.yaml -n hpe-csi
 
     ```
 
@@ -171,10 +170,12 @@ spec:
 
     oc delete -f
     https://raw.githubusercontent.com/hpe-storage/co-deployments/master/operators/hpe-csi-operator/deploy/crds/storage.hpe.com_v1_hpecsidriver_cr.yaml
+    -n hpe-csi
 
 
     oc delete -f
     https://raw.githubusercontent.com/hpe-storage/co-deployments/master/operators/hpe-csi-operator/deploy/crds/storage.hpe.com_hpecsidrivers_crd.yaml
+    -n hpe-csi
 
     ```
 
@@ -198,13 +199,8 @@ spec:
     ```
 
     oc delete -f
-    https://raw.githubusercontent.com/hpe-storage/co-deployments/master/operators/hpe-csi-operator/deploy/role.yaml
-
-    oc delete -f
-    https://raw.githubusercontent.com/hpe-storage/co-deployments/master/operators/hpe-csi-operator/deploy/role_binding.yaml
-
-    oc delete -f
-    https://raw.githubusercontent.com/hpe-storage/co-deployments/master/operators/hpe-csi-operator/deploy/service_account.yaml
+    https://raw.githubusercontent.com/hpe-storage/co-deployments/master/operators/hpe-csi-operator/deploy/rbac.yaml
+    -n hpe-csi
 
     ```
 
@@ -215,6 +211,7 @@ spec:
 
     oc delete -f
     https://raw.githubusercontent.com/hpe-storage/co-deployments/master/operators/hpe-csi-operator/deploy/scc.yaml
+    -n hpe-csi
 
     ```
 
@@ -225,6 +222,7 @@ spec:
 
     oc delete -f
     https://raw.githubusercontent.com/hpe-storage/co-deployments/master/operators/hpe-csi-operator/deploy/operator.yaml
+    -n hpe-csi
 
     ```
 
@@ -277,179 +275,129 @@ spec:
           - version: v1
             kind: ConfigMap
         specDescriptors:
-          - path: CRD
-            description: CRD
-            displayName: CRD
+          - path: crd.nodeInfo.create
+            description: Controls creation of HPE NodeInfo CRDs
+            displayName: HPE NodeInfo CRD
             x-descriptors:
               - 'urn:alm:descriptor:com.tectonic.ui:booleanSwitch'
-          - path: accessProtocol
-            description: Access Protocol
-            displayName: Access Protocol
+          - displayName: HPE CSP Name
+            description: Name of the HPE Container Storage Provider Deployment
+            path: cspName
             x-descriptors:
               - 'urn:alm:descriptor:com.tectonic.ui:text'
-          - path: allowVolumeExpansion
-            description: Allow Volume Expansion
-            displayName: Allow Volume Expansion
-            x-descriptors:
-              - 'urn:alm:descriptor:com.tectonic.ui:booleanSwitch'
-          - path: backend
-            description: Backend
-            displayName: Backend
-            x-descriptors:
-              - 'urn:alm:descriptor:com.tectonic.ui:text'
-          - path: csiAttacherImage
-            description: Csi Attacher Image
-            displayName: Csi Attacher Image
-            x-descriptors:
-              - 'urn:alm:descriptor:com.tectonic.ui:text'
-          - path: csiAttacherTagv0
-            description: Csi Attacher Tagv 0
-            displayName: Csi Attacher Tagv 0
-            x-descriptors:
-              - 'urn:alm:descriptor:com.tectonic.ui:text'
-          - path: csiAttacherTagv1
-            description: Csi Attacher Tagv 1
-            displayName: Csi Attacher Tagv 1
-            x-descriptors:
-              - 'urn:alm:descriptor:com.tectonic.ui:text'
-          - path: csiDriverImage
-            description: Csi Driver Image
-            displayName: Csi Driver Image
-            x-descriptors:
-              - 'urn:alm:descriptor:com.tectonic.ui:text'
-          - path: csiDriverTag
-            description: Csi Driver Tag
-            displayName: Csi Driver Tag
-            x-descriptors:
-              - 'urn:alm:descriptor:com.tectonic.ui:text'
-          - path: csiProvisionerImage
-            description: Csi Provisioner Image
-            displayName: Csi Provisioner Image
-            x-descriptors:
-              - 'urn:alm:descriptor:com.tectonic.ui:text'
-          - path: csiProvisionerTagv0
-            description: Csi Provisioner Tagv 0
-            displayName: Csi Provisioner Tagv 0
-            x-descriptors:
-              - 'urn:alm:descriptor:com.tectonic.ui:text'
-          - path: csiProvisionerTagv1
-            description: Csi Provisioner Tagv 1
-            displayName: Csi Provisioner Tagv 1
-            x-descriptors:
-              - 'urn:alm:descriptor:com.tectonic.ui:text'
-          - path: csiResizerImage
-            description: Csi Resizer Image
-            displayName: Csi Resizer Image
-            x-descriptors:
-              - 'urn:alm:descriptor:com.tectonic.ui:text'
-          - path: csiResizerTag
-            description: Csi Resizer Tag
-            displayName: Csi Resizer Tag
-            x-descriptors:
-              - 'urn:alm:descriptor:com.tectonic.ui:text'
-          - path: csiSnapshotterImage
-            description: Csi Snapshotter Image
-            displayName: Csi Snapshotter Image
-            x-descriptors:
-              - 'urn:alm:descriptor:com.tectonic.ui:text'
-          - path: csiSnapshotterTag
-            description: Csi Snapshotter Tag
-            displayName: Csi Snapshotter Tag
-            x-descriptors:
-              - 'urn:alm:descriptor:com.tectonic.ui:text'
-          - path: cspImage
-            description: Csp Image
-            displayName: Csp Image
-            x-descriptors:
-              - 'urn:alm:descriptor:com.tectonic.ui:text'
-          - path: cspName
-            description: Csp Name
-            displayName: Csp Name
-            x-descriptors:
-              - 'urn:alm:descriptor:com.tectonic.ui:text'
-          - path: cspTag
-            description: Csp Tag
-            displayName: Csp Tag
-            x-descriptors:
-              - 'urn:alm:descriptor:com.tectonic.ui:text'
-          - path: flavor
-            description: Flavor
-            displayName: Flavor
-            x-descriptors:
-              - 'urn:alm:descriptor:com.tectonic.ui:text'
-          - path: fsType
-            description: Fs Type
-            displayName: Fs Type
-            x-descriptors:
-              - 'urn:alm:descriptor:com.tectonic.ui:text'
-          - path: imagePullPolicy
-            description: Image Pull Policy
-            displayName: Image Pull Policy
+          - displayName: ImagePullPolicy
+            description: Image Pull Policy for all images used in HPE CSI deployment
+            path: imagePullPolicy
             x-descriptors:
               - 'urn:alm:descriptor:com.tectonic.ui:imagePullPolicy'
-          - path: logLevel
-            description: Log Level
-            displayName: Log Level
+          - displayName: CO Flavor
+            description: 'Flavor of the CO (kubernetes, ocp)'
+            path: flavor
             x-descriptors:
               - 'urn:alm:descriptor:com.tectonic.ui:text'
-          - path: nodeRegistrarImage
-            description: Node Registrar Image
-            displayName: Node Registrar Image
+          - displayName: Log Level
+            description: 'Log level for HPE CSI driver (trace, debug, warn, info, error)'
+            path: logLevel
             x-descriptors:
               - 'urn:alm:descriptor:com.tectonic.ui:text'
-          - path: nodeRegistrarTag
-            description: Node Registrar Tag
-            displayName: Node Registrar Tag
+          - displayName: CSI Driver Image
+            description: HPE CSI Driver Image
+            path: images.csiDriverImage
             x-descriptors:
               - 'urn:alm:descriptor:com.tectonic.ui:text'
-          - path: password
-            description: Password
-            displayName: Password
+          - displayName: HPE CSP Image
+            description: HPE CSP Image
+            path: images.cspImage
+            x-descriptors:
+              - 'urn:alm:descriptor:com.tectonic.ui:text'
+          - displayName: HPE Secret Name
+            description: Secret Name to create after CSI driver deployment
+            path: secret.name
+            x-descriptors:
+              - 'urn:alm:descriptor:com.tectonic.ui:text'
+          - displayName: Create Secret
+            description: 'Create secret for HPE backend (default: true)'
+            path: secret.create
+            x-descriptors:
+              - 'urn:alm:descriptor:com.tectonic.ui:booleanSwitch'
+          - displayName: Username
+            description: HPE backend username
+            path: secret.username
+            x-descriptors:
+              - 'urn:alm:descriptor:com.tectonic.ui:text'
+          - displayName: Password
+            description: HPE backend password
+            path: secret.password
             x-descriptors:
               - 'urn:alm:descriptor:com.tectonic.ui:password'
-          - path: postInstallImage
-            description: Post Install Image
-            displayName: Post Install Image
+          - displayName: CSP Service Name
+            description: HPE CSP service name
+            path: secret.serviceName
             x-descriptors:
               - 'urn:alm:descriptor:com.tectonic.ui:text'
-          - path: postInstallTag
-            description: Post Install Tag
-            displayName: Post Install Tag
+          - displayName: CSP Service Port
+            description: HPE CSP service port
+            path: secret.servicePort
             x-descriptors:
               - 'urn:alm:descriptor:com.tectonic.ui:text'
-          - path: secretName
-            description: Secret Name
-            displayName: Secret Name
+          - displayName: HPE Backend
+            description: HPE Storage Backend IP
+            path: secret.backend
             x-descriptors:
               - 'urn:alm:descriptor:com.tectonic.ui:text'
-          - path: serviceName
-            description: Service Name
-            displayName: Service Name
+          - displayName: HPE Storage Class Name
+            description: HPE Storage Class Name
+            path: storageClass.name
             x-descriptors:
               - 'urn:alm:descriptor:com.tectonic.ui:text'
-          - path: servicePort
-            description: Service Port
-            displayName: Service Port
+          - displayName: Create HPE Storage Class
+            description: 'Create a storage class for HPE storage (default: true)'
+            path: storageClass.create
+            x-descriptors:
+              - 'urn:alm:descriptor:com.tectonic.ui:booleanSwitch'
+          - displayName: Create DefaultClass
+            description: 'Create HPE storage class as default storage class (default: false)'
+            path: storageClass.defaultClass
+            x-descriptors:
+              - 'urn:alm:descriptor:com.tectonic.ui:booleanSwitch'
+          - displayName: Default Volume Description
+            description: Volume description in HPE storage class
+            path: storageClass.parameters.volumeDescription
             x-descriptors:
               - 'urn:alm:descriptor:com.tectonic.ui:text'
-          - path: storageClass
-            description: Storage Class
-            displayName: Storage Class
+          - displayName: Default Filesystem Type
+            description: 'Filesystem type to use in HPE storage class (default: xfs)'
+            path: storageClass.parameters.fsType
             x-descriptors:
               - 'urn:alm:descriptor:com.tectonic.ui:text'
-          - path: username
-            description: Username
-            displayName: Username
+          - displayName: Default Access Protocol
+            description: 'Access protocol to use in HPE storage class (default: iscsi)'
+            path: storageClass.parameters.accessProtocol
             x-descriptors:
               - 'urn:alm:descriptor:com.tectonic.ui:text'
-          - path: volumeDescription
-            description: Volume Description
-            displayName: Volume Description
+          - displayName: Allow Volume Expansion
+            description: Enable volume expansion in HPE storage class
+            path: storageClass.allowVolumeExpansion
+            x-descriptors:
+              - 'urn:alm:descriptor:com.tectonic.ui:booleanSwitch'
+          - displayName: Images
+            description: HPE CSI Driver Images
+            path: images
             x-descriptors:
               - 'urn:alm:descriptor:com.tectonic.ui:text'
-          - displayName: Service Wait Time
-            description: Wait time for HPE CSI driver pods to be up
-            path: serviceWaitTime
+          - displayName: HPE Secret
+            description: Secret parameters to create for HPE backend
+            path: secret
+            x-descriptors:
+              - 'urn:alm:descriptor:com.tectonic.ui:text'
+          - displayName: HPE NodeInfo CRD
+            description: HPE NodeInfo CRD controls
+            path: crd
+            x-descriptors:
+              - 'urn:alm:descriptor:com.tectonic.ui:text'
+          - displayName: HPE Storage Class
+            description: HPE storage class created as part of deployment
+            path: storageClass
             x-descriptors:
               - 'urn:alm:descriptor:com.tectonic.ui:text'
         statusDescriptors:
