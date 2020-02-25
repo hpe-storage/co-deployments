@@ -12,53 +12,54 @@ For platform dependencies for HPE CSI driver please refer to [prerequisites](htt
 
 ## Installation
 
-Clone this GitHub repository.
+Create a new namespace/project called hpe-csi
 ```
-git clone https://github.com/hpe-storage/co-deployments
-cd operators/hpe-csi-operator
+kubectl create namespace hpe-csi
+```
+or for OCP
+```
+oc new-project hpe-csi
 ```
 
-Create your own `values.yaml`. The easiest way is to copy the default [./values.yaml](../../helm/charts/hpe-csi-driver/values.yaml) with `wget` and change parameters like `backend` as necessary.
+For OCP create SecurityContextConstraints with privileges required for CSI driver
+```
+oc apply -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/operators/hpe-csi-operator/deploy/scc.yaml -n hpe-csi
+```
 
-Run the install script to set up the HPE CSI Operator.
-```install.sh --image=<image> --namespace=<namespace> --flavor=<co flavor> --values=<values.yaml file path>```
+*** NOTE *** If you are using OpenShift, replace `kubectl` with `oc` below.
 
-Parameter list:<br/>
-1. ``image`` is the HPE CSI Operator image. If unspecified ``image`` resolves to the released version at [hpestorage/hpe-csi-operator](https://hub.docker.com/repository/docker/hpestorage/csi-driver-operator).
-2. ``namespace`` is the namespace/project in which the HPE CSI Operator and its entities will be installed. If unspecified, the operator creates and installs in  the ``hpe-csi`` namespace.
-**HPE CSI Operator MUST be installed in a new project with no other pods. Otherwise an uninstall may delete pods that are not related to the HPE CSI Operator.**
-3. ``flavor`` defaults to ``k8s``. Options are ``k8s``, ``kubernetes``, ``ocp`` or ``openshift``.
-4. ``values.yaml`` is the customized helm-chart configuration parameters. This is a **required parameter** and must contain a valid backend HPE storage system. All parameters that need a non-default value must be specified in this file.
-Refer to [Configuration for values.yaml.](https://github.com/hpe-storage/co-deployments/tree/master/helm/charts/hpe-csi-driver#configuration--installation) for details about various parameters.
+Deploy Operator/RBAC and CRD's required
+```
+kubectl apply -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/operators/hpe-csi-operator/deploy/role.yaml
+kubectl apply -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/operators/hpe-csi-operator/deploy/role_binding.yaml
+kubectl apply -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/operators/hpe-csi-operator/deploy/service_account.yaml
+kubectl apply -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/operators/hpe-csi-operator/deploy/operator.yaml
+kubectl apply -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/operators/hpe-csi-operator/deploy/crds/storage.hpe.com_hpecsidrivers_crd.yaml
+```
 
-**Note:** HPE CSI Driver for Kubernetes automatically configures Linux iSCSI/Multipath settings based on [config.json](https://raw.githubusercontent.com/hpe-storage/co-deployments/master/helm/charts/hpe-csi-driver/files/config.json). In order to tune these values, edit the config map with `kubectl edit configmap hpe-linux-config -n hpe-csi` and restart node plugin using `kubectl delete pod -l app=hpe-csi-node` to apply.
+Fetch and update CustomResource of type `HPECSIDriver` with required values like `backend`, `username`, `password` etc.
+```
+curl -sL https://raw.githubusercontent.com/hpe-storage/co-deployments/master/operators/hpe-csi-operator/deploy/crds/storage.hpe.com_v1_hpecsidriver_cr.yaml > storage.hpe.com_v1_hpecsidriver_cr.yaml
+```
 
-### Install script steps:
-The install script will do the following:
-1. Create New Project.<br/>
-The script creates a new project (if it does not already exist) with the given namespace. If no namespace parameter is specified, the ``hpe-csi`` namespace is used.<br/>
+Deploy above updated CustomResource `csi-driver`
+```
+kubectl apply -f storage.hpe.com_v1_hpecsidriver_cr.yaml
+```
 
-2. Create a Custom Resource Definition (CRD) for the HPE CSI Operator. <br/>
-The script waits for the CRD to be published in the cluster. If after 10 seconds the API server has not setup the CRD, the script times out.
-
-3. Create RBAC rules for the Operator.<br/>
-The HPE CSI Operator needs the following Cluster-level Roles and RoleBindings.
-
-
-| Resource        | Permissions           | Notes  |
-| ------------- |:-------------:| -----:|
-| Namespace | Get | HPE CSI Operator needs the ability to get created namespaces |
-| Storageclass | Create/Delete | Create and cleanup storage classes to be used for Provisioning |
-| ClusterRoleBinding | Create/Delete/Get | HPE Operator needs to create and cleanup a ClusterRoleBinding used by the external-provisioner/external-attacher/external-snapshotter/external-resizer sidecars |
-<br/>
-
-In addition, the operator needs access to multiple resources in the project/namespace that it is deployed in to function correctly. Hence it is recommended to install the HPE CSI Operator in the non-default namespace.
-<br/>
-
-4. Creates a deployment for the Operator.<br/>
-Finally the script creates and deploys the operator using the customized parameters passed in the ``values.yaml`` file.
+The HPE CSI Operator will be installed in `hpe-csi` project/namespace. It is **strongly recommended** to install the HPE CSI Operator in a new project and not add any other pods to this project/namespace. Any pods in this project will be cleaned up on an uninstall.
 
 ## Upgrading
+
+Fetch and update CustomResource of type `HPECSIDriver` with required values
+```
+curl -sL https://raw.githubusercontent.com/hpe-storage/co-deployments/master/operators/hpe-csi-operator/deploy/crds/storage.hpe.com_v1_hpecsidriver_cr.yaml > storage.hpe.com_v1_hpecsidriver_cr.yaml
+```
+
+Deploy updated CustomResource `csi-driver`
+```
+kubectl apply -f storage.hpe.com_v1_hpecsidriver_cr.yaml -n hpe-csi
+```
 
 ### How to upgrade from helm install to HPE CSI Operator
 This upgrade will not impact the in-use volumes/filesystems from data path perspective. However, it will affect the in-flight volume/filesystem management operations. So, it is recommended to stop all the volume/filesystem management operations before doing this upgrade. Otherwise, these operations may need to be retried after the upgrade.
@@ -66,29 +67,41 @@ This upgrade will not impact the in-use volumes/filesystems from data path persp
 Remove the helm-chart using instructions in https://helm.sh/docs/using_helm/#uninstall-a-release.
 Once the helm chart has been uninstalled, follow the install instructions [above.](#installation)
 
-### Apply changes in ``values.yaml``
-The ``update.sh`` script is used to apply changes from ``values.yaml`` as follows.
-```
-./update.sh -f values.yaml
-```
-
 ## Uninstall
-To uninstall the HPE CSI Operator, run
-```
-kubectl delete all --all -n <hpe-csi-operator-installed-namespace>
-```
-where ``hpe-csi-operator-installed-namespace`` is the project/namespace in which the HPE CSI Operator is installed. It is **strongly recommended** to install the HPE CSI Operator in a new project and not add any other pods to this project/namespace. Any pods in this project will be cleaned up on an uninstall.
 
-If you are using OpenShift, replace `kubectl` with `oc`.
-To completely remove the CustomResourceDefinition used by the Operator run
+*** NOTE *** If you are using OpenShift, replace `kubectl` with `oc`.
+
+1. Delete the HPE CSI Driver custom resource, this will cause our CSI plugin resources to be cleaned up.
 ```
-kubectl delete crd hpecsidrivers.storage.hpe.com
+kubectl delete -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/operators/hpe-csi-operator/deploy/crds/storage.hpe.com_v1_hpecsidriver_cr.yaml
+
+kubectl delete -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/operators/hpe-csi-operator/deploy/crds/storage.hpe.com_hpecsidrivers_crd.yaml
 ```
+
 If the CRD fails to delete you may be experiencing a known issue. Resolve this by running:
 ```
+kubectl patch hpecsidrivers/csi-driver -n hpe-csi -p '{"metadata":{"finalizers":[]}}' --type=merge
 kubectl patch crd/hpecsidrivers.storage.hpe.com -p '{"metadata":{"finalizers":[]}}' --type=merge
 ```
-If you are using OpenShift, replace `kubectl` with `oc` in the above commands.
+
+2. Delete all cluster level roles and bindings for operator
+```
+kubectl delete -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/operators/hpe-csi-operator/deploy/role.yaml
+kubectl delete -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/operators/hpe-csi-operator/deploy/role_binding.yaml
+kubectl delete -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/operators/hpe-csi-operator/deploy/service_account.yaml
+```
+
+For OpenShift, delete SecurityContextConstraints created
+```
+kubectl delete -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/operators/hpe-csi-operator/deploy/scc.yaml
+```
+
+3. Delete operator deployment itself
+```
+kubectl delete -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/operators/hpe-csi-operator/deploy/operator.yaml
+```
+
+``hpe-csi`` is the project/namespace in which the HPE CSI Operator will be installed by default. It is **strongly recommended** to install the HPE CSI Operator in a new project and not add any other pods to this project/namespace. Any pods in this project will be cleaned up on an uninstall.
 
 ## License
 This is open source software licensed using the Apache License 2.0. Please see [LICENSE](../../LICENSE) for details.

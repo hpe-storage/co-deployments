@@ -31,13 +31,7 @@ spec:
       {{- end }}
       containers:
         - name: csi-node-driver-registrar
-          {{- if semverCompare "~1.12.0" .Capabilities.KubeVersion.GitVersion }}
-          image: {{ .Values.nodeRegistrarImagev0}}: {{- .Values.nodeRegistrarTagv0}}
-          {{- else if semverCompare "~1.13.0" .Capabilities.KubeVersion.GitVersion }}
-          image: {{ .Values.nodeRegistrarImage}}: {{- .Values.nodeRegistrarTagv1}}
-          {{- else }}
-          image: {{ .Values.nodeRegistrarImage}}: {{- .Values.nodeRegistrarTagv2}}
-          {{- end }}
+          image: quay.io/k8scsi/csi-node-driver-registrar:v1.1.0
           args:
             - "--csi-address=$(ADDRESS)"
             - "--kubelet-registration-path=$(DRIVER_REG_SOCK_PATH)"
@@ -65,7 +59,7 @@ spec:
             - name: registration-dir
               mountPath: /registration
         - name: hpe-csi-driver
-          image: {{ .Values.csiDriverImage}}: {{- .Values.csiDriverTag}}
+          image: {{ .Values.images.csiDriverImage}}
           args :
             - "--endpoint=$(CSI_ENDPOINT)"
             - "--node-service"

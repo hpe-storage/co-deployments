@@ -3,6 +3,13 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: hpe-csi-operator
+  namespace: hpe-csi
+  labels:
+    product: hpe-csi-driver
+    csi: hpe
+    app.kubernetes.io/name: hpe-csi-operator
+    app.kubernetes.io/instance: hpe-csi-operator
+    app.kubernetes.io/managed-by: hpe-csi-operator
 spec:
   replicas: 1
   selector:
@@ -12,12 +19,20 @@ spec:
     metadata:
       labels:
         name: hpe-csi-operator
+        product: hpe-csi-driver
+        csi: hpe
+        app.kubernetes.io/name: hpe-csi-operator
+        app.kubernetes.io/instance: hpe-csi-operator
+        app.kubernetes.io/managed-by: hpe-csi-operator
     spec:
-      serviceAccountName: default
+      serviceAccountName: hpe-csi-operator-sa
       containers:
         - name: hpe-csi-operator
           # Replace this with the built image name
-          image: REPLACE_IMAGE
+          image: hpestorage/csi-driver-operator:edge
+          ports:
+          - containerPort: 60000
+            name: metrics
           imagePullPolicy: Always
           env:
             - name: WATCH_NAMESPACE

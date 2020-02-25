@@ -1,0 +1,4 @@
+packageName: csi-driver-operator
+channels:
+  - name: hpestorage/csi-driver-operator
+    currentCSV: hpe-csi-driver-operator.v1.0.0

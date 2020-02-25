@@ -25,10 +25,10 @@ spec:
       dnsPolicy: ClusterFirstWithHostNet
       containers:
         - name: csi-provisioner
-          {{- if semverCompare "~1.12.0" .Capabilities.KubeVersion.GitVersion }}
-          image: {{ .Values.csiProvisionerImage}}: {{- .Values.csiProvisionerTagv0}}
+          {{- if semverCompare "<=1.16.0" .Capabilities.KubeVersion.GitVersion }}
+          image: quay.io/k8scsi/csi-provisioner:v1.4.0
           {{- else }}
-          image: {{ .Values.csiProvisionerImage}}: {{- .Values.csiProvisionerTagv1}}
+          image: quay.io/k8scsi/csi-provisioner:v1.5.0
           {{- end }}
           args:
             - "--csi-address=$(ADDRESS)"
@@ -45,12 +45,10 @@ spec:
             - name: socket-dir
               mountPath: /var/lib/csi/sockets/pluginproxy
         - name: csi-attacher
-          {{- if semverCompare "~1.12.0" .Capabilities.KubeVersion.GitVersion }}
-          image: {{ .Values.csiAttacherImage}}: {{- .Values.csiAttacherTagv0}}
-          {{- else if semverCompare "~1.13.0" .Capabilities.KubeVersion.GitVersion }}
-          image: {{ .Values.csiAttacherImage}}: {{- .Values.csiAttacherTagv1}}
+          {{- if semverCompare "~1.13.0" .Capabilities.KubeVersion.GitVersion }}
+          image: quay.io/k8scsi/csi-attacher:v1.1.0
           {{- else }}
-          image: {{ .Values.csiAttacherImage}}: {{- .Values.csiAttacherTagv2}}
+          image: quay.io/k8scsi/csi-attacher:v2.1.1
           {{- end }}
           args:
             - "--v=5"
@@ -64,7 +62,7 @@ spec:
               mountPath: /var/lib/csi/sockets/pluginproxy
         {{- if semverCompare ">=1.17.0" .Capabilities.KubeVersion.GitVersion }}
         - name: csi-snapshotter
-          image: quay.io/k8scsi/csi-snapshotter:v2.0.0-rc4
+          image: quay.io/k8scsi/csi-snapshotter:v2.0.1
           args:
             - "--v=5"
             - "--csi-address=$(ADDRESS)"
@@ -78,7 +76,7 @@ spec:
         {{- end }}
         {{- if semverCompare ">=1.15.0" .Capabilities.KubeVersion.GitVersion }}
         - name: csi-resizer
-          image: {{ .Values.csiResizerImage}}: {{- .Values.csiResizerTag}}
+          image: quay.io/k8scsi/csi-resizer:v0.4.0
           args:
             - "--csi-address=$(ADDRESS)"
             - "--v=5"
@@ -91,7 +89,7 @@ spec:
               mountPath: /var/lib/csi/sockets/pluginproxy
         {{- end }}
         - name: hpe-csi-driver
-          image: {{ .Values.csiDriverImage}}: {{- .Values.csiDriverTag}}
+          image: {{ .Values.images.csiDriverImage}}
           args :
             - "--endpoint=$(CSI_ENDPOINT)"
             - "--flavor=kubernetes"
