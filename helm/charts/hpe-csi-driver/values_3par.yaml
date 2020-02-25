@@ -1,0 +1,58 @@
+# Default values for hpe-csi-storage.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+images:
+  # csi-driver
+  csiDriverImage: hpestorage/csi-driver:v1.1.0-beta
+  # csp-hpe
+  cspImage: dockerciuser/hpe_3par_primera_csp:test
+
+# image pull policy for all images in csi deployment
+imagePullPolicy: 'Always'
+
+# CSP deployment name
+cspName: hpe3parprimera-csp
+
+secret:
+  # parameters for nimble
+  create: true
+  backend: 15.212.195.246
+  username: 3paradm
+  password: 3pardata
+  servicePort: "10000"
+  serviceName: hpe3parprimera-csp-svc
+  name: hpe3parprimera-secret
+
+# flavor
+flavor: kubernetes
+
+# log level for all csi driver components
+logLevel: info
+
+## For creating the StorageClass automatically:
+storageClass:
+  create: false
+
+  ## Set StorageClass as the default StorageClass
+  ## Ignored if storageClass.create is false
+  defaultClass: false
+
+  ## Set a StorageClass name
+  ## Ignored if storageClass.create is false
+  name: hpe-standard
+  # Enable volume resize
+  ## Ignored if storageClass.create is false
+  #allowVolumeExpansion: true
+  # Default storage class parameters
+  parameters:
+    fsType: ext4
+    volumeDescription: "Volume created by the HPE CSI Driver for Kubernetes"
+    accessProtocol: "iscsi"
+
+# CRD creation controls
+crd:
+  nodeInfo:
+    ## For helm v3+ CRD's are handled automatically without this flag.
+    ## This flag should be enabled for helm v2+
+    create: false
