@@ -15,7 +15,7 @@ imagePullPolicy: 'Always'
 cspName: hpe3parprimera-csp
 
 secret:
-  # parameters for nimble
+  # parameters for hpe3parprimera
   create: true
   backend: 15.212.195.246
   username: 3paradm

@@ -46,4 +46,3 @@ spec:
         - name: log-dir
           hostPath:
             path: /var/log
-
