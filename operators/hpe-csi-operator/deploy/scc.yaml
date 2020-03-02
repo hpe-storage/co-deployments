@@ -1,19 +1,27 @@
 ---
 kind: SecurityContextConstraints
-apiVersion: v1
+apiVersion: security.openshift.io/v1
 metadata:
   name: hpe-csi-scc
-allowPrivilegedContainer: true
 allowHostDirVolumePlugin: true
+allowHostIPC: true
 allowHostNetwork: true
+allowHostPID: true
 allowHostPorts: true
+allowPrivilegeEscalation: true
+allowPrivilegedContainer: true
 allowedCapabilities:
 - '*'
+defaultAddCapabilities: []
+fsGroup:
+  type: RunAsAny
+groups: []
+priority:
+readOnlyRootFilesystem: false
+requiredDropCapabilities: []
 runAsUser:
   type: RunAsAny
 seLinuxContext:
-  type: RunAsAny
-fsGroup:
   type: RunAsAny
 supplementalGroups:
   type: RunAsAny
