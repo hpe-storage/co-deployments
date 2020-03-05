@@ -23,6 +23,10 @@ spec:
       serviceAccount: hpe-csi-controller-sa
       hostNetwork: true
       dnsPolicy: ClusterFirstWithHostNet
+      dnsConfig:
+        options:
+          - name: ndots
+            value: "1"
       containers:
         - name: csi-provisioner
           {{- if semverCompare "<=1.16.0" .Capabilities.KubeVersion.GitVersion }}

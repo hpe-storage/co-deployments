@@ -3,9 +3,9 @@ entries:
   hpe-csi-driver:
   - apiVersion: v1
     appVersion: 1.1.0-beta
-    created: "2020-02-29T22:46:06.995443-08:00"
+    created: "2020-03-04T09:09:43.51251-08:00"
     description: A Helm chart for installing the HPE CSI Driver for Kubernetes
-    digest: 441a07b4c832127c3fe26ab27edc2ba082cd13f3fb4bea292b87ca85bcf25753
+    digest: 68f350a88b2a161748e69465ae675060f7b5b72e882a76c301c07ab2e11dc795
     home: https://hpe.com/storage/containers
     icon: https://raw.githubusercontent.com/hpe-storage/co-deployments/master/docs/assets/hpedev.png
     keywords:
@@ -25,7 +25,7 @@ entries:
     version: 1.1.0-beta
   - apiVersion: v1
     appVersion: "1.0"
-    created: "2020-02-29T22:46:06.993757-08:00"
+    created: "2020-03-04T09:09:43.511791-08:00"
     description: A Helm chart for installing the HPE CSI Driver for Kubernetes
     digest: 0370a3eb966b1665c1d612ca78e9ad254960f9e10f34ff8a3a926870f241fc6e
     home: https://hpe.com/storage/containers
@@ -47,7 +47,7 @@ entries:
     version: 1.0.1
   - apiVersion: v1
     appVersion: "1.0"
-    created: "2020-02-29T22:46:06.993022-08:00"
+    created: "2020-03-04T09:09:43.505065-08:00"
     description: A Helm chart for installing the HPE CSI Driver for Kubernetes
     digest: 14fe529034fb3bc806639630424bdd11ba2c259dc363014d30a8a8d6b5830cae
     home: https://hpe.com/storage/containers
@@ -70,7 +70,7 @@ entries:
   hpe-flexvolume-driver:
   - apiVersion: v1
     appVersion: "3.1"
-    created: "2020-02-29T22:46:06.996615-08:00"
+    created: "2020-03-04T09:09:43.5203-08:00"
     description: A Helm chart for installing the HPE Volume Driver for Kubernetes
       FlexVolume plugin
     digest: 6a123483f0408b25f2aef04f5433550d5c315d3fcb3e9dd724e8def0ca5fe2c6
@@ -94,7 +94,7 @@ entries:
     version: 3.1.0
   - apiVersion: v1
     appVersion: "3.0"
-    created: "2020-02-29T22:46:06.996073-08:00"
+    created: "2020-03-04T09:09:43.517917-08:00"
     description: A Helm chart for installing the HPE Volume Driver for Kubernetes
       FlexVolume plugin
     digest: 523ad3c654d697e6350cde6cfee346f056373585c7bcce9b2125b9fb9cd92289
@@ -115,4 +115,4 @@ entries:
     urls:
     - hpe-flexvolume-driver-3.0.0.tgz
     version: 3.0.0
-generated: "2020-02-29T22:46:06.992106-08:00"
+generated: "2020-03-04T09:09:43.499165-08:00"
