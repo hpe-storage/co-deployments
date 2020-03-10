@@ -17,6 +17,14 @@
             "limit": 1
         },
         {
+            "pattern": "dcs-docker-local/hpestorage/csi-driver/v1.1.0*",
+            "sortBy": [
+                "created"
+            ],
+            "sortOrder": "desc",
+            "limit": 1
+        },
+        {
             "pattern": "dcs-docker-local/hpestorage/csi-driver/edge*",
             "sortBy": [
                 "created"
