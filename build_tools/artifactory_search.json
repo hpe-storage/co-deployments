@@ -33,7 +33,15 @@
             "limit": 1
         },
         {
-            "pattern": "dcs-docker-local/hpestorage/nimble-csp/",
+            "pattern": "dcs-docker-local/hpestorage/nimble-csp/v1.1.0*",
+            "sortBy": [
+                "created"
+            ],
+            "sortOrder": "desc",
+            "limit": 1
+        },
+        {
+            "pattern": "dcs-docker-local/hpestorage/nimble-csp/edge*",
             "sortBy": [
                 "created"
             ],
