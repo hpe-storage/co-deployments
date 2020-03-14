@@ -8,9 +8,9 @@ spec:
   # Default values copied from <project_dir>/helm-charts/hpe-csi-driver/values.yaml
   images:
     # csi-driver
-    csiDriverImage: hpestorage/csi-driver:v1.1.0-beta
+    csiDriverImage: hpestorage/csi-driver:v1.1.0
     # csp-hpe
-    cspImage: hpestorage/nimble-csp:v1.1.0-beta
+    cspImage: hpestorage/nimble-csp:v1.1.0
 
   # image pull policy for all images in csi deployment
   imagePullPolicy: 'Always'
