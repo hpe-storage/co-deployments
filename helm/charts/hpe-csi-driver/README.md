@@ -84,7 +84,7 @@ helm delete hpe-csi --purge
 ```
 
 ### Alternative install method
-In some cases it's more practical to provide the local configuration via the `helm` command directly. Specify each parameter using the `--set key=value[,key=value]` argument to `helm install`. These will take precedence than entries in values.yaml. For example:
+In some cases it's more practical to provide the local configuration via the `helm` command directly. Specify each parameter using the `--set key=value[,key=value]` argument to `helm install`. These will take precedence over entries in values.yaml. For example:
 
 ```
 # helm v3
