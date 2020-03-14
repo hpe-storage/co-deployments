@@ -1,25 +1,25 @@
 categories:
 - storage
 questions:
-- variable: backend
+- variable: secret.backend
   label: "IP address"
   type: string
   required: true
   description: "Please specify HPE backend IP address."
   group: "HPE backend settings"
-- variable: username
+- variable: secret.username
   label: "Username"
   type: string
   required: true
   description: "Specify username with backend storage admin permissions."
   group: "HPE backend settings"
-- variable: password
+- variable: secret.password
   label: "Password"
   type: password
   required: true
   description: "Specify password for the backend user."
   group: "HPE backend settings"
-- variable: fsType
+- variable: storageClass.parameters.fsType
   label: "Filesystem"
   default: "xfs"
   type: enum
@@ -30,7 +30,7 @@ questions:
     - "btrfs"
   description: "Select the filesystem for Persistent Volumes, defaults to xfs."
   group: "HPE StorageClass and volume settings"
-- variable: accessProtocol
+- variable: storageClass.parameters.accessProtocol
   label: "HPE storage protocol"
   type: enum
   default: "iscsi"
@@ -52,7 +52,7 @@ questions:
   default: false
   description: "If specified as 'true', the 'hpe-standard' StorageClass will be annotated as 'default'. This option is ignored if 'Create a StorageClass' is set to 'false'."
   group: "HPE StorageClass and volume settings"
-- variable: CRD.nodeInfo.create
+- variable: crd.nodeInfo.create
   label: "Create HPE NodeInfo CRD."
   type: boolean
   default: false
