@@ -52,10 +52,10 @@ helm search repo hpe-csi-driver
 
 Install the latest chart:
 ```
-# Helm 2
+# Helm 3
 helm install hpe-csi hpe/hpe-csi-driver --namespace kube-system -f myvalues.yaml
 
-# Helm 3
+# Helm 2
 # Install with HPENodeInfos CRD's enabled explicitly
 helm install --name hpe-csi hpe/hpe-csi-driver --namespace kube-system -f myvalues.yaml --set crd.nodeInfo.create=true
 ```
@@ -76,10 +76,10 @@ helm upgrade hpe-csi hpe/hpe-csi-driver --namespace kube-system --version=x.x.x.
 To uninstall/delete the `hpe-csi` chart:
 
 ```
-# Helm 2
+# Helm 3
 helm uninstall hpe-csi
 
-# Helm 3
+# Helm 2
 helm delete hpe-csi --purge
 ```
 
@@ -87,11 +87,11 @@ helm delete hpe-csi --purge
 In some cases it's more practical to provide the local configuration via the `helm` command directly. Specify each parameter using the `--set key=value[,key=value]` argument to `helm install`. These will take precedence over entries in [values.yaml](https://github.com/hpe-storage/co-deployments/blob/master/helm/values/csi-driver/v1.1.0/values.yaml). For example:
 
 ```
-# Helm 2
+# Helm 3
 helm install hpe-csi hpe/hpe-csi-driver --namespace kube-system \
 --set backend=X.X.X.X --set username=admin --set password=xxxxxxxxx
 
-# Helm 3
+# Helm 2
 helm install --name hpe-csi hpe/hpe-csi-driver --namespace kube-system \
 --set backend=X.X.X.X --set username=admin --set password=xxxxxxxxx
 ```
