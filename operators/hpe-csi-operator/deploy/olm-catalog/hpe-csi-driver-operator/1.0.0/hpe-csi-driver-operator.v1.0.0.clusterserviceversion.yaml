@@ -5,9 +5,51 @@ metadata:
   namespace: placeholder
   annotations:
     alm-examples: >-
-      [{"apiVersion":"storage.hpe.com/v1","kind":"HPECSIDriver","metadata":{"name":"csi-driver","namespace":"hpe-csi"},"spec":{"images":{"csiDriverImage":"hpestorage/csi-driver:v1.1.0","cspImage":"hpestorage/nimble-csp:v1.1.0"},"imagePullPolicy":"Always","cspName":"nimble-csp","secret":{"create":true,"backend":"192.168.1.1","username":"admin","password":"admin","servicePort":"8080","serviceName":"nimble-csp-svc","name":"nimble-secret"},"flavor":"kubernetes","logLevel":"info","storageClass":{"create":true,"defaultClass":false,"name":"hpe-standard","allowVolumeExpansion":true,"parameters":{"fsType":"xfs","volumeDescription":"Volume
-      created by the HPE CSI Driver for
-      Kubernetes","accessProtocol":"iscsi"}},"crd":{"nodeInfo":{"create":false}}}}]
+      [
+        {
+          "apiVersion": "storage.hpe.com/v1",
+          "kind": "HPECSIDriver",
+          "metadata": {
+            "name": "csi-driver",
+            "namespace": "hpe-csi"
+          },
+          "spec": {
+            "crd": {
+              "nodeInfo": {
+                "create": false
+              }
+            },
+            "cspName": "nimble-csp",
+            "flavor": "kubernetes",
+            "imagePullPolicy": "Always",
+            "images": {
+              "csiDriverImage": "hpestorage/csi-driver:v1.1.0",
+              "cspImage": "hpestorage/nimble-csp:v1.1.0"
+            },
+            "logLevel": "info",
+            "secret": {
+              "backend": "192.168.1.1",
+              "create": true,
+              "name": "nimble-secret",
+              "password": "admin",
+              "serviceName": "nimble-csp-svc",
+              "servicePort": "8080",
+              "username": "admin"
+            },
+            "storageClass": {
+              "allowVolumeExpansion": true,
+              "create": true,
+              "defaultClass": false,
+              "name": "hpe-standard",
+              "parameters": {
+                "accessProtocol": "iscsi",
+                "fsType": "xfs",
+                "volumeDescription": "Volume created by the HPE CSI Driver for Kubernetes"
+              }
+            }
+          }
+        }
+      ]
     categories: Storage
     certified: 'true'
     createdAt: ''
