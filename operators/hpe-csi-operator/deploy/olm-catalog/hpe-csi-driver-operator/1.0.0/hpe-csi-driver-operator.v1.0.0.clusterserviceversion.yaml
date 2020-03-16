@@ -227,6 +227,26 @@ spec:
             path: storageClass.allowVolumeExpansion
             x-descriptors:
               - 'urn:alm:descriptor:com.tectonic.ui:booleanSwitch'
+          - displayName: Images
+            description: HPE CSI Driver Images
+            path: images
+            x-descriptors:
+              - 'urn:alm:descriptor:com.tectonic.ui:text'
+          - displayName: HPE Secret
+            description: Secret parameters to create for HPE backend
+            path: secret
+            x-descriptors:
+              - 'urn:alm:descriptor:com.tectonic.ui:text'
+          - displayName: HPE NodeInfo CRD
+            description: HPE NodeInfo CRD controls
+            path: crd
+            x-descriptors:
+              - 'urn:alm:descriptor:com.tectonic.ui:text'
+          - displayName: HPE Storage Class
+            description: HPE storage class created as part of deployment
+            path: storageClass
+            x-descriptors:
+              - 'urn:alm:descriptor:com.tectonic.ui:text'
         statusDescriptors:
           - displayName: Conditions
             description: HPE CSI Driver Helm release status
