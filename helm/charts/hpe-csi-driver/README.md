@@ -6,7 +6,7 @@ The [HPE CSI Driver for Kubernetes](https://github.com/hpe-storage/csi-driver) l
 
 - Upstream Kubernetes version > 1.13
 - Most Kubernetes distributions supported
-- OpenShift 4.2, 4.3 (RHCOS and RHEL)
+- OpenShift 4.2, 4.3 (RHCOS and RHEL 7.x)
 - Recent Ubuntu, CentOS or RHEL compute nodes connected to their respective official package repositories
 - Helm 2 (Should specify creation of CRD's explicitly using `--set crd.nodeInfo.create=true` during install)
 - Helm 3 (Supported only from HPE CSI Driver version 1.1.0 onwards)
@@ -77,7 +77,7 @@ To uninstall/delete the `hpe-csi` chart:
 
 ```
 # Helm 3
-helm uninstall hpe-csi
+helm uninstall hpe-csi --namespace kube-system
 
 # Helm 2
 helm delete hpe-csi --purge
