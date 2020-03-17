@@ -119,7 +119,7 @@ spec:
             - name: socket-dir
               mountPath: /var/lib/csi/sockets/pluginproxy/
         - name: csi-attacher
-          image: quay.io/k8scsi/csi-attacher:v1.2.0
+          image: quay.io/k8scsi/csi-attacher:v2.1.1
           args:
             - "--v=5"
             - "--csi-address=$(ADDRESS)"
@@ -143,7 +143,7 @@ spec:
             - name: socket-dir
               mountPath: /var/lib/csi/sockets/pluginproxy/
         - name: hpe-csi-driver
-          image: hpestorage/csi-driver:v1.1.0-beta
+          image: hpestorage/csi-driver:edge
           args :
             - "--endpoint=$(CSI_ENDPOINT)"
             - "--flavor=kubernetes"
@@ -249,7 +249,7 @@ rules:
     verbs: ["get", "list", "watch"]
   - apiGroups: ["storage.k8s.io"]
     resources: ["volumeattachments"]
-    verbs: ["get", "list", "watch", "update"]
+    verbs: ["get", "list", "watch", "update", "patch"]
   - apiGroups: ["storage.k8s.io"]
     resources: ["volumeattachments/status"]
     verbs: ["get", "list", "watch", "update", "create", "delete"]
@@ -416,7 +416,7 @@ spec:
             - name: registration-dir
               mountPath: /registration
         - name: hpe-csi-driver
-          image: hpestorage/csi-driver:v1.1.0-beta
+          image: hpestorage/csi-driver:edge
           args :
             - "--endpoint=$(CSI_ENDPOINT)"
             - "--node-service"

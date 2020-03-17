@@ -46,7 +46,7 @@ spec:
       priorityClassName: system-cluster-critical
       containers:
         - name: nimble-csp
-          image: hpestorage/nimble-csp:v1.1.0-beta
+          image: hpestorage/nimble-csp:edge
           imagePullPolicy: Always
           ports:
           - containerPort: 8080
