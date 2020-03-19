@@ -13,6 +13,9 @@ subjects:
 - kind: ServiceAccount
   name: hpe-csi-operator-sa
   namespace: hpe-csi
+- kind: ServiceAccount
+  name: hpe-csp-sa
+  namespace: hpe-csi
 roleRef:
   kind: ClusterRole
   name: hpe-csi-operator-role
@@ -32,6 +35,9 @@ metadata:
 subjects:
 - kind: ServiceAccount
   name: hpe-csi-operator-sa
+  namespace: hpe-csi
+- kind: ServiceAccount
+  name: hpe-csp-sa
   namespace: hpe-csi
 roleRef:
   kind: Role
