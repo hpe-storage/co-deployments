@@ -21,7 +21,7 @@ spec:
                 type: string
           
               record:
-                description: Metadata for the volume
+                description: Metadata for the volume.
                 type: map[string]string
           type: array
   version: v1
