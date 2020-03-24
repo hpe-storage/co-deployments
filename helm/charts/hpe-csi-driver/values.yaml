@@ -10,9 +10,9 @@ images:
 
 # image pull policy for all images in csi deployment
 imagePullPolicy: 'Always'
-
-# CSP deployment name
-cspName: nimble-csp
+backendType: nimble
+# CSP deployment name, handled internally according to backendType
+#cspName: nimble-csp
 
 secret:
   # parameters for nimble
@@ -21,8 +21,9 @@ secret:
   username: admin
   password: admin
   servicePort: "8080"
-  serviceName: nimble-csp-svc
-  name: nimble-secret
+# The following parameters are handled depending on the backendType
+  #serviceName: nimble-csp-svc
+  #name: nimble-secret
 
 # flavor
 flavor: kubernetes
