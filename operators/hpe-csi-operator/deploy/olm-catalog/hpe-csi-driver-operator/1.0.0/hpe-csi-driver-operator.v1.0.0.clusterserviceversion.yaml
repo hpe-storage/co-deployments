@@ -10,8 +10,7 @@ metadata:
           "apiVersion": "storage.hpe.com/v1",
           "kind": "HPECSIDriver",
           "metadata": {
-            "name": "csi-driver",
-            "namespace": "hpe-csi"
+            "name": "csi-driver
           },
           "spec": {
             "crd": {
@@ -66,12 +65,14 @@ spec:
     The HPE CSI Operator for Kubernetes packages, deploys, manages, upgrades the HPE CSI Driver on
     Kubernetes and OpenShift for dynamic provisioning of persistent volumes on HPE storage systems.
 
+
     The HPE CSI Driver for Kubernetes leverages HPE storage
     platforms to provide scalable and persistent storage for stateful
     applications. Please refer to our CSI driver [documentation](https://github.com/hpe-storage/csi-driver)
     for supported HPE platforms and full list of supported CSI features.
 
     ## Installation
+    
     Refer to the HPE CSI Operator for Kubernetes [documentation](https://github.com/hpe-storage/co-deployments/tree/master/operators/hpe-csi-operator).
 
   maturity: beta
@@ -190,7 +191,7 @@ spec:
             x-descriptors:
               - 'urn:alm:descriptor:com.tectonic.ui:text'
           - displayName: StorageClass name
-            description: StorageClass name (default: hpe-standard)
+            description: 'StorageClass name (default: hpe-standard)'
             path: storageClass.name
             x-descriptors:
               - 'urn:alm:descriptor:com.tectonic.ui:text'
