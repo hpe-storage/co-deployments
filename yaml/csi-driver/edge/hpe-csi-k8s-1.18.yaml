@@ -62,19 +62,6 @@ status:
 
 ---
 
-################# CSI Driver CRD ###########
-apiVersion: storage.k8s.io/v1beta1
-kind: CSIDriver
-metadata:
-  name: csi.hpe.com
-spec:
-  podInfoOnMount: true
-  volumeLifecycleModes:
-  - Persistent
-  - Ephemeral
-
----
-
 #############################################
 ############  Controller driver  ############
 #############################################
@@ -469,7 +456,7 @@ spec:
             value: "1"
       containers:
         - name: csi-node-driver-registrar
-          image: quay.io/k8scsi/csi-node-driver-registrar:v1.1.0
+          image: quay.io/k8scsi/csi-node-driver-registrar:v1.2.0
           args:
             - "--csi-address=$(ADDRESS)"
             - "--kubelet-registration-path=$(DRIVER_REG_SOCK_PATH)"
