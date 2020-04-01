@@ -35,7 +35,11 @@ spec:
       hostNetwork: true
       containers:
         - name: {{ .Values.backendType }}-csp
-          image: {{ .Values.images.cspImage}}
+          {{- if eq .Values.backendType "hpe3parprimera" }}
+          image: hpestorage/hpe3parprimera-csp:v1.0.0-beta
+          {{- else }}
+          image: hpestorage/nimble-csp:v1.1.0
+          {{- end }}
           imagePullPolicy: {{ .Values.imagePullPolicy | quote }}
           ports:
             - containerPort: {{ .Values.secret.servicePort }}
