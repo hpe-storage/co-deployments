@@ -35,6 +35,9 @@ spec:
         spec:
           description: HPECSIDriverSpec defines the desired state of HPECSIDriver
           properties:
+            backendType:
+              description: BackendType nimble/hpe3parprimera for the CSP deployment
+              type: string
             crd:
               description: HPE CRD controls
               properties:
@@ -50,26 +53,12 @@ spec:
               required:
               - nodeInfo
               type: object
-            cspName:
-              description: HPE CSP name
-              type: string
             flavor:
               description: Flavor of the CO orchestrator
               type: string
             imagePullPolicy:
               description: Image Pull Policy for HPE CSI driver images
               type: string
-            images:
-              description: HPE CSI driver images
-              properties:
-                csiDriverImage:
-                  type: string
-                cspImage:
-                  type: string
-              required:
-              - csiDriverImage
-              - cspImage
-              type: object
             logLevel:
               description: Default logLevel for HPE CSI driver deployments
               type: string
@@ -83,14 +72,8 @@ spec:
                   description: 'Create HPE secret after CSI driver deployment, default:
                     true'
                   type: boolean
-                name:
-                  description: HPE Secret Name
-                  type: string
                 password:
                   description: Password for storage backend
-                  type: string
-                serviceName:
-                  description: HPE CSP Service Name
                   type: string
                 servicePort:
                   description: HPE CSP Service Port
@@ -101,9 +84,7 @@ spec:
               required:
               - backend
               - create
-              - name
               - password
-              - serviceName
               - servicePort
               - username
               type: object
@@ -131,8 +112,15 @@ spec:
                     accessProtocol:
                       description: Access protocol for storage backend
                       type: string
+                    cpg:
+                      description: CPG for the hpe3parprimera storage backend
+                      type: string
                     fsType:
                       description: Filesystem type for default storage class
+                      type: string
+                    provisioningType:
+                      description: Provisioning type for the hpe3parprimera storage
+                        backend
                       type: string
                     volumeDescription:
                       description: Volume description parameter in default storage
@@ -142,6 +130,8 @@ spec:
                   - accessProtocol
                   - fsType
                   - volumeDescription
+                  - provisioningType
+                  - cpg
                   type: object
               required:
               - allowVolumeExpansion
@@ -151,11 +141,10 @@ spec:
               - parameters
               type: object
           required:
+          - backendType
           - crd
-          - cspName
           - flavor
           - imagePullPolicy
-          - images
           - logLevel
           - secret
           - storageClass

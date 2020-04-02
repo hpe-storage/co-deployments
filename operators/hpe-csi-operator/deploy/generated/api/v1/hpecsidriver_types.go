@@ -27,8 +27,7 @@ type HPECSIDriverSpec struct {
 	// INSERT ADDITIONAL SPEC FIELDS - desired state of cluster
 	// Important: Run "make" to regenerate code after modifying this file
 
-	// HPE CSI driver images
-	Images  HPECSIImages `json:"images"`
+	
 	// HPE Storage class controls
 	StorageClass HPEStorageClass `json:"storageClass"`
 	// HPE Secret controls
@@ -38,33 +37,27 @@ type HPECSIDriverSpec struct {
 	// Image Pull Policy for HPE CSI driver images
 	ImagePullPolicy      string `json:"imagePullPolicy"`
 	// HPE CSP name
-	CspName              string `json:"cspName"`
+
 	// Flavor of the CO orchestrator
 	Flavor               string `json:"flavor"`
 	// Default logLevel for HPE CSI driver deployments
 	LogLevel             string `json:"logLevel"`
+	// BackendType nimble/hpe3parprimera for the CSP deployment
+	BackendType          string `json:"backendType"`
 }
 
-// HPEImages defines HPE CSI driver images (name:tag)
-type HPECSIImages struct {
-	CsiDriverImage string `json:"csiDriverImage"`
-	CspImage string `json:"cspImage"`
-}
 
 // HPESecret defines HPE secret params
 type HPESecret struct {
 	// Create HPE secret after CSI driver deployment, default: true
 	Create bool `json:"create"`
-	// HPE Secret Name
-	Name           string `json:"name"`
+
 	// Username for storage backend
 	Username             string `json:"username"`
 	// Password for storage backend
 	Password             string `json:"password"`
 	// Storage backend IP
 	Backend              string `json:"backend"`
-	// HPE CSP Service Name
-	ServiceName     string `json:"serviceName"`
 	// HPE CSP Service Port
 	ServicePort     string `json:"servicePort"`
 }
@@ -91,6 +84,10 @@ type HPEStorageClassParameters struct {
 	AccessProtocol       string `json:"accessProtocol"`
 	// Filesystem type for default storage class
 	FsType               string `json:"fsType"`
+	//Provisioning type for the hpe3parprimera storage backend
+	ProvisioningType string  `json:"provisioningType,omitempty"`
+	// CPG for the hpe3parprimera storage backend
+	CPG string  `json:"cpg,omitempty"`
 }
 
 // HPECRD defines the behavior of HPE CSI Driver for creation of HPE CRDs

@@ -6,18 +6,13 @@ metadata:
   namespace: hpe-csi
 spec:
   # Default values copied from <project_dir>/helm-charts/hpe-csi-driver/values.yaml
-  images:
-    # csi-driver
-    csiDriverImage: hpestorage/csi-driver:v1.1.0
-    # csp-hpe
-    cspImage: hpestorage/nimble-csp:v1.1.0
-
   # image pull policy for all images in csi deployment
   imagePullPolicy: 'Always'
 
   # CSP deployment name
-  cspName: nimble-csp
-
+  #cspName: nimble-csp
+  backendType: nimble
+  
   secret:
     # parameters for nimble
     create: true
@@ -25,8 +20,8 @@ spec:
     username: admin
     password: admin
     servicePort: "8080"
-    serviceName: nimble-csp-svc
-    name: nimble-secret
+    #serviceName: nimble-csp-svc
+    #name: nimble-secret
 
   # flavor
   flavor: kubernetes
@@ -53,6 +48,8 @@ spec:
       fsType: xfs
       volumeDescription: "Volume created by the HPE CSI Driver for Kubernetes"
       accessProtocol: "iscsi"
+      provisioningType: "tpvv"
+      cpg: "FC_r6"
 
   # CRD creation controls
   crd:
