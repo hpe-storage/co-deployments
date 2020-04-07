@@ -2,17 +2,12 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
-images:
-  # csi-driver
-  csiDriverImage: hpestorage/csi-driver:v1.1.0
-  # csp-hpe
-  cspImage: hpestorage/nimble-csp:v1.1.0
 
 # image pull policy for all images in csi deployment
 imagePullPolicy: 'Always'
-
-# CSP deployment name
-cspName: nimble-csp
+backendType: nimble
+# CSP deployment name, handled internally according to backendType
+#cspName: nimble-csp
 
 secret:
   # parameters for nimble
@@ -21,8 +16,9 @@ secret:
   username: admin
   password: admin
   servicePort: "8080"
-  serviceName: nimble-csp-svc
-  name: nimble-secret
+# The following parameters are handled internally depending on the backendType
+  #serviceName: nimble-csp-svc
+  #name: nimble-secret
 
 # flavor
 flavor: kubernetes
@@ -49,6 +45,8 @@ storageClass:
     fsType: xfs
     volumeDescription: "Volume created by the HPE CSI Driver for Kubernetes"
     accessProtocol: "iscsi"
+    provisioningType: "tpvv"
+    cpg: "FC_r6"
 
 # CRD creation controls
 crd:
