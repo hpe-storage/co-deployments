@@ -24,7 +24,7 @@ spec:
 
   # flavor
   flavor: kubernetes
-
+  
   # log level for all csi driver components
   logLevel: info
 
@@ -47,9 +47,9 @@ spec:
       fsType: xfs
       volumeDescription: "Volume created by the HPE CSI Driver for Kubernetes"
       accessProtocol: "iscsi"
-      # privisioning type for primera
+      # Provisioning type for 3PAR/Primera
       provisioningType: "tpvv"
-      # cpg for primera
+      # CPG for 3PAR/Primera
       cpg: "FC_r6"
 
   # CRD creation controls
