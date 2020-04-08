@@ -3,16 +3,17 @@ apiVersion: storage.hpe.com/v1
 kind: HPECSIDriver
 metadata:
   name: csi-driver
-  namespace: hpe-csi
 spec:
-  # Default values copied from <project_dir>/helm-charts/hpe-csi-driver/values.yaml
+  # Default values for hpe-csi-storage.
+  # This is a YAML-formatted file.
+  # Declare variables to be passed into your templates.
+
   # image pull policy for all images in csi deployment
   imagePullPolicy: 'Always'
 
-  # CSP deployment name
-  #cspName: nimble-csp
+  # HPE backend storage type (nimble, hpe3parprimera)
   backendType: nimble
-  
+
   secret:
     # parameters for nimble
     create: true
@@ -20,8 +21,6 @@ spec:
     username: admin
     password: admin
     servicePort: "8080"
-    #serviceName: nimble-csp-svc
-    #name: nimble-secret
 
   # flavor
   flavor: kubernetes
@@ -48,12 +47,16 @@ spec:
       fsType: xfs
       volumeDescription: "Volume created by the HPE CSI Driver for Kubernetes"
       accessProtocol: "iscsi"
+      # privisioning type for primera
       provisioningType: "tpvv"
+      # cpg for primera
       cpg: "FC_r6"
 
   # CRD creation controls
+  ## For HELM 3 CRD's are handled automatically without this flag.
+  ## This flag should be enabled only for HELM 2
   crd:
     nodeInfo:
-      ## For helm v3+ CRD's are handled automatically without this flag.
-      ## This flag should be enabled for helm v2+
+      create: false
+    volumeInfo:
       create: false

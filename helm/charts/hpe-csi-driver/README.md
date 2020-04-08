@@ -21,20 +21,23 @@ The following table lists the configurable parameters of the HPE-CSI chart and t
 
 |  Parameter                |  Description                                                |  Default    |
 |---------------------------|-------------------------------------------------------------|-------------|
-| secret.name                   | Name of the secret to create along with driver deployment                 | nimble-secret |
+| backendType                   | Name of the HPE Storage backend type (nimble, hpe3parprimera)                 | nimble |
 | secret.create                   | Enabled creation of secret along with driver deployment                 | 192.168.1.1 |
 | secret.backend                   | HPE storage backend hostname or IP address.                 | 192.168.1.1 |
 | secret.username                  | Username for the backend.                                   | admin       |
 | secret.password                  | Password for the backend.                                   | admin       |
 | crd.nodeInfo.create       | Create nodeinfo CRDs required by HPE CSI driver. Should only enable with helm 2.x, as they are automatically created with helm 3.x without this flag.                  | false        |
+| crd.volumeInfo.create       | Create volumeinfo CRDs required by HPE CSI driver for 3PAR Primera. Should only enable with HELM 2, as they are automatically created with HELM 3 without this flag.                  | false        |
 | logLevel             | Log level. Can be one of `info`, `debug`, `trace`, `warn` and `error`                                        | info         |
 | imagePullPolicy | Image pull policy (Always, IfNotPresent, Never).                                          | Always |
 | storageClass.name  | The name to assign the created StorageClass.                                          | hpe-standard |
-| storageClass.create | Enables creation of StorageClass to consume this hpe-csi-driver instance using secret as secret.name variable                              | true        |
+| storageClass.create | Enables creation of StorageClass to consume this hpe-csi-driver instance                              | true        |
 | storageClass.defaultClass | Whether to set the created StorageClass as the clusters default StorageClass.                                | false       |
 | storageClass.parameters.fsType                    | Type of file system being used (ext4, ext3, xfs, btrfs)     | xfs         |
 | storageClass.parameters.volumeDescription         | Volume description for volumes created using HPE CSI driver     | -         |
 | storageClass.parameters.accessProtocol            | Access protocol to use for storage connectivity (iscsi, fc)     | iscsi         |
+| storageClass.parameters.provisioningType         | Provisioning type for HPE 3PAR Primera     | tpvv         |
+| storageClass.parameters.cpg            | CPG type for HPE 3PAR Primera     | FC_r6         |
 
 It's recommended to create a [values.yaml](https://github.com/hpe-storage/co-deployments/blob/master/helm/values/csi-driver) file from corresponding release and edit it to fit the environment the chart is being deployed to. Download and edit the sample file.
 
@@ -56,8 +59,11 @@ Install the latest chart:
 helm install hpe-csi hpe/hpe-csi-driver --namespace kube-system -f myvalues.yaml
 
 # Helm 2
-# Install with HPENodeInfos CRD's enabled explicitly
+# For Nimble, Install with HPENodeInfos CRD's enabled explicitly
 helm install --name hpe-csi hpe/hpe-csi-driver --namespace kube-system -f myvalues.yaml --set crd.nodeInfo.create=true
+
+# For 3PAR Primera, Install with HPENodeInfos/HPEVolumeInfos CRD's enabled explicitly
+helm install --name hpe-csi hpe/hpe-csi-driver --namespace kube-system -f myvalues.yaml --set crd.nodeInfo.create=true --set crd.volumeInfo.create=true
 ```
 
 ### Upgrading the Chart
