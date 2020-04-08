@@ -36,8 +36,8 @@ The following table lists the configurable parameters of the HPE-CSI chart and t
 | storageClass.parameters.fsType                    | Type of file system being used (ext4, ext3, xfs, btrfs)     | xfs         |
 | storageClass.parameters.volumeDescription         | Volume description for volumes created using HPE CSI driver     | -         |
 | storageClass.parameters.accessProtocol            | Access protocol to use for storage connectivity (iscsi, fc)     | iscsi         |
-| storageClass.parameters.provisioningType         | Volume description for volumes created using HPE CSI driver     | -         |
-| storageClass.parameters.cpg            | Access protocol to use for storage connectivity (iscsi, fc)     | iscsi         |
+| storageClass.parameters.provisioningType         | Provisioning type for HPE 3PAR Primera     | tpvv         |
+| storageClass.parameters.cpg            | CPG type for HPE 3PAR Primera     | FC_r6         |
 
 It's recommended to create a [values.yaml](https://github.com/hpe-storage/co-deployments/blob/master/helm/values/csi-driver) file from corresponding release and edit it to fit the environment the chart is being deployed to. Download and edit the sample file.
 
@@ -59,8 +59,11 @@ Install the latest chart:
 helm install hpe-csi hpe/hpe-csi-driver --namespace kube-system -f myvalues.yaml
 
 # Helm 2
-# Install with HPENodeInfos CRD's enabled explicitly
+# For Nimble, Install with HPENodeInfos CRD's enabled explicitly
 helm install --name hpe-csi hpe/hpe-csi-driver --namespace kube-system -f myvalues.yaml --set crd.nodeInfo.create=true
+
+# For 3PAR Primera, Install with HPENodeInfos/HPEVolumeInfos CRD's enabled explicitly
+helm install --name hpe-csi hpe/hpe-csi-driver --namespace kube-system -f myvalues.yaml --set crd.nodeInfo.create=true --set crd.volumeInfo.create=true
 ```
 
 ### Upgrading the Chart
