@@ -5,9 +5,9 @@
 
 # image pull policy for all images in csi deployment
 imagePullPolicy: 'Always'
+
+# HPE backend storage type (nimble, hpe3parprimera)
 backendType: nimble
-# CSP deployment name, handled internally according to backendType
-#cspName: nimble-csp
 
 secret:
   # parameters for nimble
@@ -16,9 +16,6 @@ secret:
   username: admin
   password: admin
   servicePort: "8080"
-# The following parameters are handled internally depending on the backendType
-  #serviceName: nimble-csp-svc
-  #name: nimble-secret
 
 # flavor
 flavor: kubernetes
@@ -45,12 +42,16 @@ storageClass:
     fsType: xfs
     volumeDescription: "Volume created by the HPE CSI Driver for Kubernetes"
     accessProtocol: "iscsi"
+    # Provisioning type for 3PAR primera
     provisioningType: "tpvv"
+    # CPG for 3PAR primera
     cpg: "FC_r6"
 
 # CRD creation controls
+## For HELM 3 CRD's are handled automatically without this flag.
+## This flag should be enabled only for HELM 2
 crd:
   nodeInfo:
-    ## For helm v3+ CRD's are handled automatically without this flag.
-    ## This flag should be enabled for helm v2+
+    create: false
+  volumeInfo:
     create: false
