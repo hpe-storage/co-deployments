@@ -38,31 +38,6 @@ spec:
             backendType:
               description: HPE storage backend type (nimble, hpe3parprimera) for the CSP deployment
               type: string
-            crd:
-              description: HPE CRD controls
-              properties:
-                nodeInfo:
-                  description: Properties for controlling HPE NodeInfo CRDs
-                  properties:
-                    create:
-                      description: Indicates to create HPENodeInfo CRD objects
-                      type: boolean
-                  required:
-                  - create
-                  type: object
-                volumeInfo:
-                  description: Properties for controlling HPE VolumeInfo CRDs
-                  properties:
-                    create:
-                      description: Indicates to create VolumeInfo CRD objects
-                      type: boolean
-                  required:
-                  - create
-                  type: object
-              required:
-              - nodeInfo
-              - volumeInfo
-              type: object
             flavor:
               description: Flavor of the CO orchestrator
               type: string
@@ -140,8 +115,6 @@ spec:
                   - accessProtocol
                   - fsType
                   - volumeDescription
-                  - provisioningType
-                  - cpg
                   type: object
               required:
               - allowVolumeExpansion
@@ -152,7 +125,6 @@ spec:
               type: object
           required:
           - backendType
-          - crd
           - flavor
           - imagePullPolicy
           - logLevel
