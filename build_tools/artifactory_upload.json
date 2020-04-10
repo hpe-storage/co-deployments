@@ -10,6 +10,16 @@
             "pattern": "build/*.yaml",
             "props": "buildno=${buildno};job_name=${JOB_NAME};jobno=${BUILD_NUMBER}",
             "target": "dcs_k8s-local/${JOB_NAME}/${BUILD_NUMBER}/yaml/"
+        },
+        {
+            "pattern": "build/helm/*.yaml",
+            "props": "buildno=${buildno};job_name=${JOB_NAME};jobno=${BUILD_NUMBER}",
+            "target": "dcs_k8s-local/${JOB_NAME}/${BUILD_NUMBER}/helm/"
+        },
+        {
+            "pattern": "build/operator/*.yaml",
+            "props": "buildno=${buildno};job_name=${JOB_NAME};jobno=${BUILD_NUMBER}",
+            "target": "dcs_k8s-local/${JOB_NAME}/${BUILD_NUMBER}/operator"
         }
    ]
 }
