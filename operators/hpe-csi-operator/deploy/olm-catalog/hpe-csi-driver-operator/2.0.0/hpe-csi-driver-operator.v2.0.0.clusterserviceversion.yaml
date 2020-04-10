@@ -13,14 +13,6 @@ metadata:
             "name": "csi-driver"
           },
           "spec": {
-            "crd": {
-              "nodeInfo": {
-                "create": false
-              },
-              "volumeInfo": {
-                "create": false
-              }
-            },
             "backendType": "nimble",
             "flavor": "kubernetes",
             "imagePullPolicy": "Always",
@@ -72,7 +64,7 @@ spec:
     for supported HPE platforms and full list of supported CSI features.
 
     ## Installation
-    
+
     Refer to the HPE CSI Operator for Kubernetes [documentation](https://github.com/hpe-storage/co-deployments/tree/master/operators/hpe-csi-operator).
 
   maturity: beta
@@ -125,16 +117,6 @@ spec:
             path: backendType
             x-descriptors:
               - 'urn:alm:descriptor:com.tectonic.ui:text'
-          - displayName: Create HPE NodeInfo CRD
-            path: crd.nodeInfo.create
-            description: Controls creation of HPE NodeInfo CRDs
-            x-descriptors:
-              - 'urn:alm:descriptor:com.tectonic.ui:booleanSwitch'
-          - displayName: Create HPE VolumeInfo CRD for 3PAR Primera
-            path: crd.volumeInfo.create
-            description: Controls creation of HPE VolumeInfo CRDs for 3PAR Primera
-            x-descriptors:
-              - 'urn:alm:descriptor:com.tectonic.ui:booleanSwitch'
           - displayName: ImagePullPolicy
             description: Image pull policy for all images used in the HPE CSI Driver deployment
             path: imagePullPolicy
@@ -166,7 +148,7 @@ spec:
             x-descriptors:
               - 'urn:alm:descriptor:com.tectonic.ui:password'
           - displayName: CSP service hostname
-            description: CSP service hostname or IP address 
+            description: CSP service hostname or IP address
             path: secret.serviceName
             x-descriptors:
               - 'urn:alm:descriptor:com.tectonic.ui:text'
@@ -233,11 +215,6 @@ spec:
           - displayName: Secret
             description: Secret parameters to create for the backend
             path: secret
-            x-descriptors:
-              - 'urn:alm:descriptor:com.tectonic.ui:text'
-          - displayName: HPE NodeInfo CRD
-            description: HPE NodeInfo CRD controls
-            path: crd
             x-descriptors:
               - 'urn:alm:descriptor:com.tectonic.ui:text'
           - displayName: StorageClass

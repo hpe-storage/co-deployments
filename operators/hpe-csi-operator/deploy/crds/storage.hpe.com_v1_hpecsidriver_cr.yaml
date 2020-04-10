@@ -24,7 +24,7 @@ spec:
 
   # flavor
   flavor: kubernetes
-  
+
   # log level for all csi driver components
   logLevel: info
 
@@ -51,12 +51,3 @@ spec:
       provisioningType: "tpvv"
       # CPG for 3PAR/Primera
       cpg: "FC_r6"
-
-  # CRD creation controls
-  ## For HELM 3 CRD's are handled automatically without this flag.
-  ## This flag should be enabled only for HELM 2
-  crd:
-    nodeInfo:
-      create: false
-    volumeInfo:
-      create: false
