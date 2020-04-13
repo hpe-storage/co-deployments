@@ -15,7 +15,10 @@ cd ${CHART_BASE_DIR}
 echo "Linting chart ${CHART_NAME}"
 helm lint ${CHART_NAME}
 echo "Packaging ${CHART_NAME}..."
-helm package ${CHART_NAME} -d ${CHART_BASE_DIR}/../../docs
+helm package ${CHART_NAME} -d .
 echo "Generating index file under docs/"
-helm repo index ${CHART_BASE_DIR}/../../docs
+helm repo index --merge ${CHART_BASE_DIR}/../../docs/index.yaml .
+mv *.tgz ${CHART_BASE_DIR}/../../docs/
+mv index.yaml ${CHART_BASE_DIR}/../../docs/
 echo "Successfully generated chart for $1 and updated docs/index.yaml"
+

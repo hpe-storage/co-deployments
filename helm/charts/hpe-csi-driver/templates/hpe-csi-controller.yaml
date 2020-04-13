@@ -93,7 +93,7 @@ spec:
               mountPath: /var/lib/csi/sockets/pluginproxy
         {{- end }}
         - name: hpe-csi-driver
-          image: {{ .Values.images.csiDriverImage}}
+          image: hpestorage/csi-driver:v1.1.1
           args :
             - "--endpoint=$(CSI_ENDPOINT)"
             - "--flavor=kubernetes"

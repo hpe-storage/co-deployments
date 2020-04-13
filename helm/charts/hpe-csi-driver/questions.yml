@@ -7,6 +7,14 @@ questions:
   required: true
   description: "Please specify HPE backend IP address."
   group: "HPE backend settings"
+- variable: backendType
+  label: "BackendType"
+  default: "nimble"
+  type: enum
+  options:
+    - "nimble"
+    - "hpe3parprimera"
+  group: "HPE backend settings"
 - variable: secret.username
   label: "Username"
   type: string
@@ -56,5 +64,11 @@ questions:
   label: "Create HPE NodeInfo CRD."
   type: boolean
   default: false
-  description: "For helm v3.x required CRD's are automatically created without this flag. This flag should be explicitly enabled only for helm v2.x"
+  description: "For HELM3 required CRD's are automatically created without this flag. This flag should be explicitly enabled only for HELM 2"
+  group: "HPE CSI Driver settings"
+- variable: crd.volumeInfo.create
+  label: "Create HPE VolumeInfo CRD."
+  type: boolean
+  default: false
+  description: "For HELM3 required CRD's are automatically created without this flag. This flag should be explicitly enabled only for HELM 2"
   group: "HPE CSI Driver settings"

@@ -27,46 +27,33 @@ type HPECSIDriverSpec struct {
 	// INSERT ADDITIONAL SPEC FIELDS - desired state of cluster
 	// Important: Run "make" to regenerate code after modifying this file
 
-	// HPE CSI driver images
-	Images  HPECSIImages `json:"images"`
 	// HPE Storage class controls
 	StorageClass HPEStorageClass `json:"storageClass"`
 	// HPE Secret controls
-	Secret       HPESecret        `json:"secret"`
-	// HPE CRD controls
-	Crd          HPECRD           `json:"crd"`
+	Secret HPESecret `json:"secret"`
 	// Image Pull Policy for HPE CSI driver images
-	ImagePullPolicy      string `json:"imagePullPolicy"`
-	// HPE CSP name
-	CspName              string `json:"cspName"`
+	ImagePullPolicy string `json:"imagePullPolicy"`
 	// Flavor of the CO orchestrator
-	Flavor               string `json:"flavor"`
+	Flavor string `json:"flavor"`
 	// Default logLevel for HPE CSI driver deployments
-	LogLevel             string `json:"logLevel"`
-}
-
-// HPEImages defines HPE CSI driver images (name:tag)
-type HPECSIImages struct {
-	CsiDriverImage string `json:"csiDriverImage"`
-	CspImage string `json:"cspImage"`
+	LogLevel string `json:"logLevel"`
+	// BackendType nimble/hpe3parprimera for the CSP deployment
+	BackendType string `json:"backendType"`
 }
 
 // HPESecret defines HPE secret params
 type HPESecret struct {
 	// Create HPE secret after CSI driver deployment, default: true
 	Create bool `json:"create"`
-	// HPE Secret Name
-	Name           string `json:"name"`
+
 	// Username for storage backend
-	Username             string `json:"username"`
+	Username string `json:"username"`
 	// Password for storage backend
-	Password             string `json:"password"`
+	Password string `json:"password"`
 	// Storage backend IP
-	Backend              string `json:"backend"`
-	// HPE CSP Service Name
-	ServiceName     string `json:"serviceName"`
+	Backend string `json:"backend"`
 	// HPE CSP Service Port
-	ServicePort     string `json:"servicePort"`
+	ServicePort string `json:"servicePort"`
 }
 
 // HPEStorageClass defines the behavior of HPE CSI Driver Operator for creation of default  storage class
@@ -78,7 +65,7 @@ type HPEStorageClass struct {
 	// Name of storage class to create for HPE
 	Name string `json:"name"`
 	// Allow volume expansion parameter for default  storage class
-	AllowVolumeExpansion bool   `json:"allowVolumeExpansion"`
+	AllowVolumeExpansion bool `json:"allowVolumeExpansion"`
 	// HPE storage class parameters
 	Parameters HPEStorageClassParameters `json:"parameters"`
 }
@@ -88,21 +75,13 @@ type HPEStorageClassParameters struct {
 	// Volume description parameter in default storage class
 	VolumeDescription string `json:"volumeDescription"`
 	// Access protocol for storage backend
-	AccessProtocol       string `json:"accessProtocol"`
+	AccessProtocol string `json:"accessProtocol"`
 	// Filesystem type for default storage class
-	FsType               string `json:"fsType"`
-}
-
-// HPECRD defines the behavior of HPE CSI Driver for creation of HPE CRDs
-type HPECRD struct {
-	// Properties for controlling HPE NodeInfo CRDs
-	NodeInfo HPENodeInfoCRD `json:"nodeInfo"`
-}
-
-// HPECRD defines the behavior of HPE CSI Driver for creation of HPE NodeInfo CRD
-type HPENodeInfoCRD struct {
-	// Indicates to create HPENodeInfo CRD objects
-	Create bool `json:"create"`
+	FsType string `json:"fsType"`
+	//Provisioning type for the hpe3parprimera storage backend
+	ProvisioningType string `json:"provisioningType,omitempty"`
+	// CPG for the hpe3parprimera storage backend
+	CPG string `json:"cpg,omitempty"`
 }
 
 type HelmAppConditionType string
@@ -126,9 +105,9 @@ type HelmAppRelease struct {
 // HpecsidriverStatus defines the observed state of Hpecsidriver
 type HPECSIDriverStatus struct {
 	// HPE CSI Driver helm release status
-	Conditions      []HelmAppCondition `json:"conditions"`
+	Conditions []HelmAppCondition `json:"conditions"`
 	// HPE CSI Driver helm release
-	DeployedRelease *HelmAppRelease    `json:"deployedRelease,omitempty"`
+	DeployedRelease *HelmAppRelease `json:"deployedRelease,omitempty"`
 }
 
 // +kubebuilder:object:root=true

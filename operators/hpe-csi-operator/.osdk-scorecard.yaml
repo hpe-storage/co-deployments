@@ -1,7 +1,7 @@
 scorecard:
   # Setting a global scorecard option
   # Change below to CSV bundle directory path
-  bundle: /Users/skrishna/test-operator/hpe-csi-driver-operator.v1.0.0
+  bundle: /Users/skrishna/test-operator/hpe-csi-driver-operator.v2.0.0
   output: json
   plugins:
     # `basic` tests configured to test HPE CSI CR
@@ -14,6 +14,6 @@ scorecard:
     - olm:
         cr-manifest:
           - "deploy/crds/storage.hpe.com_v1_hpecsidriver_cr.yaml"
-        csv-path: "deploy/olm-catalog/hpe-csi-driver-operator/1.0.0/hpe-csi-driver-operator.v1.0.0.clusterserviceversion.yaml"
+        csv-path: "deploy/olm-catalog/hpe-csi-driver-operator/2.0.0/hpe-csi-driver-operator.v2.0.0.clusterserviceversion.yaml"
         init-timeout: 300
         namespace: hpe-csi

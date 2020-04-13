@@ -1,7 +1,7 @@
 apiVersion: operators.coreos.com/v1alpha1
 kind: ClusterServiceVersion
 metadata:
-  name: hpe-csi-driver-operator.v1.0.0
+  name: hpe-csi-driver-operator.v2.0.0
   namespace: placeholder
   annotations:
     alm-examples: >-
@@ -13,23 +13,13 @@ metadata:
             "name": "csi-driver"
           },
           "spec": {
-            "crd": {
-              "nodeInfo": {
-                "create": false
-              }
-            },
-            "cspName": "nimble-csp",
+            "backendType": "nimble",
             "flavor": "kubernetes",
             "imagePullPolicy": "Always",
-            "images": {
-              "csiDriverImage": "hpestorage/csi-driver:v1.1.0",
-              "cspImage": "hpestorage/nimble-csp:v1.1.0"
-            },
             "logLevel": "info",
             "secret": {
               "backend": "192.168.1.1",
               "create": true,
-              "name": "nimble-secret",
               "password": "admin",
               "serviceName": "nimble-csp-svc",
               "servicePort": "8080",
@@ -43,7 +33,9 @@ metadata:
               "parameters": {
                 "accessProtocol": "iscsi",
                 "fsType": "xfs",
-                "volumeDescription": "Volume created by the HPE CSI Driver for Kubernetes"
+                "volumeDescription": "Volume created by the HPE CSI Driver for Kubernetes",
+                "provisioningType": "tpvv",
+                "cpg": "FC_r6"
               }
             }
           }
@@ -51,11 +43,11 @@ metadata:
       ]
     categories: Storage
     certified: 'true'
-    createdAt: ''
+    createdAt: 'Tue Apr  7 14:47:55 PDT 2020'
     description: >-
       A Container Storage Interface (CSI) driver for HPE storage platforms. The CSI driver
       allows you to use HPE storage with your preferred container orchestrator.
-    containerImage: 'registry.connect.redhat.com/hpestorage/csi-driver-operator:v1.0.0'
+    containerImage: 'hpestorage/csi-driver-operator:v2.0.0-beta'
     support: 'HPE'
     capabilities: Basic Install
     repository: 'https://github.com/hpe-storage/co-deployments'
@@ -72,12 +64,12 @@ spec:
     for supported HPE platforms and full list of supported CSI features.
 
     ## Installation
-    
+
     Refer to the HPE CSI Operator for Kubernetes [documentation](https://github.com/hpe-storage/co-deployments/tree/master/operators/hpe-csi-operator).
 
   maturity: beta
-  version: 1.0.0
-  replaces: ''
+  version: 2.0.0
+  replaces: hpe-csi-driver-operator.v1.0.0
   minKubeVersion: 1.14.0
   keywords:
     - HPE
@@ -120,14 +112,9 @@ spec:
           - version: v1
             kind: ConfigMap
         specDescriptors:
-          - path: crd.nodeInfo.create
-            description: Controls creation of HPE NodeInfo CRDs
-            displayName: Create HPE NodeInfo CRD
-            x-descriptors:
-              - 'urn:alm:descriptor:com.tectonic.ui:booleanSwitch'
-          - displayName: CSP Name
-            description: Name of the Container Storage Provider deployment
-            path: cspName
+          - displayName: Backend Type
+            description: 'HPE storage backend type (nimble, hpe3parprimera)'
+            path: backendType
             x-descriptors:
               - 'urn:alm:descriptor:com.tectonic.ui:text'
           - displayName: ImagePullPolicy
@@ -143,21 +130,6 @@ spec:
           - displayName: Log level
             description: 'Log level for HPE CSI Driver (trace, debug, warn, info, error)'
             path: logLevel
-            x-descriptors:
-              - 'urn:alm:descriptor:com.tectonic.ui:text'
-          - displayName: CSI driver image
-            description: CSI driver image
-            path: images.csiDriverImage
-            x-descriptors:
-              - 'urn:alm:descriptor:com.tectonic.ui:text'
-          - displayName: CSP image
-            description: CSP image
-            path: images.cspImage
-            x-descriptors:
-              - 'urn:alm:descriptor:com.tectonic.ui:text'
-          - displayName: Secret
-            description: Secret to create after CSI driver deployment
-            path: secret.name
             x-descriptors:
               - 'urn:alm:descriptor:com.tectonic.ui:text'
           - displayName: Create secret
@@ -176,7 +148,7 @@ spec:
             x-descriptors:
               - 'urn:alm:descriptor:com.tectonic.ui:password'
           - displayName: CSP service hostname
-            description: CSP service hostname or IP address 
+            description: CSP service hostname or IP address
             path: secret.serviceName
             x-descriptors:
               - 'urn:alm:descriptor:com.tectonic.ui:text'
@@ -220,6 +192,16 @@ spec:
             path: storageClass.parameters.accessProtocol
             x-descriptors:
               - 'urn:alm:descriptor:com.tectonic.ui:text'
+          - displayName: Provisioning type for 3PAR Primera
+            description: 'Provisioning type for 3PAR Primera (default: tpvv choices: tpvv)'
+            path: storageClass.parameters.provisioningType
+            x-descriptors:
+              - 'urn:alm:descriptor:com.tectonic.ui:text'
+          - displayName: CPG for 3PAR Primera
+            description: 'CPG for 3PAR Primera (default: FC_r6, choices: FC_r6)'
+            path: storageClass.parameters.cpg
+            x-descriptors:
+              - 'urn:alm:descriptor:com.tectonic.ui:text'
           - displayName: Allow volume expansion
             description: Enable volume expansion in the installed StorageClass
             path: storageClass.allowVolumeExpansion
@@ -233,11 +215,6 @@ spec:
           - displayName: Secret
             description: Secret parameters to create for the backend
             path: secret
-            x-descriptors:
-              - 'urn:alm:descriptor:com.tectonic.ui:text'
-          - displayName: HPE NodeInfo CRD
-            description: HPE NodeInfo CRD controls
-            path: crd
             x-descriptors:
               - 'urn:alm:descriptor:com.tectonic.ui:text'
           - displayName: StorageClass
@@ -391,6 +368,10 @@ spec:
             - apiGroups: ["storage.hpe.com"]
               resources: ["hpenodeinfos"]
               verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+          # Need permissions to let 3PAR CSP to load/unload/update hpevolumeinfos resources
+            - apiGroups: ["storage.hpe.com"]
+              resources: ["hpevolumeinfos"]
+              verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
             - apiGroups: ["coordination.k8s.io"]
               resources: ["leases"]
               verbs: ["get", "watch", "list", "delete", "update", "create", "patch"]
@@ -417,7 +398,7 @@ spec:
                 serviceAccountName: hpe-csi-operator-sa
                 containers:
                   - name: hpe-csi-operator
-                    image: 'hpestorage/csi-driver-operator:v1.0.0'
+                    image: 'hpestorage/csi-driver-operator:v2.0.0-beta'
                     ports:
                       - containerPort: 60000
                         name: metrics
