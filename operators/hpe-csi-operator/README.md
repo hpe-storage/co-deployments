@@ -5,7 +5,7 @@ The HPE CSI Operator packages, deploys, manages, upgrades HPE CSI Driver on Kube
 
 This Operator is created as a [Custom Resource Definition](https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/custom-resources/#customresourcedefinitions) from the [hpe-csi-driver Helm chart](https://github.com/hpe-storage/co-deployments/tree/master/helm/charts/hpe-csi-driver) using the [Operator-SDK](https://github.com/operator-framework/operator-sdk#overview).
 
-**Note:** This installation process does NOT require Helm.
+**Note:** This installation process does NOT require Helm. Also if need to install using OLM, please refer to install steps from [OperatorHub.io](https://operatorhub.io/operator/hpe-csi-driver-operator) install page. If using OCP console, below steps doesn't apply as well.
 
 ## Platform and Software Dependencies
 For platform dependencies for the HPE CSI Driver please refer to [prerequisites](https://github.com/hpe-storage/co-deployments/tree/master/helm/charts/hpe-csi-driver#prerequisites).
@@ -44,7 +44,7 @@ curl -sL https://raw.githubusercontent.com/hpe-storage/co-deployments/master/ope
 
 Deploy above updated `CustomResource` `csi-driver`.
 ```
-kubectl apply -f storage.hpe.com_v1_hpecsidriver_cr.yaml
+kubectl apply -f storage.hpe.com_v1_hpecsidriver_cr.yaml -n hpe-csi
 ```
 
 The HPE CSI Operator will be installed in `hpe-csi` project/namespace. It is **strongly recommended** to install the HPE CSI Operator in a new project and not add any other pods to this project/namespace. Any pods in this project will be cleaned up during uninstall.
