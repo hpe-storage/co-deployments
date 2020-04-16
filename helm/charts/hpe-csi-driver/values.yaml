@@ -9,7 +9,7 @@ imagePullPolicy: 'Always'
 backendType: nimble
 
 secret:
-  # parameters for nimble
+  # parameters for specified backendType (nimble, hpe3parprimera)
   create: true
   backend: 192.168.1.1
   username: admin
@@ -41,9 +41,9 @@ storageClass:
     fsType: xfs
     volumeDescription: "Volume created by the HPE CSI Driver for Kubernetes"
     accessProtocol: "iscsi"
-    # Provisioning type for 3PAR primera
+    # Provisioning type for 3PAR primera (tpvv, tdvv, full)
     provisioningType: "tpvv"
-    # CPG for 3PAR primera
+    # Existing CPG name for 3PAR primera
     cpg: "FC_r6"
 
 # CRD creation controls

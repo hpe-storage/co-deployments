@@ -21,7 +21,6 @@ metadata:
               "backend": "192.168.1.1",
               "create": true,
               "password": "admin",
-              "serviceName": "nimble-csp-svc",
               "servicePort": "8080",
               "username": "admin"
             },
@@ -147,11 +146,6 @@ spec:
             path: secret.password
             x-descriptors:
               - 'urn:alm:descriptor:com.tectonic.ui:password'
-          - displayName: CSP service hostname
-            description: CSP service hostname or IP address
-            path: secret.serviceName
-            x-descriptors:
-              - 'urn:alm:descriptor:com.tectonic.ui:text'
           - displayName: CSP pervice port
             description: CSP service port
             path: secret.servicePort
@@ -193,11 +187,11 @@ spec:
             x-descriptors:
               - 'urn:alm:descriptor:com.tectonic.ui:text'
           - displayName: Provisioning type for 3PAR Primera
-            description: 'Provisioning type for 3PAR Primera (default: tpvv choices: tpvv)'
+            description: 'Provisioning type for 3PAR Primera (default: tpvv choices: tpvv, tdvv, full)'
             path: storageClass.parameters.provisioningType
             x-descriptors:
               - 'urn:alm:descriptor:com.tectonic.ui:text'
-          - displayName: CPG for 3PAR Primera
+          - displayName: Existing CPG for 3PAR Primera
             description: 'CPG for 3PAR Primera (default: FC_r6, choices: FC_r6)'
             path: storageClass.parameters.cpg
             x-descriptors:
