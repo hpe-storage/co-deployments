@@ -12,7 +12,7 @@ For platform dependencies for the HPE CSI Driver please refer to [prerequisites]
 
 ## Installation on OpenShift
 
-HPE CSI Driver needs to run in privileged mode and needs need access to host ports, host network and should be able to mount hostPath volumes. Hence, before deploying HPE CSI operator on OCP, please create a `SecurityContextConstraints` to allow our driver to be running with these privileges.
+HPE CSI Driver needs to run in privileged mode and needs access to host ports, host network and should be able to mount hostPath volumes. Hence, before deploying HPE CSI operator on OCP, please create a `SecurityContextConstraints` to allow our driver to be running with these privileges.
 
 Get SCC:
 ```
