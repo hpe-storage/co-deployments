@@ -11,7 +11,25 @@ This Operator is created as a [Custom Resource Definition](https://kubernetes.io
 For platform dependencies for the HPE CSI Driver please refer to [prerequisites](https://github.com/hpe-storage/co-deployments/tree/master/helm/charts/hpe-csi-driver#prerequisites).
 
 ## Installation on OpenShift
-Please follow usual steps to deploy Operator through OCP console from Operator catalog. Once operator is deployed, create HPECSIDriver instance with required values like `backend`, `username`, and `password`. This will deploy HPE CSI driver under same project.
+
+HPE CSI Driver needs to run in priviledge mode and need access to host ports, host network and should be able to mount hostPath volumes. Hence, before deploying HPE CSI operator on OCP, please create a `SecurityContextConstraints` to allow our driver to be running with these privileges.
+
+Get SCC:
+```
+curl -sL https://raw.githubusercontent.com/hpe-storage/co-deployments/master/operators/hpe-csi-operator/deploy/scc.yaml > hpe-csi-scc.yaml
+```
+
+Change `my-hpe-csi-driver-operator` to the name of the project(eg `my-project-name` below) where CSI operator is being deployed
+```
+sed -i 's/my-hpe-csi-driver-operator/my-project-name/g' hpe-csi-scc.yaml
+```
+
+Deploy SCC:
+```
+oc create -f hpe-csi-scc.yaml
+```
+
+After this, please follow usual steps to deploy Operator through OCP console from Operator catalog under same project as specified in SCC above. Once operator is deployed, create HPECSIDriver instance with required values like `backend`, `username`, and `password`. This will deploy HPE CSI driver under same project.
 
 ## Installation on Kubernetes
 Please follow steps from install page of [OperatorHub](https://operatorhub.io/operator/hpe-csi-driver-operator). Once operator is installed, HPECSIDriver CustomResource should be installed in namespace `my-hpe-csi-driver-operator`. CustomResource sample can be found at OperatorHub as well.
