@@ -26,9 +26,9 @@ seLinuxContext:
 supplementalGroups:
   type: RunAsAny
 users:
-- system:serviceaccount:hpe-csi:hpe-csi-controller-sa
-- system:serviceaccount:hpe-csi:hpe-csi-node-sa
-- system:serviceaccount:hpe-csi:hpe-csp-sa
-- system:serviceaccount:hpe-csi:hpe-csi-operator-sa
+- system:serviceaccount:my-hpe-csi-driver-operator:hpe-csi-controller-sa
+- system:serviceaccount:my-hpe-csi-driver-operator:hpe-csi:hpe-csi-node-sa
+- system:serviceaccount:my-hpe-csi-driver-operator:hpe-csp-sa
+- system:serviceaccount:my-hpe-csi-driver-operator:hpe-csi-operator-sa
 volumes:
 - '*'
