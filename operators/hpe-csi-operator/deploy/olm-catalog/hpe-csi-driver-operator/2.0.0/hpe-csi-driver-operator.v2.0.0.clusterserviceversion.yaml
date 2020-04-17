@@ -33,8 +33,6 @@ metadata:
                 "accessProtocol": "iscsi",
                 "fsType": "xfs",
                 "volumeDescription": "Volume created by the HPE CSI Driver for Kubernetes",
-                "provisioningType": "tpvv",
-                "cpg": "FC_r6"
               }
             }
           }
@@ -184,16 +182,6 @@ spec:
           - displayName: Default access protocol
             description: 'Access protocol set in the installed StorageClass (default: iscsi, choices: fc)'
             path: storageClass.parameters.accessProtocol
-            x-descriptors:
-              - 'urn:alm:descriptor:com.tectonic.ui:text'
-          - displayName: Provisioning type for 3PAR Primera
-            description: 'Provisioning type for 3PAR Primera (default: tpvv choices: tpvv, tdvv, full)'
-            path: storageClass.parameters.provisioningType
-            x-descriptors:
-              - 'urn:alm:descriptor:com.tectonic.ui:text'
-          - displayName: Existing CPG for 3PAR Primera
-            description: 'CPG for 3PAR Primera (default: FC_r6, choices: FC_r6)'
-            path: storageClass.parameters.cpg
             x-descriptors:
               - 'urn:alm:descriptor:com.tectonic.ui:text'
           - displayName: Allow volume expansion

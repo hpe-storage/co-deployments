@@ -36,8 +36,6 @@ The following table lists the configurable parameters of the HPE-CSI chart and t
 | storageClass.parameters.fsType                    | Type of file system being used (ext4, ext3, xfs, btrfs)     | xfs         |
 | storageClass.parameters.volumeDescription         | Volume description for volumes created using HPE CSI driver     | -         |
 | storageClass.parameters.accessProtocol            | Access protocol to use for storage connectivity (iscsi, fc)     | iscsi         |
-| storageClass.parameters.provisioningType         | Provisioning type for HPE 3PAR Primera(tpvv, tdvv, full)     | tpvv         |
-| storageClass.parameters.cpg            |  Existing CPG name for HPE 3PAR Primera     | FC_r6         |
 
 It's recommended to create a [values.yaml](https://github.com/hpe-storage/co-deployments/blob/master/helm/values/csi-driver) file from corresponding release and edit it to fit the environment the chart is being deployed to. Download and edit the sample file.
 

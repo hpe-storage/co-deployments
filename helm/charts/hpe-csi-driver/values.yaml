@@ -41,10 +41,6 @@ storageClass:
     fsType: xfs
     volumeDescription: "Volume created by the HPE CSI Driver for Kubernetes"
     accessProtocol: "iscsi"
-    # Provisioning type for 3PAR primera (tpvv, tdvv, full)
-    provisioningType: "tpvv"
-    # Existing CPG name for 3PAR primera
-    cpg: "FC_r6"
 
 # CRD creation controls
 ## For HELM 3 CRD's are handled automatically without this flag.

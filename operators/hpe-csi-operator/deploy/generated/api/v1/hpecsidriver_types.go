@@ -78,10 +78,6 @@ type HPEStorageClassParameters struct {
 	AccessProtocol string `json:"accessProtocol"`
 	// Filesystem type for default storage class
 	FsType string `json:"fsType"`
-	//Provisioning type for the hpe3parprimera storage backend
-	ProvisioningType string `json:"provisioningType,omitempty"`
-	// CPG for the hpe3parprimera storage backend
-	CPG string `json:"cpg,omitempty"`
 }
 
 type HelmAppConditionType string

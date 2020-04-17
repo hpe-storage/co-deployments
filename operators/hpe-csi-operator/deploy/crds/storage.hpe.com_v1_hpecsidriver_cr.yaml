@@ -47,7 +47,4 @@ spec:
       fsType: xfs
       volumeDescription: "Volume created by the HPE CSI Driver for Kubernetes"
       accessProtocol: "iscsi"
-      # Provisioning type for 3PAR/Primera
-      provisioningType: "tpvv"
-      # CPG for 3PAR/Primera
-      cpg: "FC_r6"
+

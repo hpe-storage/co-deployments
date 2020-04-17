@@ -97,15 +97,8 @@ spec:
                     accessProtocol:
                       description: Access protocol for storage backend
                       type: string
-                    cpg:
-                      description: CPG for the hpe3parprimera storage backend
-                      type: string
                     fsType:
                       description: Filesystem type for default storage class
-                      type: string
-                    provisioningType:
-                      description: 'Provisioning type for the hpe3parprimera storage
-                        backend'
                       type: string
                     volumeDescription:
                       description: 'Volume description parameter in default storage
