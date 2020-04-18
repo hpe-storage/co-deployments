@@ -32,7 +32,7 @@ metadata:
               "parameters": {
                 "accessProtocol": "iscsi",
                 "fsType": "xfs",
-                "volumeDescription": "Volume created by the HPE CSI Driver for Kubernetes",
+                "volumeDescription": "Volume created by the HPE CSI Driver for Kubernetes"
               }
             }
           }
