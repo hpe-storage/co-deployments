@@ -27,7 +27,7 @@ supplementalGroups:
   type: RunAsAny
 users:
 - system:serviceaccount:my-hpe-csi-driver-operator:hpe-csi-controller-sa
-- system:serviceaccount:my-hpe-csi-driver-operator:hpe-csi:hpe-csi-node-sa
+- system:serviceaccount:my-hpe-csi-driver-operator:hpe-csi-node-sa
 - system:serviceaccount:my-hpe-csi-driver-operator:hpe-csp-sa
 - system:serviceaccount:my-hpe-csi-driver-operator:hpe-csi-operator-sa
 volumes:
