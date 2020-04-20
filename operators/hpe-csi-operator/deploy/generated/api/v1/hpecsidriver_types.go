@@ -37,7 +37,7 @@ type HPECSIDriverSpec struct {
 	Flavor string `json:"flavor"`
 	// Default logLevel for HPE CSI driver deployments
 	LogLevel string `json:"logLevel"`
-	// BackendType nimble/hpe3parprimera for the CSP deployment
+	// BackendType nimble/primera3par for the CSP deployment
 	BackendType string `json:"backendType"`
 }
 

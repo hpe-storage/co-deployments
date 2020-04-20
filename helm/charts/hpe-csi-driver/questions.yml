@@ -13,7 +13,7 @@ questions:
   type: enum
   options:
     - "nimble"
-    - "hpe3parprimera"
+    - "primera3par"
   group: "HPE backend settings"
 - variable: secret.username
   label: "Username"

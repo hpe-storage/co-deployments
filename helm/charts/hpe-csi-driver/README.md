@@ -21,7 +21,7 @@ The following table lists the configurable parameters of the HPE-CSI chart and t
 
 |  Parameter                |  Description                                                |  Default    |
 |---------------------------|-------------------------------------------------------------|-------------|
-| backendType                   | Name of the HPE Storage backend type (nimble, hpe3parprimera)                 | nimble |
+| backendType                   | Name of the HPE Storage backend type (nimble, primera3par)                 | nimble |
 | secret.create                   | Enabled creation of secret along with driver deployment                 | true |
 | secret.backend                   | HPE storage backend hostname or IP address.                 | 192.168.1.1 |
 | secret.username                  | Username for the backend.                                   | admin       |

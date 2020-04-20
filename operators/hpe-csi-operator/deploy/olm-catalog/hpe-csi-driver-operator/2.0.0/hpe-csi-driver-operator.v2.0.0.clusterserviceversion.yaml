@@ -110,7 +110,7 @@ spec:
             kind: ConfigMap
         specDescriptors:
           - displayName: Backend Type
-            description: 'HPE storage backend type (nimble, hpe3parprimera)'
+            description: 'HPE storage backend type (nimble, primera3par)'
             path: backendType
             x-descriptors:
               - 'urn:alm:descriptor:com.tectonic.ui:text'

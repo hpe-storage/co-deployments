@@ -11,7 +11,7 @@ spec:
   # image pull policy for all images in csi deployment
   imagePullPolicy: 'Always'
 
-  # HPE backend storage type (nimble, hpe3parprimera)
+  # HPE backend storage type (nimble, primera3par)
   backendType: nimble
 
   secret:
