@@ -11,16 +11,16 @@
 kind: Service
 apiVersion: v1
 metadata:
-  name: hpe3parprimera-csp-svc
+  name: primera3par-csp-svc
   namespace: kube-system
   labels:
-    app: hpe3parprimera-csp-svc
+    app: primera3par-csp-svc
 spec:
   ports:
   - port: 8080
     protocol: TCP
   selector:
-    app: hpe3parprimera-csp
+    app: primera3par-csp
 
 ---
 
@@ -31,21 +31,21 @@ spec:
 kind: Deployment
 apiVersion: apps/v1
 metadata:
-  name: hpe3parprimera-csp
+  name: primera3par-csp
   namespace: kube-system
 spec:
   selector:
     matchLabels:
-      app: hpe3parprimera-csp
+      app: primera3par-csp
   replicas: 1
   template:
     metadata:
       labels:
-        app: hpe3parprimera-csp
+        app: primera3par-csp
     spec:
       priorityClassName: system-cluster-critical
       containers:
-        - name: hpe3parprimera-csp
+        - name: primera3par-csp
           image: hpestorage/hpe3parprimera-csp:v1.0.0
           imagePullPolicy: Always
           ports:

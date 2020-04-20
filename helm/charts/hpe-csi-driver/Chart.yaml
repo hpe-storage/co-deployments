@@ -6,7 +6,7 @@ maintainers:
 - name: shivamerla
   email: hpe-containers-dev@hpe.com
 sources:
-- https://github.com/hpe-storage/csi-driver
+- https://scod.hpedev.io/csi_driver
 name: hpe-csi-driver
 home: https://hpe.com/storage/containers
 version: 1.2.0
