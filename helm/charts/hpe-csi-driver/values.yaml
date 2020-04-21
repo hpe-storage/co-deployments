@@ -9,7 +9,7 @@ imagePullPolicy: 'Always'
 backendType: nimble
 
 secret:
-  # parameters for specified backendType (nimble, hpe3parprimera)
+  # parameters for specified backendType (nimble, primera3par)
   create: true
   backend: 192.168.1.1
   username: admin
