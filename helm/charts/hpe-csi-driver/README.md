@@ -5,8 +5,7 @@ The [HPE CSI Driver for Kubernetes](https://scod.hpedev.io/csi_driver/index.html
 ## Prerequisites
 
 - Upstream Kubernetes version >= 1.13
-- Most Kubernetes distributions supported
-- OpenShift 4.2, 4.3 (RHCOS and RHEL 7.x)
+- Most Kubernetes distributions are supported
 - Recent Ubuntu, CentOS or RHEL compute nodes connected to their respective official package repositories
 - Helm 2 (Should specify creation of CRD's explicitly using `--set crd.nodeInfo.create=true` during install)
 - Helm 3 (Supported only from HPE CSI Driver version 1.1.0 onwards)
@@ -51,12 +50,6 @@ secret:
 ```
 
 Tweak any additional parmeters to suit the environment or as prescribed by HPE.
-
-### Data path configuration
-
-The HPE CSI Driver for Kubernetes automatically configures Linux iSCSI/multipath settings based on [config.json](https://raw.githubusercontent.com/hpe-storage/co-deployments/master/helm/charts/hpe-csi-driver/files/config.json). In order to tune these values, edit the config map with `kubectl edit configmap hpe-linux-config -n kube-system` and restart node plugin using `kubectl delete pod -l app=hpe-csi-node` to apply.
-
-**Note:** HPE provide a set of general purpose default values, tuning is only required if prescribed by HPE.
 
 ### Installing the chart
 
@@ -115,6 +108,12 @@ helm install hpe-csi hpe/hpe-csi-driver --namespace kube-system --set backendTyp
 helm install --name hpe-csi hpe/hpe-csi-driver --namespace kube-system --set backendType=nimble \
 --set backend=X.X.X.X --set username=admin --set password=xxxxxxxxx
 ```
+
+### Data path configuration
+
+The HPE CSI Driver for Kubernetes automatically configures Linux iSCSI/multipath settings based on [config.json](https://raw.githubusercontent.com/hpe-storage/co-deployments/master/helm/charts/hpe-csi-driver/files/config.json). In order to tune these values, edit the config map with `kubectl edit configmap hpe-linux-config -n kube-system` and restart node plugin using `kubectl delete pod -l app=hpe-csi-node` to apply.
+
+**Note:** HPE provide a set of general purpose default values, tuning is only required if prescribed by HPE.
 
 ## Using
 
