@@ -1,0 +1,52 @@
+# Default values for hpe-csi-storage.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+# image pull policy for all images in csi deployment
+imagePullPolicy: 'Always'
+
+# HPE backend storage type (nimble, primera3par)
+backendType: nimble
+
+secret:
+  # parameters for specified backendType (nimble, primera3par)
+  create: true
+  backend: 192.168.1.1
+  username: admin
+  password: admin
+  servicePort: "8080"
+
+# flavor
+flavor: kubernetes
+
+# log level for all csi driver components
+logLevel: info
+
+## For creating the StorageClass automatically:
+storageClass:
+  create: true
+
+  ## Set StorageClass as the default StorageClass
+  ## Ignored if storageClass.create is false
+  defaultClass: false
+
+  ## Set a StorageClass name
+  ## Ignored if storageClass.create is false
+  name: hpe-standard
+  # Enable volume resize
+  ## Ignored if storageClass.create is false
+  allowVolumeExpansion: true
+  # Default storage class parameters
+  parameters:
+    fsType: xfs
+    volumeDescription: "Volume created by the HPE CSI Driver for Kubernetes"
+    accessProtocol: "iscsi"
+
+# CRD creation controls
+## For HELM 3 CRD's are handled automatically without this flag.
+## This flag should be enabled only for HELM 2
+crd:
+  nodeInfo:
+    create: false
+  volumeInfo:
+    create: false

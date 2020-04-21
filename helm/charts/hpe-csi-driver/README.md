@@ -1,58 +1,71 @@
-
 # HPE CSI Driver for Kubernetes Helm chart
-The [HPE CSI Driver for Kubernetes](https://github.com/hpe-storage/csi-driver) leverages HPE storage platforms to provide scalable and persistent storage for stateful applications.
+
+The [HPE CSI Driver for Kubernetes](https://scod.hpedev.io/csi_driver/index.html) leverages HPE storage platforms to provide scalable and persistent storage for stateful applications.
 
 ## Prerequisites
 
-- Upstream Kubernetes version > 1.13
+- Upstream Kubernetes version >= 1.13
 - Most Kubernetes distributions supported
 - OpenShift 4.2, 4.3 (RHCOS and RHEL 7.x)
 - Recent Ubuntu, CentOS or RHEL compute nodes connected to their respective official package repositories
 - Helm 2 (Should specify creation of CRD's explicitly using `--set crd.nodeInfo.create=true` during install)
 - Helm 3 (Supported only from HPE CSI Driver version 1.1.0 onwards)
 
-Depending on which [Container Storage Provider](https://scod.hpedev.io/container_storage_provider/) (CSP) is being used, other prerequisites and requirements may apply.
+Depending on which [Container Storage Provider](https://scod.hpedev.io/container_storage_provider/index.html) (CSP) is being used, other prerequisites and requirements may apply, such as storage platform OS and features.
 
-### HPE Nimble Storage CSP
-- NimbleOS 5.0.x or later
+- [HPE Nimble Storage](https://scod.hpedev.io/container_storage_provider/hpe_nimble_storage/index.html)
+- [HPE 3PAR and Primera](https://scod.hpedev.io/container_storage_provider/hpe_3par_primera/index.html)
 
-### HPE 3PAR and Primera Storage CSP
-- 3PAR OS 3.3.1
-- Primera OS 4.0.0, 4.1.0
+## Configuration and installation
 
-## Configuration & Installation
 The following table lists the configurable parameters of the HPE-CSI chart and their default values.
 
 |  Parameter                |  Description                                                |  Default    |
 |---------------------------|-------------------------------------------------------------|-------------|
-| backendType                   | Name of the HPE Storage backend type (nimble, primera3par)                 | nimble |
-| secret.create                   | Enabled creation of secret along with driver deployment                 | true |
+| backendType                   | Name of the HPE storage backend type (nimble, primera3par)                 | nimble |
+| secret.create                   | Enable creation of `Secret` along with CSP deployment                 | true |
 | secret.backend                   | HPE storage backend hostname or IP address.                 | 192.168.1.1 |
 | secret.username                  | Username for the backend.                                   | admin       |
 | secret.password                  | Password for the backend.                                   | admin       |
-| crd.nodeInfo.create       | Create nodeinfo CRDs required by HPE CSI driver. Should only enable with HELM 2, as they are automatically created with HELM 3 without this flag.                  | false        |
-| crd.volumeInfo.create       | Create volumeinfo CRDs required by HPE CSI driver for 3PAR Primera. Should only enable with HELM 2, as they are automatically created with HELM 3 without this flag.                  | false        |
+| crd.nodeInfo.create       | Create `hpenodeinfo` CRDs required by HPE CSI Driver. Should only be enabled with Helm 2, as they are automatically created with Helm 3 without this flag.                  | false        |
+| crd.volumeInfo.create       | Create `hpevolumeinfo` CRDs required by HPE CSI Driver for 3PAR and Primera. Should only be enabled with Helm 2, as they are automatically created with Helm 3 without this flag. | false        |
 | logLevel             | Log level. Can be one of `info`, `debug`, `trace`, `warn` and `error`                                        | info         |
-| imagePullPolicy | Image pull policy (Always, IfNotPresent, Never).                                          | Always |
-| storageClass.name  | The name to assign the created StorageClass.                                          | hpe-standard |
-| storageClass.create | Enables creation of StorageClass to consume this hpe-csi-driver instance                              | true        |
-| storageClass.defaultClass | Whether to set the created StorageClass as the clusters default StorageClass.                                | false       |
+| imagePullPolicy | Image pull policy (`Always`, `IfNotPresent`, `Never`).                                          | Always |
+| storageClass.name  | The name to assign the created `StorageClass`.                                          | hpe-standard |
+| storageClass.create | Enables creation of a `StorageClass` managed by this Helm chart                            | true        |
+| storageClass.defaultClass | Whether to set the created `StorageClass` as the clusters default `StorageClass`.                                | false       |
 | storageClass.parameters.fsType                    | Type of file system being used (ext4, ext3, xfs, btrfs)     | xfs         |
-| storageClass.parameters.volumeDescription         | Volume description for volumes created using HPE CSI driver     | -         |
+| storageClass.parameters.volumeDescription         | Default volume description set on backend volume     | -         |
 | storageClass.parameters.accessProtocol            | Access protocol to use for storage connectivity (iscsi, fc)     | iscsi         |
 
 It's recommended to create a [values.yaml](https://github.com/hpe-storage/co-deployments/blob/master/helm/values/csi-driver) file from corresponding release and edit it to fit the environment the chart is being deployed to. Download and edit the sample file.
 
-**Note:** HPE CSI Driver for Kubernetes automatically configures Linux iSCSI/Multipath settings based on [config.json](https://raw.githubusercontent.com/hpe-storage/co-deployments/master/helm/charts/hpe-csi-driver/files/config.json). In order to tune these values, edit the config map with `kubectl edit configmap hpe-linux-config -n kube-system` and restart node plugin using `kubectl delete pod -l app=hpe-csi-node` to apply.
+These are the bare minimum required parameters for a successful deployment to an iSCSI enviornment:
+```
+# nimble or primera3par
+backendType: nimble
+secret:
+  backend: 192.168.1.1
+  username: admin
+  password: admin
+```
 
-### Installing the Chart
+Tweak any additional parmeters to suit the environment or as prescribed by HPE.
+
+### Data path configuration
+
+The HPE CSI Driver for Kubernetes automatically configures Linux iSCSI/multipath settings based on [config.json](https://raw.githubusercontent.com/hpe-storage/co-deployments/master/helm/charts/hpe-csi-driver/files/config.json). In order to tune these values, edit the config map with `kubectl edit configmap hpe-linux-config -n kube-system` and restart node plugin using `kubectl delete pod -l app=hpe-csi-node` to apply.
+
+**Note:** HPE provide a set of general purpose default values, tuning is only required if prescribed by HPE.
+
+### Installing the chart
+
 To install the chart with the name `hpe-csi`:
 
 Add HPE helm repo:
 ```
 helm repo add hpe https://hpe-storage.github.io/co-deployments
 helm repo update
-helm search repo hpe-csi-driver
 ```
 
 Install the latest chart:
@@ -60,13 +73,13 @@ Install the latest chart:
 # Helm 3
 helm install hpe-csi hpe/hpe-csi-driver --namespace kube-system -f myvalues.yaml
 
-# Helm 2
-# For Nimble, Install with HPENodeInfos CRD's enabled explicitly
+# Helm 2, for Nimble, Install with HPENodeInfos CRD's enabled explicitly
 helm install --name hpe-csi hpe/hpe-csi-driver --namespace kube-system -f myvalues.yaml --set crd.nodeInfo.create=true
 ```
 
 ### Upgrading the Chart
-To upgrade the chart, specify the version you want to upgrade to as below. Please do NOT re-use the values.yaml from 1.0.0 version to upgrade to later versions. Always use values.yaml from corresponding release from [values.yaml](https://github.com/hpe-storage/co-deployments/blob/master/helm/values/csi-driver)
+
+To upgrade the chart, specify the version you want to upgrade to as below. Please do NOT re-use a full blown `values.yaml` from prior versions to upgrade to later versions. Always use `values.yaml` from corresponding release from [values.yaml](https://github.com/hpe-storage/co-deployments/blob/master/helm/values/csi-driver)
 
 ```
 # List the avaiable version of the plugin:
@@ -78,6 +91,7 @@ helm upgrade hpe-csi hpe/hpe-csi-driver --namespace kube-system --version=x.x.x.
 ```
 
 ### Uninstalling the Chart
+
 To uninstall/delete the `hpe-csi` chart:
 
 ```
@@ -89,6 +103,7 @@ helm delete hpe-csi --purge
 ```
 
 ### Alternative install method
+
 In some cases it's more practical to provide the local configuration via the `helm` command directly. Specify each parameter using the `--set key=value[,key=value]` argument to `helm install`. These will take precedence over entries in [values.yaml](https://github.com/hpe-storage/co-deployments/blob/master/helm/values/csi-driver/v1.1.0/values.yaml). For example:
 
 ```
@@ -102,13 +117,17 @@ helm install --name hpe-csi hpe/hpe-csi-driver --namespace kube-system \
 ```
 
 ## Using
-To enable dynamic provisioning of volumes through the use of `PersistentVolumeClaim` API objects, a `StorageClass` needs to be declared on the cluster. Please see the [HPE CSI Driver for Kubernetes](https://github.com/hpe-storage/csi-driver) repository for the official documentation for this Helm chart. Also, it's helpful to be familar with [persistent storage concepts](https://kubernetes.io/docs/concepts/storage/volumes/) in Kubernetes prior to deploying stateful workloads.
+
+To enable dynamic provisioning of volumes through the use of `PersistentVolumeClaim` API objects, a `StorageClass` needs to be declared on the cluster. By default, a `StorageClass` named `hpe-standard` is installed. Please see the [HPE CSI Driver for Kubernetes](https://scod.hpedev.io/csi_driver/index.html) documentation portal for the official documentation for this CSI driver. Also, it's helpful to be familar with [persistent storage concepts](https://kubernetes.io/docs/concepts/storage/volumes/) in Kubernetes prior to deploying stateful workloads.
 
 ## Support
-The HPE CSI Driver for Kubernetes Helm chart is covered by your HPE support contract. Please file any issues, questions or feature requests [here](https://github.com/hpe-storage/co-deployments/issues) or contact HPE through the regular support channels. You may also join our Slack community to chat with HPE folks close to this project. We hang out in `#NimbleStorage` and `#Kubernetes` at [slack.hpedev.io](https://slack.hpedev.io/).
+
+The HPE CSI Driver for Kubernetes Helm chart is covered by your HPE support contract. Please file any issues, questions or feature requests [here](https://github.com/hpe-storage/co-deployments/issues) or contact HPE through the regular support channels. You may also join our Slack community to chat with HPE folks close to this project. We hang out in `#NimbleStorage`, `#3par-primera` and `#Kubernetes` at [hpedev.slack.com](https://hpedev.slack.com), sign up here: [slack.hpedev.io](https://slack.hpedev.io/).
 
 ## Contributing
+
 We value all feedback and contributions. If you find any issues or want to contribute, please feel free to open an issue or file a PR. More details in [CONTRIBUTING.md](https://github.com/hpe-storage/co-deployments/blob/master/CONTRIBUTING.md)
 
 ## License
+
 This is open source software licensed using the Apache License 2.0. Please see [LICENSE](https://github.com/hpe-storage/co-deployments/blob/master/LICENSE) for details.
