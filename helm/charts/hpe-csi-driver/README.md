@@ -92,7 +92,7 @@ helm upgrade hpe-csi hpe/hpe-csi-driver --namespace kube-system --version=x.x.x.
 
 ### Uninstalling the Chart
 
-To uninstall/delete the `hpe-csi` chart:
+To uninstall (Helm 3) or delete (Helm 2) the `hpe-csi` chart:
 
 ```
 # Helm 3
@@ -104,21 +104,21 @@ helm delete hpe-csi --purge
 
 ### Alternative install method
 
-In some cases it's more practical to provide the local configuration via the `helm` command directly. Specify each parameter using the `--set key=value[,key=value]` argument to `helm install`. These will take precedence over entries in [values.yaml](https://github.com/hpe-storage/co-deployments/blob/master/helm/values/csi-driver/v1.1.0/values.yaml). For example:
+In some cases it's more practical to provide the local configuration via the `helm` command directly. Specify each parameter using the `--set key=value[,key=value]` argument to `helm install`. These will take precedence over entries in [values.yaml](https://github.com/hpe-storage/co-deployments/blob/master/helm/values/csi-driver). For example:
 
 ```
 # Helm 3
-helm install hpe-csi hpe/hpe-csi-driver --namespace kube-system \
+helm install hpe-csi hpe/hpe-csi-driver --namespace kube-system --set backendType=nimble \
 --set backend=X.X.X.X --set username=admin --set password=xxxxxxxxx
 
 # Helm 2
-helm install --name hpe-csi hpe/hpe-csi-driver --namespace kube-system \
+helm install --name hpe-csi hpe/hpe-csi-driver --namespace kube-system --set backendType=nimble \
 --set backend=X.X.X.X --set username=admin --set password=xxxxxxxxx
 ```
 
 ## Using
 
-To enable dynamic provisioning of volumes through the use of `PersistentVolumeClaim` API objects, a `StorageClass` needs to be declared on the cluster. By default, a `StorageClass` named `hpe-standard` is installed. Please see the [HPE CSI Driver for Kubernetes](https://scod.hpedev.io/csi_driver/index.html) documentation portal for the official documentation for this CSI driver. Also, it's helpful to be familar with [persistent storage concepts](https://kubernetes.io/docs/concepts/storage/volumes/) in Kubernetes prior to deploying stateful workloads.
+To enable dynamic provisioning of volumes through the use of `PersistentVolumeClaim` API objects, a `StorageClass` needs to be declared on the cluster. By default, a `StorageClass` named `hpe-standard` is installed. Please see the [HPE CSI Driver for Kubernetes](https://scod.hpedev.io/csi_driver/index.html) documentation portal for the official documentation for the HPE CSI Driver for Kubernetes. Also, it's helpful to be familar with [persistent storage concepts](https://kubernetes.io/docs/concepts/storage/volumes/) in Kubernetes prior to deploying stateful workloads.
 
 ## Support
 
