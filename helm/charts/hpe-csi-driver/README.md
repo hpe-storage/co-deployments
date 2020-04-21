@@ -11,17 +11,21 @@ The [HPE CSI Driver for Kubernetes](https://github.com/hpe-storage/csi-driver) l
 - Helm 2 (Should specify creation of CRD's explicitly using `--set crd.nodeInfo.create=true` during install)
 - Helm 3 (Supported only from HPE CSI Driver version 1.1.0 onwards)
 
-Depending on which [Container Storage Provider](https://github.com/hpe-storage/container-storage-provider) (CSP) is being used, other prerequisites and requirements may apply.
+Depending on which [Container Storage Provider](https://scod.hpedev.io/container_storage_provider/) (CSP) is being used, other prerequisites and requirements may apply.
 
 ### HPE Nimble Storage CSP
 - NimbleOS 5.0.x or later
+
+### HPE 3PAR and Primera Storage CSP
+- 3PAR OS 3.3.1
+- Primera OS 4.0.0, 4.1.0
 
 ## Configuration & Installation
 The following table lists the configurable parameters of the HPE-CSI chart and their default values.
 
 |  Parameter                |  Description                                                |  Default    |
 |---------------------------|-------------------------------------------------------------|-------------|
-| backendType                   | Name of the HPE Storage backend type (nimble, hpe3parprimera)                 | nimble |
+| backendType                   | Name of the HPE Storage backend type (nimble, primera3par)                 | nimble |
 | secret.create                   | Enabled creation of secret along with driver deployment                 | true |
 | secret.backend                   | HPE storage backend hostname or IP address.                 | 192.168.1.1 |
 | secret.username                  | Username for the backend.                                   | admin       |
@@ -36,8 +40,6 @@ The following table lists the configurable parameters of the HPE-CSI chart and t
 | storageClass.parameters.fsType                    | Type of file system being used (ext4, ext3, xfs, btrfs)     | xfs         |
 | storageClass.parameters.volumeDescription         | Volume description for volumes created using HPE CSI driver     | -         |
 | storageClass.parameters.accessProtocol            | Access protocol to use for storage connectivity (iscsi, fc)     | iscsi         |
-| storageClass.parameters.provisioningType         | Provisioning type for HPE 3PAR Primera     | tpvv         |
-| storageClass.parameters.cpg            | CPG type for HPE 3PAR Primera     | FC_r6         |
 
 It's recommended to create a [values.yaml](https://github.com/hpe-storage/co-deployments/blob/master/helm/values/csi-driver) file from corresponding release and edit it to fit the environment the chart is being deployed to. Download and edit the sample file.
 
@@ -61,9 +63,6 @@ helm install hpe-csi hpe/hpe-csi-driver --namespace kube-system -f myvalues.yaml
 # Helm 2
 # For Nimble, Install with HPENodeInfos CRD's enabled explicitly
 helm install --name hpe-csi hpe/hpe-csi-driver --namespace kube-system -f myvalues.yaml --set crd.nodeInfo.create=true
-
-# For 3PAR Primera, Install with HPENodeInfos/HPEVolumeInfos CRD's enabled explicitly
-helm install --name hpe-csi hpe/hpe-csi-driver --namespace kube-system -f myvalues.yaml --set crd.nodeInfo.create=true --set crd.volumeInfo.create=true
 ```
 
 ### Upgrading the Chart

@@ -21,7 +21,6 @@ metadata:
               "backend": "192.168.1.1",
               "create": true,
               "password": "admin",
-              "serviceName": "nimble-csp-svc",
               "servicePort": "8080",
               "username": "admin"
             },
@@ -33,9 +32,7 @@ metadata:
               "parameters": {
                 "accessProtocol": "iscsi",
                 "fsType": "xfs",
-                "volumeDescription": "Volume created by the HPE CSI Driver for Kubernetes",
-                "provisioningType": "tpvv",
-                "cpg": "FC_r6"
+                "volumeDescription": "Volume created by the HPE CSI Driver for Kubernetes"
               }
             }
           }
@@ -113,7 +110,7 @@ spec:
             kind: ConfigMap
         specDescriptors:
           - displayName: Backend Type
-            description: 'HPE storage backend type (nimble, hpe3parprimera)'
+            description: 'HPE storage backend type (nimble, primera3par)'
             path: backendType
             x-descriptors:
               - 'urn:alm:descriptor:com.tectonic.ui:text'
@@ -147,11 +144,6 @@ spec:
             path: secret.password
             x-descriptors:
               - 'urn:alm:descriptor:com.tectonic.ui:password'
-          - displayName: CSP service hostname
-            description: CSP service hostname or IP address
-            path: secret.serviceName
-            x-descriptors:
-              - 'urn:alm:descriptor:com.tectonic.ui:text'
           - displayName: CSP pervice port
             description: CSP service port
             path: secret.servicePort
@@ -190,16 +182,6 @@ spec:
           - displayName: Default access protocol
             description: 'Access protocol set in the installed StorageClass (default: iscsi, choices: fc)'
             path: storageClass.parameters.accessProtocol
-            x-descriptors:
-              - 'urn:alm:descriptor:com.tectonic.ui:text'
-          - displayName: Provisioning type for 3PAR Primera
-            description: 'Provisioning type for 3PAR Primera (default: tpvv choices: tpvv)'
-            path: storageClass.parameters.provisioningType
-            x-descriptors:
-              - 'urn:alm:descriptor:com.tectonic.ui:text'
-          - displayName: CPG for 3PAR Primera
-            description: 'CPG for 3PAR Primera (default: FC_r6, choices: FC_r6)'
-            path: storageClass.parameters.cpg
             x-descriptors:
               - 'urn:alm:descriptor:com.tectonic.ui:text'
           - displayName: Allow volume expansion

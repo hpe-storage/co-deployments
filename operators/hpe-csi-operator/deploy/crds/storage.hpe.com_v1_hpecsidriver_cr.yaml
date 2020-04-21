@@ -11,7 +11,7 @@ spec:
   # image pull policy for all images in csi deployment
   imagePullPolicy: 'Always'
 
-  # HPE backend storage type (nimble, hpe3parprimera)
+  # HPE backend storage type (nimble, primera3par)
   backendType: nimble
 
   secret:
@@ -47,7 +47,4 @@ spec:
       fsType: xfs
       volumeDescription: "Volume created by the HPE CSI Driver for Kubernetes"
       accessProtocol: "iscsi"
-      # Provisioning type for 3PAR/Primera
-      provisioningType: "tpvv"
-      # CPG for 3PAR/Primera
-      cpg: "FC_r6"
+

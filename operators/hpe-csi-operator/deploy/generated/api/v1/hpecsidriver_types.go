@@ -37,7 +37,7 @@ type HPECSIDriverSpec struct {
 	Flavor string `json:"flavor"`
 	// Default logLevel for HPE CSI driver deployments
 	LogLevel string `json:"logLevel"`
-	// BackendType nimble/hpe3parprimera for the CSP deployment
+	// BackendType nimble/primera3par for the CSP deployment
 	BackendType string `json:"backendType"`
 }
 
@@ -78,10 +78,6 @@ type HPEStorageClassParameters struct {
 	AccessProtocol string `json:"accessProtocol"`
 	// Filesystem type for default storage class
 	FsType string `json:"fsType"`
-	//Provisioning type for the hpe3parprimera storage backend
-	ProvisioningType string `json:"provisioningType,omitempty"`
-	// CPG for the hpe3parprimera storage backend
-	CPG string `json:"cpg,omitempty"`
 }
 
 type HelmAppConditionType string

@@ -36,7 +36,7 @@ spec:
           description: HPECSIDriverSpec defines the desired state of HPECSIDriver
           properties:
             backendType:
-              description: HPE storage backend type (nimble, hpe3parprimera) for the CSP deployment
+              description: HPE storage backend type (nimble, primera3par) for the CSP deployment
               type: string
             flavor:
               description: Flavor of the CO orchestrator
@@ -97,15 +97,8 @@ spec:
                     accessProtocol:
                       description: Access protocol for storage backend
                       type: string
-                    cpg:
-                      description: CPG for the hpe3parprimera storage backend
-                      type: string
                     fsType:
                       description: Filesystem type for default storage class
-                      type: string
-                    provisioningType:
-                      description: 'Provisioning type for the hpe3parprimera storage
-                        backend'
                       type: string
                     volumeDescription:
                       description: 'Volume description parameter in default storage

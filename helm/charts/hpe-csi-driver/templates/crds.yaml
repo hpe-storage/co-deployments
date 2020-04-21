@@ -3,7 +3,7 @@
 {{ .Files.Get "crds/hpe-nodeinfo-crd.yaml" }}
 ---
 {{- end }}
-{{ if and (eq .Values.backendType "hpe3parprimera") (eq .Values.crd.volumeInfo.create true) -}}
+{{ if and (eq .Values.backendType "primera3par") (eq .Values.crd.volumeInfo.create true) -}}
 ################ HPE VolumeInfo CRD for 3PAR ##########
 {{ .Files.Get "crds/hpe-volumeinfo-crd.yaml" }}
 ---
