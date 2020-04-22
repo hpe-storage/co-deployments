@@ -1,7 +1,7 @@
 apiVersion: operators.coreos.com/v1alpha1
 kind: ClusterServiceVersion
 metadata:
-  name: hpe-csi-driver-operator.v2.0.0
+  name: hpe-csi-driver-operator.v1.1.0
   namespace: placeholder
   annotations:
     alm-examples: >-
@@ -40,11 +40,11 @@ metadata:
       ]
     categories: Storage
     certified: 'true'
-    createdAt: 'Tue Apr  7 14:47:55 PDT 2020'
+    createdAt: 'Tue Apr 21 16:09:17 PDT 2020'
     description: >-
       A Container Storage Interface (CSI) driver for HPE storage platforms. The CSI driver
       allows you to use HPE storage with your preferred container orchestrator.
-    containerImage: 'hpestorage/csi-driver-operator:v2.0.0-beta'
+    containerImage: 'registry.connect.redhat.com/hpestorage/csi-driver-operator:v1.1.0'
     support: 'HPE'
     capabilities: Basic Install
     repository: 'https://github.com/hpe-storage/co-deployments'
@@ -64,8 +64,8 @@ spec:
 
     Refer to the HPE CSI Operator for Kubernetes [documentation](https://github.com/hpe-storage/co-deployments/tree/master/operators/hpe-csi-operator).
 
-  maturity: beta
-  version: 2.0.0
+  maturity: stable
+  version: 1.1.0
   replaces: hpe-csi-driver-operator.v1.0.0
   minKubeVersion: 1.14.0
   keywords:
@@ -380,7 +380,7 @@ spec:
                 serviceAccountName: hpe-csi-operator-sa
                 containers:
                   - name: hpe-csi-operator
-                    image: 'hpestorage/csi-driver-operator:v2.0.0-beta'
+                    image: 'registry.connect.redhat.com/hpestorage/csi-driver-operator:v1.1.0'
                     ports:
                       - containerPort: 60000
                         name: metrics

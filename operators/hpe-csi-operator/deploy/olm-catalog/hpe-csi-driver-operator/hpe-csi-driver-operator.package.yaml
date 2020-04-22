@@ -1,5 +1,5 @@
 channels:
-- currentCSV: hpe-csi-driver-operator.v2.0.0
+- currentCSV: hpe-csi-driver-operator.v1.1.0
   name: stable
 defaultChannel: stable
 packageName: csi-driver-operator
