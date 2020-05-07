@@ -39,6 +39,8 @@ The following table lists the configurable parameters of the HPE-CSI chart and t
 
 It's recommended to create a [values.yaml](https://github.com/hpe-storage/co-deployments/blob/master/helm/values/csi-driver) file from the corresponding release of the chart and edit it to fit the environment the chart is being deployed to. Download and edit [a sample file](https://github.com/hpe-storage/co-deployments/blob/master/helm/values/csi-driver).
 
+> Note: Set `storageClass.create` parameter to `false` for backendType `primera3par`.
+
 These are the bare minimum required parameters for a successful deployment to an iSCSI enviornment:
 
 ```
@@ -95,6 +97,8 @@ helm uninstall hpe-csi --namespace kube-system
 # Helm 2
 helm delete hpe-csi --purge
 ```
+
+> Note: CRDs are not deleted as part of Helm uninstall.
 
 ### Alternative install method
 
