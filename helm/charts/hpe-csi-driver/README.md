@@ -37,9 +37,10 @@ The following table lists the configurable parameters of the HPE-CSI chart and t
 | storageClass.parameters.volumeDescription         | Default volume description set on backend volume.     | -         |
 | storageClass.parameters.accessProtocol            | Access protocol to use for storage connectivity (iscsi, fc).     | iscsi         |
 
-It's recommended to create a [values.yaml](https://github.com/hpe-storage/co-deployments/blob/master/helm/values/csi-driver) file from the corresponding release of the chart and edit it to fit the environment the chart is being deployed to. Download and edit [a sample file](https://github.com/hpe-storage/co-deployments/blob/master/helm/values/csi-driver).
+> **Note**: The provided `StorageClass` is currently not compatible with `backendType: primera3par`.
+> How to setup a `StorageClass` for HPE 3PAR and Primera is documented on [SCOD](https://scod.hpedev.io/container_storage_provider/hpe_3par_primera/).
 
-> Note: Set `storageClass.create` parameter to `false` for backendType `primera3par`.
+It's recommended to create a [values.yaml](https://github.com/hpe-storage/co-deployments/blob/master/helm/values/csi-driver) file from the corresponding release of the chart and edit it to fit the environment the chart is being deployed to. Download and edit [a sample file](https://github.com/hpe-storage/co-deployments/blob/master/helm/values/csi-driver).
 
 These are the bare minimum required parameters for a successful deployment to an iSCSI enviornment:
 
@@ -98,7 +99,7 @@ helm uninstall hpe-csi --namespace kube-system
 helm delete hpe-csi --purge
 ```
 
-> Note: CRDs are not deleted as part of Helm uninstall.
+> **Note**: Due to a limitation in Helm, CRDs are not deleted as part of the chart uninstall.
 
 ### Alternative install method
 
