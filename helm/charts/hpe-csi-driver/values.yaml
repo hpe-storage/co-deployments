@@ -42,6 +42,9 @@ storageClass:
     volumeDescription: "Volume created by the HPE CSI Driver for Kubernetes"
     accessProtocol: "iscsi"
 
+## For controlling automatic iscsi/multipath package installation (default: false)
+disableNodeConformance: false
+
 # CRD creation controls
 ## For HELM 3 CRD's are handled automatically without this flag.
 ## This flag should be enabled only for HELM 2

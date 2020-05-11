@@ -39,6 +39,8 @@ type HPECSIDriverSpec struct {
 	LogLevel string `json:"logLevel"`
 	// BackendType nimble/primera3par for the CSP deployment
 	BackendType string `json:"backendType"`
+	// DisableNodeConformance disables automatic installation of iscsi/multipath packages
+	DisableNodeConformance bool `json:"disableNodeConformance"`
 }
 
 // HPESecret defines HPE secret params

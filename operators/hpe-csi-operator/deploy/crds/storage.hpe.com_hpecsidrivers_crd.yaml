@@ -73,6 +73,9 @@ spec:
               - servicePort
               - username
               type: object
+            disableNodeConformance:
+              description: 'Disable automatic installation of iSCSI/Multipath packages, default: false'
+              type: boolean
             storageClass:
               description: HPE Storage class controls
               properties:

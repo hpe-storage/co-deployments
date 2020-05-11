@@ -48,3 +48,6 @@ spec:
       volumeDescription: "Volume created by the HPE CSI Driver for Kubernetes"
       accessProtocol: "iscsi"
 
+  ## For controlling automatic iscsi/multipath package installation (default: false)
+  disableNodeConformance: false
+

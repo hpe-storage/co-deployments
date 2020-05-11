@@ -212,8 +212,8 @@ rules:
     resources: ["nodes"]
     verbs: ["get", "list"]
   - apiGroups: [""]
-    resources: ["pods"]
-    verbs: ["get", "list"]
+    resources: ["serviceaccounts"]
+    verbs: ["get", "list", "create"]
   - apiGroups: [""]
     resources: ["configmaps"]
     verbs: ["get", "create"]
@@ -512,6 +512,8 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: spec.nodeName
+            - name: DISABLE_NODE_CONFORMANCE
+              value: "false"
           imagePullPolicy: "Always"
           securityContext:
             privileged: true
