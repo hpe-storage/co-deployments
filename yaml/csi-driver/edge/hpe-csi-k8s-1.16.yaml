@@ -160,6 +160,8 @@ spec:
               mountPath: /etc/kubernetes
             - name: hpeconfig
               mountPath: /etc/hpe-storage
+            - name: root-dir
+              mountPath: /host
       volumes:
         - name: socket-dir
           emptyDir: {}
@@ -172,7 +174,9 @@ spec:
         - name: hpeconfig
           hostPath:
               path: /etc/hpe-storage/
-
+        - name: root-dir
+          hostPath:
+              path: /
 ---
 
 kind: ServiceAccount
@@ -221,6 +225,12 @@ rules:
   - apiGroups: [""]
     resources: ["events"]
     verbs: ["list", "watch", "create", "update", "patch"]
+  - apiGroups: [""]
+    resources: ["pods"]
+    verbs: ["get", "list", "delete"]
+  - apiGroups: ["storage.k8s.io"]
+    resources: ["volumeattachments"]
+    verbs: ["get", "list", "watch", "update", "patch", "delete"]
 
 ---
 

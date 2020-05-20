@@ -54,6 +54,12 @@ rules:
     resources: ["volumesnapshotcontents"]
     verbs: ["get", "list"]
 {{- end }}
+  - apiGroups: [""]
+    resources: ["pods"]
+    verbs: ["get", "list", "delete"]
+  - apiGroups: ["storage.k8s.io"]
+    resources: ["volumeattachments"]
+    verbs: ["get", "list", "watch", "update", "patch", "delete"]
 
 ---
 
