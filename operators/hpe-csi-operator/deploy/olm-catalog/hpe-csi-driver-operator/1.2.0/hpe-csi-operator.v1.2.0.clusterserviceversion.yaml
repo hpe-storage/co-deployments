@@ -1,7 +1,7 @@
 apiVersion: operators.coreos.com/v1alpha1
 kind: ClusterServiceVersion
 metadata:
-  name: hpe-csi-driver-operator.v1.1.0
+  name: hpe-csi-operator.v1.2.0
   namespace: placeholder
   annotations:
     alm-examples: >-
@@ -14,9 +14,9 @@ metadata:
           },
           "spec": {
             "backendType": "nimble",
-            "flavor": "kubernetes",
             "imagePullPolicy": "Always",
             "logLevel": "info",
+            "disableNodeConformance": true,
             "secret": {
               "backend": "192.168.1.1",
               "create": true,
@@ -32,7 +32,7 @@ metadata:
               "parameters": {
                 "accessProtocol": "iscsi",
                 "fsType": "xfs",
-                "volumeDescription": "Volume created by the HPE CSI Driver for Kubernetes"
+                "volumeDescription": "Volume created by the HPE CSI Driver"
               }
             }
           }
@@ -40,11 +40,11 @@ metadata:
       ]
     categories: Storage
     certified: 'true'
-    createdAt: 'Tue Apr 21 16:09:17 PDT 2020'
+    createdAt: 'Mon Jun  1 12:54:27 PDT 2020'
     description: >-
       A Container Storage Interface (CSI) driver for HPE storage platforms. The CSI driver
       allows you to use HPE storage with your preferred container orchestrator.
-    containerImage: 'registry.connect.redhat.com/hpestorage/csi-driver-operator:v1.1.0'
+    containerImage: 'registry.connect.redhat.com/hpestorage/csi-driver-operator:v1.2.0'
     support: 'HPE'
     capabilities: Basic Install
     repository: 'https://github.com/hpe-storage/co-deployments'
@@ -65,8 +65,8 @@ spec:
 
 
   maturity: stable
-  version: 1.1.0
-  replaces: hpe-csi-driver-operator.v1.0.0
+  version: 1.2.0
+  replaces: hpe-csi-operator.v1.1.0
   minKubeVersion: 1.14.0
   keywords:
     - HPE
@@ -119,16 +119,16 @@ spec:
             path: imagePullPolicy
             x-descriptors:
               - 'urn:alm:descriptor:com.tectonic.ui:imagePullPolicy'
-          - displayName: CO flavor
-            description: 'Flavor of the CO (kubernetes, ocp)'
-            path: flavor
-            x-descriptors:
-              - 'urn:alm:descriptor:com.tectonic.ui:text'
           - displayName: Log level
             description: 'Log level for HPE CSI Driver (trace, debug, warn, info, error)'
             path: logLevel
             x-descriptors:
               - 'urn:alm:descriptor:com.tectonic.ui:text'
+          - displayName: Disables automatic installation of iSCSI, multipath packages
+            description: 'Disable node conformance (default: false)'
+            path: disableNodeConformance
+            x-descriptors:
+              - 'urn:alm:descriptor:com.tectonic.ui:booleanSwitch'
           - displayName: Create secret
             description: 'Create Secret for backend (default: true)'
             path: secret.create
@@ -224,28 +224,28 @@ spec:
           rules:
             - apiGroups: ["batch"]
               resources: ["jobs"]
-              verbs: ["*"]
+              verbs: ["get", "watch", "list", "delete", "update", "create"]
             - apiGroups: [""]
               resources: ["pods", "services", "endpoints", "configmaps", "secrets", "serviceaccounts"]
-              verbs: ["*"]
+              verbs: ["get", "watch", "list", "delete", "update", "create"]
             - apiGroups: [""]
               resources: ["namespaces"]
               verbs: ["get"]
             - apiGroups: ["apps"]
               resources: ["deployments", "daemonsets", "statefulsets", "replicasets"]
-              verbs: ["*"]
+              verbs: ["get", "watch", "list", "delete", "update", "create"]
             - apiGroups: ["extensions"]
               resources: ["deployments", "daemonsets", "replicasets"]
-              verbs: ["*"]
+              verbs: ["get", "watch", "list", "delete", "update", "create"]
             - apiGroups: ["rbac.authorization.k8s.io"]
               resources: ["roles", "rolebindings"]
-              verbs: ["*"]
+              verbs: ["get", "watch", "list", "delete", "update", "create"]
             - apiGroups: ["authorization.openshift.io"]
               resources: ["roles", "rolebindings"]
-              verbs: ["*"]
+              verbs: ["get", "watch", "list", "delete", "update", "create"]
             - apiGroups: ["storage.hpe.com"]
               resources: ["*"]
-              verbs: ["*"]
+              verbs: ["get", "watch", "list", "delete", "update", "create"]
             - apiGroups: ["coordination.k8s.io"]
               resources: ["leases"]
               verbs: ["get", "watch", "list", "delete", "update", "create"]
@@ -254,10 +254,10 @@ spec:
           rules:
             - apiGroups: ["storage.hpe.com"]
               resources: ["*"]
-              verbs: ["*"]
+              verbs: ["get", "watch", "list", "delete", "update", "create"]
             - apiGroups: [""]
               resources: ["namespaces", "pods", "services", "endpoints", "configmaps", "secrets", "serviceaccounts"]
-              verbs: ["*"]
+              verbs: ["get", "watch", "list", "delete", "update", "create"]
             - apiGroups: ["storage.k8s.io"]
               resources: ["storageclasses"]
               verbs: ["create", "delete"]
@@ -290,7 +290,7 @@ spec:
               verbs: ["create", "get", "list", "watch", "update", "delete"]
             - apiGroups: ["apps"]
               resources: ["deployments", "daemonsets"]
-              verbs: ["*"]
+              verbs: ["get", "watch", "list", "delete", "update", "create"]
             - apiGroups: ["storage.k8s.io"]
               resources: ["storageclasses"]
               verbs: ["get", "list", "watch"]
@@ -306,7 +306,7 @@ spec:
               verbs: ["get", "list", "watch"]
             - apiGroups: ["storage.k8s.io"]
               resources: ["volumeattachments"]
-              verbs: ["get", "list", "watch", "update", "patch"]
+              verbs: ["get", "list", "watch", "update", "patch", "delete"]
             - apiGroups: ["storage.k8s.io"]
               resources: ["volumeattachments/status"]
               verbs: ["get", "list", "watch", "update", "create", "delete"]
@@ -335,13 +335,13 @@ spec:
           # Need the same permissions as driver-registrar clusterrole to be able to create it.
             - apiGroups: ["apiextensions.k8s.io"]
               resources: ["customresourcedefinitions"]
-              verbs: ["*"]
+              verbs: ["get", "watch", "list", "delete", "update", "create"]
             - apiGroups: ["csi.storage.k8s.io"]
               resources: ["csidrivers"]
-              verbs: ["*"]
+              verbs: ["get", "watch", "list", "delete", "update", "create"]
             - apiGroups: ["storage.k8s.io"]
               resources: ["csidrivers"]
-              verbs: ["*"]
+              verbs: ["get", "watch", "list", "delete", "update", "create"]
           # Need the same permissions as external-resizer to be able to create it.
             - apiGroups: [""]
               resources: ["persistentvolumeclaims/status"]
@@ -359,7 +359,7 @@ spec:
               verbs: ["get", "watch", "list", "delete", "update", "create", "patch"]
             - apiGroups: ["batch"]
               resources: ["jobs"]
-              verbs: ["*"]
+              verbs: ["get", "watch", "list", "delete", "update", "create"]
       deployments:
         - name: hpe-csi-driver-operator
           spec:
@@ -380,7 +380,7 @@ spec:
                 serviceAccountName: hpe-csi-operator-sa
                 containers:
                   - name: hpe-csi-operator
-                    image: 'registry.connect.redhat.com/hpestorage/csi-driver-operator:v1.1.0'
+                    image: 'registry.connect.redhat.com/hpestorage/csi-driver-operator:v1.2.0'
                     ports:
                       - containerPort: 60000
                         name: metrics

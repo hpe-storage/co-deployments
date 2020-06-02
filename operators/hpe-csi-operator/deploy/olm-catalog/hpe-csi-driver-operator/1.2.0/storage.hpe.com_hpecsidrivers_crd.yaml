@@ -38,6 +38,9 @@ spec:
             backendType:
               description: HPE storage backend type (nimble, primera3par) for the CSP deployment
               type: string
+            flavor:
+              description: Flavor of the CO orchestrator
+              type: string
             imagePullPolicy:
               description: Image Pull Policy for HPE CSI driver images
               type: string
@@ -70,6 +73,9 @@ spec:
               - servicePort
               - username
               type: object
+            disableNodeConformance:
+              description: 'Disable automatic installation of iSCSI/Multipath packages, default: false'
+              type: boolean
             storageClass:
               description: HPE Storage class controls
               properties:

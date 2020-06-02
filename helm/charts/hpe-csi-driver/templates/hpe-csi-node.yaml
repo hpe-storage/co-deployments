@@ -63,7 +63,7 @@ spec:
             - name: registration-dir
               mountPath: /registration
         - name: hpe-csi-driver
-          image: hpestorage/csi-driver:v1.1.1
+          image: hpestorage/csi-driver:v1.2.0-beta
           args :
             - "--endpoint=$(CSI_ENDPOINT)"
             - "--node-service"
