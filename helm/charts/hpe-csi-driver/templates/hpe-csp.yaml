@@ -32,13 +32,12 @@ spec:
         app: {{ .Values.backendType }}-csp
     spec:
       serviceAccount: hpe-csp-sa
-      hostNetwork: true
       containers:
         - name: {{ .Values.backendType }}-csp
           {{- if eq .Values.backendType "primera3par" }}
-          image: hpestorage/hpe3parprimera-csp:v1.0.0
+          image: hpestorage/hpe3parprimera-csp:v1.0.1-beta
           {{- else }}
-          image: hpestorage/nimble-csp:v1.1.0
+          image: hpestorage/nimble-csp:v1.2.0-beta
           {{- end }}
           imagePullPolicy: {{ .Values.imagePullPolicy | quote }}
           ports:
@@ -50,4 +49,4 @@ spec:
         - name: log-dir
           hostPath:
             path: /var/log
-            
+
