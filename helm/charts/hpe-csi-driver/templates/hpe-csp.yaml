@@ -32,12 +32,15 @@ spec:
         app: {{ .Values.backendType }}-csp
     spec:
       serviceAccount: hpe-csp-sa
+      {{- if semverCompare ">=1.17.0" .Capabilities.KubeVersion.GitVersion }}
+      priorityClassName: system-cluster-critical
+      {{- end }}
       containers:
         - name: {{ .Values.backendType }}-csp
           {{- if eq .Values.backendType "primera3par" }}
-          image: hpestorage/hpe3parprimera-csp:v1.0.1-beta
+          image: hpestorage/hpe3parprimera-csp:v1.0.1
           {{- else }}
-          image: hpestorage/nimble-csp:v1.2.0-beta
+          image: hpestorage/nimble-csp:v1.2.0
           {{- end }}
           imagePullPolicy: {{ .Values.imagePullPolicy | quote }}
           ports:
