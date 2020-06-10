@@ -8,7 +8,7 @@ The [HPE CSI Driver for Kubernetes](https://scod.hpedev.io/csi_driver/index.html
 - Most Kubernetes distributions are supported
 - Recent Ubuntu, CentOS or RHEL compute nodes connected to their respective official package repositories
 - Helm 2 (Should specify creation of CRD's explicitly using `--set crd.nodeInfo.create=true` during install)
-- Helm 3 (Supported only from HPE CSI Driver version 1.1.0 onwards)
+- Helm 3
 
 Depending on which [Container Storage Provider](https://scod.hpedev.io/container_storage_provider/index.html) (CSP) is being used, other prerequisites and requirements may apply, such as storage platform OS and features.
 
@@ -29,16 +29,14 @@ The following table lists the configurable parameters of the HPE-CSI chart and t
 | crd.nodeInfo.create       | Create `hpenodeinfo` CRDs required by HPE CSI Driver. Should only be enabled with Helm 2, as they are automatically created with Helm 3 without this flag.                  | false        |
 | crd.volumeInfo.create       | Create `hpevolumeinfo` CRDs required by HPE CSI Driver for 3PAR and Primera. Should only be enabled with Helm 2, as they are automatically created with Helm 3 without this flag. | false        |
 | logLevel             | Log level. Can be one of `info`, `debug`, `trace`, `warn` and `error`.                                        | info         |
-| imagePullPolicy | Image pull policy (`Always`, `IfNotPresent`, `Never`).                                          | Always |
+| imagePullPolicy | Image pull policy (`Always`, `IfNotPresent`, `Never`).                                          | IfNotPresent |
+| disableNodeConformance | Disable automatic installation of iSCSI/Multipath Packages.                                           | false |
 | storageClass.name  | The name to assign the created `StorageClass`.                                          | hpe-standard |
 | storageClass.create | Enables creation of a `StorageClass` managed by this Helm chart.                            | true        |
 | storageClass.defaultClass | Whether to set the created `StorageClass` as the clusters default `StorageClass`.                                | false       |
 | storageClass.parameters.fsType                    | Type of file system being used (ext4, ext3, xfs, btrfs).     | xfs         |
 | storageClass.parameters.volumeDescription         | Default volume description set on backend volume.     | -         |
 | storageClass.parameters.accessProtocol            | Access protocol to use for storage connectivity (iscsi, fc).     | iscsi         |
-
-> **Note**: The provided `StorageClass` is currently not compatible with `backendType: primera3par`.
-> How to setup a `StorageClass` for HPE 3PAR and Primera is documented on [SCOD](https://scod.hpedev.io/container_storage_provider/hpe_3par_primera/).
 
 It's recommended to create a [values.yaml](https://github.com/hpe-storage/co-deployments/blob/master/helm/values/csi-driver) file from the corresponding release of the chart and edit it to fit the environment the chart is being deployed to. Download and edit [a sample file](https://github.com/hpe-storage/co-deployments/blob/master/helm/values/csi-driver).
 
