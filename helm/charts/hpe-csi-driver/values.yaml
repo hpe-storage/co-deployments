@@ -41,6 +41,7 @@ storageClass:
     fsType: xfs
     volumeDescription: "Volume created by the HPE CSI Driver for Kubernetes"
     accessProtocol: "iscsi"
+    provisioningType: "tpvv"
 
 # CRD creation controls
 ## For HELM 3 CRD's are handled automatically without this flag.
