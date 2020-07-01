@@ -258,7 +258,78 @@ roleRef:
   kind: Role
   name: external-resizer-cfg
   apiGroup: rbac.authorization.k8s.io
+
+
+---
+# mutator must be able to work with PVCs, PVs, SCs.
+kind: ClusterRole
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: csi-mutator-role
+rules:
+  - apiGroups: [""]
+    resources: ["secrets"]
+    verbs: ["get", "list", "watch"]
+  - apiGroups: [""]
+    resources: ["persistentvolumes"]
+    verbs: ["get", "list", "watch", "update", "patch"]
+  - apiGroups: [""]
+    resources: ["persistentvolumeclaims"]
+    verbs: ["get", "list", "watch"]
+  - apiGroups: ["storage.k8s.io"]
+    resources: ["storageclasses"]
+    verbs: ["get", "list", "watch"]
+  - apiGroups: [""]
+    resources: ["persistentvolumeclaims/status"]
+    verbs: ["update", "patch"]
+  - apiGroups: [""]
+    resources: ["events"]
+    verbs: ["list", "watch", "create", "update", "patch"]
+
+---
+kind: ClusterRoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: csi-mutator-binding
+subjects:
+  - kind: ServiceAccount
+    name: hpe-csi-controller-sa
+    # replace with non-default namespace name
+    namespace: kube-system
+roleRef:
+  kind: ClusterRole
+  name: csi-mutator-role
+  apiGroup: rbac.authorization.k8s.io
+
+---
+# mutator must be able to work with end point in current namespace
+# if (and only if) leadership election is enabled
+kind: Role
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  namespace: kube-system
+  name: csi-mutator-cfg
+rules:
+- apiGroups: ["coordination.k8s.io"]
+  resources: ["leases"]
+  verbs: ["get", "watch", "list", "delete", "update", "create"]
+
+---
+kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: csi-mutator-role-cfg
+  namespace: kube-system
+subjects:
+  - kind: ServiceAccount
+    name: hpe-csi-controller-sa
+    namespace: kube-system
+roleRef:
+  kind: Role
+  name: csi-mutator-cfg
+  apiGroup: rbac.authorization.k8s.io
 {{- end }}
+
 ---
 
 kind: ClusterRole
