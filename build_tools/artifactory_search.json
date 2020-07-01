@@ -65,6 +65,22 @@
             "limit": 1
         },
         {
+            "pattern": "dcs-docker-local/hpestorage/volume-mutator/edge*",
+            "sortBy": [
+                "created"
+            ],
+            "sortOrder": "desc",
+            "limit": 1
+        },
+        {
+            "pattern": "dcs-docker-local/hpestorage/csi-extensions/edge*",
+            "sortBy": [
+                "created"
+            ],
+            "sortOrder": "desc",
+            "limit": 1
+        },
+        {
             "pattern": "dcs-docker-local/hpestorage/flexvolume-driver/",
             "sortBy": [
                 "created"
