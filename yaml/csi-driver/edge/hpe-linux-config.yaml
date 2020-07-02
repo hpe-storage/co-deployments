@@ -135,3 +135,8 @@ data:
     }
     ]
 
+  chap.json: |-
+    {
+        "chap_user": "",
+        "chap_password": ""
+    }
