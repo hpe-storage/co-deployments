@@ -364,6 +364,16 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: spec.nodeName
+            - name: CHAP_USER
+              valueFrom:
+                configMapKeyRef:
+                  name: hpe-linux-config
+                  key: CHAP_USER
+            - name: CHAP_PASSWORD
+              valueFrom:
+                configMapKeyRef:
+                  name: hpe-linux-config
+                  key: CHAP_PASSWORD
             - name: DISABLE_NODE_CONFORMANCE
               value: "false"
           imagePullPolicy: "Always"
