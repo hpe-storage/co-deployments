@@ -5,6 +5,8 @@ metadata:
   name: hpe-linux-config
   namespace: kube-system
 data:
+  CHAP_USER: ""
+  CHAP_PASSWORD: ""
   config.json: |-
     [
     {
@@ -134,9 +136,3 @@ data:
         "recommendation": "infinity"
     }
     ]
-
-  chap.json: |-
-    {
-        "chap_user": "",
-        "chap_password": ""
-    }
