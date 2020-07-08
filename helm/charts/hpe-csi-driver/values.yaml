@@ -53,3 +53,8 @@ crd:
     create: false
   volumeInfo:
     create: false
+
+# values for CHAP Authentication
+iscsi:
+  chapUser:
+  chapPassword:
