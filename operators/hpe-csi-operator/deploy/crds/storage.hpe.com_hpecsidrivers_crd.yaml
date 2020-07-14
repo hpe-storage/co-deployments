@@ -51,9 +51,6 @@ spec:
                   type: string
                 chapUser:
                   type: string
-              required:
-              - chapPassword
-              - chapUser
               type: object
             logLevel:
               description: Default logLevel for HPE CSI driver deployments
@@ -134,7 +131,6 @@ spec:
           - backendType
           - flavor
           - imagePullPolicy
-          - iscsi
           - logLevel
           - secret
           - storageClass
