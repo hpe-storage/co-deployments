@@ -41,6 +41,14 @@ type HPECSIDriverSpec struct {
 	BackendType string `json:"backendType"`
 	// DisableNodeConformance disables automatic installation of iscsi/multipath packages
 	DisableNodeConformance bool `json:"disableNodeConformance"`
+	// Iscsi parameters to be configured
+	Iscsi IscsiInfo `json:"iscsi"`
+}
+
+// IscsiInfo defines different Iscsi parameters which can be configured
+type IscsiInfo struct {
+	ChapUser     string `json:"chapUser"`
+	ChapPassword string `json:"chapPassword"`
 }
 
 // HPESecret defines HPE secret params
