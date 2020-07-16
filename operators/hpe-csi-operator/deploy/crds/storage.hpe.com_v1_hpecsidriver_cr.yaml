@@ -51,3 +51,8 @@ spec:
   ## For controlling automatic iscsi/multipath package installation (default: false)
   disableNodeConformance: false
 
+  # Iscsi parameters
+  iscsi:
+    ## values for CHAP Authentication
+    chapUser: ""
+    chapPassword: ""

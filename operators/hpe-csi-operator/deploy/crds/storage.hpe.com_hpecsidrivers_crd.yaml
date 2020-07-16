@@ -44,6 +44,14 @@ spec:
             imagePullPolicy:
               description: Image Pull Policy for HPE CSI driver images
               type: string
+            iscsi:
+              description: Iscsi parameters to be configured
+              properties:
+                chapPassword:
+                  type: string
+                chapUser:
+                  type: string
+              type: object
             logLevel:
               description: Default logLevel for HPE CSI driver deployments
               type: string
