@@ -1,9 +1,10 @@
+{{- if has "primera3par" .Values.backends }}
 ---
 ### CSP Service ###
 kind: Service
 apiVersion: v1
 metadata:
-  name: {{ .Values.backendType }}-csp-svc
+  name: primera-3par-csp-svc
   namespace: {{ .Release.Namespace }}
   labels:
     app: hpe-csi
@@ -12,41 +13,37 @@ spec:
   - port: {{ .Values.csp.servicePort }}
     protocol: TCP
   selector:
-    role: {{ .Values.backendType }}-csp
+    role: primera-3par-csp
 
 ---
 ### CSP deployment ###
 kind: Deployment
 apiVersion: apps/v1
 metadata:
-  name: {{ .Values.backendType }}-csp
+  name: primera-3par-csp
   labels:
     app: hpe-csi
-    role: {{ .Values.backendType }}-csp
+    role: primera-3par-csp
   namespace: {{ .Release.Namespace }}
 spec:
   selector:
     matchLabels:
       app: hpe-csi
-      role: {{ .Values.backendType }}-csp
+      role: primera-3par-csp
   replicas: 1
   template:
     metadata:
       labels:
         app: hpe-csi
-        role: {{ .Values.backendType }}-csp
+        role: primera-3par-csp
     spec:
       serviceAccount: hpe-csp-sa
       {{- if semverCompare ">=1.17.0" .Capabilities.KubeVersion.GitVersion }}
       priorityClassName: system-cluster-critical
       {{- end }}
       containers:
-        - name: {{ .Values.backendType }}-csp
-          {{- if eq .Values.backendType "primera3par" }}
-          image: hpestorage/hpe3parprimera-csp:v1.0.1
-          {{- else }}
-          image: hpestorage/nimble-csp:v1.2.0
-          {{- end }}
+        - name: primera-3par-csp
+          image: hpestorage/primera-3par-csp:v1.2.0
           imagePullPolicy: {{ .Values.imagePullPolicy | quote }}
           ports:
             - containerPort: {{ .Values.csp.servicePort }}
@@ -70,4 +67,4 @@ spec:
 {{ toYaml .Values.csp.affinity | indent 8 }}
       {{- end }}
       terminationGracePeriodSeconds: {{ .Values.csp.terminationGracePeriodSeconds | default 30 }}
-
+{{- end }}

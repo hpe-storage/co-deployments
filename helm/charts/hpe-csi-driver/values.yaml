@@ -6,7 +6,9 @@
 imagePullPolicy: 'IfNotPresent'
 
 # HPE backend storage type (nimble, primera3par)
-backendType: nimble
+backends:
+  - nimble
+  - primera3par
 
 # flavor
 flavor: kubernetes
@@ -15,11 +17,21 @@ flavor: kubernetes
 logLevel: info
 
 controller:
+  # Grace period before terminating controller plugin
+  terminationGracePeriodSeconds: 10
   # These values map directly to yaml in the deployment spec, see the kubernetes docs for info
   nodeSelector: {}
     # disktype: ssd
   # These values map directly to yaml in the deployment spec, see the kubernetes docs for info
   tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 30
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 30
   # These values map directly to yaml in the deployment spec, see the kubernetes docs for info
   affinity: {}
     # nodeAffinity:
@@ -33,6 +45,8 @@ controller:
     #         - az-west
 
 node:
+  # Grace period before terminating node plugin
+  terminationGracePeriodSeconds: 10
   # iSCSI settings
   iscsi:
     # Username when CHAP authentication is enabled for iSCSI
@@ -62,6 +76,9 @@ node:
     #         - az-west
 
 csp:
+  # Grace period before terminating CSP
+  terminationGracePeriodSeconds: 10
+  # CSP service port
   servicePort: "8080"
   # These values map directly to yaml in the deployment spec, see the kubernetes docs for info
   nodeSelector: {}

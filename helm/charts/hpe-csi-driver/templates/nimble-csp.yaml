@@ -1,0 +1,70 @@
+{{- if has "nimble" .Values.backends }}
+---
+### CSP Service ###
+kind: Service
+apiVersion: v1
+metadata:
+  name: nimble-csp-svc
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app: hpe-csi
+spec:
+  ports:
+  - port: {{ .Values.csp.servicePort }}
+    protocol: TCP
+  selector:
+    role: nimble-csp
+
+---
+### CSP deployment ###
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: nimble-csp
+  labels:
+    app: hpe-csi
+    role: nimble-csp
+  namespace: {{ .Release.Namespace }}
+spec:
+  selector:
+    matchLabels:
+      app: hpe-csi
+      role: nimble-csp
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: hpe-csi
+        role: nimble-csp
+    spec:
+      serviceAccount: hpe-csp-sa
+      {{- if semverCompare ">=1.17.0" .Capabilities.KubeVersion.GitVersion }}
+      priorityClassName: system-cluster-critical
+      {{- end }}
+      containers:
+        - name: nimble-csp
+          image: hpestorage/nimble-csp:v1.2.0
+          imagePullPolicy: {{ .Values.imagePullPolicy | quote }}
+          ports:
+            - containerPort: {{ .Values.csp.servicePort }}
+          volumeMounts:
+            - name: log-dir
+              mountPath: /var/log
+      volumes:
+        - name: log-dir
+          hostPath:
+            path: /var/log
+      {{- if .Values.csp.nodeSelector }}
+      nodeSelector:
+{{ toYaml .Values.csp.nodeSelector | indent 8 }}
+      {{- end }}
+      {{- if .Values.csp.tolerations }}
+      tolerations:
+{{ toYaml .Values.csp.tolerations | indent 8 }}
+      {{- end }}
+      {{- if .Values.csp.affinity }}
+      affinity:
+{{ toYaml .Values.csp.affinity | indent 8 }}
+      {{- end }}
+      terminationGracePeriodSeconds: {{ .Values.csp.terminationGracePeriodSeconds | default 30 }}
+{{- end }}
