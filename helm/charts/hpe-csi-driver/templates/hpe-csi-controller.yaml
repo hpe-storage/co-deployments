@@ -9,16 +9,20 @@ apiVersion: apps/v1
 metadata:
   name: hpe-csi-controller
   namespace: {{ .Release.Namespace }}
+  labels:
+    app: hpe-csi
+    role: hpe-csi-controller
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: hpe-csi-controller
+      app: hpe-csi
+      role: hpe-csi-controller
   template:
     metadata:
       labels:
-        app: hpe-csi-controller
-        role: hpe-csi
+        app: hpe-csi
+        role: hpe-csi-controller
     spec:
       serviceAccount: hpe-csi-controller-sa
       {{- if semverCompare ">=1.17.0" .Capabilities.KubeVersion.GitVersion }}
@@ -160,3 +164,16 @@ spec:
         - name: root-dir
           hostPath:
             path: /
+      {{- if .Values.controller.nodeSelector }}
+      nodeSelector:
+{{ toYaml .Values.controller.nodeSelector | indent 8 }}
+      {{- end }}
+      {{- if .Values.controller.tolerations }}
+      tolerations:
+{{ toYaml .Values.controller.tolerations | indent 8 }}
+      {{- end }}
+      {{- if .Values.controller.affinity }}
+      affinity:
+{{ toYaml .Values.controller.affinity | indent 8 }}
+      {{- end }}
+      terminationGracePeriodSeconds: {{ .Values.controller.terminationGracePeriodSeconds | default 30 }}

@@ -8,16 +8,20 @@ kind: DaemonSet
 apiVersion: apps/v1
 metadata:
   name: hpe-csi-node
+  labels:
+    app: hpe-csi
+    role: hpe-csi-node
   namespace: {{ .Release.Namespace }}
 spec:
   selector:
     matchLabels:
-      app: hpe-csi-node
+      app: hpe-csi
+      role: hpe-csi-node
   template:
     metadata:
       labels:
-        app: hpe-csi-node
-        role: hpe-csi
+        app: hpe-csi
+        role: hpe-csi-node
     spec:
       serviceAccount: hpe-csi-node-sa
       {{- if semverCompare ">=1.17.0" .Capabilities.KubeVersion.GitVersion }}
@@ -73,7 +77,7 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: spec.nodeName
-            {{ if and .Values.iscsi.chapUser .Values.iscsi.chapPassword }}
+            {{ if and .Values.node.iscsi.chapUser .Values.node.iscsi.chapPassword }}
             - name: CHAP_USER
               valueFrom:
                 configMapKeyRef:
@@ -85,7 +89,7 @@ spec:
                   name: hpe-linux-config
                   key: CHAP_PASSWORD
             {{- end }}
-            {{ if .Values.disableNodeConformance -}}
+            {{ if .Values.node.disableNodeConformance -}}
             - name: DISABLE_NODE_CONFORMANCE
               value: "true"
             {{- end }}
@@ -160,3 +164,16 @@ spec:
         - name: linux-config-file
           configMap:
             name: hpe-linux-config
+      {{- if .Values.node.nodeSelector }}
+      nodeSelector:
+{{ toYaml .Values.node.nodeSelector | indent 8 }}
+      {{- end }}
+      {{- if .Values.node.tolerations }}
+      tolerations:
+{{ toYaml .Values.node.tolerations | indent 8 }}
+      {{- end }}
+      {{- if .Values.node.affinity }}
+      affinity:
+{{ toYaml .Values.node.affinity | indent 8 }}
+      {{- end }}
+      terminationGracePeriodSeconds: {{ .Values.node.terminationGracePeriodSeconds | default 30 }}

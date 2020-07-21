@@ -8,53 +8,82 @@ imagePullPolicy: 'IfNotPresent'
 # HPE backend storage type (nimble, primera3par)
 backendType: nimble
 
-secret:
-  # parameters for specified backendType (nimble, primera3par)
-  create: true
-  backend: 192.168.1.1
-  username: admin
-  password: admin
-  servicePort: "8080"
-
 # flavor
 flavor: kubernetes
 
 # log level for all csi driver components
 logLevel: info
 
-## For creating the StorageClass automatically:
-storageClass:
-  create: true
+controller:
+  # These values map directly to yaml in the deployment spec, see the kubernetes docs for info
+  nodeSelector: {}
+    # disktype: ssd
+  # These values map directly to yaml in the deployment spec, see the kubernetes docs for info
+  tolerations:
+  # These values map directly to yaml in the deployment spec, see the kubernetes docs for info
+  affinity: {}
+    # nodeAffinity:
+    #   requiredDuringSchedulingIgnoredDuringExecution:
+    #     nodeSelectorTerms:
+    #     - matchExpressions:
+    #       - key: az
+    #         operator: In
+    #         values:
+    #         - az-east
+    #         - az-west
 
-  ## Set StorageClass as the default StorageClass
-  ## Ignored if storageClass.create is false
-  defaultClass: false
+node:
+  # iSCSI settings
+  iscsi:
+    # Username when CHAP authentication is enabled for iSCSI
+    chapUser: ""
+    # Password when CHAP authentication is enabled for iSCSI
+    chapPassword: ""
+  # For controlling automatic iscsi/multipath package installation (default: false)
+  disableNodeConformance: false
+  # These values map directly to yaml in the deployment spec, see the kubernetes docs for info
+  nodeSelector: {}
+    # disktype: ssd
+  # These values map directly to yaml in the deployment spec, see the kubernetes docs for info
+  tolerations: []
+    # - effect: NoSchedule
+    #   key: node-role.kubernetes.io/master
+    #   operator: Exists
+  # These values map directly to yaml in the deployment spec, see the kubernetes docs for info
+  affinity: {}
+    # nodeAffinity:
+    #   requiredDuringSchedulingIgnoredDuringExecution:
+    #     nodeSelectorTerms:
+    #     - matchExpressions:
+    #       - key: az
+    #         operator: In
+    #         values:
+    #         - az-east
+    #         - az-west
 
-  ## Set a StorageClass name
-  ## Ignored if storageClass.create is false
-  name: hpe-standard
-  # Enable volume resize
-  ## Ignored if storageClass.create is false
-  allowVolumeExpansion: true
-  # Default storage class parameters
-  parameters:
-    fsType: xfs
-    volumeDescription: "Volume created by the HPE CSI Driver for Kubernetes"
-    accessProtocol: "iscsi"
-
-## For controlling automatic iscsi/multipath package installation (default: false)
-disableNodeConformance: false
-
-# CRD creation controls
-## For HELM 3 CRD's are handled automatically without this flag.
-## This flag should be enabled only for HELM 2
-crd:
-  nodeInfo:
-    create: false
-  volumeInfo:
-    create: false
-
-# values for CHAP Authentication
-iscsi:
-  chapUser:
-  chapPassword:
+csp:
+  servicePort: "8080"
+  # These values map directly to yaml in the deployment spec, see the kubernetes docs for info
+  nodeSelector: {}
+    # disktype: ssd
+  # These values map directly to yaml in the deployment spec, see the kubernetes docs for info
+  tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 30
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 30
+  # These values map directly to yaml in the deployment spec, see the kubernetes docs for info
+  affinity: {}
+    # nodeAffinity:
+    #   requiredDuringSchedulingIgnoredDuringExecution:
+    #     nodeSelectorTerms:
+    #     - matchExpressions:
+    #       - key: az
+    #         operator: In
+    #         values:
+    #         - az-east
+    #         - az-west

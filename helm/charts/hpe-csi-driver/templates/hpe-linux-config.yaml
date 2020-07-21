@@ -5,9 +5,9 @@ metadata:
   name: hpe-linux-config
   namespace: {{ .Release.Namespace }}
 data:
-{{ if and .Values.iscsi.chapUser .Values.iscsi.chapPassword }}
-  CHAP_USER: {{ .Values.iscsi.chapUser  | quote }}
-  CHAP_PASSWORD: {{ .Values.iscsi.chapPassword  | quote }}
+{{ if and .Values.node.iscsi.chapUser .Values.node.iscsi.chapPassword }}
+  CHAP_USER: {{ .Values.node.iscsi.chapUser  | quote }}
+  CHAP_PASSWORD: {{ .Values.node.iscsi.chapPassword  | quote }}
 {{- end }}
   config.json: |-
 {{ (.Files.Get "files/config.json") | indent 4 }}
