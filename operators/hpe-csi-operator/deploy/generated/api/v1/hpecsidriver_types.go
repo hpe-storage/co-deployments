@@ -16,78 +16,115 @@ limitations under the License.
 package v1
 
 import (
+	corev1 "k8s.io/api/core/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
 // EDIT THIS FILE!  THIS IS SCAFFOLDING FOR YOU TO OWN!
 // NOTE: json tags are required.  Any new fields you add must have json tags for the fields to be serialized.
 
-// HpecsidriverSpec defines the desired state of Hpecsidriver
+// HPECSIDriverSpec defines the desired state of HPECSIDriver
 type HPECSIDriverSpec struct {
 	// INSERT ADDITIONAL SPEC FIELDS - desired state of cluster
 	// Important: Run "make" to regenerate code after modifying this file
 
-	// HPE Storage class controls
-	StorageClass HPEStorageClass `json:"storageClass"`
-	// HPE Secret controls
-	Secret HPESecret `json:"secret"`
 	// Image Pull Policy for HPE CSI driver images
 	ImagePullPolicy string `json:"imagePullPolicy"`
 	// Flavor of the CO orchestrator
 	Flavor string `json:"flavor"`
 	// Default logLevel for HPE CSI driver deployments
 	LogLevel string `json:"logLevel"`
-	// BackendType nimble/primera3par for the CSP deployment
-	BackendType string `json:"backendType"`
+	// Backends list [nimble, primera3par] for the CSP deployment
+	Backends   []string         `json:"backends"`
+	Node       NodePlugin       `json:"node"`
+	Controller ControllerPlugin `json:"controller"`
+	Csp        CSPPlugin        `json:"csp"`
+}
+
+// NodePlugin defines configuration of HPE CSI node plugin
+type NodePlugin struct {
+	// Node selector to control the selection of nodes (optional)
+	// +operator-sdk:gen-csv:customresourcedefinitions.specDescriptors=true
+	// +operator-sdk:gen-csv:customresourcedefinitions.specDescriptors.displayName="Node Selector"
+	// +operator-sdk:gen-csv:customresourcedefinitions.specDescriptors.x-descriptors="urn:alm:descriptor:com.tectonic.ui:selector:Node"
+	NodeSelector map[string]string `json:"nodeSelector,omitempty"`
+
+	// Optional: set tolerations for the node plugin pods
+	// +listType=set
+	// +operator-sdk:gen-csv:customresourcedefinitions.specDescriptors=true
+	// +operator-sdk:gen-csv:customresourcedefinitions.specDescriptors.displayName="Tolerations"
+	// +operator-sdk:gen-csv:customresourcedefinitions.specDescriptors.x-descriptors="urn:alm:descriptor:com.tectonic.ui:advanced,urn:alm:descriptor:io.kubernetes:Tolerations"
+	Tolerations []corev1.Toleration `json:"tolerations,omitempty"`
+	// Termination grace period for node plugin (optional)
+	// +operator-sdk:gen-csv:customresourcedefinitions.specDescriptors=true
+	// +operator-sdk:gen-csv:customresourcedefinitions.specDescriptors.displayName="Termination Grace Period(Seconds)"
+	TerminationGracePeriodSeconds *int32 `json:"terminationGracePeriodSeconds,omitempty"`
+	// Node affinity for node plugin (optional)
+	// +operator-sdk:gen-csv:customresourcedefinitions.specDescriptors=true
+	// +operator-sdk:gen-csv:customresourcedefinitions.specDescriptors.displayName="Termination Grace Period(Seconds)"
+	Affinity *corev1.Affinity `json:"affinity,omitempty"`
 	// DisableNodeConformance disables automatic installation of iscsi/multipath packages
+	// +operator-sdk:gen-csv:customresourcedefinitions.specDescriptors=true
+	// +operator-sdk:gen-csv:customresourcedefinitions.specDescriptors.displayName="Disable automatic installation of iscsi/multipath packages"
 	DisableNodeConformance bool `json:"disableNodeConformance"`
 	// Iscsi parameters to be configured
-	Iscsi IscsiInfo `json:"iscsi"`
+	// +operator-sdk:gen-csv:customresourcedefinitions.specDescriptors=true
+	// +operator-sdk:gen-csv:customresourcedefinitions.specDescriptors.displayName="iSCSI settings for node"
+	Iscsi *IscsiInfo `json:"iscsi,omitempty"`
+}
+
+// ControllerPlugin defines configuration of HPE CSI controller plugin
+type ControllerPlugin struct {
+	// Node selector to control the selection of nodes (optional)
+	// +operator-sdk:gen-csv:customresourcedefinitions.specDescriptors=true
+	// +operator-sdk:gen-csv:customresourcedefinitions.specDescriptors.displayName="Node Selector"
+	// +operator-sdk:gen-csv:customresourcedefinitions.specDescriptors.x-descriptors="urn:alm:descriptor:com.tectonic.ui:selector:Node"
+	NodeSelector map[string]string `json:"nodeSelector,omitempty"`
+
+	// Optional: set tolerations for the controller plugin pods
+	// +listType=set
+	// +operator-sdk:gen-csv:customresourcedefinitions.specDescriptors=true
+	// +operator-sdk:gen-csv:customresourcedefinitions.specDescriptors.displayName="Tolerations"
+	// +operator-sdk:gen-csv:customresourcedefinitions.specDescriptors.x-descriptors="urn:alm:descriptor:com.tectonic.ui:advanced,urn:alm:descriptor:io.kubernetes:Tolerations"
+	Tolerations []corev1.Toleration `json:"tolerations,omitempty"`
+
+	// Termination grace period for controller plugin (optional)
+	// +operator-sdk:gen-csv:customresourcedefinitions.specDescriptors=true
+	// +operator-sdk:gen-csv:customresourcedefinitions.specDescriptors.displayName="Termination Grace Period(Seconds)"
+	TerminationGracePeriodSeconds *int64 `json:"terminationGracePeriodSeconds,omitempty"`
+
+	// Node affinity for controller plugin (optional)
+	// +operator-sdk:gen-csv:customresourcedefinitions.specDescriptors=true
+	// +operator-sdk:gen-csv:customresourcedefinitions.specDescriptors.displayName="Termination Grace Period(Seconds)"
+	Affinity *corev1.Affinity `json:"affinity,omitempty"`
+}
+
+// CSPPlugin defines configuration of HPE ContainerStorageProvider(CSP)
+type CSPPlugin struct {
+	// Node selector to control the selection of nodes (optional)
+	// +operator-sdk:gen-csv:customresourcedefinitions.specDescriptors=true
+	// +operator-sdk:gen-csv:customresourcedefinitions.specDescriptors.displayName="CSP Pod Node Selector"
+	// +operator-sdk:gen-csv:customresourcedefinitions.specDescriptors.x-descriptors="urn:alm:descriptor:com.tectonic.ui:selector:Node"
+	NodeSelector map[string]string `json:"nodeSelector,omitempty"`
+
+	// Set tolerations for the csp pods (optional)
+	// +listType=set
+	// +operator-sdk:gen-csv:customresourcedefinitions.specDescriptors=true
+	// +operator-sdk:gen-csv:customresourcedefinitions.specDescriptors.displayName="CSP Pod Tolerations"
+	// +operator-sdk:gen-csv:customresourcedefinitions.specDescriptors.x-descriptors="urn:alm:descriptor:com.tectonic.ui:advanced,urn:alm:descriptor:io.kubernetes:Tolerations"
+	Tolerations []corev1.Toleration `json:"tolerations,omitempty"`
+
+	// Termination grace period for csp plugin (optional)
+	TerminationGracePeriodSeconds *int64 `json:"terminationGracePeriodSeconds,omitempty"`
+
+	// Node affinity for csp plugin (optional)
+	Affinity *corev1.Affinity `json:"affinity,omitempty"`
 }
 
 // IscsiInfo defines different Iscsi parameters which can be configured
 type IscsiInfo struct {
-	ChapUser     string `json:"chapUser"`
-	ChapPassword string `json:"chapPassword"`
-}
-
-// HPESecret defines HPE secret params
-type HPESecret struct {
-	// Create HPE secret after CSI driver deployment, default: true
-	Create bool `json:"create"`
-
-	// Username for storage backend
-	Username string `json:"username"`
-	// Password for storage backend
-	Password string `json:"password"`
-	// Storage backend IP
-	Backend string `json:"backend"`
-	// HPE CSP Service Port
-	ServicePort string `json:"servicePort"`
-}
-
-// HPEStorageClass defines the behavior of HPE CSI Driver Operator for creation of default  storage class
-type HPEStorageClass struct {
-	// Indicates to create a storage class in the cluster, default: true
-	Create bool `json:"create"`
-	// Indicates to make storage class as default in the cluster, default: false
-	DefaultClass bool `json:"defaultClass"`
-	// Name of storage class to create for HPE
-	Name string `json:"name"`
-	// Allow volume expansion parameter for default  storage class
-	AllowVolumeExpansion bool `json:"allowVolumeExpansion"`
-	// HPE storage class parameters
-	Parameters HPEStorageClassParameters `json:"parameters"`
-}
-
-// HPEStorageClassParameters defines HPE storage class parameters
-type HPEStorageClassParameters struct {
-	// Volume description parameter in default storage class
-	VolumeDescription string `json:"volumeDescription"`
-	// Access protocol for storage backend
-	AccessProtocol string `json:"accessProtocol"`
-	// Filesystem type for default storage class
-	FsType string `json:"fsType"`
+	ChapUser     *string `json:"chapUser,omitempty"`
+	ChapPassword *string `json:"chapPassword,omitempty"`
 }
 
 type HelmAppConditionType string
