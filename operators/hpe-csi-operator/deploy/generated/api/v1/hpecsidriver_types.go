@@ -61,7 +61,7 @@ type NodePlugin struct {
 	TerminationGracePeriodSeconds *int32 `json:"terminationGracePeriodSeconds,omitempty"`
 	// Node affinity for node plugin (optional)
 	// +operator-sdk:gen-csv:customresourcedefinitions.specDescriptors=true
-	// +operator-sdk:gen-csv:customresourcedefinitions.specDescriptors.displayName="Termination Grace Period(Seconds)"
+	// +operator-sdk:gen-csv:customresourcedefinitions.specDescriptors.displayName="Node affinity"
 	Affinity *corev1.Affinity `json:"affinity,omitempty"`
 	// DisableNodeConformance disables automatic installation of iscsi/multipath packages
 	// +operator-sdk:gen-csv:customresourcedefinitions.specDescriptors=true
@@ -95,7 +95,7 @@ type ControllerPlugin struct {
 
 	// Node affinity for controller plugin (optional)
 	// +operator-sdk:gen-csv:customresourcedefinitions.specDescriptors=true
-	// +operator-sdk:gen-csv:customresourcedefinitions.specDescriptors.displayName="Termination Grace Period(Seconds)"
+	// +operator-sdk:gen-csv:customresourcedefinitions.specDescriptors.displayName="Node affinity"
 	Affinity *corev1.Affinity `json:"affinity,omitempty"`
 }
 
@@ -115,9 +115,13 @@ type CSPPlugin struct {
 	Tolerations []corev1.Toleration `json:"tolerations,omitempty"`
 
 	// Termination grace period for csp plugin (optional)
+	// +operator-sdk:gen-csv:customresourcedefinitions.specDescriptors=true
+	// +operator-sdk:gen-csv:customresourcedefinitions.specDescriptors.displayName="Termination Grace Period(Seconds)"
 	TerminationGracePeriodSeconds *int64 `json:"terminationGracePeriodSeconds,omitempty"`
 
-	// Node affinity for csp plugin (optional)
+	// Node affinity for CSP (optional)
+	// +operator-sdk:gen-csv:customresourcedefinitions.specDescriptors=true
+	// +operator-sdk:gen-csv:customresourcedefinitions.specDescriptors.displayName="Node affinity"
 	Affinity *corev1.Affinity `json:"affinity,omitempty"`
 }
 

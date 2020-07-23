@@ -5,7 +5,7 @@ kind: CustomResourceDefinition
 metadata:
   annotations:
     controller-gen.kubebuilder.io/version: v0.2.4
-  creationTimestamp: Tue Jul 21 17:52:44 PDT 2020
+  creationTimestamp: null
   name: hpecsidrivers.storage.hpe.com
 spec:
   group: storage.hpe.com
@@ -1351,9 +1351,7 @@ spec:
               description: Flavor of the CO orchestrator
               type: string
             imagePullPolicy:
-              description: 'INSERT ADDITIONAL SPEC FIELDS - desired state of cluster
-                Important: Run "make" to regenerate code after modifying this file
-                Image Pull Policy for HPE CSI driver images'
+              description: 'Image Pull Policy for HPE CSI driver images'
               type: string
             logLevel:
               description: Default logLevel for HPE CSI driver deployments
