@@ -75,15 +75,9 @@ spec:
                   fieldPath: spec.nodeName
             {{ if and .Values.iscsi.chapUser .Values.iscsi.chapPassword }}
             - name: CHAP_USER
-              valueFrom:
-                configMapKeyRef:
-                  name: hpe-linux-config
-                  key: CHAP_USER
+              value: {{ .Values.iscsi.chapUser }}
             - name: CHAP_PASSWORD
-              valueFrom:
-                configMapKeyRef:
-                  name: hpe-linux-config
-                  key: CHAP_PASSWORD
+              value: {{ .Values.iscsi.chapPassword }}
             {{- end }}
             {{ if .Values.disableNodeConformance -}}
             - name: DISABLE_NODE_CONFORMANCE
