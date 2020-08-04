@@ -448,15 +448,9 @@ spec:
                 fieldRef:
                   fieldPath: spec.nodeName
             - name: CHAP_USER
-              valueFrom:
-                configMapKeyRef:
-                  name: hpe-linux-config
-                  key: CHAP_USER
+              value: ""    
             - name: CHAP_PASSWORD
-              valueFrom:
-                configMapKeyRef:
-                  name: hpe-linux-config
-                  key: CHAP_PASSWORD
+              value: ""    
             - name: DISABLE_NODE_CONFORMANCE
               value: "false"
           imagePullPolicy: "Always"
