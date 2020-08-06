@@ -33,7 +33,7 @@
             "limit": 1
         },
         {
-            "pattern": "dcs-docker-local/hpestorage/csi-driver/edge*",
+            "pattern": "dcs-docker-local/hpestorage/csi-driver/edge-*",
             "sortBy": [
                 "created"
             ],
@@ -57,7 +57,7 @@
             "limit": 1
         },
         {
-            "pattern": "dcs-docker-local/hpestorage/nimble-csp/edge*",
+            "pattern": "dcs-docker-local/hpestorage/nimble-csp/edge-*",
             "sortBy": [
                 "created"
             ],
@@ -65,7 +65,7 @@
             "limit": 1
         },
         {
-            "pattern": "dcs-docker-local/hpestorage/volume-mutator/edge*",
+            "pattern": "dcs-docker-local/hpestorage/volume-mutator/edge-*",
             "sortBy": [
                 "created"
             ],
@@ -73,7 +73,7 @@
             "limit": 1
         },
         {
-            "pattern": "dcs-docker-local/hpestorage/csi-extensions/edge*",
+            "pattern": "dcs-docker-local/hpestorage/csi-extensions/edge-*",
             "sortBy": [
                 "created"
             ],
