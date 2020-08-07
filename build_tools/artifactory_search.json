@@ -73,6 +73,22 @@
             "limit": 1
         },
         {
+            "pattern": "dcs-docker-local/hpestorage/volume-group-provisioner/edge-*",
+            "sortBy": [
+                "created"
+            ],
+            "sortOrder": "desc",
+            "limit": 1
+        },
+        {
+            "pattern": "dcs-docker-local/hpestorage/volume-group-snapshotter/edge-*",
+            "sortBy": [
+                "created"
+            ],
+            "sortOrder": "desc",
+            "limit": 1
+        },
+        {
             "pattern": "dcs-docker-local/hpestorage/csi-extensions/edge-*",
             "sortBy": [
                 "created"
