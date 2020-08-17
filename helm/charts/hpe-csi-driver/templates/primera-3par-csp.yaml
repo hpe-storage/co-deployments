@@ -6,13 +6,13 @@ metadata:
   name: primera3par-csp-svc
   namespace: {{ .Release.Namespace }}
   labels:
-    app: hpe-csi
+    app: primera3par-csp-svc
 spec:
   ports:
   - port: 8080
     protocol: TCP
   selector:
-    role: primera3par-csp
+    app: primera3par-csp
 
 ---
 ### CSP deployment ###
@@ -21,20 +21,17 @@ apiVersion: apps/v1
 metadata:
   name: primera3par-csp
   labels:
-    app: hpe-csi
-    role: primera3par-csp
+    app: primera3par-csp
   namespace: {{ .Release.Namespace }}
 spec:
   selector:
     matchLabels:
-      app: hpe-csi
-      role: primera3par-csp
+      app: primera3par-csp
   replicas: 1
   template:
     metadata:
       labels:
-        app: hpe-csi
-        role: primera3par-csp
+        app: primera3par-csp
     spec:
       serviceAccount: hpe-csp-sa
       {{- if semverCompare ">=1.17.0" .Capabilities.KubeVersion.GitVersion }}
@@ -42,7 +39,7 @@ spec:
       {{- end }}
       containers:
         - name: primera3par-csp
-          image: hpestorage/primera3par-csp:v1.0.1
+          image: hpestorage/hpe3parprimera-csp:v1.1.0-beta
           imagePullPolicy: {{ .Values.imagePullPolicy | quote }}
           ports:
             - containerPort: 8080
