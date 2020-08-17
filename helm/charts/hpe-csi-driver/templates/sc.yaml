@@ -1,33 +1,22 @@
-{{ if .Values.storageClass.create -}}
+{{ if $sc := (lookup "storage.k8s.io/v1" "StorageClass" "" "hpe-standard") -}}
 ---
 apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
-   name: {{ .Values.storageClass.name }}
-   labels:
-     plugin: {{ .Release.Name }}
-   {{- if .Values.storageClass.defaultClass }}
-   annotations:
-     storageclass.kubernetes.io/is-default-class: "true"
-   {{- end }}
+  name: hpe-standard
+  labels:
+    plugin: {{ .Release.Name }}
+  annotations:
+    "helm.sh/resource-policy": keep
+    {{- range $k, $v := $sc.metadata.annotations }}
+    {{ $k }}: {{ $v}}
+    {{- end }}
 provisioner: csi.hpe.com
 {{- if semverCompare ">=1.15.0" .Capabilities.KubeVersion.GitVersion }}
-allowVolumeExpansion: {{ .Values.storageClass.allowVolumeExpansion }}
+allowVolumeExpansion: {{ $sc.allowVolumeExpansion }}
 {{- end }}
 parameters:
-   description: {{ .Values.storageClass.parameters.volumeDescription }}
-   accessProtocol: {{ .Values.storageClass.parameters.accessProtocol }}
-   csi.storage.k8s.io/fstype: {{ .Values.storageClass.parameters.fsType }}
-   csi.storage.k8s.io/provisioner-secret-name: {{ .Values.backendType }}-secret
-   csi.storage.k8s.io/provisioner-secret-namespace: {{ .Release.Namespace }}
-   csi.storage.k8s.io/controller-publish-secret-name: {{ .Values.backendType }}-secret
-   csi.storage.k8s.io/controller-publish-secret-namespace: {{ .Release.Namespace }}
-   csi.storage.k8s.io/node-stage-secret-name: {{ .Values.backendType }}-secret
-   csi.storage.k8s.io/node-stage-secret-namespace: {{ .Release.Namespace }}
-   csi.storage.k8s.io/node-publish-secret-name: {{ .Values.backendType }}-secret
-   csi.storage.k8s.io/node-publish-secret-namespace: {{ .Release.Namespace }}
-   {{- if semverCompare ">=1.15.0" .Capabilities.KubeVersion.GitVersion }}
-   csi.storage.k8s.io/controller-expand-secret-name: {{ .Values.backendType }}-secret
-   csi.storage.k8s.io/controller-expand-secret-namespace: {{ .Release.Namespace }}
-   {{- end }}
+  {{- range $k, $v := $sc.parameters }}
+  {{ $k }}: {{ $v}}
+  {{- end }}
 {{- end }}
