@@ -87,9 +87,9 @@ helm install hpe-csi hpe/hpe-csi-driver --namespace kube-system --set iscsi.chap
 --set iscsi.chapPassword=xxxxxxxx
 ```
 
-## Using persistent storage for Kubernetes
+## Using persistent storage with Kubernetes
 
-To enable dynamic provisioning of volumes through the use of `PersistentVolumeClaim` API objects, a `StorageClass` needs to be declared on the cluster. By default, a `StorageClass` named `hpe-standard` is installed on the cluster. Please see the [HPE CSI Driver for Kubernetes](https://scod.hpedev.io/csi_driver/index.html) documentation on [SCOD](https://scod.hpedev.io) for the official documentation of the HPE CSI Driver for Kubernetes. Also, it's helpful to be familar with [persistent storage concepts](https://kubernetes.io/docs/concepts/storage/volumes/) in Kubernetes prior to deploying stateful workloads.
+Enable dynamic provisioning of persistent storage by creating a `StorageClass` API object that references a `Secret` which maps to a supported HPE primary storage backend. Refer to the [HPE CSI Driver for Kubernetes](https://scod.hpedev.io/csi_driver/using.html) documentation on [HPE Storage Container Orchestration Documentation](https://scod.hpedev.io/). Also, it's helpful to be familiar with [persistent storage concepts](https://kubernetes.io/docs/concepts/storage/volumes/) in Kubernetes prior to deploying stateful workloads.
 
 ## Support
 
