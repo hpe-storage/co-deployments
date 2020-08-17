@@ -1,4 +1,8 @@
 {{ if $sc := (lookup "storage.k8s.io/v1" "StorageClass" "" "hpe-standard") -}}
+# This is required to maintain backward compatibility of resources(storageclass)
+# created with previous releases as we no longer create a storageclass with CSI driver install.
+# Annotation "helm.sh/resource-policy": keep" should help to remove this file altogether
+# in future.
 ---
 apiVersion: storage.k8s.io/v1
 kind: StorageClass

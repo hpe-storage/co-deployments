@@ -28,7 +28,7 @@ The following table lists the configurable parameters of the HPE-CSI chart and t
 
 It's recommended to create a [values.yaml](https://github.com/hpe-storage/co-deployments/blob/master/helm/values/csi-driver) file from the corresponding release of the chart and edit it to fit the environment the chart is being deployed to. Download and edit [a sample file](https://github.com/hpe-storage/co-deployments/blob/master/helm/values/csi-driver).
 
-These are the bare minimum required parameters for a successful deployment to an iSCSI enviornment if CHAP is required.
+These are the bare minimum required parameters for a successful deployment to an iSCSI environment if CHAP authentication is required.
 
 ```
 iscsi:
@@ -53,6 +53,8 @@ Install the latest chart:
 helm install hpe-csi hpe/hpe-csi-driver --namespace kube-system -f myvalues.yaml
 ```
 
+**Note**: values.yaml is optional if no parameters are overridden from defaults.
+
 ### Upgrading the Chart
 
 To upgrade the chart, specify the version you want to upgrade to as below. Please do NOT re-use a full blown `values.yaml` from prior versions to upgrade to later versions. Always use `values.yaml` from corresponding release from [values.yaml](https://github.com/hpe-storage/co-deployments/blob/master/helm/values/csi-driver)
@@ -74,7 +76,7 @@ To uninstall the `hpe-csi` chart:
 helm uninstall hpe-csi --namespace kube-system
 ```
 
-> **Note**: Due to a limitation in Helm, CRDs are not deleted as part of the chart uninstall.
+**Note**: Due to a limitation in Helm, CRDs are not deleted as part of the chart uninstall.
 
 ### Alternative install method
 
