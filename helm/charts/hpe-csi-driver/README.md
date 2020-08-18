@@ -4,7 +4,7 @@ The [HPE CSI Driver for Kubernetes](https://scod.hpedev.io/csi_driver/index.html
 
 ## Prerequisites
 
-- Upstream Kubernetes version >= 1.14
+- Upstream Kubernetes version >= 1.15
 - Most Kubernetes distributions are supported
 - Recent Ubuntu, SLES, CentOS or RHEL compute nodes connected to their respective official package repositories
 - Helm 3
@@ -18,13 +18,13 @@ Depending on which [Container Storage Provider](https://scod.hpedev.io/container
 
 The following table lists the configurable parameters of the HPE-CSI chart and their default values.
 
-|  Parameter                |  Description                                                |  Default    |
-|---------------------------|-------------------------------------------------------------|-------------|
-| logLevel             | Log level. Can be one of `info`, `debug`, `trace`, `warn` and `error`.                                        | info         |
-| imagePullPolicy | Image pull policy (`Always`, `IfNotPresent`, `Never`).                                          | IfNotPresent |
-| disableNodeConformance | Disable automatic installation of iSCSI/Multipath Packages.                                           | false |
-| iscsi.chapUser | Username for iSCSI CHAP authentication.                                           | "" |
-| iscsi.chapPassword | Password for iSCSI CHAP authentication. Packages.                             | "" |
+|  Parameter                |  Description                                                           |  Default     |
+|---------------------------|------------------------------------------------------------------------|--------------|
+| logLevel                  | Log level. Can be one of `info`, `debug`, `trace`, `warn` and `error`. | info         |
+| imagePullPolicy           | Image pull policy (`Always`, `IfNotPresent`, `Never`).                 | IfNotPresent |
+| disableNodeConformance    | Disable automatic installation of iSCSI/Multipath Packages.            | false        |
+| iscsi.chapUser            | Username for iSCSI CHAP authentication.                                | ""           |
+| iscsi.chapPassword        | Password for iSCSI CHAP authentication. Packages.                      | ""           |
 
 It's recommended to create a [values.yaml](https://github.com/hpe-storage/co-deployments/blob/master/helm/values/csi-driver) file from the corresponding release of the chart and edit it to fit the environment the chart is being deployed to. Download and edit [a sample file](https://github.com/hpe-storage/co-deployments/blob/master/helm/values/csi-driver).
 
@@ -43,12 +43,14 @@ Tweak any additional parameters to suit the environment or as prescribed by HPE.
 To install the chart with the name `hpe-csi`:
 
 Add HPE helm repo:
+
 ```
 helm repo add hpe https://hpe-storage.github.io/co-deployments
 helm repo update
 ```
 
 Install the latest chart:
+
 ```
 helm install hpe-csi hpe/hpe-csi-driver --namespace kube-system -f myvalues.yaml
 ```
@@ -60,21 +62,22 @@ helm install hpe-csi hpe/hpe-csi-driver --namespace kube-system -f myvalues.yaml
 To upgrade the chart, specify the version you want to upgrade to as below. Please do NOT re-use a full blown `values.yaml` from prior versions to upgrade to later versions. Always use `values.yaml` from corresponding release from [values.yaml](https://github.com/hpe-storage/co-deployments/blob/master/helm/values/csi-driver)
 
 List the avaiable version of the plugin:
+
 ```
 helm repo update
 helm search repo hpe-csi-driver -l
 ```
 
 Select the target version to upgrade as below:
+
 ```
 helm upgrade hpe-csi hpe/hpe-csi-driver --namespace kube-system --version=x.x.x.x -f myvalues.yaml
 ```
 
-### Select the target version to upgrade as below
-
 ### Uninstalling the Chart
 
 To uninstall the `hpe-csi` chart:
+
 ```
 helm uninstall hpe-csi --namespace kube-system
 ```
