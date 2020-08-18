@@ -1,74 +1,31 @@
 categories:
 - storage
 questions:
-- variable: secret.backend
-  label: "IP address"
-  type: string
-  required: true
-  description: "Please specify HPE backend IP address."
-  group: "HPE backend settings"
-- variable: backendType
-  label: "BackendType"
-  default: "nimble"
+- variable: imagePullPolicy
+  label: "ImagePullPolicy"
+  default: "IfNotPresent"
   type: enum
   options:
-    - "nimble"
-    - "primera3par"
-  group: "HPE backend settings"
-- variable: secret.username
-  label: "Username"
+    - "IfNotPresent"
+    - "Always"
+    - "Never"
+  description: "ImagePulPolicy for all CSI driver images"
+  group: "HPE CSI Driver Settings"
+- variable: disableNodeConformance
+  label: "Disable automatic installation of iSCSI/Multipath Packages"
+  type: boolean
+  default: false
+  description: "Disable automatic installation of iSCSI/Multipath Packages"
+  group: "HPE CSI Driver settings"
+- variable: iscsi.chapUser
+  label: "iSCSI CHAP Username"
   type: string
   required: true
-  description: "Specify username with backend storage admin permissions."
-  group: "HPE backend settings"
-- variable: secret.password
-  label: "Password"
+  description: "Specify username for iSCSI CHAP authentication"
+  group: "HPE iSCSI settings"
+- variable: iscsi.chapPassword
+  label: "iSCSI CHAP Password"
   type: password
   required: true
-  description: "Specify password for the backend user."
-  group: "HPE backend settings"
-- variable: storageClass.parameters.fsType
-  label: "Filesystem"
-  default: "xfs"
-  type: enum
-  options:
-    - "xfs"
-    - "ext4"
-    - "ext3"
-    - "btrfs"
-  description: "Select the filesystem for Persistent Volumes, defaults to xfs."
-  group: "HPE StorageClass and volume settings"
-- variable: storageClass.parameters.accessProtocol
-  label: "HPE storage protocol"
-  type: enum
-  default: "iscsi"
-  options:
-    - "iscsi"
-    - "fc"
-  description: "Specify storage protocol for HPE backend connectivity."
-  group: "HPE StorageClass and volume settings"
-- variable: storageClass.create
-  label: "Create a StorageClass"
-  type: boolean
-  default: true
-  required: true
-  description: "If specified as 'true', a StorageClass named 'hpe-standard' will be created with the HPE CSI Driver for Kubernetes as provisioner."
-  group: "HPE StorageClass and volume settings"
-- variable: storageClass.defaultClass
-  label: "Mark StorageClass 'hpe-standard' as 'default'."
-  type: boolean
-  default: false
-  description: "If specified as 'true', the 'hpe-standard' StorageClass will be annotated as 'default'. This option is ignored if 'Create a StorageClass' is set to 'false'."
-  group: "HPE StorageClass and volume settings"
-- variable: crd.nodeInfo.create
-  label: "Create HPE NodeInfo CRD."
-  type: boolean
-  default: false
-  description: "For HELM3 required CRD's are automatically created without this flag. This flag should be explicitly enabled only for HELM 2"
-  group: "HPE CSI Driver settings"
-- variable: crd.volumeInfo.create
-  label: "Create HPE VolumeInfo CRD."
-  type: boolean
-  default: false
-  description: "For HELM3 required CRD's are automatically created without this flag. This flag should be explicitly enabled only for HELM 2"
-  group: "HPE CSI Driver settings"
+  description: "Specify password for iSCSI CHAP authentication""
+  group: "HPE iSCSI settings"
