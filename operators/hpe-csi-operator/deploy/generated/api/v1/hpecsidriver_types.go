@@ -27,18 +27,12 @@ type HPECSIDriverSpec struct {
 	// INSERT ADDITIONAL SPEC FIELDS - desired state of cluster
 	// Important: Run "make" to regenerate code after modifying this file
 
-	// HPE Storage class controls
-	StorageClass HPEStorageClass `json:"storageClass"`
-	// HPE Secret controls
-	Secret HPESecret `json:"secret"`
 	// Image Pull Policy for HPE CSI driver images
 	ImagePullPolicy string `json:"imagePullPolicy"`
 	// Flavor of the CO orchestrator
 	Flavor string `json:"flavor"`
 	// Default logLevel for HPE CSI driver deployments
 	LogLevel string `json:"logLevel"`
-	// BackendType nimble/primera3par for the CSP deployment
-	BackendType string `json:"backendType"`
 	// DisableNodeConformance disables automatic installation of iscsi/multipath packages
 	DisableNodeConformance bool `json:"disableNodeConformance"`
 	// Iscsi parameters to be configured
@@ -49,45 +43,6 @@ type HPECSIDriverSpec struct {
 type IscsiInfo struct {
 	ChapUser     string `json:"chapUser"`
 	ChapPassword string `json:"chapPassword"`
-}
-
-// HPESecret defines HPE secret params
-type HPESecret struct {
-	// Create HPE secret after CSI driver deployment, default: true
-	Create bool `json:"create"`
-
-	// Username for storage backend
-	Username string `json:"username"`
-	// Password for storage backend
-	Password string `json:"password"`
-	// Storage backend IP
-	Backend string `json:"backend"`
-	// HPE CSP Service Port
-	ServicePort string `json:"servicePort"`
-}
-
-// HPEStorageClass defines the behavior of HPE CSI Driver Operator for creation of default  storage class
-type HPEStorageClass struct {
-	// Indicates to create a storage class in the cluster, default: true
-	Create bool `json:"create"`
-	// Indicates to make storage class as default in the cluster, default: false
-	DefaultClass bool `json:"defaultClass"`
-	// Name of storage class to create for HPE
-	Name string `json:"name"`
-	// Allow volume expansion parameter for default  storage class
-	AllowVolumeExpansion bool `json:"allowVolumeExpansion"`
-	// HPE storage class parameters
-	Parameters HPEStorageClassParameters `json:"parameters"`
-}
-
-// HPEStorageClassParameters defines HPE storage class parameters
-type HPEStorageClassParameters struct {
-	// Volume description parameter in default storage class
-	VolumeDescription string `json:"volumeDescription"`
-	// Access protocol for storage backend
-	AccessProtocol string `json:"accessProtocol"`
-	// Filesystem type for default storage class
-	FsType string `json:"fsType"`
 }
 
 type HelmAppConditionType string

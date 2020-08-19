@@ -11,48 +11,16 @@ spec:
   # image pull policy for all images in csi deployment
   imagePullPolicy: 'IfNotPresent'
 
-  # HPE backend storage type (nimble, primera3par)
-  backendType: nimble
-
-  secret:
-    # parameters for nimble
-    create: true
-    backend: 192.168.1.1
-    username: admin
-    password: admin
-    servicePort: "8080"
-
   # flavor
   flavor: kubernetes
 
   # log level for all csi driver components
   logLevel: info
 
-  ## For creating the StorageClass automatically:
-  storageClass:
-    create: true
-
-    ## Set StorageClass as the default StorageClass
-    ## Ignored if storageClass.create is false
-    defaultClass: false
-
-    ## Set a StorageClass name
-    ## Ignored if storageClass.create is false
-    name: hpe-standard
-    # Enable volume resize
-    ## Ignored if storageClass.create is false
-    allowVolumeExpansion: true
-    # Default storage class parameters
-    parameters:
-      fsType: xfs
-      volumeDescription: "Volume created by the HPE CSI Driver for Kubernetes"
-      accessProtocol: "iscsi"
-
   ## For controlling automatic iscsi/multipath package installation (default: false)
   disableNodeConformance: false
 
-  # Iscsi parameters
+  # values for CHAP Authentication
   iscsi:
-    ## values for CHAP Authentication
     chapUser: ""
     chapPassword: ""
