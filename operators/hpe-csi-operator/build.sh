@@ -17,7 +17,6 @@ mkdir -p ${IMG_DIR}/helm-charts
 cp ${IMG_DIR}/../../LICENSE ${IMG_DIR}/
 
 # Copy helm charts to staging directory
-rm -rf ${IMG_DIR}/helm-charts
 cp -r ${HELM_DIR}/charts/hpe-csi-driver ${IMG_DIR}/helm-charts
 
 # build an operator
