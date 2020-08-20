@@ -65,7 +65,23 @@
             "limit": 1
         },
         {
+            "pattern": "dcs-docker-local/hpestorage/nimble-csp/v1.3.0*",
+            "sortBy": [
+                "created"
+            ],
+            "sortOrder": "desc",
+            "limit": 1
+        },
+        {
             "pattern": "dcs-docker-local/hpestorage/nimble-csp/edge-*",
+            "sortBy": [
+                "created"
+            ],
+            "sortOrder": "desc",
+            "limit": 1
+        },
+        {
+            "pattern": "dcs-docker-local/hpestorage/volume-mutator/v1.0.0*",
             "sortBy": [
                 "created"
             ],
@@ -90,6 +106,14 @@
         },
         {
             "pattern": "dcs-docker-local/hpestorage/volume-group-snapshotter/edge-*",
+            "sortBy": [
+                "created"
+            ],
+            "sortOrder": "desc",
+            "limit": 1
+        },
+        {
+            "pattern": "dcs-docker-local/hpestorage/csi-extensions/v1.0.0*",
             "sortBy": [
                 "created"
             ],
