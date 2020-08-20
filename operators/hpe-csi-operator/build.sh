@@ -11,12 +11,12 @@ HPE_CSI_OPERATOR_TAG=${HPE_CSI_OPERATOR_TAG:-edge}
 # stage directory for build
 IMG_DIR=$(dirname $0)
 HELM_DIR=${IMG_DIR}/../../helm
+rm -rf ${IMG_DIR}/helm-charts
 mkdir -p ${IMG_DIR}/helm-charts
 
 cp ${IMG_DIR}/../../LICENSE ${IMG_DIR}/
 
-# Cleanup and Copy helm charts to staging directory
-rm -rf ${IMG_DIR}/helm-charts
+# Copy helm charts to staging directory
 cp -r ${HELM_DIR}/charts/hpe-csi-driver ${IMG_DIR}/helm-charts
 
 # build an operator

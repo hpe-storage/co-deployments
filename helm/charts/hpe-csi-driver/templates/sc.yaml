@@ -17,7 +17,11 @@ metadata:
     meta.helm.sh/release-name: {{ .Release.Name }}
     meta.helm.sh/release-namespace: {{ .Release.Namespace }}
     {{- range $k, $v := $sc.metadata.annotations }}
-    {{ $k }}: {{ $v}}
+    {{- if or (eq $v "true") (eq $v "false")}}
+    {{ $k }}: {{ $v | quote }}
+    {{- else }}
+    {{ $k }}: {{ $v }}
+    {{- end }}
     {{- end }}
 provisioner: csi.hpe.com
 {{- if semverCompare ">=1.15.0" .Capabilities.KubeVersion.GitVersion }}
@@ -25,6 +29,10 @@ allowVolumeExpansion: {{ $sc.allowVolumeExpansion }}
 {{- end }}
 parameters:
   {{- range $k, $v := $sc.parameters }}
-  {{ $k }}: {{ $v}}
+  {{- if or (eq $v "true") (eq $v "false")}}
+  {{ $k }}: {{ $v | quote }}
+  {{- else }}
+  {{ $k }}: {{ $v }}
+  {{- end }}
   {{- end }}
 {{- end }}
