@@ -165,7 +165,7 @@ spec:
             - name: root-dir
               mountPath: /host
         - name: csi-volume-mutator
-          image: hpestorage/volume-mutator:v1.3.0-beta
+          image: hpestorage/volume-mutator:v1.0.0-beta
           args:
             - "--v=5"
             - "--csi-address=$(ADDRESS)"
@@ -177,7 +177,7 @@ spec:
             - name: socket-dir
               mountPath: /var/lib/csi/sockets/pluginproxy/
         - name: csi-extensions
-          image: hpestorage/csi-extensions:v1.3.0-beta
+          image: hpestorage/csi-extensions:v1.0.0-beta
           args:
             - "--v=5"
             - "--endpoint=$(CSI_ENDPOINT)"
@@ -490,7 +490,7 @@ rules:
     verbs: ["get", "list"]
   - apiGroups: ["storage.k8s.io"]
     resources: ["storageclasses"]
-    verbs: ["get", "list", "watch"]        
+    verbs: ["get", "list", "watch"]
 
 ---
 
