@@ -93,7 +93,7 @@ spec:
                     targetSnapCpg:
                       description: Target Snap CPG of the array
                       type: string
-					targetSecret:
+                    targetSecret:
                       description: Secret of the replicated array
                       type: string
 
