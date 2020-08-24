@@ -81,7 +81,7 @@ spec:
                     targetMode:
                       description: Replication Mode
                       type: string
-                    targetSecretNamespace
+                    targetSecretNamespace:
                       description: Namespace of secret
                       type: string
                   required:
