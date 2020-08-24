@@ -78,10 +78,17 @@ spec:
                     targetSecret:
                       description: Secret of the replicated array
                       type: string
+                    targetMode:
+                      description: Replication Mode
+                      type: string
+                    targetSecretNamespace
+                      description: Namespace of secret
+                      type: string
                   required:
                     - targetName
                     - targetCpg
                     - targetSecret
+                    - targetSecretNamespace
           type: array
   version: v1
 status:
