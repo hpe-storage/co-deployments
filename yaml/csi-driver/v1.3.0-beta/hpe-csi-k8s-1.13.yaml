@@ -61,7 +61,6 @@ status:
   storedVersions: []
 
 ---
-
 #############################################
 ############  Controller driver  ############
 #############################################
@@ -294,6 +293,9 @@ rules:
     verbs: ["get", "list"]
   - apiGroups: ["storage.hpe.com"]
     resources: ["hpevolumeinfos"]
+    verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+  - apiGroups: ["storage.hpe.com"]
+    resources: ["hpereplicationdeviceinfos"]
     verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
   - apiGroups: [""]
     resources: ["persistentvolumeclaims"]
