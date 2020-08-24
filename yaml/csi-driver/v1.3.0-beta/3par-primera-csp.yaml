@@ -17,6 +17,8 @@ spec:
   names:
     kind: HPEVolumeInfo
     plural: hpevolumeinfos
+    shortNames:
+      - hperdi
   scope: Cluster
   validation:
     openAPIV3Schema:
@@ -76,7 +78,10 @@ spec:
                     targetSecret:
                       description: Secret of the replicated array
                       type: string
-
+                  required:
+                    - targetName
+                    - targetCpg
+                    - targetSecret
           type: array
   version: v1
 status:
