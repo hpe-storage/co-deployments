@@ -45,8 +45,10 @@ spec:
               description: Iscsi parameters to be configured
               properties:
                 chapPassword:
+                  description: iSCSI CHAP username
                   type: string
                 chapUser:
+                  description: iSCSI CHAP password
                   type: string
               type: object
             logLevel:

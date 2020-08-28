@@ -448,9 +448,9 @@ spec:
                 fieldRef:
                   fieldPath: spec.nodeName
             - name: CHAP_USER
-              value: ""    
+              value: ""
             - name: CHAP_PASSWORD
-              value: ""    
+              value: ""
             - name: DISABLE_NODE_CONFORMANCE
               value: "false"
           imagePullPolicy: "Always"
