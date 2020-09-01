@@ -104,20 +104,32 @@ spec:
             path: logLevel
             x-descriptors:
               - 'urn:alm:descriptor:com.tectonic.ui:text'
+          - displayName: Flavor
+            description: 'Flavor of CO Orchestrator (kubernetes, openshift)'
+            path: flavor
+            x-descriptors:
+              - 'urn:alm:descriptor:com.tectonic.ui:text'
           - displayName: Disables automatic installation of iSCSI, multipath packages
             description: 'Disable node conformance (default: false)'
             path: disableNodeConformance
             x-descriptors:
               - 'urn:alm:descriptor:com.tectonic.ui:booleanSwitch'
+          - displayName: iSCSI Configuration
+            description: 'iSCSI Configuration'
+            path: iscsi
+            x-descriptors:
+              - 'urn:alm:descriptor:com.tectonic.ui:radio'
           - displayName: iSCSI CHAP username
             description: 'Username for iSCSI CHAP authentication'
             path: iscsi.chapUsername
             x-descriptors:
+              - 'urn:alm:descriptor:com.tectonic.ui:fieldGroup:iscsi'
               - 'urn:alm:descriptor:com.tectonic.ui:text'
           - displayName: iSCSI CHAP password
             description: 'Password for iSCSI CHAP authentication'
             path: iscsi.chapPassword
             x-descriptors:
+              - 'urn:alm:descriptor:com.tectonic.ui:fieldGroup:iscsi'
               - 'urn:alm:descriptor:com.tectonic.ui:password'
         statusDescriptors:
           - displayName: Conditions

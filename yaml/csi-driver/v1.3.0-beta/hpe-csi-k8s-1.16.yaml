@@ -164,7 +164,7 @@ spec:
             - name: root-dir
               mountPath: /host
         - name: csi-volume-mutator
-          image: hpestorage/volume-mutator:v1.0.0-beta
+          image: quay.io/hpestorage/volume-mutator:v1.0.0-beta
           args:
             - "--v=5"
             - "--csi-address=$(ADDRESS)"
@@ -176,7 +176,7 @@ spec:
             - name: socket-dir
               mountPath: /var/lib/csi/sockets/pluginproxy/
         - name: csi-extensions
-          image: hpestorage/csi-extensions:v1.0.0-beta
+          image: quay.io/hpestorage/csi-extensions:v1.0.0-beta
           args:
             - "--v=5"
             - "--endpoint=$(CSI_ENDPOINT)"
