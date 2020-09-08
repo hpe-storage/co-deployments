@@ -1,5 +1,5 @@
 # Configuration to deploy the HPE CSI driver compatible with
-# Kubernetes = v1.14
+# Kubernetes = v1.15
 #
 # example usage: kubectl create -f <this_file>
 
@@ -126,8 +126,20 @@ spec:
           volumeMounts:
             - name: socket-dir
               mountPath: /var/lib/csi/sockets/pluginproxy/
+        - name: csi-resizer
+          image: quay.io/k8scsi/csi-resizer:v0.3.0
+          args:
+            - "--csi-address=$(ADDRESS)"
+            - "--v=5"
+          env:
+            - name: ADDRESS
+              value: /var/lib/csi/sockets/pluginproxy/csi.sock
+          imagePullPolicy: "Always"
+          volumeMounts:
+            - name: socket-dir
+              mountPath: /var/lib/csi/sockets/pluginproxy/
         - name: hpe-csi-driver
-          image: hpestorage/csi-driver:v1.3.0-beta
+          image: hpestorage/csi-driver:v1.3.0
           args :
             - "--endpoint=$(CSI_ENDPOINT)"
             - "--flavor=kubernetes"
@@ -276,6 +288,77 @@ roleRef:
   apiGroup: rbac.authorization.k8s.io
 
 ---
+# Resizer must be able to work with PVCs, PVs, SCs.
+kind: ClusterRole
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: external-resizer-role
+rules:
+  - apiGroups: [""]
+    resources: ["secrets"]
+    verbs: ["get", "list", "watch"]
+  - apiGroups: [""]
+    resources: ["persistentvolumes"]
+    verbs: ["get", "list", "watch", "update", "patch"]
+  - apiGroups: [""]
+    resources: ["persistentvolumeclaims"]
+    verbs: ["get", "list", "watch"]
+  - apiGroups: [""]
+    resources: ["persistentvolumeclaims/status"]
+    verbs: ["update", "patch"]
+  - apiGroups: ["storage.k8s.io"]
+    resources: ["storageclasses"]
+    verbs: ["get", "list", "watch"]
+  - apiGroups: [""]
+    resources: ["events"]
+    verbs: ["list", "watch", "create", "update", "patch"]
+
+---
+
+kind: ClusterRoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: csi-resizer-role
+subjects:
+  - kind: ServiceAccount
+    name: hpe-csi-controller-sa
+    namespace: kube-system
+roleRef:
+  kind: ClusterRole
+  name: external-resizer-role
+  apiGroup: rbac.authorization.k8s.io
+
+---
+
+# Resizer must be able to work with end point in current namespace
+# if (and only if) leadership election is enabled
+kind: Role
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  namespace: kube-system
+  name: external-resizer-cfg
+rules:
+  - apiGroups: ["coordination.k8s.io"]
+    resources: ["leases"]
+    verbs: ["get", "watch", "list", "delete", "update", "create"]
+
+---
+
+kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: csi-resizer-role-cfg
+  namespace: kube-system
+subjects:
+  - kind: ServiceAccount
+    name: hpe-csi-controller-sa
+    namespace: kube-system
+roleRef:
+  kind: Role
+  name: external-resizer-cfg
+  apiGroup: rbac.authorization.k8s.io
+
+---
 
 kind: ClusterRole
 apiVersion: rbac.authorization.k8s.io/v1
@@ -366,7 +449,7 @@ spec:
             - name: registration-dir
               mountPath: /registration
         - name: hpe-csi-driver
-          image: hpestorage/csi-driver:v1.3.0-beta
+          image: hpestorage/csi-driver:v1.3.0
           args :
             - "--endpoint=$(CSI_ENDPOINT)"
             - "--node-service"
@@ -379,15 +462,9 @@ spec:
                 fieldRef:
                   fieldPath: spec.nodeName
             - name: CHAP_USER
-              valueFrom:
-                configMapKeyRef:
-                  name: hpe-linux-config
-                  key: CHAP_USER
+              value: ""
             - name: CHAP_PASSWORD
-              valueFrom:
-                configMapKeyRef:
-                  name: hpe-linux-config
-                  key: CHAP_PASSWORD
+              value: ""
             - name: DISABLE_NODE_CONFORMANCE
               value: "false"
           imagePullPolicy: "Always"

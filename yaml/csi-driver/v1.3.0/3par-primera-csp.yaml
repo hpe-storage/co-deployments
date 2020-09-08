@@ -141,7 +141,7 @@ spec:
       priorityClassName: system-cluster-critical
       containers:
         - name: primera3par-csp
-          image: hpestorage/hpe3parprimera-csp:v1.1.0-beta
+          image: hpestorage/hpe3parprimera-csp:v1.1.0
           imagePullPolicy: Always
           ports:
           - containerPort: 8080

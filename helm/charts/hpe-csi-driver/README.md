@@ -7,7 +7,7 @@ The [HPE CSI Driver for Kubernetes](https://scod.hpedev.io/csi_driver/index.html
 - Upstream Kubernetes version >= 1.15
 - Most Kubernetes distributions are supported
 - Recent Ubuntu, SLES, CentOS or RHEL compute nodes connected to their respective official package repositories
-- Helm 3
+- Helm 3 (Version >= 3.2.0 required)
 
 Depending on which [Container Storage Provider](https://scod.hpedev.io/container_storage_provider/index.html) (CSP) is being used, other prerequisites and requirements may apply, such as storage platform OS and features.
 
