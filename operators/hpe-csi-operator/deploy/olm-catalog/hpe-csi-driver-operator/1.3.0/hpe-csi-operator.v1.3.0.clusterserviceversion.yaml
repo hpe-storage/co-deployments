@@ -29,7 +29,7 @@ metadata:
     description: >-
       A Container Storage Interface (CSI) driver for HPE storage platforms. The CSI driver
       allows you to use HPE storage with your preferred container orchestrator.
-    containerImage: 'registry.connect.redhat.com/hpestorage/csi-driver-operator:v1.3.0-beta'
+    containerImage: 'registry.connect.redhat.com/hpestorage/csi-driver-operator:v1.3.0'
     support: 'HPE'
     capabilities: Basic Install
     repository: 'https://github.com/hpe-storage/co-deployments'
@@ -307,7 +307,7 @@ spec:
                 serviceAccountName: hpe-csi-operator-sa
                 containers:
                   - name: hpe-csi-operator
-                    image: 'registry.connect.redhat.com/hpestorage/csi-driver-operator:v1.3.0-beta'
+                    image: 'registry.connect.redhat.com/hpestorage/csi-driver-operator:v1.3.0'
                     ports:
                       - containerPort: 60000
                         name: metrics
