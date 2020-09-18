@@ -10,7 +10,7 @@ questions:
     - "Always"
     - "Never"
   description: "ImagePulPolicy for all CSI driver images"
-  group: "HPE CSI Driver Settings"
+  group: "HPE CSI Driver settings"
 - variable: disableNodeConformance
   label: "Disable automatic installation of iSCSI/Multipath Packages"
   type: boolean
