@@ -27,5 +27,5 @@ questions:
   label: "iSCSI CHAP Password"
   type: password
   required: true
-  description: "Specify password for iSCSI CHAP authentication""
+  description: "Specify password for iSCSI CHAP authentication"
   group: "HPE iSCSI settings"
