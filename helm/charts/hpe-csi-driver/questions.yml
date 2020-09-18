@@ -9,8 +9,8 @@ questions:
     - "IfNotPresent"
     - "Always"
     - "Never"
-  description: "ImagePulPolicy for all CSI driver images"
-  group: "HPE CSI Driver Settings"
+  description: "ImagePullPolicy for all CSI driver images"
+  group: "HPE CSI Driver settings"
 - variable: disableNodeConformance
   label: "Disable automatic installation of iSCSI/Multipath Packages"
   type: boolean
@@ -27,5 +27,5 @@ questions:
   label: "iSCSI CHAP Password"
   type: password
   required: true
-  description: "Specify password for iSCSI CHAP authentication""
+  description: "Specify password for iSCSI CHAP authentication"
   group: "HPE iSCSI settings"
