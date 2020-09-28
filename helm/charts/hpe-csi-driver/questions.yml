@@ -22,12 +22,12 @@ questions:
 - variable: iscsi.chapUser
   label: "iSCSI CHAP Username"
   type: string
-  required: true
+  required: false
   description: "Specify username for iSCSI CHAP authentication"
   group: "HPE iSCSI settings"
 - variable: iscsi.chapPassword
   label: "iSCSI CHAP Password"
   type: password
-  required: true
+  required: false
   description: "Specify password for iSCSI CHAP authentication"
   group: "HPE iSCSI settings"
