@@ -37,7 +37,7 @@ spec:
       {{- end }}
       containers:
         - name: nimble-csp
-          image: hpestorage/nimble-csp:v1.3.0
+          image: {{ .Values.registryPrefix }}hpestorage/nimble-csp:v1.3.0
           imagePullPolicy: {{ .Values.imagePullPolicy | quote }}
           ports:
             - containerPort: 8080

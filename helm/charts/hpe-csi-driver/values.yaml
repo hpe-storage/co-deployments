@@ -18,3 +18,5 @@ disableNodeConformance: false
 iscsi:
   chapUser: ""
   chapPassword: ""
+
+registryPrefix: "quay.io/"
