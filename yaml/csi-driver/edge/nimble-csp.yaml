@@ -31,7 +31,7 @@ spec:
 kind: Deployment
 apiVersion: apps/v1
 metadata:
-  name: csp-service
+  name: nimble-csp
   namespace: kube-system
 spec:
   selector:

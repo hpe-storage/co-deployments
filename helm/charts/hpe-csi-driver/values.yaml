@@ -19,4 +19,6 @@ iscsi:
   chapUser: ""
   chapPassword: ""
 
+# registry prefix for hpe csi images
 registry: "quay.io"
+
