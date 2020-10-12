@@ -19,4 +19,4 @@ iscsi:
   chapUser: ""
   chapPassword: ""
 
-registryPrefix: "quay.io/"
+registry: "quay.io"
