@@ -62,8 +62,8 @@ spec:
           {{- if .Values.registry }}
           image: {{ .Values.registry }}/hpestorage/csi-driver:v1.3.0
           {{- else }}
-            image: hpestorage/csi-driver:v1.3.0
-          {{- end}}             
+          image: hpestorage/csi-driver:v1.3.0
+          {{- end}}        
           args :
             - "--endpoint=$(CSI_ENDPOINT)"
             - "--node-service"
