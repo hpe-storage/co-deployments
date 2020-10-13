@@ -96,7 +96,11 @@ spec:
               mountPath: /var/lib/csi/sockets/pluginproxy
         {{- end }}
         - name: hpe-csi-driver
+         {{- if .Values.registry }}
+          image: {{ .Values.registry }}/hpestorage/csi-driver:v1.3.0
+         {{- else }}
           image: hpestorage/csi-driver:v1.3.0
+         {{- end}}   
           args :
             - "--endpoint=$(CSI_ENDPOINT)"
             - "--flavor=kubernetes"
@@ -120,7 +124,11 @@ spec:
             - name: root-dir
               mountPath: /host
         - name: csi-volume-mutator
-          image: quay.io/hpestorage/volume-mutator:v1.0.0
+        {{- if .Values.registry }}
+        image: {{ .Values.registry }}/hpestorage/volume-mutator:v1.0.0
+        {{- else }}
+        image: hpestorage/volume-mutator:v1.0.0
+        {{- end}}   
           args:
             - "--v=5"
             - "--csi-address=$(ADDRESS)"
@@ -132,7 +140,11 @@ spec:
             - name: socket-dir
               mountPath: /var/lib/csi/sockets/pluginproxy/
         - name: csi-extensions
-          image: quay.io/hpestorage/csi-extensions:v1.0.0
+        {{- if .Values.registry }}
+        image: {{ .Values.registry }}/hpestorage/csi-extensions:v1.0.0
+        {{- else }}
+        image: hpestorage/csi-extensions:v1.0.0
+        {{- end}}  
           args:
             - "--v=5"
             - "--endpoint=$(CSI_ENDPOINT)"

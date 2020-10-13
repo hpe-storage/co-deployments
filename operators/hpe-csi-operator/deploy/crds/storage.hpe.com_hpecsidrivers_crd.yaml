@@ -57,6 +57,9 @@ spec:
             disableNodeConformance:
               description: 'Disable automatic installation of iSCSI/Multipath packages, default: false'
               type: boolean
+            registry:
+              description: 'Registry prefix for HPE CSI driver images, default: quay.io'
+              type: string
           required:
           - iscsi
           - imagePullPolicy
