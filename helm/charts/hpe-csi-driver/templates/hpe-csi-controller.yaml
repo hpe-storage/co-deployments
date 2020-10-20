@@ -69,7 +69,7 @@ spec:
               mountPath: /var/lib/csi/sockets/pluginproxy
         {{- if semverCompare ">=1.17.0" .Capabilities.KubeVersion.GitVersion }}
         - name: csi-snapshotter
-          image: quay.io/k8scsi/csi-snapshotter:v2.0.1
+          image: quay.io/k8scsi/csi-snapshotter:v3.0.1
           args:
             - "--v=5"
             - "--csi-address=$(ADDRESS)"
