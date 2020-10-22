@@ -113,6 +113,22 @@
             "limit": 1
         },
         {
+            "pattern": "dcs-docker-local/hpestorage/volume-group-provisioner/v1.0.0*",
+            "sortBy": [
+                "created"
+            ],
+            "sortOrder": "desc",
+            "limit": 1
+        },
+        {
+            "pattern": "dcs-docker-local/hpestorage/volume-group-snapshotter/v1.0.0*",
+            "sortBy": [
+                "created"
+            ],
+            "sortOrder": "desc",
+            "limit": 1
+        },
+        {
             "pattern": "dcs-docker-local/hpestorage/csi-extensions/v1.0.0*",
             "sortBy": [
                 "created"

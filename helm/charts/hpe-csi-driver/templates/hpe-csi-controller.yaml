@@ -139,6 +139,38 @@ spec:
           volumeMounts:
             - name: socket-dir
               mountPath: /var/lib/csi/sockets/pluginproxy/
+        - name: csi-volume-group-snapshotter
+          {{- if .Values.registry }}
+          image: {{ .Values.registry }}/hpestorage/volume-group-snapshotter:v1.0.0-beta
+          {{- else }}
+          image: hpestorage/volume-group-snapshotter:v1.0.0-beta
+          {{- end }}
+          args:
+            - "--v=5"
+            - "--csi-address=$(ADDRESS)"
+          env:
+            - name: ADDRESS
+              value: /var/lib/csi/sockets/pluginproxy/csi-extensions.sock
+          imagePullPolicy: "Always"
+          volumeMounts:
+            - name: socket-dir
+              mountPath: /var/lib/csi/sockets/pluginproxy/
+        - name: csi-volume-group-provisioner
+          {{- if .Values.registry }}
+          image: {{ .Values.registry }}/hpestorage/volume-group-provisioner:v1.0.0-beta
+          {{- else }}
+          image: hpestorage/volume-group-provisioner:v1.0.0-beta
+          {{- end }}
+          args:
+            - "--v=5"
+            - "--csi-address=$(ADDRESS)"
+          env:
+            - name: ADDRESS
+              value: /var/lib/csi/sockets/pluginproxy/csi-extensions.sock
+          imagePullPolicy: "Always"
+          volumeMounts:
+            - name: socket-dir
+              mountPath: /var/lib/csi/sockets/pluginproxy/
         - name: csi-extensions
           {{- if .Values.registry }}
           image: {{ .Values.registry }}/hpestorage/csi-extensions:v1.0.0
