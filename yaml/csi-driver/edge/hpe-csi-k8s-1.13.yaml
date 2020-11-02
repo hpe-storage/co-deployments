@@ -329,10 +329,6 @@ spec:
             - "--csi-address=$(ADDRESS)"
             - "--kubelet-registration-path=$(DRIVER_REG_SOCK_PATH)"
             - "--v=5"
-          lifecycle:
-            preStop:
-              exec:
-                command: ["/bin/sh", "-c", "rm -rf /registration/csi.hpe.com /registration/csi.hpe.com-reg.sock"]
           env:
             - name: ADDRESS
               value: /csi/csi.sock
@@ -341,7 +337,7 @@ spec:
           imagePullPolicy: "Always"
           volumeMounts:
             - name: plugin-dir
-              mountPath: /csi/
+              mountPath: /csi
             - name: registration-dir
               mountPath: /registration
         - name: hpe-csi-driver
@@ -397,9 +393,11 @@ spec:
         - name: registration-dir
           hostPath:
             path: /var/lib/kubelet/plugins_registry/
+            type: Directory
         - name: plugin-dir
           hostPath:
             path: /var/lib/kubelet/plugins/csi.hpe.com/
+            type: DirectoryOrCreate
         - name: pods-mount-dir
           hostPath:
             path: /var/lib/kubelet
