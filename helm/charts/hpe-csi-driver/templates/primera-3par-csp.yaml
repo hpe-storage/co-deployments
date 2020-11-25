@@ -39,7 +39,7 @@ spec:
       {{- end }}
       containers:
         - name: primera3par-csp
-          image: hpestorage/hpe3parprimera-csp:v1.1.0
+          image: quay.io/hpestorage/hpe3parprimera-csp:test
           imagePullPolicy: {{ .Values.imagePullPolicy | quote }}
           ports:
             - containerPort: 8080
