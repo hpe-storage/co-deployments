@@ -97,9 +97,10 @@ spec:
         {{- end }}
         - name: hpe-csi-driver
          {{- if .Values.registry }}
-          image: {{ .Values.registry }}/hpestorage/csi-driver:v1.3.0
+          image: {{ .Values.registry }}/hpestorage/csi-driver:v1.4.0-beta
          {{- else }}
           image: hpestorage/csi-driver:v1.3.0
+          #image: {{ .Values.registry }}/hpestorage/csi-driver:v1.4.0-beta
          {{- end }}
           args :
             - "--endpoint=$(CSI_ENDPOINT)"
@@ -125,7 +126,7 @@ spec:
               mountPath: /host
         - name: csi-volume-mutator
           {{- if .Values.registry }}
-          image: {{ .Values.registry }}/hpestorage/volume-mutator:v1.0.0
+          image: {{ .Values.registry }}/hpestorage/volume-mutator:v1.2.0-beta
           {{- else }}
           image: hpestorage/volume-mutator:v1.0.0
           {{- end }}
@@ -141,7 +142,7 @@ spec:
               mountPath: /var/lib/csi/sockets/pluginproxy/
         - name: csi-volume-group-snapshotter
           {{- if .Values.registry }}
-          image: {{ .Values.registry }}/hpestorage/volume-group-snapshotter:v1.0.0-beta
+          image: {{ .Values.registry }}/hpestorage/volume-group-snapshotter:edge
           {{- else }}
           image: hpestorage/volume-group-snapshotter:v1.0.0-beta
           {{- end }}
@@ -173,7 +174,7 @@ spec:
               mountPath: /var/lib/csi/sockets/pluginproxy/
         - name: csi-extensions
           {{- if .Values.registry }}
-          image: {{ .Values.registry }}/hpestorage/csi-extensions:v1.0.0
+          image: {{ .Values.registry }}/hpestorage/csi-extensions:v1.2.0-beta
           {{- else }}
           image: hpestorage/csi-extensions:v1.0.0
           {{- end }}  
@@ -185,7 +186,8 @@ spec:
               value: unix:///var/lib/csi/sockets/pluginproxy/csi-extensions.sock
             - name: LOG_LEVEL
               value: {{ .Values.logLevel }}
-          imagePullPolicy: {{ .Values.imagePullPolicy | quote }}
+          #imagePullPolicy: {{ .Values.imagePullPolicy | quote }}
+          imagePullPolicy: "Always"
           volumeMounts:
             - name: socket-dir
               mountPath: /var/lib/csi/sockets/pluginproxy/
