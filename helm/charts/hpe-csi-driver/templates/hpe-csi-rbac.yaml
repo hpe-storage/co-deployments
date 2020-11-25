@@ -266,7 +266,7 @@ kind: ClusterRole
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
   name: hpe-csi-volumegroup-role
-  namespace: kube-system
+  namespace: {{ .Release.Namespace }}
 rules:
   - apiGroups: ["storage.hpe.com"]
     resources: ["volumegroups"]
@@ -317,7 +317,7 @@ metadata:
 subjects:
   - kind: ServiceAccount
     name: hpe-csi-controller-sa
-    namespace: kube-system
+    namespace: {{ .Release.Namespace }}
 roleRef:
   kind: ClusterRole
   name: hpe-csi-volumegroup-role
@@ -329,7 +329,7 @@ kind: ClusterRole
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
   name: hpe-csi-snapshotgroup-role
-  namespace: kube-system
+  namespace: {{ .Release.Namespace }}
 rules:
   - apiGroups: ["storage.hpe.com"]
     resources: ["snapshotgroups"]
@@ -404,7 +404,7 @@ metadata:
 subjects:
   - kind: ServiceAccount
     name: hpe-csi-controller-sa
-    namespace: kube-system
+    namespace: {{ .Release.Namespace }}
 roleRef:
   kind: ClusterRole
   name: hpe-csi-snapshotgroup-role
@@ -445,7 +445,7 @@ subjects:
   - kind: ServiceAccount
     name: hpe-csi-controller-sa
     # replace with non-default namespace name
-    namespace: kube-system
+    namespace: {{ .Release.Namespace }}
 roleRef:
   kind: ClusterRole
   name: csi-mutator-role
@@ -457,7 +457,7 @@ roleRef:
 kind: Role
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
-  namespace: kube-system
+  namespace: {{ .Release.Namespace }}
   name: csi-mutator-cfg
 rules:
 - apiGroups: ["coordination.k8s.io"]
@@ -469,11 +469,11 @@ kind: RoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
   name: csi-mutator-role-cfg
-  namespace: kube-system
+  namespace: {{ .Release.Namespace }}
 subjects:
   - kind: ServiceAccount
     name: hpe-csi-controller-sa
-    namespace: kube-system
+    namespace: {{ .Release.Namespace }}
 roleRef:
   kind: Role
   name: csi-mutator-cfg
