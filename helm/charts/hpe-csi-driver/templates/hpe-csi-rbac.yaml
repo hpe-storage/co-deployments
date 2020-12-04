@@ -266,7 +266,6 @@ kind: ClusterRole
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
   name: hpe-csi-volumegroup-role
-  namespace: kube-system
 rules:
   - apiGroups: ["storage.hpe.com"]
     resources: ["volumegroups"]
@@ -317,7 +316,7 @@ metadata:
 subjects:
   - kind: ServiceAccount
     name: hpe-csi-controller-sa
-    namespace: kube-system
+    namespace: {{ .Release.Namespace }}
 roleRef:
   kind: ClusterRole
   name: hpe-csi-volumegroup-role
@@ -329,7 +328,6 @@ kind: ClusterRole
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
   name: hpe-csi-snapshotgroup-role
-  namespace: kube-system
 rules:
   - apiGroups: ["storage.hpe.com"]
     resources: ["snapshotgroups"]
@@ -404,7 +402,7 @@ metadata:
 subjects:
   - kind: ServiceAccount
     name: hpe-csi-controller-sa
-    namespace: kube-system
+    namespace: {{ .Release.Namespace }}
 roleRef:
   kind: ClusterRole
   name: hpe-csi-snapshotgroup-role

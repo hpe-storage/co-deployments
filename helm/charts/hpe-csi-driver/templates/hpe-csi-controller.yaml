@@ -97,7 +97,7 @@ spec:
         {{- end }}
         - name: hpe-csi-driver
          {{- if .Values.registry }}
-          image: {{ .Values.registry }}/hpestorage/csi-driver:v1.3.0
+          image: {{ .Values.registry }}/hpestorage/csi-driver:v1.4.0-beta
          {{- else }}
           image: hpestorage/csi-driver:v1.3.0
          {{- end }}
@@ -173,7 +173,7 @@ spec:
               mountPath: /var/lib/csi/sockets/pluginproxy/
         - name: csi-extensions
           {{- if .Values.registry }}
-          image: {{ .Values.registry }}/hpestorage/csi-extensions:v1.0.0
+          image: {{ .Values.registry }}/hpestorage/csi-extensions:v1.2.0-beta
           {{- else }}
           image: hpestorage/csi-extensions:v1.0.0
           {{- end }}  
