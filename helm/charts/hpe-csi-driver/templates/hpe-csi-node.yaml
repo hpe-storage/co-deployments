@@ -56,7 +56,7 @@ spec:
               mountPath: /registration
         - name: hpe-csi-driver
           {{- if .Values.registry }}
-          image: {{ .Values.registry }}/hpestorage/csi-driver:v1.3.0
+          image: {{ .Values.registry }}/hpestorage/csi-driver:v1.4.0-beta
           {{- else }}
           image: hpestorage/csi-driver:v1.3.0
           {{- end}}        
