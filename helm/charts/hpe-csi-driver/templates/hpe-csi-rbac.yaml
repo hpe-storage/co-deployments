@@ -46,7 +46,7 @@ rules:
   - apiGroups: [""]
     resources: ["events"]
     verbs: ["list", "watch", "create", "update", "patch"]
-{{- if semverCompare ">=1.17.0" .Capabilities.KubeVersion.GitVersion }}
+{{- if semverCompare ">=1.17.0" .Capabilities.KubeVersion.Version }}
   - apiGroups: ["snapshot.storage.k8s.io"]
     resources: ["volumesnapshots"]
     verbs: ["get", "list"]
@@ -98,10 +98,10 @@ rules:
   - apiGroups: [""]
     resources: ["secrets"]
     verbs: ["get", "watch", "list"]
-  {{- if semverCompare "~1.12.0" .Capabilities.KubeVersion.GitVersion }}
+  {{- if semverCompare "~1.12.0" .Capabilities.KubeVersion.Version }}
     resources: ["csinodeinfos"]
     verbs: ["get", "list", "watch"]
-  {{- else if semverCompare "~1.13.0" .Capabilities.KubeVersion.GitVersion }}
+  {{- else if semverCompare "~1.13.0" .Capabilities.KubeVersion.Version }}
   - apiGroups: ["csi.storage.k8s.io"]
     resources: ["csinodeinfos"]
     verbs: ["get", "list", "watch"]
@@ -127,7 +127,7 @@ roleRef:
   apiGroup: rbac.authorization.k8s.io
 
 
-{{- if semverCompare ">=1.17.0" .Capabilities.KubeVersion.GitVersion }}
+{{- if semverCompare ">=1.17.0" .Capabilities.KubeVersion.Version }}
 ---
 
 kind: ClusterRole
@@ -187,7 +187,7 @@ roleRef:
 {{- end }}
 
 
-{{- if semverCompare ">=1.15.0" .Capabilities.KubeVersion.GitVersion }}
+{{- if semverCompare ">=1.15.0" .Capabilities.KubeVersion.Version }}
 ---
 # Resizer must be able to work with PVCs, PVs, SCs.
 kind: ClusterRole

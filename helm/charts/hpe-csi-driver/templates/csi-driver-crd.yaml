@@ -1,4 +1,4 @@
-{{- if semverCompare ">=1.14.0" .Capabilities.KubeVersion.GitVersion }}
+{{- if semverCompare ">=1.14.0" .Capabilities.KubeVersion.Version }}
 ---
 
 ################# CSI Driver ###########
@@ -8,7 +8,7 @@ metadata:
   name: csi.hpe.com
 spec:
   podInfoOnMount: true
-  {{- if semverCompare ">=1.16.0" .Capabilities.KubeVersion.GitVersion }}
+  {{- if semverCompare ">=1.16.0" .Capabilities.KubeVersion.Version }}
   volumeLifecycleModes:
   - Persistent
   - Ephemeral
