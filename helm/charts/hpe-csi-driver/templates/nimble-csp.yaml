@@ -32,7 +32,7 @@ spec:
         app: nimble-csp
     spec:
       serviceAccount: hpe-csp-sa
-      {{- if semverCompare ">=1.17.0" .Capabilities.KubeVersion.GitVersion }}
+      {{- if semverCompare ">=1.17.0" .Capabilities.KubeVersion.Version }}
       priorityClassName: system-cluster-critical
       {{- end }}
       containers:
