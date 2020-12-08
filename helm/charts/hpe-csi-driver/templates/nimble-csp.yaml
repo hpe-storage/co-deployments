@@ -32,13 +32,13 @@ spec:
         app: nimble-csp
     spec:
       serviceAccount: hpe-csp-sa
-      {{- if semverCompare ">=1.17.0" .Capabilities.KubeVersion.GitVersion }}
+      {{- if semverCompare ">=1.17.0" .Capabilities.KubeVersion.Version }}
       priorityClassName: system-cluster-critical
       {{- end }}
       containers:
         - name: nimble-csp
           {{- if .Values.registry }}
-          image: {{ .Values.registry }}/hpestorage/nimble-csp:v1.3.0
+          image: {{ .Values.registry }}/hpestorage/nimble-csp:v1.4.0-beta
           {{- else }}
           image: hpestorage/nimble-csp:v1.3.0
           {{- end }}
