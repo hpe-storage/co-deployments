@@ -26,6 +26,7 @@ spec:
         hpeNodes:
           description: List of HPE nodes configured for storage access.
           items:
+            properties:
               uuid:
                 description: The UUID of the node.
                 type: string
