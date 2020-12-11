@@ -52,7 +52,7 @@ helm repo update
 Install the latest chart:
 
 ```
-helm install hpe-csi hpe/hpe-csi-driver --namespace kube-system -f myvalues.yaml
+helm install hpe-csi hpe/hpe-csi-driver --namespace hpe-storage -f myvalues.yaml
 ```
 
 **Note**: values.yaml is optional if no parameters are overridden from defaults.
@@ -71,7 +71,7 @@ helm search repo hpe-csi-driver -l
 Select the target version to upgrade as below:
 
 ```
-helm upgrade hpe-csi hpe/hpe-csi-driver --namespace kube-system --version=x.x.x.x -f myvalues.yaml
+helm upgrade hpe-csi hpe/hpe-csi-driver --namespace hpe-storage --version=x.x.x.x -f myvalues.yaml
 ```
 
 ### Uninstalling the Chart
@@ -79,7 +79,7 @@ helm upgrade hpe-csi hpe/hpe-csi-driver --namespace kube-system --version=x.x.x.
 To uninstall the `hpe-csi` chart:
 
 ```
-helm uninstall hpe-csi --namespace kube-system
+helm uninstall hpe-csi --namespace hpe-storage
 ```
 
 **Note**: Due to a limitation in Helm, CRDs are not deleted as part of the chart uninstall.
@@ -89,7 +89,7 @@ helm uninstall hpe-csi --namespace kube-system
 In some cases it's more practical to provide the local configuration via the `helm` CLI directly. Specify each parameter using the `--set key=value[,key=value]` argument to `helm install`. These will take precedence over entries in [values.yaml](https://github.com/hpe-storage/co-deployments/blob/master/helm/values/csi-driver). For example:
 
 ```
-helm install hpe-csi hpe/hpe-csi-driver --namespace kube-system --set iscsi.chapUsername=admin \
+helm install hpe-csi hpe/hpe-csi-driver --namespace hpe-storage --set iscsi.chapUsername=admin \
 --set iscsi.chapPassword=xxxxxxxx
 ```
 
