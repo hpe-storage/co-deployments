@@ -1,4 +1,4 @@
-{{- if semverCompare ">=1.14.0" .Capabilities.KubeVersion.Version }}
+{{- if and (eq .Capabilities.KubeVersion.Major "1") ( ge  ( trimSuffix "+" .Capabilities.KubeVersion.Minor ) "14") }}
 ---
 
 ################# CSI Driver ###########
@@ -8,7 +8,7 @@ metadata:
   name: csi.hpe.com
 spec:
   podInfoOnMount: true
-  {{- if semverCompare ">=1.16.0" .Capabilities.KubeVersion.Version }}
+  {{- if and (eq .Capabilities.KubeVersion.Major "1") ( ge  ( trimSuffix "+" .Capabilities.KubeVersion.Minor ) "16") }}
   volumeLifecycleModes:
   - Persistent
   - Ephemeral
