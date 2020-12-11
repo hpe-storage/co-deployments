@@ -20,7 +20,7 @@ spec:
         role: hpe-csi
     spec:
       serviceAccount: hpe-csi-node-sa
-      {{- if semverCompare ">=1.17.0" .Capabilities.KubeVersion.Version }}
+      {{- if and (eq .Capabilities.KubeVersion.Major "1") ( ge  ( trimSuffix "+" .Capabilities.KubeVersion.Minor ) "17") }}
       priorityClassName: system-node-critical
       {{- end }}
       hostNetwork: true
@@ -41,7 +41,7 @@ spec:
               value: /csi/csi.sock
             - name: DRIVER_REG_SOCK_PATH
               value: /var/lib/kubelet/plugins/csi.hpe.com/csi.sock
-            {{- if semverCompare "~1.12.0" .Capabilities.KubeVersion.Version }}
+            {{- if and (eq .Capabilities.KubeVersion.Major "1") ( eq  ( trimSuffix "+" .Capabilities.KubeVersion.Minor ) "12") }}
             - name: KUBE_NODE_NAME
               valueFrom:
                 fieldRef:
