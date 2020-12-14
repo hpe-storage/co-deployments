@@ -52,7 +52,11 @@ helm repo update
 Install the latest chart:
 
 ```
-helm install hpe-csi hpe/hpe-csi-driver --namespace hpe-storage -f myvalues.yaml
+kubectl create ns hpe-storage
+```
+
+```
+helm install hpe-csi hpe-storage/hpe-csi-driver --version 1.4.0-beta --namespace hpe-storage -f myvalues.yaml
 ```
 
 **Note**: values.yaml is optional if no parameters are overridden from defaults.

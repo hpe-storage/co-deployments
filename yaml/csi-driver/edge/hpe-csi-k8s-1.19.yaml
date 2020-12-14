@@ -3,14 +3,6 @@
 #
 # example usage: kubectl create -f <this_file>
 
---- 
-
-apiVersion: v1
-kind: Namespace
-metadata:
-  name: hpe-storage
-
-
 ---
 
 #############################################
