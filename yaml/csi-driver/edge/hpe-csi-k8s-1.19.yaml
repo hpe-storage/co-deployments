@@ -64,7 +64,6 @@ spec:
                   type: array
               required: 
                 - uuid
-                - iqns
                 - networks
               type: object
           required: 
