@@ -69,7 +69,7 @@ spec:
               mountPath: /var/lib/csi/sockets/pluginproxy
         {{- if and (eq .Capabilities.KubeVersion.Major "1") ( ge  ( trimSuffix "+" .Capabilities.KubeVersion.Minor ) "17") }}
         - name: csi-snapshotter
-          image: quay.io/k8scsi/csi-snapshotter:v3.0.1
+          image: quay.io/k8scsi/csi-snapshotter:v3.0.2
           args:
             - "--v=5"
             - "--csi-address=$(ADDRESS)"
