@@ -25,6 +25,7 @@ The following table lists the configurable parameters of the HPE-CSI chart and t
 | disableNodeConformance    | Disable automatic installation of iSCSI/Multipath Packages.            | false        |
 | iscsi.chapUser            | Username for iSCSI CHAP authentication.                                | ""           |
 | iscsi.chapPassword        | Password for iSCSI CHAP authentication.                                | ""           |
+| registry                  | Registry to pull HPE CSI Driver container images from.                 | quay.io      |
 
 It's recommended to create a [values.yaml](https://github.com/hpe-storage/co-deployments/blob/master/helm/values/csi-driver) file from the corresponding release of the chart and edit it to fit the environment the chart is being deployed to. Download and edit [a sample file](https://github.com/hpe-storage/co-deployments/blob/master/helm/values/csi-driver).
 
@@ -32,30 +33,31 @@ These are the bare minimum required parameters for a successful deployment to an
 
 ```
 iscsi:
-  chapUser: <username>
-  chapPassword: <password>
+  chapUser: "<username>"
+  chapPassword: "<password>"
 ```
 
 Tweak any additional parameters to suit the environment or as prescribed by HPE.
 
 ### Installing the chart
 
-To install the chart with the name `hpe-csi`:
+To install the chart with the name `my-hpe-csi-driver`:
 
 Add HPE helm repo:
 
 ```
-helm repo add hpe https://hpe-storage.github.io/co-deployments
+helm repo add hpe-storage https://hpe-storage.github.io/co-deployments/
 helm repo update
 ```
 
 Install the latest chart:
 
 ```
-helm install hpe-csi hpe/hpe-csi-driver --namespace kube-system -f myvalues.yaml
+kubectl create ns hpe-storage
+helm install my-hpe-csi-driver hpe-storage/hpe-csi-driver -n hpe-storage -f myvalues.yaml
 ```
 
-**Note**: values.yaml is optional if no parameters are overridden from defaults.
+**Note**: `values.yaml` is optional if no parameters are overridden from defaults.
 
 ### Upgrading the Chart
 
@@ -65,21 +67,21 @@ List the avaiable version of the plugin:
 
 ```
 helm repo update
-helm search repo hpe-csi-driver -l
+helm search repo hpe-storage -l
 ```
 
 Select the target version to upgrade as below:
 
 ```
-helm upgrade hpe-csi hpe/hpe-csi-driver --namespace kube-system --version=x.x.x.x -f myvalues.yaml
+helm upgrade my-hpe-csi-driver hpe-storage/hpe-csi-driver -n hpe-storage --version=x.x.x -f myvalues.yaml
 ```
 
 ### Uninstalling the Chart
 
-To uninstall the `hpe-csi` chart:
+To uninstall the `my-hpe-csi-driver` chart:
 
 ```
-helm uninstall hpe-csi --namespace kube-system
+helm uninstall my-hpe-csi-driver -n hpe-storage
 ```
 
 **Note**: Due to a limitation in Helm, CRDs are not deleted as part of the chart uninstall.
@@ -89,8 +91,9 @@ helm uninstall hpe-csi --namespace kube-system
 In some cases it's more practical to provide the local configuration via the `helm` CLI directly. Specify each parameter using the `--set key=value[,key=value]` argument to `helm install`. These will take precedence over entries in [values.yaml](https://github.com/hpe-storage/co-deployments/blob/master/helm/values/csi-driver). For example:
 
 ```
-helm install hpe-csi hpe/hpe-csi-driver --namespace kube-system --set iscsi.chapUsername=admin \
---set iscsi.chapPassword=xxxxxxxx
+helm install my-hpe-csi-driver hpe-storage/hpe-csi-driver -n hpe-storage \
+  --set iscsi.chapUsername=admin \
+  --set iscsi.chapPassword=xxxxxxxx
 ```
 
 ## Using persistent storage with Kubernetes

@@ -46,7 +46,7 @@ rules:
   - apiGroups: [""]
     resources: ["events"]
     verbs: ["list", "watch", "create", "update", "patch"]
-{{- if semverCompare ">=1.17.0" .Capabilities.KubeVersion.Version }}
+{{- if and (eq .Capabilities.KubeVersion.Major "1") ( ge  ( trimSuffix "+" .Capabilities.KubeVersion.Minor ) "17") }}
   - apiGroups: ["snapshot.storage.k8s.io"]
     resources: ["volumesnapshots"]
     verbs: ["get", "list"]
@@ -98,10 +98,10 @@ rules:
   - apiGroups: [""]
     resources: ["secrets"]
     verbs: ["get", "watch", "list"]
-  {{- if semverCompare "~1.12.0" .Capabilities.KubeVersion.Version }}
+  {{- if and (eq .Capabilities.KubeVersion.Major "1") ( eq  ( trimSuffix "+" .Capabilities.KubeVersion.Minor ) "12") }}
     resources: ["csinodeinfos"]
     verbs: ["get", "list", "watch"]
-  {{- else if semverCompare "~1.13.0" .Capabilities.KubeVersion.Version }}
+  {{- else if and (eq .Capabilities.KubeVersion.Major "1") ( eq  ( trimSuffix "+" .Capabilities.KubeVersion.Minor ) "13") }}
   - apiGroups: ["csi.storage.k8s.io"]
     resources: ["csinodeinfos"]
     verbs: ["get", "list", "watch"]
@@ -127,7 +127,7 @@ roleRef:
   apiGroup: rbac.authorization.k8s.io
 
 
-{{- if semverCompare ">=1.17.0" .Capabilities.KubeVersion.Version }}
+{{- if and (eq .Capabilities.KubeVersion.Major "1") ( ge  ( trimSuffix "+" .Capabilities.KubeVersion.Minor ) "17") }}
 ---
 
 kind: ClusterRole
@@ -186,8 +186,7 @@ roleRef:
 
 {{- end }}
 
-
-{{- if semverCompare ">=1.15.0" .Capabilities.KubeVersion.Version }}
+{{- if and (eq .Capabilities.KubeVersion.Major "1") ( ge  ( trimSuffix "+" .Capabilities.KubeVersion.Minor ) "15") }}
 ---
 # Resizer must be able to work with PVCs, PVs, SCs.
 kind: ClusterRole
@@ -443,7 +442,8 @@ subjects:
   - kind: ServiceAccount
     name: hpe-csi-controller-sa
     # replace with non-default namespace name
-    namespace: {{ .Release.Namespace }}
+    namespace: hpe-storage
+
 roleRef:
   kind: ClusterRole
   name: csi-mutator-role
@@ -455,7 +455,7 @@ roleRef:
 kind: Role
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
-  namespace: {{ .Release.Namespace }}
+  namespace: hpe-storage
   name: csi-mutator-cfg
 rules:
 - apiGroups: ["coordination.k8s.io"]
@@ -467,11 +467,11 @@ kind: RoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
   name: csi-mutator-role-cfg
-  namespace: {{ .Release.Namespace }}
+  namespace: hpe-storage
 subjects:
   - kind: ServiceAccount
     name: hpe-csi-controller-sa
-    namespace: {{ .Release.Namespace }}
+    namespace: hpe-storage
 roleRef:
   kind: Role
   name: csi-mutator-cfg

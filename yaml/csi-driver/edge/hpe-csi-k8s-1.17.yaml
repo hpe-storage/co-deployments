@@ -83,7 +83,7 @@ kind: Deployment
 apiVersion: apps/v1
 metadata:
   name: hpe-csi-controller
-  namespace: kube-system
+  namespace: hpe-storage
 spec:
   replicas: 1
   selector:
@@ -250,7 +250,7 @@ kind: ServiceAccount
 apiVersion: v1
 metadata:
   name: hpe-csi-controller-sa
-  namespace: kube-system
+  namespace: hpe-storage
 
 ---
 
@@ -314,7 +314,7 @@ metadata:
 subjects:
   - kind: ServiceAccount
     name: hpe-csi-controller-sa
-    namespace: kube-system
+    namespace: hpe-storage
 roleRef:
   kind: ClusterRole
   name: hpe-csi-provisioner-role
@@ -355,7 +355,7 @@ metadata:
 subjects:
   - kind: ServiceAccount
     name: hpe-csi-controller-sa
-    namespace: kube-system
+    namespace: hpe-storage
 roleRef:
   kind: ClusterRole
   name: hpe-csi-attacher-role
@@ -408,7 +408,7 @@ metadata:
 subjects:
   - kind: ServiceAccount
     name: hpe-csi-controller-sa
-    namespace: kube-system
+    namespace: hpe-storage
 roleRef:
   kind: ClusterRole
   name: hpe-csi-snapshotter-role
@@ -449,7 +449,7 @@ metadata:
 subjects:
   - kind: ServiceAccount
     name: hpe-csi-controller-sa
-    namespace: kube-system
+    namespace: hpe-storage
 roleRef:
   kind: ClusterRole
   name: external-resizer-role
@@ -462,7 +462,7 @@ roleRef:
 kind: Role
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
-  namespace: kube-system
+  namespace: hpe-storage
   name: external-resizer-cfg
 rules:
   - apiGroups: ["coordination.k8s.io"]
@@ -475,11 +475,11 @@ kind: RoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
   name: csi-resizer-role-cfg
-  namespace: kube-system
+  namespace: hpe-storage
 subjects:
   - kind: ServiceAccount
     name: hpe-csi-controller-sa
-    namespace: kube-system
+    namespace: hpe-storage
 roleRef:
   kind: Role
   name: external-resizer-cfg
@@ -491,7 +491,7 @@ kind: ClusterRole
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
   name: hpe-csi-volumegroup-role
-  namespace: kube-system
+  namespace: hpe-storage
 rules:
   - apiGroups: ["storage.hpe.com"]
     resources: ["volumegroups"]
@@ -542,7 +542,7 @@ metadata:
 subjects:
   - kind: ServiceAccount
     name: hpe-csi-controller-sa
-    namespace: kube-system
+    namespace: hpe-storage
 roleRef:
   kind: ClusterRole
   name: hpe-csi-volumegroup-role
@@ -554,7 +554,7 @@ kind: ClusterRole
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
   name: hpe-csi-snapshotgroup-role
-  namespace: kube-system
+  namespace: hpe-storage
 rules:
   - apiGroups: ["storage.hpe.com"]
     resources: ["snapshotgroups"]
@@ -629,7 +629,7 @@ metadata:
 subjects:
   - kind: ServiceAccount
     name: hpe-csi-controller-sa
-    namespace: kube-system
+    namespace: hpe-storage
 roleRef:
   kind: ClusterRole
   name: hpe-csi-snapshotgroup-role
@@ -670,7 +670,7 @@ subjects:
   - kind: ServiceAccount
     name: hpe-csi-controller-sa
     # replace with non-default namespace name
-    namespace: kube-system
+    namespace: hpe-storage
 roleRef:
   kind: ClusterRole
   name: csi-mutator-role
@@ -682,7 +682,7 @@ roleRef:
 kind: Role
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
-  namespace: kube-system
+  namespace: hpe-storage
   name: csi-mutator-cfg
 rules:
 - apiGroups: ["coordination.k8s.io"]
@@ -694,11 +694,11 @@ kind: RoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
   name: csi-mutator-role-cfg
-  namespace: kube-system
+  namespace: hpe-storage
 subjects:
   - kind: ServiceAccount
     name: hpe-csi-controller-sa
-    namespace: kube-system
+    namespace: hpe-storage
 roleRef:
   kind: Role
   name: csi-mutator-cfg
@@ -710,7 +710,7 @@ kind: ClusterRole
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
   name: hpe-csi-driver-role
-  namespace: kube-system
+  namespace: hpe-storage
 rules:
   - apiGroups: ["storage.hpe.com"]
     resources: ["hpenodeinfos"]
@@ -758,7 +758,7 @@ kind: DaemonSet
 apiVersion: apps/v1
 metadata:
   name: hpe-csi-node
-  namespace: kube-system
+  namespace: hpe-storage
 spec:
   selector:
     matchLabels:
@@ -894,7 +894,7 @@ apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: hpe-csi-node-sa
-  namespace: kube-system
+  namespace: hpe-storage
 
 ---
 
@@ -905,10 +905,10 @@ metadata:
 subjects:
   - kind: ServiceAccount
     name: hpe-csi-controller-sa
-    namespace: kube-system
+    namespace: hpe-storage
   - kind: ServiceAccount
     name: hpe-csi-node-sa
-    namespace: kube-system
+    namespace: hpe-storage
 roleRef:
   kind: ClusterRole
   name: hpe-csi-driver-role

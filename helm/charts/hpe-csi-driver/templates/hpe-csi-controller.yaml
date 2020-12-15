@@ -21,7 +21,7 @@ spec:
         role: hpe-csi
     spec:
       serviceAccount: hpe-csi-controller-sa
-      {{- if semverCompare ">=1.17.0" .Capabilities.KubeVersion.Version }}
+      {{- if and (eq .Capabilities.KubeVersion.Major "1") ( ge  ( trimSuffix "+" .Capabilities.KubeVersion.Minor ) "17") }}
       priorityClassName: system-cluster-critical
       {{- end }}
       hostNetwork: true
@@ -32,7 +32,7 @@ spec:
             value: "1"
       containers:
         - name: csi-provisioner
-          {{- if semverCompare "<=1.16.0" .Capabilities.KubeVersion.Version }}
+          {{- if and (eq .Capabilities.KubeVersion.Major "1") ( le  ( trimSuffix "+" .Capabilities.KubeVersion.Minor ) "16") }}
           image: quay.io/k8scsi/csi-provisioner:v1.4.0
           {{- else }}
           image: quay.io/k8scsi/csi-provisioner:v1.5.0
@@ -40,7 +40,7 @@ spec:
           args:
             - "--csi-address=$(ADDRESS)"
             - "--v=5"
-            {{- if semverCompare ">= 1.13.0" .Capabilities.KubeVersion.Version }}
+            {{- if and (eq .Capabilities.KubeVersion.Major "1") ( ge  ( trimSuffix "+" .Capabilities.KubeVersion.Minor ) "13") }}
             - "--timeout=30s"
             - "--worker-threads=16"
             {{- end }}
@@ -52,7 +52,7 @@ spec:
             - name: socket-dir
               mountPath: /var/lib/csi/sockets/pluginproxy
         - name: csi-attacher
-          {{- if semverCompare "~1.13.0" .Capabilities.KubeVersion.Version }}
+          {{- if and (eq .Capabilities.KubeVersion.Major "1") ( eq  ( trimSuffix "+" .Capabilities.KubeVersion.Minor ) "13") }}
           image: quay.io/k8scsi/csi-attacher:v1.1.0
           {{- else }}
           image: quay.io/k8scsi/csi-attacher:v2.1.1
@@ -67,7 +67,7 @@ spec:
           volumeMounts:
             - name: socket-dir
               mountPath: /var/lib/csi/sockets/pluginproxy
-        {{- if semverCompare ">=1.17.0" .Capabilities.KubeVersion.Version }}
+        {{- if and (eq .Capabilities.KubeVersion.Major "1") ( ge  ( trimSuffix "+" .Capabilities.KubeVersion.Minor ) "17") }}
         - name: csi-snapshotter
           image: quay.io/k8scsi/csi-snapshotter:v3.0.1
           args:
@@ -81,7 +81,7 @@ spec:
             - name: socket-dir
               mountPath: /var/lib/csi/sockets/pluginproxy/
         {{- end }}
-        {{- if semverCompare ">=1.15.0" .Capabilities.KubeVersion.Version }}
+        {{- if and (eq .Capabilities.KubeVersion.Major "1") ( ge  ( trimSuffix "+" .Capabilities.KubeVersion.Minor ) "15") }}
         - name: csi-resizer
           image: quay.io/k8scsi/csi-resizer:v0.4.0
           args:
