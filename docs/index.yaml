@@ -3,9 +3,9 @@ entries:
   hpe-csi-driver:
   - apiVersion: v1
     appVersion: 1.4.0-beta
-    created: "2020-12-15T10:29:30.471204-08:00"
+    created: "2020-12-15T14:27:31.80526-08:00"
     description: A Helm chart for installing the HPE CSI Driver for Kubernetes
-    digest: ed8bf63393060cbaad8896024ea291c26e2326c05d4a9efefcdffcdec6521848
+    digest: a69a89388de81abaf0987f9238537c771cf7e3edc7f319efa07584febdf96c5b
     home: https://hpe.com/storage/containers
     icon: https://raw.githubusercontent.com/hpe-storage/co-deployments/master/docs/assets/hpedev.png
     keywords:
@@ -275,4 +275,4 @@ entries:
     urls:
     - hpe-flexvolume-driver-3.0.0.tgz
     version: 3.0.0
-generated: "2020-12-15T10:29:30.470234-08:00"
+generated: "2020-12-15T14:27:31.80381-08:00"
