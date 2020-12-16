@@ -1,5 +1,5 @@
 # Configuration to deploy the HPE CSI driver compatible with
-# Kubernetes = v1.16
+# Kubernetes = v1.20
 #
 # example usage: kubectl create -f <this_file>
 
@@ -9,61 +9,76 @@
 ############  HPE Node Info CRD  ############
 #############################################
 
-apiVersion: apiextensions.k8s.io/v1beta1
+apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
-metadata:
+metadata: 
   creationTimestamp: null
   name: hpenodeinfos.storage.hpe.com
-spec:
+spec: 
   group: storage.hpe.com
-  names:
+  names: 
     kind: HPENodeInfo
     plural: hpenodeinfos
   scope: Cluster
-  validation:
-    openAPIV3Schema:
-      properties:
-        hpeNodes:
-          description: List of HPE nodes configured for storage access.
-          items:
-            properties:
-              uuid:
-                description: The UUID of the node.
-                type: string
-              iqns:
-                description: List of IQNs configured on the node.
-                items:
+  versions: 
+    - name: v1
+      # Each version can be enabled/disabled by Served flag.
+      served: true
+      # One and only one version must be marked as the storage version.
+      storage: true
+      schema: 
+        openAPIV3Schema: 
+          properties: 
+            apiVersion: 
+              description: "APIVersion defines the versioned schema of this representation of an object."
+              type: string
+            kind: 
+              description: "Kind is a string value representing the REST resource this object represents"
+              type: string
+            spec: 
+              description: "spec defines the desired characteristics of a HPE nodeinfo requested by a user."
+              properties: 
+                chapPassword: 
+                  description: "The CHAP Password"
                   type: string
-                type: array
-              chapUser:
-                  description: The CHAP User Name
+                chapUser: 
+                  description: "The CHAP User Name"
                   type: string
-              chapPassword:
-                 description: The CHAP Password
-                 type: string
-              networks:
-                description: List of networks configured on the node.
-                items:
+                iqns: 
+                  description: "List of IQNs configured on the node."
+                  items: 
+                    type: string
+                  type: array
+                networks: 
+                  description: "List of networks configured on the node."
+                  items: 
+                    type: string
+                  type: array
+                uuid: 
+                  description: "The UUID of the node."
                   type: string
-                type: array
-              wwpns:
-                description: List of WWPNs configured on the node.
-                items:
-                  type: string
-                type: array
-          type: array
-  version: v1
-status:
-  acceptedNames:
+                wwpns: 
+                  description: "List of WWPNs configured on the node."
+                  items: 
+                    type: string
+                  type: array
+              required: 
+                - uuid
+                - networks
+              type: object
+          required: 
+            - spec
+          type: object
+status: 
+  acceptedNames: 
     kind: ""
     plural: ""
   conditions: []
   storedVersions: []
 
 ---
-
 ################# CSI Driver CRD ###########
-apiVersion: storage.k8s.io/v1beta1
+apiVersion: storage.k8s.io/v1
 kind: CSIDriver
 metadata:
   name: csi.hpe.com
@@ -83,7 +98,7 @@ kind: Deployment
 apiVersion: apps/v1
 metadata:
   name: hpe-csi-controller
-  namespace: kube-system
+  namespace: hpe-storage
 spec:
   replicas: 1
   selector:
@@ -105,7 +120,7 @@ spec:
             value: "1"
       containers:
         - name: csi-provisioner
-          image: quay.io/k8scsi/csi-provisioner:v1.4.0
+          image: quay.io/k8scsi/csi-provisioner:v1.5.0
           args:
             - "--csi-address=$(ADDRESS)"
             - "--v=5"
@@ -130,8 +145,20 @@ spec:
           volumeMounts:
             - name: socket-dir
               mountPath: /var/lib/csi/sockets/pluginproxy/
+        - name: csi-snapshotter
+          image: quay.io/k8scsi/csi-snapshotter:v3.0.2
+          args:
+            - "--v=5"
+            - "--csi-address=$(ADDRESS)"
+          env:
+            - name: ADDRESS
+              value: /var/lib/csi/sockets/pluginproxy/csi.sock
+          imagePullPolicy: "IfNotPresent"
+          volumeMounts:
+            - name: socket-dir
+              mountPath: /var/lib/csi/sockets/pluginproxy/
         - name: csi-resizer
-          image: quay.io/k8scsi/csi-resizer:v0.3.0
+          image: quay.io/k8scsi/csi-resizer:v0.4.0
           args:
             - "--csi-address=$(ADDRESS)"
             - "--v=5"
@@ -143,7 +170,7 @@ spec:
             - name: socket-dir
               mountPath: /var/lib/csi/sockets/pluginproxy/
         - name: hpe-csi-driver
-          image: hpestorage/csi-driver:edge
+          image: quay.io/hpestorage/csi-driver:v1.4.0-beta
           args :
             - "--endpoint=$(CSI_ENDPOINT)"
             - "--flavor=kubernetes"
@@ -152,6 +179,8 @@ spec:
           env:
             - name: CSI_ENDPOINT
               value: unix:///var/lib/csi/sockets/pluginproxy/csi.sock
+            - name: LOG_LEVEL
+              value: trace
           imagePullPolicy: "IfNotPresent"
           volumeMounts:
             - name: socket-dir
@@ -165,7 +194,7 @@ spec:
             - name: root-dir
               mountPath: /host
         - name: csi-volume-mutator
-          image: quay.io/hpestorage/volume-mutator:edge
+          image: quay.io/hpestorage/volume-mutator:v1.0.0
           args:
             - "--v=5"
             - "--csi-address=$(ADDRESS)"
@@ -176,8 +205,32 @@ spec:
           volumeMounts:
             - name: socket-dir
               mountPath: /var/lib/csi/sockets/pluginproxy/
+        - name: csi-volume-group-snapshotter
+          image: quay.io/hpestorage/volume-group-snapshotter:v1.0.0-beta
+          args:
+            - "--v=5"
+            - "--csi-address=$(ADDRESS)"
+          env:
+            - name: ADDRESS
+              value: /var/lib/csi/sockets/pluginproxy/csi-extensions.sock
+          imagePullPolicy: "Always"
+          volumeMounts:
+            - name: socket-dir
+              mountPath: /var/lib/csi/sockets/pluginproxy/
+        - name: csi-volume-group-provisioner
+          image: quay.io/hpestorage/volume-group-provisioner:v1.0.0-beta
+          args:
+            - "--v=5"
+            - "--csi-address=$(ADDRESS)"
+          env:
+            - name: ADDRESS
+              value: /var/lib/csi/sockets/pluginproxy/csi-extensions.sock
+          imagePullPolicy: "Always"
+          volumeMounts:
+            - name: socket-dir
+              mountPath: /var/lib/csi/sockets/pluginproxy/
         - name: csi-extensions
-          image: quay.io/hpestorage/csi-extensions:edge
+          image: quay.io/hpestorage/csi-extensions:v1.2.0-beta
           args:
             - "--v=5"
             - "--endpoint=$(CSI_ENDPOINT)"
@@ -205,13 +258,14 @@ spec:
         - name: root-dir
           hostPath:
               path: /
+
 ---
 
 kind: ServiceAccount
 apiVersion: v1
 metadata:
   name: hpe-csi-controller-sa
-  namespace: kube-system
+  namespace: hpe-storage
 
 ---
 
@@ -253,6 +307,12 @@ rules:
   - apiGroups: [""]
     resources: ["events"]
     verbs: ["list", "watch", "create", "update", "patch"]
+  - apiGroups: ["snapshot.storage.k8s.io"]
+    resources: ["volumesnapshots"]
+    verbs: ["get", "list"]
+  - apiGroups: ["snapshot.storage.k8s.io"]
+    resources: ["volumesnapshotcontents"]
+    verbs: ["get", "list"]
   - apiGroups: [""]
     resources: ["pods"]
     verbs: ["get", "list", "delete"]
@@ -269,7 +329,7 @@ metadata:
 subjects:
   - kind: ServiceAccount
     name: hpe-csi-controller-sa
-    namespace: kube-system
+    namespace: hpe-storage
 roleRef:
   kind: ClusterRole
   name: hpe-csi-provisioner-role
@@ -310,10 +370,63 @@ metadata:
 subjects:
   - kind: ServiceAccount
     name: hpe-csi-controller-sa
-    namespace: kube-system
+    namespace: hpe-storage
 roleRef:
   kind: ClusterRole
   name: hpe-csi-attacher-role
+  apiGroup: rbac.authorization.k8s.io
+
+---
+
+kind: ClusterRole
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: hpe-csi-snapshotter-role
+rules:
+  - apiGroups: [""]
+    resources: ["persistentvolumes"]
+    verbs: ["get", "list", "watch"]
+  - apiGroups: [""]
+    resources: ["persistentvolumeclaims"]
+    verbs: ["get", "list", "watch", "update"]
+  - apiGroups: ["storage.k8s.io"]
+    resources: ["storageclasses"]
+    verbs: ["get", "list", "watch"]
+  - apiGroups: [""]
+    resources: ["events"]
+    verbs: ["list", "watch", "create", "update", "patch"]
+  - apiGroups: ["snapshot.storage.k8s.io"]
+    resources: ["volumesnapshotclasses"]
+    verbs: ["get", "list", "watch"]
+  - apiGroups: ["snapshot.storage.k8s.io"]
+    resources: ["volumesnapshotcontents"]
+    verbs: ["create", "get", "list", "watch", "update", "delete"]
+  - apiGroups: ["snapshot.storage.k8s.io"]
+    resources: ["volumesnapshotcontents/status"]
+    verbs: ["create", "get", "list", "watch", "update", "delete"]
+  - apiGroups: ["snapshot.storage.k8s.io"]
+    resources: ["volumesnapshots"]
+    verbs: ["get", "list", "watch", "update"]
+  - apiGroups: ["snapshot.storage.k8s.io"]
+    resources: ["volumesnapshots/status"]
+    verbs: ["update"]
+  - apiGroups: ["coordination.k8s.io"]
+    resources: ["leases"]
+    verbs: ["get", "watch", "list", "delete", "update", "create"]
+
+---
+
+kind: ClusterRoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: hpe-csi-snapshotter-binding
+subjects:
+  - kind: ServiceAccount
+    name: hpe-csi-controller-sa
+    namespace: hpe-storage
+roleRef:
+  kind: ClusterRole
+  name: hpe-csi-snapshotter-role
   apiGroup: rbac.authorization.k8s.io
 
 ---
@@ -351,7 +464,7 @@ metadata:
 subjects:
   - kind: ServiceAccount
     name: hpe-csi-controller-sa
-    namespace: kube-system
+    namespace: hpe-storage
 roleRef:
   kind: ClusterRole
   name: external-resizer-role
@@ -364,7 +477,7 @@ roleRef:
 kind: Role
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
-  namespace: kube-system
+  namespace: hpe-storage
   name: external-resizer-cfg
 rules:
   - apiGroups: ["coordination.k8s.io"]
@@ -377,14 +490,165 @@ kind: RoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
   name: csi-resizer-role-cfg
-  namespace: kube-system
+  namespace: hpe-storage
 subjects:
   - kind: ServiceAccount
     name: hpe-csi-controller-sa
-    namespace: kube-system
+    namespace: hpe-storage
 roleRef:
   kind: Role
   name: external-resizer-cfg
+  apiGroup: rbac.authorization.k8s.io
+
+
+---
+# cluster role to support volumegroup
+kind: ClusterRole
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: hpe-csi-volumegroup-role
+  namespace: hpe-storage
+rules:
+  - apiGroups: ["storage.hpe.com"]
+    resources: ["volumegroups"]
+    verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+  - apiGroups: ["storage.hpe.com"]
+    resources: ["volumegroupcontents"]
+    verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+  - apiGroups: ["storage.hpe.com"]
+    resources: ["volumegroupclasses"]
+    verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+  - apiGroups: ["storage.hpe.com"]
+    resources: ["volumegroups/status"]
+    verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+  - apiGroups: ["storage.hpe.com"]
+    resources: ["volumegroupcontents/status"]
+    verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+  - apiGroups: [""]
+    resources: ["namespaces"]
+    verbs: ["get", "list", "create"]
+  - apiGroups: [""]
+    resources: ["persistentvolumes"]
+    verbs: ["get", "list", "watch", "create", "delete"]
+  - apiGroups: [""]
+    resources: ["persistentvolumeclaims"]
+    verbs: ["create", "get", "list", "watch", "update", "delete"]
+  - apiGroups: [""]
+    resources: ["persistentvolumeclaims/status"]
+    verbs: ["update", "patch"]
+  - apiGroups: [""]
+    resources: ["events"]
+    verbs: ["list", "watch", "create", "update", "patch"]
+  - apiGroups: [""]
+    resources: ["secrets"]
+    verbs: ["get"]
+  - apiGroups: ["apiextensions.k8s.io"]
+    resources: ["customresourcedefinitions"]
+    verbs: ["create", "list", "watch", "delete", "get", "update"]
+  - apiGroups: ["coordination.k8s.io"]
+    resources: ["leases"]
+    verbs: ["get", "watch", "list", "delete", "update", "create"]
+
+---
+
+kind: ClusterRoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: hpe-csi-volumegroup-binding
+subjects:
+  - kind: ServiceAccount
+    name: hpe-csi-controller-sa
+    namespace: hpe-storage
+roleRef:
+  kind: ClusterRole
+  name: hpe-csi-volumegroup-role
+  apiGroup: rbac.authorization.k8s.io
+
+---
+# cluster role to support snapshotgroup
+kind: ClusterRole
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: hpe-csi-snapshotgroup-role
+  namespace: hpe-storage
+rules:
+  - apiGroups: ["storage.hpe.com"]
+    resources: ["snapshotgroups"]
+    verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+  - apiGroups: ["storage.hpe.com"]
+    resources: ["snapshotgroupcontents"]
+    verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+  - apiGroups: ["storage.hpe.com"]
+    resources: ["snapshotgroupclasses"]
+    verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+  - apiGroups: ["storage.hpe.com"]
+    resources: ["snapshotgroups/status"]
+    verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+  - apiGroups: ["storage.hpe.com"]
+    resources: ["snapshotgroupcontents/status"]
+    verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+  - apiGroups: [""]
+    resources: ["namespaces"]
+    verbs: ["get", "list", "create"]
+  - apiGroups: [""]
+    resources: ["persistentvolumes"]
+    verbs: ["get", "list", "watch", "create", "delete"]
+  - apiGroups: [""]
+    resources: ["persistentvolumeclaims"]
+    verbs: ["create", "get", "list", "watch", "update", "delete"]
+  - apiGroups: [""]
+    resources: ["persistentvolumeclaims/status"]
+    verbs: ["update", "patch"]
+  - apiGroups: [""]
+    resources: ["events"]
+    verbs: ["list", "watch", "create", "update", "patch"]
+  - apiGroups: [""]
+    resources: ["secrets"]
+    verbs: ["get"]
+  - apiGroups: ["apiextensions.k8s.io"]
+    resources: ["customresourcedefinitions"]
+    verbs: ["create", "list", "watch", "delete", "get", "update"]
+  - apiGroups: ["coordination.k8s.io"]
+    resources: ["leases"]
+    verbs: ["get", "watch", "list", "delete", "update", "create"]
+  - apiGroups: ["storage.hpe.com"]
+    resources: ["volumegroups"]
+    verbs: ["get", "list", "watch"]
+  - apiGroups: ["storage.hpe.com"]
+    resources: ["volumegroupcontents"]
+    verbs: ["get", "list", "watch"]
+  - apiGroups: ["storage.hpe.com"]
+    resources: ["volumegroupclasses"]
+    verbs: ["get", "list", "watch"]
+  - apiGroups: ["snapshot.storage.k8s.io"]
+    resources: ["volumesnapshotcontents"]
+    verbs: ["create", "get", "list", "watch", "update", "delete"]
+  - apiGroups: ["snapshot.storage.k8s.io"]
+    resources: ["volumesnapshotcontents/status"]
+    verbs: ["create", "get", "list", "watch", "update", "delete"]
+  - apiGroups: ["snapshot.storage.k8s.io"]
+    resources: ["volumesnapshots"]
+    verbs: ["create", "get", "list", "watch", "update", "delete"]
+  - apiGroups: ["snapshot.storage.k8s.io"]
+    resources: ["volumesnapshots/status"]
+    verbs: ["update"]
+  - apiGroups: ["snapshot.storage.k8s.io"]
+    resources: ["volumesnapshotclasses"]
+    verbs: ["get", "list"]
+
+---
+
+kind: ClusterRoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: hpe-csi-snapshotgroup-binding
+subjects:
+  - kind: ServiceAccount
+    name: hpe-csi-controller-sa
+    namespace: hpe-storage
+roleRef:
+  kind: ClusterRole
+  name: hpe-csi-snapshotgroup-role
   apiGroup: rbac.authorization.k8s.io
 
 ---
@@ -422,7 +686,7 @@ subjects:
   - kind: ServiceAccount
     name: hpe-csi-controller-sa
     # replace with non-default namespace name
-    namespace: kube-system
+    namespace: hpe-storage
 roleRef:
   kind: ClusterRole
   name: csi-mutator-role
@@ -434,7 +698,7 @@ roleRef:
 kind: Role
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
-  namespace: kube-system
+  namespace: hpe-storage
   name: csi-mutator-cfg
 rules:
 - apiGroups: ["coordination.k8s.io"]
@@ -446,11 +710,11 @@ kind: RoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
   name: csi-mutator-role-cfg
-  namespace: kube-system
+  namespace: hpe-storage
 subjects:
   - kind: ServiceAccount
     name: hpe-csi-controller-sa
-    namespace: kube-system
+    namespace: hpe-storage
 roleRef:
   kind: Role
   name: csi-mutator-cfg
@@ -462,7 +726,7 @@ kind: ClusterRole
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
   name: hpe-csi-driver-role
-  namespace: kube-system
+  namespace: hpe-storage
 rules:
   - apiGroups: ["storage.hpe.com"]
     resources: ["hpenodeinfos"]
@@ -472,13 +736,28 @@ rules:
     verbs: ["get", "list"]
   - apiGroups: [""]
     resources: ["secrets"]
-    verbs: ["get"]
+    verbs: ["get", "list"]
   - apiGroups: [""]
     resources: ["services"]
     verbs: ["get"]
   - apiGroups: [""]
     resources: ["persistentvolumes"]
     verbs: ["get", "list"]
+  - apiGroups: ["storage.hpe.com"]
+    resources: ["hpevolumeinfos"]
+    verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+  - apiGroups: ["storage.hpe.com"]
+    resources: ["hpereplicationdeviceinfos"]
+    verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+  - apiGroups: [""]
+    resources: ["persistentvolumeclaims"]
+    verbs: ["get", "list"]
+  - apiGroups: [""]
+    resources: ["namespaces"]
+    verbs: ["get", "list"]
+  - apiGroups: ["storage.k8s.io"]
+    resources: ["storageclasses"]
+    verbs: ["get", "list", "watch"]
 
 ---
 
@@ -490,7 +769,7 @@ kind: DaemonSet
 apiVersion: apps/v1
 metadata:
   name: hpe-csi-node
-  namespace: kube-system
+  namespace: hpe-storage
 spec:
   selector:
     matchLabels:
@@ -521,14 +800,13 @@ spec:
               value: /csi/csi.sock
             - name: DRIVER_REG_SOCK_PATH
               value: /var/lib/kubelet/plugins/csi.hpe.com/csi.sock
-          imagePullPolicy: "IfNotPresent"
           volumeMounts:
             - name: plugin-dir
               mountPath: /csi
             - name: registration-dir
               mountPath: /registration
         - name: hpe-csi-driver
-          image: hpestorage/csi-driver:edge
+          image: quay.io/hpestorage/csi-driver:v1.4.0-beta
           args :
             - "--endpoint=$(CSI_ENDPOINT)"
             - "--node-service"
@@ -536,6 +814,8 @@ spec:
           env:
             - name: CSI_ENDPOINT
               value: unix:///csi/csi.sock
+            - name: LOG_LEVEL
+              value: trace
             - name: NODE_NAME
               valueFrom:
                 fieldRef:
@@ -546,7 +826,7 @@ spec:
               value: ""
             - name: DISABLE_NODE_CONFORMANCE
               value: "false"
-          imagePullPolicy: "IfNotPresent"
+          imagePullPolicy: "Always"
           securityContext:
             privileged: true
             capabilities:
@@ -626,7 +906,7 @@ apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: hpe-csi-node-sa
-  namespace: kube-system
+  namespace: hpe-storage
 
 ---
 
@@ -637,10 +917,10 @@ metadata:
 subjects:
   - kind: ServiceAccount
     name: hpe-csi-controller-sa
-    namespace: kube-system
+    namespace: hpe-storage
   - kind: ServiceAccount
     name: hpe-csi-node-sa
-    namespace: kube-system
+    namespace: hpe-storage
 roleRef:
   kind: ClusterRole
   name: hpe-csi-driver-role

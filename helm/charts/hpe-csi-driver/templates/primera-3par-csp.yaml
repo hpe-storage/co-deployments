@@ -34,7 +34,7 @@ spec:
         app: primera3par-csp
     spec:
       serviceAccount: hpe-csp-sa
-      {{- if semverCompare ">=1.17.0" .Capabilities.KubeVersion.Version }}
+      {{- if and (eq .Capabilities.KubeVersion.Major "1") ( ge  ( trimSuffix "+" .Capabilities.KubeVersion.Minor ) "17") }}
       priorityClassName: system-cluster-critical
       {{- end }}
       containers:
