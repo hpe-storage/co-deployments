@@ -442,12 +442,8 @@ subjects:
   - kind: ServiceAccount
     name: hpe-csi-controller-sa
     # replace with non-default namespace name
-<<<<<<< HEAD
     namespace: {{ .Release.Namespace }}
-=======
-    namespace: hpe-storage
 
->>>>>>> cb4570d4ec4507022392eeb1009f388accb89402
 roleRef:
   kind: ClusterRole
   name: csi-mutator-role
@@ -459,11 +455,7 @@ roleRef:
 kind: Role
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
-<<<<<<< HEAD
   namespace: {{ .Release.Namespace }}
-=======
-  namespace: hpe-storage
->>>>>>> cb4570d4ec4507022392eeb1009f388accb89402
   name: csi-mutator-cfg
 rules:
 - apiGroups: ["coordination.k8s.io"]
@@ -475,19 +467,12 @@ kind: RoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
   name: csi-mutator-role-cfg
-<<<<<<< HEAD
   namespace: {{ .Release.Namespace }}
 subjects:
   - kind: ServiceAccount
     name: hpe-csi-controller-sa
     namespace: {{ .Release.Namespace }}
-=======
-  namespace: hpe-storage
-subjects:
-  - kind: ServiceAccount
-    name: hpe-csi-controller-sa
-    namespace: hpe-storage
->>>>>>> cb4570d4ec4507022392eeb1009f388accb89402
+
 roleRef:
   kind: Role
   name: csi-mutator-cfg
