@@ -443,6 +443,7 @@ subjects:
     name: hpe-csi-controller-sa
     # replace with non-default namespace name
     namespace: {{ .Release.Namespace }}
+
 roleRef:
   kind: ClusterRole
   name: csi-mutator-role
@@ -471,6 +472,7 @@ subjects:
   - kind: ServiceAccount
     name: hpe-csi-controller-sa
     namespace: {{ .Release.Namespace }}
+
 roleRef:
   kind: Role
   name: csi-mutator-cfg
@@ -494,6 +496,12 @@ rules:
   - apiGroups: ["storage.hpe.com"]
     resources: ["hpereplicationdeviceinfos"]
     verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+  - apiGroups: ["storage.hpe.com"]
+    resources: ["hpevolumegroupinfos"]
+    verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+  - apiGroups: ["storage.hpe.com"]
+    resources: ["hpesnapshotgroupinfos"]
+    verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]    
   - apiGroups: [""]
     resources: ["pods"]
     verbs: ["get", "list"]
