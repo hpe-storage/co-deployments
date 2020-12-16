@@ -73,6 +73,7 @@ helm search repo hpe-storage -l
 Select the target version to upgrade as below:
 
 ```
+kubectl delete crd hpenodeinfos
 helm upgrade my-hpe-csi-driver hpe-storage/hpe-csi-driver -n hpe-storage --version=x.x.x -f myvalues.yaml
 ```
 
