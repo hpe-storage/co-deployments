@@ -35,8 +35,8 @@ spec:
               volumeGroupClassName:
                 description: name of the volumeGroupClassName to create volumeGroups
                 type: string
-              persistentVolumeNames:
-                description: persistentVolumeNames are the name of the PVC associated with this volumeGroup.
+              persistentVolumeClaimNames:
+                description: persistentVolumeClaimNames are the name of the PVC associated with this volumeGroup.
                 type: array
                 items:
                   type: string
