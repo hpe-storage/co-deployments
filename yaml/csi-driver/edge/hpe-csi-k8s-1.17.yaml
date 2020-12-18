@@ -79,7 +79,7 @@ status:
 ---
 
 ################# CSI Driver CRD ###########
-apiVersion: storage.k8s.io/v1
+apiVersion: storage.k8s.io/v1beta1
 kind: CSIDriver
 metadata:
   name: csi.hpe.com
