@@ -35,7 +35,7 @@ Once the SCC has been deployed, please follow the official Red Hat OpenShift ste
 
 ## Installation on Kubernetes
 
-Please follow the steps from the install page on [OperatorHub.io](https://operatorhub.io/operator/hpe-csi-operator). Once the operator is installed, `HPECSIDriver` `CustomResource` should be installed in namespace `my-hpe-csi-driver-operator`. A `CustomResource` sample can be found at OperatorHub.io as well.
+Please follow the steps from the install page on [OperatorHub.io](https://operatorhub.io/operator/hpe-csi-operator). Once the operator is installed, `HPECSIDriver` `CustomResource` should be installed in namespace `my-hpe-csi-operator`. A `CustomResource` sample can be found at OperatorHub.io as well.
 
 ## Using the HPE CSI Driver for Kubernetes
 
