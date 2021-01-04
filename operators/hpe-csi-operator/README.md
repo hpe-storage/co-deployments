@@ -6,7 +6,7 @@ The HPE CSI Operator packages, deploys, manages, upgrades HPE CSI Driver on Kube
 
 This Operator is created as a [Custom Resource Definition](https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/custom-resources/#customresourcedefinitions) from the [hpe-csi-driver Helm chart](https://hub.helm.sh/charts/hpe-storage/hpe-csi-driver) using the [Operator-SDK](https://github.com/operator-framework/operator-sdk#overview).
 
-**Note:** This installation process does NOT require Helm. Also if need to install using OLM, please refer to install steps from [OperatorHub.io](https://operatorhub.io/operator/hpe-csi-driver-operator) install page. If using OCP console, below steps doesn't apply as well.
+**Note:** This installation process does NOT require Helm. Also if need to install using OLM, please refer to install steps from [OperatorHub.io](https://operatorhub.io/operator/hpe-csi-operator) install page. If using OCP console, below steps doesn't apply as well.
 
 ## Platform and Software Dependencies
 
@@ -35,7 +35,7 @@ Once the SCC has been deployed, please follow the official Red Hat OpenShift ste
 
 ## Installation on Kubernetes
 
-Please follow the steps from the install page on [OperatorHub.io](https://operatorhub.io/operator/hpe-csi-driver-operator). Once the operator is installed, `HPECSIDriver` `CustomResource` should be installed in namespace `my-hpe-csi-driver-operator`. A `CustomResource` sample can be found at OperatorHub.io as well.
+Please follow the steps from the install page on [OperatorHub.io](https://operatorhub.io/operator/hpe-csi-operator). Once the operator is installed, `HPECSIDriver` `CustomResource` should be installed in namespace `my-hpe-csi-driver-operator`. A `CustomResource` sample can be found at OperatorHub.io as well.
 
 ## Using the HPE CSI Driver for Kubernetes
 
@@ -43,4 +43,4 @@ Refer to the official [HPE CSI Driver for Kubernetes](https://scod.hpedev.io/csi
 
 ## License
 
-This is open source software licensed using the Apache license 2.0. Please see [LICENSE](https://github.com/hpe-storage/co-deployments/blob/master/LICENSE) for details.
+This is open source software licensed using the Apache License 2.0. See [LICENSE](https://github.com/hpe-storage/co-deployments/blob/master/LICENSE) for details.
