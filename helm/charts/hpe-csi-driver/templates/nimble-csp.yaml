@@ -38,7 +38,7 @@ spec:
       containers:
         - name: nimble-csp
           {{- if .Values.registry }}
-          image: {{ .Values.registry }}/hpestorage/nimble-csp:v1.4.0-beta
+          image: {{ .Values.registry }}/hpestorage/nimble-csp:v1.4.0
           {{- else }}
           image: hpestorage/nimble-csp:v1.3.0
           {{- end }}

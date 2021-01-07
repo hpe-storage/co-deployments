@@ -40,9 +40,9 @@ spec:
       containers:
         - name: primera3par-csp
           {{- if .Values.registry }}
-          image: {{ .Values.registry }}/hpestorage/hpe3parprimera-csp:v1.2.0-beta
+          image: {{ .Values.registry }}/hpestorage/hpe3parprimera-csp:v1.2.0
           {{- else }}
-          image: hpestorage/hpe3parprimera-csp:v1.2.0-beta
+          image: hpestorage/hpe3parprimera-csp:v1.2.0
           {{- end }}        
           imagePullPolicy: {{ .Values.imagePullPolicy | quote }}
           ports:

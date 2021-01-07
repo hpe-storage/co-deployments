@@ -41,6 +41,14 @@
             "limit": 1
         },
         {
+            "pattern": "dcs-docker-local/hpestorage/csi-driver/v1.4.0*",
+            "sortBy": [
+                "created"
+            ],
+            "sortOrder": "desc",
+            "limit": 1
+        },
+        {
             "pattern": "dcs-docker-local/hpestorage/csi-driver/edge-*",
             "sortBy": [
                 "created"
@@ -66,6 +74,14 @@
         },
         {
             "pattern": "dcs-docker-local/hpestorage/nimble-csp/v1.3.0*",
+            "sortBy": [
+                "created"
+            ],
+            "sortOrder": "desc",
+            "limit": 1
+        },
+        {
+            "pattern": "dcs-docker-local/hpestorage/nimble-csp/v1.4.0*",
             "sortBy": [
                 "created"
             ],
@@ -138,6 +154,14 @@
         },
         {
             "pattern": "dcs-docker-local/hpestorage/csi-extensions/edge-*",
+            "sortBy": [
+                "created"
+            ],
+            "sortOrder": "desc",
+            "limit": 1
+        },
+        {
+            "pattern": "dcs-docker-local/hpestorage/csi-extensions/v1.2.0-*",
             "sortBy": [
                 "created"
             ],

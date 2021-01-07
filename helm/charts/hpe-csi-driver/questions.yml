@@ -31,3 +31,9 @@ questions:
   required: false
   description: "Specify password for iSCSI CHAP authentication"
   group: "HPE iSCSI settings"
+- variable: registryPrefix
+  label: "registry"
+  type: string
+  default: "quay.io"
+  description: "Specify registry prefix for CSI driver images"
+  group: "HPE CSI Driver settings"
