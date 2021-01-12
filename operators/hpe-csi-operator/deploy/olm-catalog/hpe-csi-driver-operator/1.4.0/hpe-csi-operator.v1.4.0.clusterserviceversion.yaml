@@ -16,11 +16,11 @@ metadata:
             "imagePullPolicy": "IfNotPresent",
             "logLevel": "info",
             "disableNodeConformance": false,
+            "registry": "quay.io",
             "iscsi": {
               "chapUser": "",
               "chapPassword": ""
-            },
-            "registry": "quay.io"
+            }
           }
         }
       ]
@@ -132,6 +132,11 @@ spec:
             x-descriptors:
               - 'urn:alm:descriptor:com.tectonic.ui:fieldGroup:iscsi'
               - 'urn:alm:descriptor:com.tectonic.ui:password'
+          - displayName: Registry
+            description: 'Registry for CSI Driver Images (quay.io)'
+            path: registry
+            x-descriptors:
+              - 'urn:alm:descriptor:com.tectonic.ui:text'
         statusDescriptors:
           - displayName: Conditions
             description: HPE CSI Driver Helm release status
