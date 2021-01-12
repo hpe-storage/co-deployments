@@ -29,7 +29,7 @@ spec:
       containers:
         - name: hpe-csi-operator
           # Replace this with the built image name
-          image: hpestorage/csi-driver-operator:v1.3.0
+          image: quay.io/hpestorage/csi-driver-operator:v1.4.0
           ports:
           - containerPort: 60000
             name: metrics

@@ -58,7 +58,7 @@ spec:
               description: 'Disable automatic installation of iSCSI/Multipath packages, default: false'
               type: boolean
             registry:
-              description: 'Registry prefix for HPE CSI driver images, default: quay.io'
+              description: Registry prefix for HPE CSI driver images
               type: string
           required:
           - iscsi

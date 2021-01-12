@@ -37,6 +37,8 @@ type HPECSIDriverSpec struct {
 	DisableNodeConformance bool `json:"disableNodeConformance"`
 	// Iscsi parameters to be configured
 	Iscsi IscsiInfo `json:"iscsi"`
+	// Registry prefix for csi images
+	Registry string `json:"registry"`
 }
 
 // IscsiInfo defines different Iscsi parameters which can be configured
