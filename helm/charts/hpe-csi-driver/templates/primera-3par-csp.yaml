@@ -42,7 +42,7 @@ spec:
           {{- if .Values.registry }}
           image: {{ .Values.registry }}/hpestorage/hpe3parprimera-csp:v1.2.0
           {{- else }}
-          image: hpestorage/hpe3parprimera-csp:v1.2.0
+          image: quay.io/hpestorage/hpe3parprimera-csp:v1.2.0
           {{- end }}        
           imagePullPolicy: {{ .Values.imagePullPolicy | quote }}
           ports:
