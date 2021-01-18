@@ -1,0 +1,5 @@
+channels:
+- currentCSV: hpe-csi-operator.v1.4.1
+  name: stable
+defaultChannel: stable
+packageName: hpe-csi-operator
