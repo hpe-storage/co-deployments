@@ -14,6 +14,6 @@ scorecard:
     - olm:
         cr-manifest:
           - "deploy/crds/storage.hpe.com_v1_hpecsidriver_cr.yaml"
-        csv-path: "deploy/olm-catalog/hpe-csi-driver-operator/1.4.0/hpe-csi-operator.v1.4.1.clusterserviceversion.yaml"
+        csv-path: "deploy/olm-catalog/hpe-csi-driver-operator/1.4.1/hpe-csi-operator.v1.4.1.clusterserviceversion.yaml"
         init-timeout: 300
         namespace: hpe-csi
