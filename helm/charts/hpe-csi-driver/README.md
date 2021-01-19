@@ -59,25 +59,12 @@ helm install my-hpe-csi-driver hpe-storage/hpe-csi-driver -n hpe-storage -f myva
 
 **Note**: `values.yaml` is optional if no parameters are overridden from defaults.
 
-### Upgrading the Chart
+### Upgrading the chart
 
-To upgrade the chart, specify the version you want to upgrade to as below. Please do NOT re-use a full blown `values.yaml` from prior versions to upgrade to later versions. Always use `values.yaml` from corresponding release from [values.yaml](https://github.com/hpe-storage/co-deployments/blob/master/helm/values/csi-driver)
+Due to the [helm limitation](https://helm.sh/docs/chart_best_practices/custom_resource_definitions/#some-caveats-and-explanations) to not support upgrade of CRDs between different chart versions, `hpe-csi-driver` helm chart upgrade is not supported.
+Our recommendation is to uninstall the existing chart and install the chart with the desired version. CRDs will be preserved between uninstall and install.
 
-List the avaiable version of the plugin:
-
-```
-helm repo update
-helm search repo hpe-storage -l
-```
-
-Select the target version to upgrade as below:
-
-```
-kubectl delete crd hpenodeinfos
-helm upgrade my-hpe-csi-driver hpe-storage/hpe-csi-driver -n hpe-storage --version=x.x.x -f myvalues.yaml
-```
-
-### Uninstalling the Chart
+### Uninstalling the chart
 
 To uninstall the `my-hpe-csi-driver` chart:
 
