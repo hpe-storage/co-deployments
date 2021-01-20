@@ -31,7 +31,11 @@ spec:
             value: "1"
       containers:
         - name: csi-node-driver-registrar
-          image: k8s.gcr.io/sig-storage/csi-node-driver-registrar:v2.0.1
+          {{- if .Values.registry }}
+          image: {{ .Values.registry }}/k8scsi/csi-node-driver-registrar:v2.0.1
+          {{- else }}
+          image: quay.io/k8scsi/csi-node-driver-registrar:v2.0.1
+          {{- end}} 
           args:
             - "--csi-address=$(ADDRESS)"
             - "--kubelet-registration-path=$(DRIVER_REG_SOCK_PATH)"
@@ -58,7 +62,7 @@ spec:
           {{- if .Values.registry }}
           image: {{ .Values.registry }}/hpestorage/csi-driver:v1.4.0
           {{- else }}
-          image: hpestorage/csi-driver:v1.3.0
+          image: quay.io/hpestorage/csi-driver:v1.4.0
           {{- end}}        
           args :
             - "--endpoint=$(CSI_ENDPOINT)"
