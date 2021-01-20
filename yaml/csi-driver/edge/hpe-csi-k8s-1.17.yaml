@@ -795,7 +795,7 @@ spec:
             value: "1"
       containers:
         - name: csi-node-driver-registrar
-          image: k8s.gcr.io/sig-storage/csi-node-driver-registrar:v2.0.1
+          image: quay.io/k8scsi/csi-node-driver-registrar:v2.0.1
           args:
             - "--csi-address=$(ADDRESS)"
             - "--kubelet-registration-path=$(DRIVER_REG_SOCK_PATH)"
