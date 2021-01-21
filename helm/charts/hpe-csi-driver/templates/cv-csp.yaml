@@ -1,0 +1,49 @@
+---
+### CSP deployment ###
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: csp-service
+  namespace: {{ .Release.Namespace }}
+spec:
+  selector:
+    matchLabels:
+      app: cv-csp
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: cv-csp
+    spec: 
+      priorityClassName: system-cluster-critical
+      serviceAccount: hpe-csi-controller-sa
+      containers:
+        - name: cv-csp
+          {{- if .Values.registry }}
+          image: {{ .Values.registry }}/hpestorage/cv-csp:latest
+          {{- else }}
+          image: quay.io/hpestorage/cv-csp:v1.0.0
+          {{- end }}
+          imagePullPolicy: {{ .Values.imagePullPolicy | quote }}
+          env:
+          - name: API_HOST
+            value: "https://demo.cloudvolumes.hpe.com"
+          ports:
+          - containerPort: 8080
+
+---
+### CSP Service ###
+kind: Service
+apiVersion: v1
+metadata:
+  name: cloudvol-csp-svc
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app: cv-csp-service
+spec:
+  selector:
+    app: cv-csp
+  ports:
+  - name: service-port
+    port: 8080
+    targetPort: 8080
