@@ -3,7 +3,7 @@
 kind: Deployment
 apiVersion: apps/v1
 metadata:
-  name: csp-service
+  name: cv-csp
   namespace: {{ .Release.Namespace }}
 spec:
   selector:
@@ -20,14 +20,14 @@ spec:
       containers:
         - name: cv-csp
           {{- if .Values.registry }}
-          image: {{ .Values.registry }}/hpestorage/cv-csp:latest
+          image: {{ .Values.registry }}/hpestorage/cv-csp:v1.0.0
           {{- else }}
           image: quay.io/hpestorage/cv-csp:v1.0.0
           {{- end }}
           imagePullPolicy: {{ .Values.imagePullPolicy | quote }}
           env:
           - name: API_HOST
-            value: "https://demo.cloudvolumes.hpe.com"
+            value: "https://prod.cloudvolumes.hpe.com"
           ports:
           - containerPort: 8080
 
@@ -36,7 +36,7 @@ spec:
 kind: Service
 apiVersion: v1
 metadata:
-  name: cloudvol-csp-svc
+  name: cv-csp-svc
   namespace: {{ .Release.Namespace }}
   labels:
     app: cv-csp-service
