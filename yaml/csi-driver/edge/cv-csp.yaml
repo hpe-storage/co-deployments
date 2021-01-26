@@ -1,10 +1,18 @@
+# (C) Copyright 2019-2021 Hewlett Packard Enterprise Development LP
+
+# Configuration to deploy the Cloud Volumes Container Storage Provider
+# Kubernetes = v1.15
+#
+# example usage: kubectl create -f <this_file>
+
 ---
-### CSP deployment ###
+
+#################### CSP Deployment ####################
 kind: Deployment
 apiVersion: apps/v1
 metadata:
   name: cv-csp
-  namespace: {{ .Release.Namespace }}
+  namespace: hpe-storage
 spec:
   selector:
     matchLabels:
@@ -14,17 +22,13 @@ spec:
     metadata:
       labels:
         app: cv-csp
-    spec: 
+    spec:
       priorityClassName: system-cluster-critical
       serviceAccount: hpe-csi-controller-sa
       containers:
         - name: cv-csp
-          {{- if .Values.registry }}
-          image: {{ .Values.registry }}/hpestorage/cv-csp:v1.0.0
-          {{- else }}
-          image: quay.io/hpestorage/cv-csp:v1.0.0
-          {{- end }}
-          imagePullPolicy: {{ .Values.imagePullPolicy | quote }}
+          image: quay.io/hpestorage/cv-csp:edge
+          imagePullPolicy: Always
           env:
           - name: API_HOST
             value: "https://prod.cloudvolumes.hpe.com"
@@ -32,12 +36,13 @@ spec:
           - containerPort: 8080
 
 ---
-### CSP Service ###
+
+#################### CSP Service ####################
 kind: Service
 apiVersion: v1
 metadata:
   name: cv-csp-svc
-  namespace: {{ .Release.Namespace }}
+  namespace: hpe-storage
   labels:
     app: cv-csp-svc
 spec:
