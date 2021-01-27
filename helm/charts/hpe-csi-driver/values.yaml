@@ -22,3 +22,8 @@ iscsi:
 # registry prefix for hpe csi images
 registry: "quay.io"
 
+nimble:
+  enabled: true
+
+primera3par:
+  enabled: true
