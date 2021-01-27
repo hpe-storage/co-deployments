@@ -28,6 +28,8 @@ The following table lists the configurable parameters of the chart and their def
 | iscsi.chapPassword     | Password for iSCSI CHAP authentication.                                | ""           |
 | logLevel               | Log level. Can be one of `info`, `debug`, `trace`, `warn` and `error`. | info         |
 | registry               | Registry to pull HPE CSI Driver container images from.                 | quay.io      |
+| primera3par.envVars    | key-value pair(s) of environment variables for 3par-container          | true         |
+| nimble.envVars         | key-value pair(s) of environment variables for nimble-container         | true         |
 
 It's recommended to create a [values.yaml](https://github.com/hpe-storage/co-deployments/blob/master/helm/values/csi-driver) file from the corresponding release of the chart and edit it to fit the environment the chart is being deployed to. Download and edit [a sample file](https://github.com/hpe-storage/co-deployments/blob/master/helm/values/csi-driver).
 
@@ -40,6 +42,17 @@ iscsi:
 ```
 
 Tweak any additional parameters to suit the environment or as prescribed by HPE.
+
+Enviroment variables can be injected as follows:
+
+```yaml
+primera3par:
+  envVars:
+    ISCSI_TARGET_PORTAL_IPS: 192.168.132.10,192.168.132.11
+nimble:
+  envVars:
+    ISCSI_TARGET_PORTAL_IPS: 192.168.132.10,192.168.132.1
+```
 
 ### Installing the chart
 

@@ -44,8 +44,15 @@ spec:
           image: {{ .Values.registry }}/hpestorage/hpe3parprimera-csp:v1.2.0
           {{- else }}
           image: quay.io/hpestorage/hpe3parprimera-csp:v1.2.0
-          {{- end }}        
+          {{- end }}
           imagePullPolicy: {{ .Values.imagePullPolicy | quote }}
+          env:
+          {{- if .Values.primera3par.envVars }}
+          {{- range $key, $value := .Values.primera3par.envVars }}
+          - name: {{ $key }}
+            value: {{ $value }}
+          {{- end }}
+          {{- end }}
           ports:
             - containerPort: 8080
           volumeMounts:

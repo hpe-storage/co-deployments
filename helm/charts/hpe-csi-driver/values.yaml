@@ -23,3 +23,11 @@ logLevel: "info"
 
 # Registry prefix for hpe-csi-driver images
 registry: "quay.io"
+
+nimble:
+  # envVars:
+  #   ISCSI_TARGET_PORTAL_IPS: 192.168.132.10,192.168.132.11
+
+primera3par:
+  # envVars:
+  #   ISCSI_TARGET_PORTAL_IPS: 192.168.132.10,192.168.132.11
