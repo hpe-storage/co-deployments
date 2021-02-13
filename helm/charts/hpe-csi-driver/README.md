@@ -26,6 +26,8 @@ The following table lists the configurable parameters of the HPE-CSI chart and t
 | iscsi.chapUser            | Username for iSCSI CHAP authentication.                                | ""           |
 | iscsi.chapPassword        | Password for iSCSI CHAP authentication.                                | ""           |
 | registry                  | Registry to pull HPE CSI Driver container images from.                 | quay.io      |
+| nimble                    | Deploy nimble-csp deployment and service                               | "true"       |
+| primera3par               | Deploy primera-3par-csp deployment and service                         | "true"       |
 
 It's recommended to create a [values.yaml](https://github.com/hpe-storage/co-deployments/blob/master/helm/values/csi-driver) file from the corresponding release of the chart and edit it to fit the environment the chart is being deployed to. Download and edit [a sample file](https://github.com/hpe-storage/co-deployments/blob/master/helm/values/csi-driver).
 
