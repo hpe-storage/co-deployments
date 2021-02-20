@@ -48,7 +48,7 @@ spec:
       priorityClassName: system-cluster-critical
       containers:
         - name: cv-csp
-          image: quay.io/hpestorage/cv-csp:edge
+          image: quay.io/hpestorage/cv-csp:v1.0.0-beta
           imagePullPolicy: Always
           env:
           - name: API_HOST
