@@ -38,9 +38,9 @@ spec:
       containers:
         - name: nimble-csp
           {{- if .Values.registry }}
-          image: {{ .Values.registry }}/hpestorage/nimble-csp:v1.4.0
+          image: {{ .Values.registry }}/hpestorage/nimble-csp:v1.5.0-beta
           {{- else }}
-          image: quay.io/hpestorage/nimble-csp:v1.4.0
+          image: quay.io/hpestorage/nimble-csp:v1.5.0-beta
           {{- end }}
           imagePullPolicy: {{ .Values.imagePullPolicy | quote }}
           ports:
