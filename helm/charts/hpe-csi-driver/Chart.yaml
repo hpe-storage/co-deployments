@@ -5,8 +5,8 @@ annotations:
   artifacthub.io/prerelease: "true"
   artifacthub.io/license: Apache-2.0
   artifacthub.io/links: |
-  - name: Documentation
-    url: https://scod.hpedev.io/csi_driver
+    - name: Documentation
+      url: https://scod.hpedev.io/csi_driver
 description: A Helm chart for installing the HPE CSI Driver for Kubernetes
 icon: https://raw.githubusercontent.com/hpe-storage/co-deployments/master/docs/assets/hpedev.png
 maintainers:
