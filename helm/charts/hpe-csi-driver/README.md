@@ -11,8 +11,9 @@ The [HPE CSI Driver for Kubernetes](https://scod.hpedev.io/csi_driver/index.html
 
 Depending on which [Container Storage Provider](https://scod.hpedev.io/container_storage_provider/index.html) (CSP) is being used, other prerequisites and requirements may apply, such as storage platform OS and features.
 
+- [HPE Cloud Volumes](https://scod.hpedev.io/container_storage_provider/hpe_cloud_volumes/index.html)
 - [HPE Nimble Storage](https://scod.hpedev.io/container_storage_provider/hpe_nimble_storage/index.html)
-- [HPE 3PAR and Primera](https://scod.hpedev.io/container_storage_provider/hpe_3par_primera/index.html)
+- [HPE Primera and 3PAR](https://scod.hpedev.io/container_storage_provider/hpe_3par_primera/index.html)
 
 ## Configuration and installation
 
@@ -86,11 +87,11 @@ helm install my-hpe-csi-driver hpe-storage/hpe-csi-driver -n hpe-storage \
 
 ## Using persistent storage with Kubernetes
 
-Enable dynamic provisioning of persistent storage by creating a `StorageClass` API object that references a `Secret` which maps to a supported HPE primary storage backend. Refer to the [HPE CSI Driver for Kubernetes](https://scod.hpedev.io/csi_driver/using.html) documentation on [HPE Storage Container Orchestration Documentation](https://scod.hpedev.io/). Also, it's helpful to be familiar with [persistent storage concepts](https://kubernetes.io/docs/concepts/storage/volumes/) in Kubernetes prior to deploying stateful workloads.
+Enable dynamic provisioning of persistent storage by creating a `StorageClass` API object that references a `Secret` which maps to a supported HPE primary storage backend. Refer to the [HPE CSI Driver for Kubernetes](https://scod.hpedev.io/csi_driver/deployment.html#add_a_hpe_storage_backend) documentation on [HPE Storage Container Orchestration Documentation](https://scod.hpedev.io/). Also, it's helpful to be familiar with [persistent storage concepts](https://kubernetes.io/docs/concepts/storage/volumes/) in Kubernetes prior to deploying stateful workloads.
 
 ## Support
 
-The HPE CSI Driver for Kubernetes Helm chart is covered by your HPE support contract. Please file any issues, questions or feature requests [here](https://github.com/hpe-storage/co-deployments/issues) or contact HPE through the regular support channels. You may also join our Slack community to chat with HPE folks close to this project. We hang out in `#NimbleStorage`, `#3par-primera` and `#Kubernetes` at [hpedev.slack.com](https://hpedev.slack.com), sign up here: [slack.hpedev.io](https://slack.hpedev.io/).
+The HPE CSI Driver for Kubernetes Helm chart is covered by your HPE support contract. Please file any issues, questions or feature requests [here](https://github.com/hpe-storage/co-deployments/issues) or contact HPE through the regular support channels. You may also join our Slack community to chat with HPE folks close to this project. We hang out in `#NimbleStorage`, `#3par-primera`, `#hpe-cloud-volumes` and `#Kubernetes` at [hpedev.slack.com](https://hpedev.slack.com), sign up here: [slack.hpedev.io](https://slack.hpedev.io/).
 
 ## Contributing
 
