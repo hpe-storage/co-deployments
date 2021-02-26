@@ -125,7 +125,7 @@ spec:
           args:
             - "--csi-address=$(ADDRESS)"
             - "--v=5"
-            - "--timeout=30s"
+            - "--timeout=120s"
             - "--worker-threads=16"
           env:
             - name: ADDRESS
