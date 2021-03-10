@@ -35,7 +35,13 @@ For information on how to use the actual CSI driver and related technologies, vi
 
 ## Support
 
-Please see the respective CO driver declaration for support options. Please file any issues, questions or feature requests [here](https://github.com/hpe-storage/co-deployments/issues). You may also join our Slack community to chat with HPE folks close to this project. We hang out in `#NimbleStorage`, `#3par-primera`, `#hpe-cloud-volumes` and `#Kubernetes` at [slack.hpedev.io](https://slack.hpedev.io/).
+The CO deployment manifests are fully supported by HPE and is Generally Available.
+
+Formal support statements for each HPE supported product is [available on SCOD](https://scod.hpedev.io/legal/support). Use this facility for formal support of your HPE storage products, including the CSI and FlexVolume drivers.
+
+## Community
+
+Please file any issues, questions or feature requests you may have [here](https://github.com/hpe-storage/co-deployments/issues) (do not use this facility for support inquiries of your HPE storage product, see [SCOD](https://scod.hpedev.io/legal/support) for support). You may also join our Slack community to chat with HPE folks close to this project. We hang out in `#NimbleStorage`, `#3par-primera`, `#hpe-cloud-volumes` and `#Kubernetes`. Sign up at [slack.hpedev.io](https://slack.hpedev.io/) and login at [hpedev.slack.com](https://hpedev.slack.com/)
 
 ## Contributing
 
