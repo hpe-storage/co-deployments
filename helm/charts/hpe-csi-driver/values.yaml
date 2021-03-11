@@ -1,24 +1,26 @@
-# Default values for hpe-csi-storage.
+# Default values for hpe-csi-driver Helm chart
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
-# image pull policy for all images in csi deployment
-imagePullPolicy: 'IfNotPresent'
+# Control CSP Service and Deployments for HPE storage products
+disable:
+  cv: false
+  nimble: false
+  primera: false
 
-# flavor
-flavor: kubernetes
-
-# log level for all csi driver components
-logLevel: info
-
-## For controlling automatic iscsi/multipath package installation (default: false)
+# For controlling automatic iscsi/multipath package installation
 disableNodeConformance: false
 
-# values for CHAP Authentication
+# imagePullPolicy applied for all hpe-csi-driver images
+imagePullPolicy: "IfNotPresent"
+
+# Cluster wide values for CHAP authentication
 iscsi:
   chapUser: ""
   chapPassword: ""
 
-# registry prefix for hpe csi images
-registry: "quay.io"
+# Log level for all hpe-csi-driver components
+logLevel: "info"
 
+# Registry prefix for hpe-csi-driver images
+registry: "quay.io"

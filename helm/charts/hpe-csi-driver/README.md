@@ -19,14 +19,17 @@ Depending on which [Container Storage Provider](https://scod.hpedev.io/container
 
 The following table lists the configurable parameters of the chart and their default values.
 
-|  Parameter                |  Description                                                           |  Default     |
-|---------------------------|------------------------------------------------------------------------|--------------|
-| logLevel                  | Log level. Can be one of `info`, `debug`, `trace`, `warn` and `error`. | info         |
-| imagePullPolicy           | Image pull policy (`Always`, `IfNotPresent`, `Never`).                 | IfNotPresent |
-| disableNodeConformance    | Disable automatic installation of iSCSI/Multipath Packages.            | false        |
-| iscsi.chapUser            | Username for iSCSI CHAP authentication.                                | ""           |
-| iscsi.chapPassword        | Password for iSCSI CHAP authentication.                                | ""           |
-| registry                  | Registry to pull HPE CSI Driver container images from.                 | quay.io      |
+| Parameter              | Description                                                            | Default      |
+|------------------------|------------------------------------------------------------------------|--------------|
+| disable.cv             | Disable HPE Cloud Volumes CSP `Service` and `Deployment`.              | false        |
+| disable.nimble         | Disable HPE Nimble Storage CSP `Service` and `Deployment`.             | false        |
+| disable.primera        | Disable HPE Primera (3PAR) CSP `Service` and `Deployment`.             | false        |
+| disableNodeConformance | Disable automatic installation of iSCSI/Multipath Packages.            | false        |
+| imagePullPolicy        | Image pull policy (`Always`, `IfNotPresent`, `Never`).                 | IfNotPresent |
+| iscsi.chapUser         | Username for iSCSI CHAP authentication.                                | ""           |
+| iscsi.chapPassword     | Password for iSCSI CHAP authentication.                                | ""           |
+| logLevel               | Log level. Can be one of `info`, `debug`, `trace`, `warn` and `error`. | info         |
+| registry               | Registry to pull HPE CSI Driver container images from.                 | quay.io      |
 
 It's recommended to create a [values.yaml](https://github.com/hpe-storage/co-deployments/blob/master/helm/values/csi-driver) file from the corresponding release of the chart and edit it to fit the environment the chart is being deployed to. Download and edit [a sample file](https://github.com/hpe-storage/co-deployments/blob/master/helm/values/csi-driver).
 
