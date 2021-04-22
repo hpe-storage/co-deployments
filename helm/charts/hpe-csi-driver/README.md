@@ -1,6 +1,6 @@
 # HPE CSI Driver for Kubernetes Helm chart
 
-The [HPE CSI Driver for Kubernetes](https://scod.hpedev.io/csi_driver/index.html) leverages HPE storage platforms to provide scalable and persistent storage for stateful applications.
+The [HPE CSI Driver for Kubernetes](https://scod.hpedev.io/csi_driver/index.html) leverages Hewlett Packard Enterprise storage platforms to provide scalable and persistent storage for stateful applications.
 
 ## Prerequisites
 
@@ -17,16 +17,19 @@ Depending on which [Container Storage Provider](https://scod.hpedev.io/container
 
 ## Configuration and installation
 
-The following table lists the configurable parameters of the HPE-CSI chart and their default values.
+The following table lists the configurable parameters of the chart and their default values.
 
-|  Parameter                |  Description                                                           |  Default     |
-|---------------------------|------------------------------------------------------------------------|--------------|
-| logLevel                  | Log level. Can be one of `info`, `debug`, `trace`, `warn` and `error`. | info         |
-| imagePullPolicy           | Image pull policy (`Always`, `IfNotPresent`, `Never`).                 | IfNotPresent |
-| disableNodeConformance    | Disable automatic installation of iSCSI/Multipath Packages.            | false        |
-| iscsi.chapUser            | Username for iSCSI CHAP authentication.                                | ""           |
-| iscsi.chapPassword        | Password for iSCSI CHAP authentication.                                | ""           |
-| registry                  | Registry to pull HPE CSI Driver container images from.                 | quay.io      |
+| Parameter              | Description                                                            | Default      |
+|------------------------|------------------------------------------------------------------------|--------------|
+| disable.cv             | Disable HPE Cloud Volumes CSP `Service` and `Deployment`.              | false        |
+| disable.nimble         | Disable HPE Nimble Storage CSP `Service` and `Deployment`.             | false        |
+| disable.primera        | Disable HPE Primera (3PAR) CSP `Service` and `Deployment`.             | false        |
+| disableNodeConformance | Disable automatic installation of iSCSI/Multipath Packages.            | false        |
+| imagePullPolicy        | Image pull policy (`Always`, `IfNotPresent`, `Never`).                 | IfNotPresent |
+| iscsi.chapUser         | Username for iSCSI CHAP authentication.                                | ""           |
+| iscsi.chapPassword     | Password for iSCSI CHAP authentication.                                | ""           |
+| logLevel               | Log level. Can be one of `info`, `debug`, `trace`, `warn` and `error`. | info         |
+| registry               | Registry to pull HPE CSI Driver container images from.                 | quay.io      |
 
 It's recommended to create a [values.yaml](https://github.com/hpe-storage/co-deployments/blob/master/helm/values/csi-driver) file from the corresponding release of the chart and edit it to fit the environment the chart is being deployed to. Download and edit [a sample file](https://github.com/hpe-storage/co-deployments/blob/master/helm/values/csi-driver).
 
@@ -58,11 +61,12 @@ kubectl create ns hpe-storage
 helm install my-hpe-csi-driver hpe-storage/hpe-csi-driver -n hpe-storage -f myvalues.yaml
 ```
 
-**Note**: `values.yaml` is optional if no parameters are overridden from defaults.
+**Note**: `myvalues.yaml` is optional if no parameters are overridden from defaults. Also pay attention to what the latest version of the chart is. If it's labeled with `pre-prelease` and a "beta" tag, add `--version X.Y.Z` to install a "stable" chart.
 
 ### Upgrading the chart
 
-Due to the [helm limitation](https://helm.sh/docs/chart_best_practices/custom_resource_definitions/#some-caveats-and-explanations) to not support upgrade of CRDs between different chart versions, `hpe-csi-driver` helm chart upgrade is not supported.
+Due to the [helm limitation](https://helm.sh/docs/chart_best_practices/custom_resource_definitions/#some-caveats-and-explanations) to not support upgrade of CRDs between different chart versions, helm chart upgrade is not supported.
+
 Our recommendation is to uninstall the existing chart and install the chart with the desired version. CRDs will be preserved between uninstall and install.
 
 ### Uninstalling the chart
@@ -91,7 +95,13 @@ Enable dynamic provisioning of persistent storage by creating a `StorageClass` A
 
 ## Support
 
-The HPE CSI Driver for Kubernetes Helm chart is covered by your HPE support contract. Please file any issues, questions or feature requests [here](https://github.com/hpe-storage/co-deployments/issues) or contact HPE through the regular support channels. You may also join our Slack community to chat with HPE folks close to this project. We hang out in `#NimbleStorage`, `#3par-primera`, `#hpe-cloud-volumes` and `#Kubernetes` at [hpedev.slack.com](https://hpedev.slack.com), sign up here: [slack.hpedev.io](https://slack.hpedev.io/).
+The HPE CSI Driver for Kubernetes Helm chart is fully supported by HPE.
+
+Formal support statements for each HPE supported CSP is [available on SCOD](https://scod.hpedev.io/legal/support). Use this facility for formal support of your HPE storage products, including the Helm chart.
+
+## Community
+
+Please file any issues, questions or feature requests you may have [here](https://github.com/hpe-storage/co-deployments/issues) (do not use this facility for support inquiries of your HPE storage product, see [SCOD](https://scod.hpedev.io/legal/support) for support). You may also join our Slack community to chat with HPE folks close to this project. We hang out in `#NimbleStorage`, `#3par-primera`, `#hpe-cloud-volumes` and `#Kubernetes`. Sign up at [slack.hpedev.io](https://slack.hpedev.io/) and login at [hpedev.slack.com](https://hpedev.slack.com/)
 
 ## Contributing
 

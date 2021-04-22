@@ -259,7 +259,15 @@ spec:
         - name: root-dir
           hostPath:
               path: /
-
+      tolerations:
+        - effect: NoExecute
+          key: node.kubernetes.io/not-ready
+          operator: Exists
+          tolerationSeconds: 30
+        - effect: NoExecute
+          key: node.kubernetes.io/unreachable
+          operator: Exists
+          tolerationSeconds: 30
 ---
 
 kind: ServiceAccount
@@ -888,7 +896,15 @@ spec:
         - name: linux-config-file
           configMap:
             name: hpe-linux-config
-
+      tolerations:
+        - effect: NoExecute
+          key: node.kubernetes.io/not-ready
+          operator: Exists
+          tolerationSeconds: 30
+        - effect: NoExecute
+          key: node.kubernetes.io/unreachable
+          operator: Exists
+          tolerationSeconds: 30
 ---
 
 apiVersion: v1
