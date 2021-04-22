@@ -112,7 +112,7 @@ spec:
         role: hpe-csi
     spec:
       priorityClassName: system-cluster-critical
-      serviceAccount: hpe-csi-controller-sa
+      serviceAccountName: hpe-csi-controller-sa
       hostNetwork: true
       dnsPolicy: ClusterFirstWithHostNet
       dnsConfig:
@@ -262,8 +262,8 @@ spec:
 
 ---
 
-kind: ServiceAccount
 apiVersion: v1
+kind: ServiceAccount
 metadata:
   name: hpe-csi-controller-sa
   namespace: hpe-storage
@@ -275,9 +275,6 @@ apiVersion: rbac.authorization.k8s.io/v1
 metadata:
   name: hpe-csi-provisioner-role
 rules:
-  - apiGroups: [""]
-    resources: ["secrets"]
-    verbs: ["get", "list"]
   - apiGroups: [""]
     resources: ["namespaces"]
     verbs: ["get", "list", "create"]
@@ -358,9 +355,6 @@ rules:
   - apiGroups: ["storage.k8s.io"]
     resources: ["volumeattachments/status"]
     verbs: ["get", "list", "watch", "update", "create", "delete"]
-  - apiGroups: [""]
-    resources: ["secrets"]
-    verbs: ["get", "watch", "list"]
 
 ---
 
@@ -437,9 +431,6 @@ apiVersion: rbac.authorization.k8s.io/v1
 metadata:
   name: external-resizer-role
 rules:
-  - apiGroups: [""]
-    resources: ["secrets"]
-    verbs: ["get", "list", "watch"]
   - apiGroups: [""]
     resources: ["persistentvolumes"]
     verbs: ["get", "list", "watch", "update", "patch"]
@@ -539,9 +530,6 @@ rules:
   - apiGroups: [""]
     resources: ["events"]
     verbs: ["list", "watch", "create", "update", "patch"]
-  - apiGroups: [""]
-    resources: ["secrets"]
-    verbs: ["get"]
   - apiGroups: ["apiextensions.k8s.io"]
     resources: ["customresourcedefinitions"]
     verbs: ["create", "list", "watch", "delete", "get", "update"]
@@ -602,9 +590,6 @@ rules:
   - apiGroups: [""]
     resources: ["events"]
     verbs: ["list", "watch", "create", "update", "patch"]
-  - apiGroups: [""]
-    resources: ["secrets"]
-    verbs: ["get"]
   - apiGroups: ["apiextensions.k8s.io"]
     resources: ["customresourcedefinitions"]
     verbs: ["create", "list", "watch", "delete", "get", "update"]
@@ -658,9 +643,6 @@ apiVersion: rbac.authorization.k8s.io/v1
 metadata:
   name: csi-mutator-role
 rules:
-  - apiGroups: [""]
-    resources: ["secrets"]
-    verbs: ["get", "list", "watch"]
   - apiGroups: [""]
     resources: ["persistentvolumes"]
     verbs: ["get", "list", "watch", "update", "patch"]
@@ -735,9 +717,6 @@ rules:
     resources: ["pods"]
     verbs: ["get", "list"]
   - apiGroups: [""]
-    resources: ["secrets"]
-    verbs: ["get"]
-  - apiGroups: [""]
     resources: ["services"]
     verbs: ["get"]
   - apiGroups: [""]
@@ -789,7 +768,7 @@ spec:
         role: hpe-csi
     spec:
       priorityClassName: system-node-critical
-      serviceAccount: hpe-csi-node-sa
+      serviceAccountName: hpe-csi-node-sa
       hostNetwork: true
       dnsPolicy: ClusterFirstWithHostNet
       dnsConfig:
@@ -917,8 +896,8 @@ metadata:
 
 ---
 
-kind: ServiceAccount
 apiVersion: v1
+kind: ServiceAccount
 metadata:
   name: hpe-csp-sa
   namespace: hpe-storage
@@ -942,4 +921,63 @@ subjects:
 roleRef:
   kind: ClusterRole
   name: hpe-csi-driver-role
+  apiGroup: rbac.authorization.k8s.io
+
+---
+
+kind: Role
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: hpe-csi-secret-get
+  namespace: hpe-storage
+rules:
+  - apiGroups: [""]
+    resources: ["secrets"]
+    verbs: ["get", "list"]
+
+---
+
+kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: hpe-csi-secret-get-binding
+  namespace: hpe-storage
+subjects:
+  - kind: ServiceAccount
+    name: hpe-csi-node-sa
+    namespace: hpe-storage
+  - kind: ServiceAccount
+    name: hpe-csp-sa
+    namespace: hpe-storage
+roleRef:
+  kind: Role
+  name: hpe-csi-secret-get
+  apiGroup: rbac.authorization.k8s.io
+
+---
+
+kind: Role
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: hpe-csi-secret-watch
+  namespace: hpe-storage
+rules:
+  - apiGroups: [""]
+    resources: ["secrets"]
+    verbs: ["get", "list", "watch"]
+
+---
+
+kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: hpe-csi-secret-watch-binding
+  namespace: hpe-storage
+subjects:
+  - kind: ServiceAccount
+    name: hpe-csi-controller-sa
+    namespace: hpe-storage
+roleRef:
+  kind: Role
+  name: hpe-csi-secret-watch
   apiGroup: rbac.authorization.k8s.io

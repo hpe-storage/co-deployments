@@ -19,7 +19,7 @@ spec:
         app: hpe-csi-node
         role: hpe-csi
     spec:
-      serviceAccount: hpe-csi-node-sa
+      serviceAccountName: hpe-csi-node-sa
       {{- if and (eq .Capabilities.KubeVersion.Major "1") ( ge  ( trimSuffix "+" .Capabilities.KubeVersion.Minor ) "17") }}
       priorityClassName: system-node-critical
       {{- end }}
