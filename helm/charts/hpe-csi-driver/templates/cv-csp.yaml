@@ -1,3 +1,4 @@
+{{- if not .Values.disable.cv }}
 # (C) Copyright 2019-2021 Hewlett Packard Enterprise Development LP
 ---
 ### CSP Service ###
@@ -58,4 +59,4 @@ spec:
           key: node.kubernetes.io/unreachable
           operator: Exists
           tolerationSeconds: 30
-
+{{- end }}
