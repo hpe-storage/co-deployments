@@ -11,7 +11,6 @@ The [HPE CSI Driver for Kubernetes](https://scod.hpedev.io/csi_driver/index.html
 
 Depending on which [Container Storage Provider](https://scod.hpedev.io/container_storage_provider/index.html) (CSP) is being used, other prerequisites and requirements may apply, such as storage platform OS and features.
 
-- [HPE Cloud Volumes](https://scod.hpedev.io/container_storage_provider/hpe_cloud_volumes/index.html)
 - [HPE Nimble Storage](https://scod.hpedev.io/container_storage_provider/hpe_nimble_storage/index.html)
 - [HPE Primera and 3PAR](https://scod.hpedev.io/container_storage_provider/hpe_3par_primera/index.html)
 
@@ -21,7 +20,6 @@ The following table lists the configurable parameters of the chart and their def
 
 | Parameter              | Description                                                            | Default      |
 |------------------------|------------------------------------------------------------------------|--------------|
-| disable.cv             | Disable HPE Cloud Volumes CSP `Service` and `Deployment`.              | false        |
 | disable.nimble         | Disable HPE Nimble Storage CSP `Service` and `Deployment`.             | false        |
 | disable.primera        | Disable HPE Primera (3PAR) CSP `Service` and `Deployment`.             | false        |
 | disableNodeConformance | Disable automatic installation of iSCSI/Multipath Packages.            | false        |
@@ -101,7 +99,7 @@ Formal support statements for each HPE supported CSP is [available on SCOD](http
 
 ## Community
 
-Please file any issues, questions or feature requests you may have [here](https://github.com/hpe-storage/co-deployments/issues) (do not use this facility for support inquiries of your HPE storage product, see [SCOD](https://scod.hpedev.io/legal/support) for support). You may also join our Slack community to chat with HPE folks close to this project. We hang out in `#NimbleStorage`, `#3par-primera`, `#hpe-cloud-volumes` and `#Kubernetes`. Sign up at [slack.hpedev.io](https://slack.hpedev.io/) and login at [hpedev.slack.com](https://hpedev.slack.com/)
+Please file any issues, questions or feature requests you may have [here](https://github.com/hpe-storage/co-deployments/issues) (do not use this facility for support inquiries of your HPE storage product, see [SCOD](https://scod.hpedev.io/legal/support) for support). You may also join our Slack community to chat with HPE folks close to this project. We hang out in `#NimbleStorage`, `#3par-primera`, and `#Kubernetes`. Sign up at [slack.hpedev.io](https://slack.hpedev.io/) and login at [hpedev.slack.com](https://hpedev.slack.com/)
 
 ## Contributing
 
