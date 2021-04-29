@@ -32,7 +32,7 @@ spec:
       labels:
         app: nimble-csp
     spec:
-      serviceAccount: hpe-csp-sa
+      serviceAccountName: hpe-csp-sa
       {{- if and (eq .Capabilities.KubeVersion.Major "1") ( ge  ( trimSuffix "+" .Capabilities.KubeVersion.Minor ) "17") }}
       priorityClassName: system-cluster-critical
       {{- end }}

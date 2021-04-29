@@ -43,7 +43,7 @@ spec:
       labels:
         app: nimble-csp
     spec:
-      serviceAccount: hpe-csp-sa
+      serviceAccountName: hpe-csp-sa
       priorityClassName: system-cluster-critical
       containers:
         - name: nimble-csp

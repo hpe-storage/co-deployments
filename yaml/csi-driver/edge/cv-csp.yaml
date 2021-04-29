@@ -44,7 +44,7 @@ spec:
       labels:
         app: cv-csp
     spec:
-      serviceAccount: hpe-csp-sa
+      serviceAccountName: hpe-csp-sa
       priorityClassName: system-cluster-critical
       containers:
         - name: cv-csp
