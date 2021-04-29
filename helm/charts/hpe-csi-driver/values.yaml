@@ -4,7 +4,6 @@
 
 # Control CSP Service and Deployments for HPE storage products
 disable:
-  cv: false
   nimble: false
   primera: false
 
