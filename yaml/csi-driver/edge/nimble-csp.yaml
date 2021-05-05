@@ -11,16 +11,16 @@
 kind: Service
 apiVersion: v1
 metadata:
-  name: nimble-csp-svc
+  name: hpe-alletra-6000-and-nimble-csp-svc
   namespace: hpe-storage
   labels:
-    app: nimble-csp-svc
+    app: hpe-alletra-6000-and-nimble-csp-svc
 spec:
   ports:
   - port: 8080
     protocol: TCP
   selector:
-    app: nimble-csp
+    app: hpe-alletra-6000-and-nimble-csp
 
 ---
 
@@ -31,23 +31,23 @@ spec:
 kind: Deployment
 apiVersion: apps/v1
 metadata:
-  name: nimble-csp
+  name: hpe-alletra-6000-and-nimble-csp
   namespace: hpe-storage
 spec:
   selector:
     matchLabels:
-      app: nimble-csp
+      app: hpe-alletra-6000-and-nimble-csp
   replicas: 1
   template:
     metadata:
       labels:
-        app: nimble-csp
+        app: hpe-alletra-6000-and-nimble-csp
     spec:
       serviceAccountName: hpe-csp-sa
       priorityClassName: system-cluster-critical
       containers:
-        - name: nimble-csp
-          image: quay.io/hpestorage/nimble-csp:v1.5.0-beta
+        - name: hpe-alletra-6000-and-nimble-csp
+          image: quay.io/hpestorage/hpe-alletra-6000-and-nimble-csp:v2.0.0-beta
           imagePullPolicy: Always
           ports:
           - containerPort: 8080

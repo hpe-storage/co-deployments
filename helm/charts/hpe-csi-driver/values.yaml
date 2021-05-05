@@ -23,3 +23,6 @@ logLevel: "info"
 
 # Registry prefix for hpe-csi-driver images
 registry: "quay.io"
+
+# override the kubelet root-dir location (default is /var/lib/kubelet) 
+kubeletRootDir: ""

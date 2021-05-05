@@ -1,5 +1,5 @@
 # Configuration to deploy the HPE CSI driver compatible with
-# Kubernetes = v1.17
+# Kubernetes = v1.21
 #
 # example usage: kubectl create -f <this_file>
 
@@ -11,75 +11,74 @@
 
 apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
-metadata:
+metadata: 
   creationTimestamp: null
   name: hpenodeinfos.storage.hpe.com
-spec:
+spec: 
   group: storage.hpe.com
-  names:
+  names: 
     kind: HPENodeInfo
     plural: hpenodeinfos
   scope: Cluster
-  versions:
+  versions: 
     - name: v1
       # Each version can be enabled/disabled by Served flag.
       served: true
       # One and only one version must be marked as the storage version.
       storage: true
-      schema:
-        openAPIV3Schema:
-          properties:
-            apiVersion:
+      schema: 
+        openAPIV3Schema: 
+          properties: 
+            apiVersion: 
               description: "APIVersion defines the versioned schema of this representation of an object."
               type: string
-            kind:
+            kind: 
               description: "Kind is a string value representing the REST resource this object represents"
               type: string
-            spec:
+            spec: 
               description: "spec defines the desired characteristics of a HPE nodeinfo requested by a user."
-              properties:
-                chapPassword:
+              properties: 
+                chapPassword: 
                   description: "The CHAP Password"
                   type: string
-                chapUser:
+                chapUser: 
                   description: "The CHAP User Name"
                   type: string
-                iqns:
+                iqns: 
                   description: "List of IQNs configured on the node."
-                  items:
+                  items: 
                     type: string
                   type: array
-                networks:
+                networks: 
                   description: "List of networks configured on the node."
-                  items:
+                  items: 
                     type: string
                   type: array
-                uuid:
+                uuid: 
                   description: "The UUID of the node."
                   type: string
-                wwpns:
+                wwpns: 
                   description: "List of WWPNs configured on the node."
-                  items:
+                  items: 
                     type: string
                   type: array
-              required:
+              required: 
                 - uuid
                 - networks
               type: object
-          required:
+          required: 
             - spec
           type: object
-status:
-  acceptedNames:
+status: 
+  acceptedNames: 
     kind: ""
     plural: ""
   conditions: []
   storedVersions: []
 
 ---
-
 ################# CSI Driver CRD ###########
-apiVersion: storage.k8s.io/v1beta1
+apiVersion: storage.k8s.io/v1
 kind: CSIDriver
 metadata:
   name: csi.hpe.com
@@ -171,7 +170,7 @@ spec:
             - name: socket-dir
               mountPath: /var/lib/csi/sockets/pluginproxy/
         - name: hpe-csi-driver
-          image: quay.io/hpestorage/csi-driver:v1.5.0-beta
+          image: quay.io/hpestorage/csi-driver:v2.0.0-beta
           args :
             - "--endpoint=$(CSI_ENDPOINT)"
             - "--flavor=kubernetes"
@@ -509,6 +508,7 @@ roleRef:
   name: external-resizer-cfg
   apiGroup: rbac.authorization.k8s.io
 
+
 ---
 # cluster role to support volumegroup
 kind: ClusterRole
@@ -760,12 +760,6 @@ rules:
   - apiGroups: ["storage.hpe.com"]
     resources: ["hpereplicationdeviceinfos"]
     verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
-  - apiGroups: ["storage.hpe.com"]
-    resources: ["hpevolumegroupinfos"]
-    verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
-  - apiGroups: ["storage.hpe.com"]
-    resources: ["hpesnapshotgroupinfos"]
-    verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]    
   - apiGroups: [""]
     resources: ["persistentvolumeclaims"]
     verbs: ["get", "list"]
@@ -775,6 +769,7 @@ rules:
   - apiGroups: ["storage.k8s.io"]
     resources: ["storageclasses"]
     verbs: ["get", "list", "watch"]
+
 ---
 
 #######################################
@@ -822,7 +817,7 @@ spec:
             - name: registration-dir
               mountPath: /registration
         - name: hpe-csi-driver
-          image: quay.io/hpestorage/csi-driver:v1.5.0-beta
+          image: quay.io/hpestorage/csi-driver:v2.0.0-beta
           args :
             - "--endpoint=$(CSI_ENDPOINT)"
             - "--node-service"

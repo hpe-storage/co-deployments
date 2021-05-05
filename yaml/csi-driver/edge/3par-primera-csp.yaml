@@ -106,16 +106,16 @@ status:
 kind: Service
 apiVersion: v1
 metadata:
-  name: primera3par-csp-svc
+  name: hpe-alletra-9000-primera-and-3par-csp-svc
   namespace: hpe-storage
   labels:
-    app: primera3par-csp-svc
+    app: hpe-alletra-9000-primera-and-3par-csp-svc
 spec:
   ports:
   - port: 8080
     protocol: TCP
   selector:
-    app: primera3par-csp
+    app: hpe-alletra-9000-primera-and-3par-csp
 
 ---
 
@@ -126,23 +126,23 @@ spec:
 kind: Deployment
 apiVersion: apps/v1
 metadata:
-  name: primera3par-csp
+  name: hpe-alletra-9000-primera-and-3par-csp
   namespace: hpe-storage
 spec:
   selector:
     matchLabels:
-      app: primera3par-csp
+      app: hpe-alletra-9000-primera-and-3par-csp
   replicas: 1
   template:
     metadata:
       labels:
-        app: primera3par-csp
+        app: hpe-alletra-9000-primera-and-3par-csp
     spec:
       serviceAccountName: hpe-csp-sa
       priorityClassName: system-cluster-critical
       containers:
-        - name: primera3par-csp
-          image: quay.io/hpestorage/hpe3parprimera-csp:v1.2.0-beta
+        - name: hpe-alletra-9000-primera-and-3par-csp
+          image: quay.io/hpestorage/hpe-alletra-9000-primera-and-3par-csp:v2.0.0-beta
           imagePullPolicy: Always
           ports:
           - containerPort: 8080

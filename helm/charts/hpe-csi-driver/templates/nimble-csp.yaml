@@ -4,44 +4,44 @@
 kind: Service
 apiVersion: v1
 metadata:
-  name: nimble-csp-svc
+  name: hpe-alletra-6000-and-nimble-csp-svc
   namespace: {{ .Release.Namespace }}
   labels:
-    app: nimble-csp-svc
+    app: hpe-alletra-6000-and-nimble-csp-svc
 spec:
   ports:
   - port: 8080
     protocol: TCP
   selector:
-    app: nimble-csp
+    app: hpe-alletra-6000-and-nimble-csp
 
 ---
 ### CSP deployment ###
 kind: Deployment
 apiVersion: apps/v1
 metadata:
-  name: nimble-csp
+  name: hpe-alletra-6000-and-nimble-csp
   namespace: {{ .Release.Namespace }}
 spec:
   selector:
     matchLabels:
-      app: nimble-csp
+      app: hpe-alletra-6000-and-nimble-csp
   replicas: 1
   template:
     metadata:
       labels:
-        app: nimble-csp
+        app: hpe-alletra-6000-and-nimble-csp
     spec:
       serviceAccountName: hpe-csp-sa
       {{- if and (eq .Capabilities.KubeVersion.Major "1") ( ge  ( trimSuffix "+" .Capabilities.KubeVersion.Minor ) "17") }}
       priorityClassName: system-cluster-critical
       {{- end }}
       containers:
-        - name: nimble-csp
+        - name: hpe-alletra-6000-and-nimble-csp
           {{- if .Values.registry }}
-          image: {{ .Values.registry }}/hpestorage/nimble-csp:v1.5.0-beta
+          image: {{ .Values.registry }}/hpestorage/hpe-alletra-6000-and-nimble-csp:v2.0.0-beta
           {{- else }}
-          image: quay.io/hpestorage/nimble-csp:v1.5.0-beta
+          image: quay.io/hpestorage/hpe-alletra-6000-and-nimble-csp:v2.0.0-beta
           {{- end }}
           imagePullPolicy: {{ .Values.imagePullPolicy | quote }}
           ports:

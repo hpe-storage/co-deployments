@@ -4,46 +4,46 @@
 kind: Service
 apiVersion: v1
 metadata:
-  name: primera3par-csp-svc
+  name: hpe-alletra-9000-primera-and-3par-csp-svc
   namespace: {{ .Release.Namespace }}
   labels:
-    app: primera3par-csp-svc
+    app: hpe-alletra-9000-primera-and-3par-csp-svc
 spec:
   ports:
   - port: 8080
     protocol: TCP
   selector:
-    app: primera3par-csp
+    app: hpe-alletra-9000-primera-and-3par-csp
 
 ---
 ### CSP deployment ###
 kind: Deployment
 apiVersion: apps/v1
 metadata:
-  name: primera3par-csp
+  name: hpe-alletra-9000-primera-and-3par-csp
   labels:
-    app: primera3par-csp
+    app: hpe-alletra-9000-primera-and-3par-csp
   namespace: {{ .Release.Namespace }}
 spec:
   selector:
     matchLabels:
-      app: primera3par-csp
+      app: hpe-alletra-9000-primera-and-3par-csp
   replicas: 1
   template:
     metadata:
       labels:
-        app: primera3par-csp
+        app: hpe-alletra-9000-primera-and-3par-csp
     spec:
       serviceAccountName: hpe-csp-sa
       {{- if and (eq .Capabilities.KubeVersion.Major "1") ( ge  ( trimSuffix "+" .Capabilities.KubeVersion.Minor ) "17") }}
       priorityClassName: system-cluster-critical
       {{- end }}
       containers:
-        - name: primera3par-csp
+        - name: hpe-alletra-9000-primera-and-3par-csp
           {{- if .Values.registry }}
-          image: {{ .Values.registry }}/hpestorage/hpe3parprimera-csp:v1.2.0
+          image: {{ .Values.registry }}/hpestorage/hpe-alletra-9000-primera-and-3par-csp:v2.0.0-beta
           {{- else }}
-          image: quay.io/hpestorage/hpe3parprimera-csp:v1.2.0
+          image: quay.io/hpestorage/hpe-alletra-9000-primera-and-3par-csp:v2.0.0-beta
           {{- end }}        
           imagePullPolicy: {{ .Values.imagePullPolicy | quote }}
           ports:
