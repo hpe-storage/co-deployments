@@ -44,6 +44,13 @@ spec:
           image: quay.io/hpestorage/nimble-csp:v1.5.0-beta
           {{- end }}
           imagePullPolicy: {{ .Values.imagePullPolicy | quote }}
+          env:
+            {{- if .Values.nimble.envVars }}
+            {{- range $key, $value := .Values.nimble.envVars }}
+            - name: {{ $key }}
+              value: {{ $value }}
+            {{- end }}
+            {{- end }}
           ports:
             - containerPort: 8080
           volumeMounts:
