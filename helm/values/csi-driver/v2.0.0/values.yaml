@@ -4,8 +4,10 @@
 
 # Control CSP Service and Deployments for HPE storage products
 disable:
-  hpe-alletra-6000-and-nimble: false
-  hpe-alletra-9000-primera-and-3par: false
+  nimble: false
+  primera: false
+  alletra6000: false
+  alletra9000: false
 
 # For controlling automatic iscsi/multipath package installation
 disableNodeConformance: false

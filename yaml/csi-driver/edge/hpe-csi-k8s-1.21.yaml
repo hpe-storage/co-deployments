@@ -146,7 +146,7 @@ spec:
             - name: socket-dir
               mountPath: /var/lib/csi/sockets/pluginproxy/
         - name: csi-snapshotter
-          image: quay.io/k8scsi/csi-snapshotter:v3.0.2
+          image: quay.io/k8scsi/csi-snapshotter:v4.1.0
           args:
             - "--v=5"
             - "--csi-address=$(ADDRESS)"
@@ -760,6 +760,12 @@ rules:
   - apiGroups: ["storage.hpe.com"]
     resources: ["hpereplicationdeviceinfos"]
     verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+  - apiGroups: ["storage.hpe.com"]
+    resources: ["hpevolumegroupinfos"]
+    verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+  - apiGroups: ["storage.hpe.com"]
+    resources: ["hpesnapshotgroupinfos"]
+    verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]    
   - apiGroups: [""]
     resources: ["persistentvolumeclaims"]
     verbs: ["get", "list"]

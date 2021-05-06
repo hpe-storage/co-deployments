@@ -1,45 +1,67 @@
-{{- if not .Values.disable.primera }}
+{{- if not .Values.disable.alletra9000 }}
 ---
-### CSP Service ###
+### Alletra9000 CSP Service ###
 kind: Service
 apiVersion: v1
 metadata:
-  name: hpe-alletra-9000-primera-and-3par-csp-svc
+  name: alletra9000-csp-svc
   namespace: {{ .Release.Namespace }}
   labels:
-    app: hpe-alletra-9000-primera-and-3par-csp-svc
+    app: alletra9000-csp-svc
 spec:
   ports:
   - port: 8080
     protocol: TCP
   selector:
-    app: hpe-alletra-9000-primera-and-3par-csp
+    app: primera3par-csp
+
+{{- end }}
+
+{{- if not .Values.disable.primera }}
+---
+### Primera3par CSP Service ###
+kind: Service
+apiVersion: v1
+metadata:
+  name: primera3par-csp-svc
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app: primera3par-csp-svc
+spec:
+  ports:
+  - port: 8080
+    protocol: TCP
+  selector:
+    app: primera3par-csp
+{{- end }}
+
+{{- if or (not .Values.disable.alletra9000) (not .Values.disable.primera) }}
 
 ---
 ### CSP deployment ###
 kind: Deployment
 apiVersion: apps/v1
 metadata:
-  name: hpe-alletra-9000-primera-and-3par-csp
+  name: primera3par-csp
   labels:
-    app: hpe-alletra-9000-primera-and-3par-csp
+    app: primera3par-csp
   namespace: {{ .Release.Namespace }}
 spec:
   selector:
     matchLabels:
-      app: hpe-alletra-9000-primera-and-3par-csp
+      app: primera3par-csp
   replicas: 1
   template:
     metadata:
       labels:
-        app: hpe-alletra-9000-primera-and-3par-csp
+        app: primera3par-csp
     spec:
       serviceAccountName: hpe-csp-sa
       {{- if and (eq .Capabilities.KubeVersion.Major "1") ( ge  ( trimSuffix "+" .Capabilities.KubeVersion.Minor ) "17") }}
       priorityClassName: system-cluster-critical
       {{- end }}
       containers:
-        - name: hpe-alletra-9000-primera-and-3par-csp
+        - name: primera3par-csp
           {{- if .Values.registry }}
           image: {{ .Values.registry }}/hpestorage/hpe-alletra-9000-primera-and-3par-csp:v2.0.0-beta
           {{- else }}
