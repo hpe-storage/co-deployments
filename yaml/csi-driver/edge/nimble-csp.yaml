@@ -2,25 +2,48 @@
 #
 # example usage: kubectl create -f <this_file>
 
+
 ---
 
-#######################################
-############  CSP Service  ############
-#######################################
+###################################################
+############ Alletra 6000 CSP Service  ############
+###################################################
 
 kind: Service
 apiVersion: v1
 metadata:
-  name: hpe-alletra-6000-and-nimble-csp-svc
+  name: alletra6000-csp-svc
   namespace: hpe-storage
   labels:
-    app: hpe-alletra-6000-and-nimble-csp-svc
+    app: alletra6000-csp-svc
 spec:
   ports:
   - port: 8080
     protocol: TCP
   selector:
-    app: hpe-alletra-6000-and-nimble-csp
+    app: nimble-csp
+
+
+
+---
+
+#############################################
+############ Nimble CSP Service  ############
+#############################################
+
+kind: Service
+apiVersion: v1
+metadata:
+  name: nimble-csp-svc
+  namespace: hpe-storage
+  labels:
+    app: nimble-csp-svc
+spec:
+  ports:
+  - port: 8080
+    protocol: TCP
+  selector:
+    app: nimble-csp
 
 ---
 
@@ -31,23 +54,23 @@ spec:
 kind: Deployment
 apiVersion: apps/v1
 metadata:
-  name: hpe-alletra-6000-and-nimble-csp
+  name: nimble-csp
   namespace: hpe-storage
 spec:
   selector:
     matchLabels:
-      app: hpe-alletra-6000-and-nimble-csp
+      app: nimble-csp
   replicas: 1
   template:
     metadata:
       labels:
-        app: hpe-alletra-6000-and-nimble-csp
+        app: nimble-csp
     spec:
       serviceAccountName: hpe-csp-sa
       priorityClassName: system-cluster-critical
       containers:
-        - name: hpe-alletra-6000-and-nimble-csp
-          image: quay.io/hpestorage/hpe-alletra-6000-and-nimble-csp:v2.0.0-beta
+        - name: nimble-csp
+          image: quay.io/hpestorage/alletra-6000-and-nimble-csp:v2.0.0-beta
           imagePullPolicy: Always
           ports:
           - containerPort: 8080
