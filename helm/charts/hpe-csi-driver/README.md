@@ -21,9 +21,9 @@ The following table lists the configurable parameters of the chart and their def
 | Parameter              | Description                                                            | Default          |
 |------------------------|------------------------------------------------------------------------|------------------|
 | disable.nimble         | Disable HPE Nimble Storage CSP `Service`.                              | false            |
-| disable.primera        | Disable HPE Primera (3PAR) CSP `Service`.                              | false            |
-| disable.alletra6000    | Disable HPE Alletra (6000) CSP `Service`.                              | false            |
-| disable.alletra9000    | Disable HPE Primera (9000) CSP `Service`.                              | false            |
+| disable.primera        | Disable HPE Primera (and 3PAR) CSP `Service`.                          | false            |
+| disable.alletra6000    | Disable HPE Alletra 6000 CSP `Service`.                                | false            |
+| disable.alletra9000    | Disable HPE Alletra 9000 CSP `Service`.                                | false            |
 | disableNodeConformance | Disable automatic installation of iSCSI/Multipath Packages.            | false            |
 | imagePullPolicy        | Image pull policy (`Always`, `IfNotPresent`, `Never`).                 | IfNotPresent     |
 | iscsi.chapUser         | Username for iSCSI CHAP authentication.                                | ""               |
