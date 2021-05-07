@@ -45,27 +45,47 @@ spec:
               description: Iscsi parameters to be configured
               properties:
                 chapPassword:
-                  description: iSCSI CHAP username
+                  description: iSCSI CHAP password
                   type: string
                 chapUser:
-                  description: iSCSI CHAP password
+                  description: iSCSI CHAP username
                   type: string
               type: object
             logLevel:
               description: Default logLevel for HPE CSI driver deployments
               type: string
+            disable:
+              description: Control CSP Service and Deployments for HPE storage products
+              properties:
+                nimble:
+                  description: Disable Nimble Storage CSP Service
+                  type: boolean
+                primera:
+                  description: Disable HPE Primera (and 3PAR) CSP
+                  type: boolean
+                alletra6000:
+                  description: Disable HPE Alletra 6000 CSP
+                  type: boolean
+                alletra9000:
+                  description: Disable HPE Alletra 9000 CSP
+                  type: boolean
             disableNodeConformance:
               description: 'Disable automatic installation of iSCSI/Multipath packages, default: false'
               type: boolean
             registry:
               description: 'Registry prefix for HPE CSI driver images, default: quay.io'
               type: string
+            kubeletRootDir:
+              description: 'RKubelet root directory path, default: /var/lib/kubelet/'
+              type: string
           required:
           - iscsi
           - imagePullPolicy
           - logLevel
+          - disable
           - disableNodeConformance
           - registry
+          - kubeletRootDir
           type: object
         status:
           description: HpecsidriverStatus defines the observed state of Hpecsidriver
