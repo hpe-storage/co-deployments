@@ -87,6 +87,10 @@ spec:
             - name: DISABLE_NODE_CONFORMANCE
               value: "true"
             {{- end }}
+            {{ if .Values.disableNodeGetVolumestats -}}
+            - name: DISABLE_NODE_GET_VOLUMESTATS
+              value: "true"
+            {{- end }}
           imagePullPolicy: {{ .Values.imagePullPolicy | quote }}
           securityContext:
             privileged: true
