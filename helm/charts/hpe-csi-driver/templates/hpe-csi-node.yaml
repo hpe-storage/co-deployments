@@ -44,7 +44,11 @@ spec:
             - name: ADDRESS
               value: /csi/csi.sock
             - name: DRIVER_REG_SOCK_PATH
+              {{- if .Values.kubeletRootDir }}
+              value: {{ .Values.kubeletRootDir }}/plugins/csi.hpe.com/csi.sock
+              {{- else }}
               value: /var/lib/kubelet/plugins/csi.hpe.com/csi.sock
+              {{- end }}
             {{- if and (eq .Capabilities.KubeVersion.Major "1") ( eq  ( trimSuffix "+" .Capabilities.KubeVersion.Minor ) "12") }}
             - name: KUBE_NODE_NAME
               valueFrom:
@@ -60,9 +64,9 @@ spec:
               mountPath: /registration
         - name: hpe-csi-driver
           {{- if .Values.registry }}
-          image: {{ .Values.registry }}/hpestorage/csi-driver:v1.5.0-beta
+          image: {{ .Values.registry }}/hpestorage/csi-driver:v2.0.0-beta
           {{- else }}
-          image: quay.io/hpestorage/csi-driver:v1.5.0-beta
+          image: quay.io/hpestorage/csi-driver:v2.0.0-beta
           {{- end}}        
           args :
             - "--endpoint=$(CSI_ENDPOINT)"
@@ -87,6 +91,10 @@ spec:
             - name: DISABLE_NODE_CONFORMANCE
               value: "true"
             {{- end }}
+            {{- if .Values.kubeletRootDir }}
+            - name: KUBELET_ROOT_DIR
+              value: {{ .Values.kubeletRootDir }}
+            {{- end }} 
           imagePullPolicy: {{ .Values.imagePullPolicy | quote }}
           securityContext:
             privileged: true
@@ -97,7 +105,11 @@ spec:
             - name: plugin-dir
               mountPath: /csi
             - name: pods-mount-dir
+            {{- if .Values.kubeletRootDir }}
+              mountPath:  {{ .Values.kubeletRootDir }}
+            {{- else }}
               mountPath: /var/lib/kubelet
+            {{- end }} 
               # needed so that any mounts setup inside this container are
               # propagated back to the host machine.
               mountPropagation: "Bidirectional"
@@ -124,15 +136,27 @@ spec:
       volumes:
         - name: registration-dir
           hostPath:
+          {{ if .Values.kubeletRootDir }}
+            path: {{ .Values.kubeletRootDir }}/plugins_registry
+          {{- else }}
             path: /var/lib/kubelet/plugins_registry
+          {{- end }}            
             type: Directory
         - name: plugin-dir
           hostPath:
+          {{ if .Values.kubeletRootDir }}
+            path: {{ .Values.kubeletRootDir }}/plugins/csi.hpe.com
+          {{- else }}
             path: /var/lib/kubelet/plugins/csi.hpe.com
+          {{- end }}            
             type: DirectoryOrCreate
         - name: pods-mount-dir
           hostPath:
+          {{ if .Values.kubeletRootDir }}
+            path: {{ .Values.kubeletRootDir }}
+          {{- else }}
             path: /var/lib/kubelet
+          {{- end }} 
         - name: root-dir
           hostPath:
             path: /

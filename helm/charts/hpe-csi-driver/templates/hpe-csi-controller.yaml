@@ -67,13 +67,22 @@ spec:
           volumeMounts:
             - name: socket-dir
               mountPath: /var/lib/csi/sockets/pluginproxy
-        {{- if and (eq .Capabilities.KubeVersion.Major "1") ( ge  ( trimSuffix "+" .Capabilities.KubeVersion.Minor ) "17") }}
         - name: csi-snapshotter
-          {{- if .Values.registry }}
+        {{- if and (eq .Capabilities.KubeVersion.Major "1") ( ge  ( trimSuffix "+" .Capabilities.KubeVersion.Minor ) "20") }}
+          {{- if and (.Values.registry) (eq .Values.registry "quay.io") }}
+          image: k8s.gcr.io/sig-storage/csi-snapshotter:v4.1.0
+          {{- else if .Values.registry }}
+          image: {{ .Values.registry }}/k8scsi/csi-snapshotter:v4.1.0
+          {{- else }}
+          image: k8s.gcr.io/sig-storage/csi-snapshotter:v4.1.0
+          {{- end }}
+        {{- else if and (eq .Capabilities.KubeVersion.Major "1") ( ge  ( trimSuffix "+" .Capabilities.KubeVersion.Minor ) "17") }}
+         {{- if .Values.registry }}
           image: {{ .Values.registry }}/k8scsi/csi-snapshotter:v3.0.2
           {{- else }}
           image: quay.io/k8scsi/csi-snapshotter:v3.0.2
           {{- end }}
+        {{- end }}
           args:
             - "--v=5"
             - "--csi-address=$(ADDRESS)"
@@ -84,7 +93,6 @@ spec:
           volumeMounts:
             - name: socket-dir
               mountPath: /var/lib/csi/sockets/pluginproxy/
-        {{- end }}
         {{- if and (eq .Capabilities.KubeVersion.Major "1") ( ge  ( trimSuffix "+" .Capabilities.KubeVersion.Minor ) "15") }}
         - name: csi-resizer
           {{- if .Values.registry }}
@@ -105,9 +113,9 @@ spec:
         {{- end }}
         - name: hpe-csi-driver
          {{- if .Values.registry }}
-          image: {{ .Values.registry }}/hpestorage/csi-driver:v1.5.0-beta
+          image: {{ .Values.registry }}/hpestorage/csi-driver:v2.0.0-beta
          {{- else }}
-          image: quay.io/hpestorage/csi-driver:v1.5.0-beta
+          image: quay.io/hpestorage/csi-driver:v2.0.0-beta
          {{- end }}
           args :
             - "--endpoint=$(CSI_ENDPOINT)"

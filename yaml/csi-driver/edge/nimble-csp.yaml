@@ -2,11 +2,34 @@
 #
 # example usage: kubectl create -f <this_file>
 
+
 ---
 
-#######################################
-############  CSP Service  ############
-#######################################
+###################################################
+############ Alletra 6000 CSP Service  ############
+###################################################
+
+kind: Service
+apiVersion: v1
+metadata:
+  name: alletra6000-csp-svc
+  namespace: hpe-storage
+  labels:
+    app: alletra6000-csp-svc
+spec:
+  ports:
+  - port: 8080
+    protocol: TCP
+  selector:
+    app: nimble-csp
+
+
+
+---
+
+#############################################
+############ Nimble CSP Service  ############
+#############################################
 
 kind: Service
 apiVersion: v1
@@ -47,7 +70,7 @@ spec:
       priorityClassName: system-cluster-critical
       containers:
         - name: nimble-csp
-          image: quay.io/hpestorage/nimble-csp:v1.5.0-beta
+          image: quay.io/hpestorage/alletra-6000-and-nimble-csp:v2.0.0-beta
           imagePullPolicy: Always
           ports:
           - containerPort: 8080
