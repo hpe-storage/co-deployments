@@ -27,5 +27,5 @@ logLevel: "info"
 registry: "quay.io"
 
 # Kubelet root directory path
-kubeletRootDir: "/var/lib/kubelet"
+kubeletRootDir: "/var/lib/kubelet/"
 
