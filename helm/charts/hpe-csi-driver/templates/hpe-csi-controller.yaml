@@ -69,10 +69,12 @@ spec:
               mountPath: /var/lib/csi/sockets/pluginproxy
         - name: csi-snapshotter
         {{- if and (eq .Capabilities.KubeVersion.Major "1") ( ge  ( trimSuffix "+" .Capabilities.KubeVersion.Minor ) "20") }}
-          {{- if .Values.registry }}
+          {{- if and (.Values.registry) (eq .Values.registry "quay.io") }}
+          image: k8s.gcr.io/sig-storage/csi-snapshotter:v4.1.0
+          {{- else if .Values.registry }}
           image: {{ .Values.registry }}/k8scsi/csi-snapshotter:v4.1.0
           {{- else }}
-          image: quay.io/k8scsi/csi-snapshotter:v4.1.0
+          image: k8s.gcr.io/sig-storage/csi-snapshotter:v4.1.0
           {{- end }}
         {{- else if and (eq .Capabilities.KubeVersion.Major "1") ( ge  ( trimSuffix "+" .Capabilities.KubeVersion.Minor ) "17") }}
          {{- if .Values.registry }}
