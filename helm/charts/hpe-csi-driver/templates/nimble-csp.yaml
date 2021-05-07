@@ -1,6 +1,25 @@
+{{- if not .Values.disable.alletra6000 }}
+
+---
+### Alletra 6000 CSP Service ###
+kind: Service
+apiVersion: v1
+metadata:
+  name: alletra6000-csp-svc
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app: alletra6000-csp-svc
+spec:
+  ports:
+  - port: 8080
+    protocol: TCP
+  selector:
+    app:  nimble-csp
+{{- end }}
+
 {{- if not .Values.disable.nimble }}
 ---
-### CSP Service ###
+### Nimble CSP Service ###
 kind: Service
 apiVersion: v1
 metadata:
@@ -14,7 +33,10 @@ spec:
     protocol: TCP
   selector:
     app: nimble-csp
+{{- end }}
 
+
+{{- if or (not .Values.disable.alletra6000) (not .Values.disable.nimble) }}
 ---
 ### CSP deployment ###
 kind: Deployment
@@ -39,9 +61,9 @@ spec:
       containers:
         - name: nimble-csp
           {{- if .Values.registry }}
-          image: {{ .Values.registry }}/hpestorage/nimble-csp:v1.5.0-beta
+          image: {{ .Values.registry }}/hpestorage/alletra-6000-and-nimble-csp:v2.0.0-beta
           {{- else }}
-          image: quay.io/hpestorage/nimble-csp:v1.5.0-beta
+          image: quay.io/hpestorage/alletra-6000-and-nimble-csp:v2.0.0-beta
           {{- end }}
           imagePullPolicy: {{ .Values.imagePullPolicy | quote }}
           ports:

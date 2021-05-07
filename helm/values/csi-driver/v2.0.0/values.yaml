@@ -26,10 +26,6 @@ logLevel: "info"
 # Registry prefix for hpe-csi-driver images
 registry: "quay.io"
 
-# NodeGetVolumestats will be called by default, set true to disable the call 
-disableNodeGetVolumestats: false
-
 # Kubelet root directory path
 kubeletRootDir: "/var/lib/kubelet/"
-
 
