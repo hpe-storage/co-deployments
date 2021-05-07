@@ -1,6 +1,25 @@
+{{- if not .Values.disable.alletra9000 }}
+---
+### Alletra9000 CSP Service ###
+kind: Service
+apiVersion: v1
+metadata:
+  name: alletra9000-csp-svc
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app: alletra9000-csp-svc
+spec:
+  ports:
+  - port: 8080
+    protocol: TCP
+  selector:
+    app: primera3par-csp
+
+{{- end }}
+
 {{- if not .Values.disable.primera }}
 ---
-### CSP Service ###
+### Primera3par CSP Service ###
 kind: Service
 apiVersion: v1
 metadata:
@@ -14,6 +33,9 @@ spec:
     protocol: TCP
   selector:
     app: primera3par-csp
+{{- end }}
+
+{{- if or (not .Values.disable.alletra9000) (not .Values.disable.primera) }}
 
 ---
 ### CSP deployment ###
@@ -41,9 +63,9 @@ spec:
       containers:
         - name: primera3par-csp
           {{- if .Values.registry }}
-          image: {{ .Values.registry }}/hpestorage/hpe3parprimera-csp:v1.2.0
+          image: {{ .Values.registry }}/hpestorage/alletra-9000-primera-and-3par-csp:v2.0.0-beta
           {{- else }}
-          image: quay.io/hpestorage/hpe3parprimera-csp:v1.2.0
+          image: quay.io/hpestorage/alletra-9000-primera-and-3par-csp:v2.0.0-beta
           {{- end }}        
           imagePullPolicy: {{ .Values.imagePullPolicy | quote }}
           ports:

@@ -1,5 +1,5 @@
 # Configuration to deploy the HPE CSI driver compatible with
-# Kubernetes = v1.17
+# Kubernetes = v1.21
 #
 # example usage: kubectl create -f <this_file>
 
@@ -77,9 +77,8 @@ status:
   storedVersions: []
 
 ---
-
 ################# CSI Driver CRD ###########
-apiVersion: storage.k8s.io/v1beta1
+apiVersion: storage.k8s.io/v1
 kind: CSIDriver
 metadata:
   name: csi.hpe.com
@@ -147,7 +146,7 @@ spec:
             - name: socket-dir
               mountPath: /var/lib/csi/sockets/pluginproxy/
         - name: csi-snapshotter
-          image: quay.io/k8scsi/csi-snapshotter:v3.0.2
+          image: k8s.gcr.io/sig-storage/csi-snapshotter:v4.1.0
           args:
             - "--v=5"
             - "--csi-address=$(ADDRESS)"
@@ -171,7 +170,7 @@ spec:
             - name: socket-dir
               mountPath: /var/lib/csi/sockets/pluginproxy/
         - name: hpe-csi-driver
-          image: quay.io/hpestorage/csi-driver:v1.5.0-beta
+          image: quay.io/hpestorage/csi-driver:v2.0.0-beta
           args :
             - "--endpoint=$(CSI_ENDPOINT)"
             - "--flavor=kubernetes"
@@ -509,6 +508,7 @@ roleRef:
   name: external-resizer-cfg
   apiGroup: rbac.authorization.k8s.io
 
+
 ---
 # cluster role to support volumegroup
 kind: ClusterRole
@@ -709,9 +709,9 @@ metadata:
   namespace: hpe-storage
   name: csi-mutator-cfg
 rules:
-- apiGroups: ["coordination.k8s.io"]
-  resources: ["leases"]
-  verbs: ["get", "watch", "list", "delete", "update", "create"]
+  - apiGroups: ["coordination.k8s.io"]
+    resources: ["leases"]
+    verbs: ["get", "watch", "list", "delete", "update", "create"]
 
 ---
 kind: RoleBinding
@@ -775,6 +775,7 @@ rules:
   - apiGroups: ["storage.k8s.io"]
     resources: ["storageclasses"]
     verbs: ["get", "list", "watch"]
+
 ---
 
 #######################################
@@ -822,7 +823,7 @@ spec:
             - name: registration-dir
               mountPath: /registration
         - name: hpe-csi-driver
-          image: quay.io/hpestorage/csi-driver:v1.5.0-beta
+          image: quay.io/hpestorage/csi-driver:v2.0.0-beta
           args :
             - "--endpoint=$(CSI_ENDPOINT)"
             - "--node-service"
