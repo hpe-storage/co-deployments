@@ -58,7 +58,7 @@ spec:
               description: Control CSP Service and Deployments for HPE storage products
               properties:
                 nimble:
-                  description: Disable Nimble Storage CSP Service
+                  description: Disable HPE Nimble Storage CSP
                   type: boolean
                 primera:
                   description: Disable HPE Primera (and 3PAR) CSP
@@ -76,7 +76,7 @@ spec:
               description: 'Registry prefix for HPE CSI driver images, default: quay.io'
               type: string
             kubeletRootDir:
-              description: 'RKubelet root directory path, default: /var/lib/kubelet/'
+              description: 'Kubelet root directory path, default: /var/lib/kubelet/'
               type: string
           required:
           - iscsi
