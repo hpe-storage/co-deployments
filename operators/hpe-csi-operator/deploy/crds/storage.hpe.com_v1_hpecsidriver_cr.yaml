@@ -17,6 +17,13 @@ spec:
   # log level for all csi driver components
   logLevel: info
 
+  # Control CSP Service and Deployments for HPE storage products
+  disable:
+    nimble: false
+    primera: false
+    alletra6000: false
+    alletra9000: false
+
   ## For controlling automatic iscsi/multipath package installation (default: false)
   disableNodeConformance: false
 
@@ -27,4 +34,6 @@ spec:
 
   # registry prefix for hpe csi images
   registry: "quay.io"
-  
+
+  # Kubelet root directory path
+  kubeletRootDir: "/var/lib/kubelet/"

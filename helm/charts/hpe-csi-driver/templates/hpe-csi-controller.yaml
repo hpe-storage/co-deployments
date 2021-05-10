@@ -32,10 +32,12 @@ spec:
             value: "1"
       containers:
         - name: csi-provisioner
-          {{- if .Values.registry }}
-          image: {{ .Values.registry }}/k8scsi/csi-provisioner:v1.5.0
+          {{- if and (.Values.registry) (eq .Values.registry "quay.io") }}
+          image: k8s.gcr.io/sig-storage/csi-provisioner:v1.5.0
+          {{- else if .Values.registry }}
+          image: {{ .Values.registry }}/sig-storage/csi-provisioner:v1.5.0
           {{- else }}
-          image: quay.io/k8scsi/csi-provisioner:v1.5.0
+          image: k8s.gcr.io/sig-storage/csi-provisioner:v1.5.0
           {{- end }}
           args:
             - "--csi-address=$(ADDRESS)"
@@ -52,10 +54,12 @@ spec:
             - name: socket-dir
               mountPath: /var/lib/csi/sockets/pluginproxy
         - name: csi-attacher
-          {{- if .Values.registry }}
-          image:  {{ .Values.registry }}/k8scsi/csi-attacher:v2.1.1
+          {{- if and (.Values.registry) (eq .Values.registry "quay.io") }}
+          image: k8s.gcr.io/sig-storage/csi-attacher:v2.2.0
+          {{- else if .Values.registry }}
+          image: {{ .Values.registry }}/sig-storage/csi-attacher:v2.2.0
           {{- else }}
-          image: quay.io/k8scsi/csi-attacher:v2.1.1
+          image: k8s.gcr.io/sig-storage/csi-attacher:v2.2.0
           {{- end }}
           args:
             - "--v=5"
@@ -95,10 +99,12 @@ spec:
               mountPath: /var/lib/csi/sockets/pluginproxy/
         {{- if and (eq .Capabilities.KubeVersion.Major "1") ( ge  ( trimSuffix "+" .Capabilities.KubeVersion.Minor ) "15") }}
         - name: csi-resizer
-          {{- if .Values.registry }}
-          image: {{ .Values.registry }}/k8scsi/csi-resizer:v0.4.0
+          {{- if and (.Values.registry) (eq .Values.registry "quay.io") }}
+          image: k8s.gcr.io/sig-storage/csi-resizer:v0.4.0
+          {{- else if .Values.registry }}
+          image: {{ .Values.registry }}/sig-storage/csi-resizer:v0.4.0
           {{- else }}
-          image: quay.io/k8scsi/csi-resizer:v0.4.0
+          image: k8s.gcr.io/sig-storage/csi-resizer:v0.4.0
           {{- end }}
           args:
             - "--csi-address=$(ADDRESS)"
