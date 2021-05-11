@@ -25,7 +25,7 @@ The following table lists the configurable parameters of the chart and their def
 | disable.alletra6000       | Disable HPE Alletra 6000 CSP `Service`.                                | false            |
 | disable.alletra9000       | Disable HPE Alletra 9000 CSP `Service`.                                | false            |
 | disableNodeConformance    | Disable automatic installation of iSCSI/Multipath Packages.            | false            |
-| disableNodeGetVolumeStats | Disable NodeGetVolumeStats call to CSI driver                          | false            |
+| disableNodeGetVolumeStats | Disable NodeGetVolumeStats call to CSI driver.                         | false            |
 | imagePullPolicy           | Image pull policy (`Always`, `IfNotPresent`, `Never`).                 | IfNotPresent     |
 | iscsi.chapUser            | Username for iSCSI CHAP authentication.                                | ""               |
 | iscsi.chapPassword        | Password for iSCSI CHAP authentication.                                | ""               |
