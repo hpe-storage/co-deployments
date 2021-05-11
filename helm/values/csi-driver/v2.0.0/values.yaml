@@ -29,6 +29,3 @@ registry: "quay.io"
 # Kubelet root directory path
 kubeletRootDir: "/var/lib/kubelet/"
 
-# NodeGetVolumestats will be called by default, set true to disable the call 
-disableNodeGetVolumeStats: false
-
