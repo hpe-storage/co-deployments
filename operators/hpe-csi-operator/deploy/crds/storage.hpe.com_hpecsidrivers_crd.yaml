@@ -78,6 +78,9 @@ spec:
             kubeletRootDir:
               description: 'Kubelet root directory path, default: /var/lib/kubelet/'
               type: string
+            disableNodeGetVolumeStats:
+              description: 'Disable NodeGetVolumeStats call to CSI driver, default: false'
+              type: boolean
           required:
           - iscsi
           - imagePullPolicy
@@ -86,6 +89,7 @@ spec:
           - disableNodeConformance
           - registry
           - kubeletRootDir
+          - disableNodeGetVolumeStats
           type: object
         status:
           description: HpecsidriverStatus defines the observed state of Hpecsidriver

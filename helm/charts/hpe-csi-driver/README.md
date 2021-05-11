@@ -18,19 +18,20 @@ Depending on which [Container Storage Provider](https://scod.hpedev.io/container
 
 The following table lists the configurable parameters of the chart and their default values.
 
-| Parameter              | Description                                                            | Default          |
-|------------------------|------------------------------------------------------------------------|------------------|
-| disable.nimble         | Disable HPE Nimble Storage CSP `Service`.                              | false            |
-| disable.primera        | Disable HPE Primera (and 3PAR) CSP `Service`.                          | false            |
-| disable.alletra6000    | Disable HPE Alletra 6000 CSP `Service`.                                | false            |
-| disable.alletra9000    | Disable HPE Alletra 9000 CSP `Service`.                                | false            |
-| disableNodeConformance | Disable automatic installation of iSCSI/Multipath Packages.            | false            |
-| imagePullPolicy        | Image pull policy (`Always`, `IfNotPresent`, `Never`).                 | IfNotPresent     |
-| iscsi.chapUser         | Username for iSCSI CHAP authentication.                                | ""               |
-| iscsi.chapPassword     | Password for iSCSI CHAP authentication.                                | ""               |
-| logLevel               | Log level. Can be one of `info`, `debug`, `trace`, `warn` and `error`. | info             |
-| registry               | Registry to pull HPE CSI Driver container images from.                 | quay.io          |
-| kubeletRootDir         | The kubelet root directory path                                        | /var/lib/kubelet |
+| Parameter                 | Description                                                            | Default          |
+|---------------------------|------------------------------------------------------------------------|------------------|
+| disable.nimble            | Disable HPE Nimble Storage CSP `Service`.                              | false            |
+| disable.primera           | Disable HPE Primera (and 3PAR) CSP `Service`.                          | false            |
+| disable.alletra6000       | Disable HPE Alletra 6000 CSP `Service`.                                | false            |
+| disable.alletra9000       | Disable HPE Alletra 9000 CSP `Service`.                                | false            |
+| disableNodeConformance    | Disable automatic installation of iSCSI/Multipath Packages.            | false            |
+| disableNodeGetVolumeStats | Disable NodeGetVolumeStats call to CSI driver.                         | false            |
+| imagePullPolicy           | Image pull policy (`Always`, `IfNotPresent`, `Never`).                 | IfNotPresent     |
+| iscsi.chapUser            | Username for iSCSI CHAP authentication.                                | ""               |
+| iscsi.chapPassword        | Password for iSCSI CHAP authentication.                                | ""               |
+| logLevel                  | Log level. Can be one of `info`, `debug`, `trace`, `warn` and `error`. | info             |
+| registry                  | Registry to pull HPE CSI Driver container images from.                 | quay.io          |
+| kubeletRootDir            | The kubelet root directory path                                        | /var/lib/kubelet |
 
 It's recommended to create a [values.yaml](https://github.com/hpe-storage/co-deployments/blob/master/helm/values/csi-driver) file from the corresponding release of the chart and edit it to fit the environment the chart is being deployed to. Download and edit [a sample file](https://github.com/hpe-storage/co-deployments/blob/master/helm/values/csi-driver).
 
