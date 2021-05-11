@@ -96,7 +96,11 @@ spec:
             {{- if .Values.kubeletRootDir }}
             - name: KUBELET_ROOT_DIR
               value: {{ .Values.kubeletRootDir }}
-            {{- end }} 
+            {{- end }}
+            {{ if .Values.disableNodeGetVolumeStats -}}
+            - name: DISABLE_NODE_GET_VOLUMESTATS
+              value: "true"
+            {{- end }}
           imagePullPolicy: {{ .Values.imagePullPolicy | quote }}
           securityContext:
             privileged: true
