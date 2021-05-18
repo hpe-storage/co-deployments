@@ -119,9 +119,9 @@ spec:
         {{- end }}
         - name: hpe-csi-driver
          {{- if .Values.registry }}
-          image: {{ .Values.registry }}/hpestorage/csi-driver:v2.0.0-beta
+          image: {{ .Values.registry }}/sneharai/csi-driver:csptimeout
          {{- else }}
-          image: quay.io/hpestorage/csi-driver:v2.0.0-beta
+          image: quay.io/sneharai/csi-driver:csptimeout
          {{- end }}
           args :
             - "--endpoint=$(CSI_ENDPOINT)"
