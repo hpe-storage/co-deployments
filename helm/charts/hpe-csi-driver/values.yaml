@@ -32,3 +32,6 @@ kubeletRootDir: "/var/lib/kubelet/"
 # NodeGetVolumestats will be called by default, set true to disable the call 
 disableNodeGetVolumeStats: false
 
+# CSP Client Timeout for alletra9000/primera backend
+cspClientTimeout: "60s"
+

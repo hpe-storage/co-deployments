@@ -81,6 +81,9 @@ spec:
             disableNodeGetVolumeStats:
               description: 'Disable NodeGetVolumeStats call to CSI driver, default: false'
               type: boolean
+            cspClientTimeout:
+              description: 'CSP Client Timeout for alletra9000/primera backend, default: 60s'
+              type: string
           required:
           - iscsi
           - imagePullPolicy
