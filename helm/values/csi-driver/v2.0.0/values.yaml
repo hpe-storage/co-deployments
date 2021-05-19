@@ -33,4 +33,4 @@ kubeletRootDir: "/var/lib/kubelet/"
 disableNodeGetVolumeStats: false
 
 # CSP Client Timeout for alletra9000/primera backend
-cspClientTimeout: 60
+cspClientTimeout: "60s"
