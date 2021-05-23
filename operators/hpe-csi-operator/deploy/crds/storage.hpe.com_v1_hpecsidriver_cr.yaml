@@ -41,5 +41,5 @@ spec:
   # NodeGetVolumestats will be called by default, set true to disable the call
   disableNodeGetVolumeStats: false
 
-  # CSP Client Timeout for alletra9000/primera backend
-  cspClientTimeout: "60s"
+  # CSP client timeout for HPE Alletra 9000, Primera and 3PAR (60-360 seconds)
+  cspClientTimeout: 60

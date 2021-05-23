@@ -32,7 +32,7 @@ The following table lists the configurable parameters of the chart and their def
 | logLevel                  | Log level. Can be one of `info`, `debug`, `trace`, `warn` and `error`. | info             |
 | registry                  | Registry to pull HPE CSI Driver container images from.                 | quay.io          |
 | kubeletRootDir            | The kubelet root directory path.                                       | /var/lib/kubelet |
-| cspClientTimeout          | CSP Client Timeout for Alletra 9000 and Primera(3PAR).                 | 60s              |
+| cspClientTimeout          | CSP client timeout for HPE Alletra 9000, Primera and 3PAR (60-360 sec).| 60               |
 
 It's recommended to create a [values.yaml](https://github.com/hpe-storage/co-deployments/blob/master/helm/values/csi-driver) file from the corresponding release of the chart and edit it to fit the environment the chart is being deployed to. Download and edit [a sample file](https://github.com/hpe-storage/co-deployments/blob/master/helm/values/csi-driver).
 

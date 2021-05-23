@@ -75,7 +75,7 @@ spec:
             - "--node-service"
             - "--flavor=kubernetes"
             {{- if .Values.cspClientTimeout }}
-            - "--csp-client-timeout={{ .Values.cspClientTimeout }}"
+            - "--csp-client-timeout={{ .Values.cspClientTimeout }}s"
             {{- end }}
           env:
             - name: CSI_ENDPOINT
