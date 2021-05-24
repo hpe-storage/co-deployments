@@ -129,7 +129,7 @@ spec:
             - "--pod-monitor"
             - "--pod-monitor-interval=30"
             {{- if .Values.cspClientTimeout }}
-            - "--csp-client-timeout={{ .Values.cspClientTimeout }}"
+            - "--csp-client-timeout={{ .Values.cspClientTimeout }}s"
             {{- end }}
           env:
             - name: CSI_ENDPOINT
