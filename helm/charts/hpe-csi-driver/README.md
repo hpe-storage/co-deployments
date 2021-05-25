@@ -4,15 +4,15 @@ The [HPE CSI Driver for Kubernetes](https://scod.hpedev.io/csi_driver/index.html
 
 ## Prerequisites
 
-- Upstream Kubernetes version >= 1.15
+- Upstream Kubernetes version >= 1.18
 - Most Kubernetes distributions are supported
 - Recent Ubuntu, SLES, CentOS or RHEL compute nodes connected to their respective official package repositories
 - Helm 3 (Version >= 3.2.0 required)
 
 Depending on which [Container Storage Provider](https://scod.hpedev.io/container_storage_provider/index.html) (CSP) is being used, other prerequisites and requirements may apply, such as storage platform OS and features.
 
-- [HPE Nimble Storage](https://scod.hpedev.io/container_storage_provider/hpe_nimble_storage/index.html)
-- [HPE Primera and 3PAR](https://scod.hpedev.io/container_storage_provider/hpe_3par_primera/index.html)
+- [HPE Alletra 6000 and Nimble Storage](https://scod.hpedev.io/container_storage_provider/hpe_nimble_storage/index.html)
+- [HPE Alletra 9000, Primera and 3PAR](https://scod.hpedev.io/container_storage_provider/hpe_3par_primera/index.html)
 
 ## Configuration and installation
 
