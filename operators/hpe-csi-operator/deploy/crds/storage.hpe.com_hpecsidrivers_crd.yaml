@@ -35,9 +35,6 @@ spec:
         spec:
           description: HPECSIDriverSpec defines the desired state of HPECSIDriver
           properties:
-            flavor:
-              description: Flavor of the CO orchestrator
-              type: string
             imagePullPolicy:
               description: Image Pull Policy for HPE CSI driver images
               type: string

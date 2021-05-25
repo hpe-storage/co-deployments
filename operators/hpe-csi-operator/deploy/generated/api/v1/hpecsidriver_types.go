@@ -29,8 +29,6 @@ type HPECSIDriverSpec struct {
 
 	// Image Pull Policy for HPE CSI driver images
 	ImagePullPolicy string `json:"imagePullPolicy"`
-	// Flavor of the CO orchestrator
-	Flavor string `json:"flavor"`
 	// Default logLevel for HPE CSI driver deployments
 	LogLevel string `json:"logLevel"`
 	// DisableNodeConformance disables automatic installation of iscsi/multipath packages
