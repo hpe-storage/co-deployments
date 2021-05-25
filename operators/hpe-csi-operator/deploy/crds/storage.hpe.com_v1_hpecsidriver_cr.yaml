@@ -11,9 +11,6 @@ spec:
   # image pull policy for all images in csi deployment
   imagePullPolicy: 'IfNotPresent'
 
-  # flavor
-  flavor: kubernetes
-
   # log level for all csi driver components
   logLevel: info
 
