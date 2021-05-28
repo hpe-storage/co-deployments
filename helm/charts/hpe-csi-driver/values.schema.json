@@ -120,7 +120,8 @@
                     "title": "CHAP password",
                     "description": "Between 12 and 16 characters",
                     "type": "string",
-                    "default": ""
+                    "default": "",
+                    "pattern": "^$|^[a-zA-Z0-9+_)(*^%$#@!]{12,16}$"
                 }
             },
             "additionalProperties": false
