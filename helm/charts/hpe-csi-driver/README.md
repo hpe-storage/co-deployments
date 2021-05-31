@@ -4,30 +4,35 @@ The [HPE CSI Driver for Kubernetes](https://scod.hpedev.io/csi_driver/index.html
 
 ## Prerequisites
 
-- Upstream Kubernetes version >= 1.15
+- Upstream Kubernetes version >= 1.18
 - Most Kubernetes distributions are supported
 - Recent Ubuntu, SLES, CentOS or RHEL compute nodes connected to their respective official package repositories
 - Helm 3 (Version >= 3.2.0 required)
 
 Depending on which [Container Storage Provider](https://scod.hpedev.io/container_storage_provider/index.html) (CSP) is being used, other prerequisites and requirements may apply, such as storage platform OS and features.
 
-- [HPE Nimble Storage](https://scod.hpedev.io/container_storage_provider/hpe_nimble_storage/index.html)
-- [HPE Primera and 3PAR](https://scod.hpedev.io/container_storage_provider/hpe_3par_primera/index.html)
+- [HPE Alletra 6000 and Nimble Storage](https://scod.hpedev.io/container_storage_provider/hpe_nimble_storage/index.html)
+- [HPE Alletra 9000, Primera and 3PAR](https://scod.hpedev.io/container_storage_provider/hpe_3par_primera/index.html)
 
 ## Configuration and installation
 
 The following table lists the configurable parameters of the chart and their default values.
 
-| Parameter              | Description                                                            | Default      |
-|------------------------|------------------------------------------------------------------------|--------------|
-| disable.nimble         | Disable HPE Nimble Storage CSP `Service` and `Deployment`.             | false        |
-| disable.primera        | Disable HPE Primera (3PAR) CSP `Service` and `Deployment`.             | false        |
-| disableNodeConformance | Disable automatic installation of iSCSI/Multipath Packages.            | false        |
-| imagePullPolicy        | Image pull policy (`Always`, `IfNotPresent`, `Never`).                 | IfNotPresent |
-| iscsi.chapUser         | Username for iSCSI CHAP authentication.                                | ""           |
-| iscsi.chapPassword     | Password for iSCSI CHAP authentication.                                | ""           |
-| logLevel               | Log level. Can be one of `info`, `debug`, `trace`, `warn` and `error`. | info         |
-| registry               | Registry to pull HPE CSI Driver container images from.                 | quay.io      |
+| Parameter                 | Description                                                            | Default          |
+|---------------------------|------------------------------------------------------------------------|------------------|
+| disable.nimble            | Disable HPE Nimble Storage CSP `Service`.                              | false            |
+| disable.primera           | Disable HPE Primera (and 3PAR) CSP `Service`.                          | false            |
+| disable.alletra6000       | Disable HPE Alletra 6000 CSP `Service`.                                | false            |
+| disable.alletra9000       | Disable HPE Alletra 9000 CSP `Service`.                                | false            |
+| disableNodeConformance    | Disable automatic installation of iSCSI/Multipath Packages.            | false            |
+| disableNodeGetVolumeStats | Disable NodeGetVolumeStats call to CSI driver.                         | false            |
+| imagePullPolicy           | Image pull policy (`Always`, `IfNotPresent`, `Never`).                 | IfNotPresent     |
+| iscsi.chapUser            | Username for iSCSI CHAP authentication.                                | ""               |
+| iscsi.chapPassword        | Password for iSCSI CHAP authentication.                                | ""               |
+| logLevel                  | Log level. Can be one of `info`, `debug`, `trace`, `warn` and `error`. | info             |
+| registry                  | Registry to pull HPE CSI Driver container images from.                 | quay.io          |
+| kubeletRootDir            | The kubelet root directory path.                                       | /var/lib/kubelet |
+| cspClientTimeout          | CSP client timeout for HPE Alletra 9000, Primera and 3PAR (60-360 sec).| 60               |
 
 It's recommended to create a [values.yaml](https://github.com/hpe-storage/co-deployments/blob/master/helm/values/csi-driver) file from the corresponding release of the chart and edit it to fit the environment the chart is being deployed to. Download and edit [a sample file](https://github.com/hpe-storage/co-deployments/blob/master/helm/values/csi-driver).
 

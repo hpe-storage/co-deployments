@@ -11,11 +11,15 @@ spec:
   # image pull policy for all images in csi deployment
   imagePullPolicy: 'IfNotPresent'
 
-  # flavor
-  flavor: kubernetes
-
   # log level for all csi driver components
   logLevel: info
+
+  # Control CSP Service and Deployments for HPE storage products
+  disable:
+    nimble: false
+    primera: false
+    alletra6000: false
+    alletra9000: false
 
   ## For controlling automatic iscsi/multipath package installation (default: false)
   disableNodeConformance: false
@@ -27,4 +31,12 @@ spec:
 
   # registry prefix for hpe csi images
   registry: "quay.io"
-  
+
+  # Kubelet root directory path
+  kubeletRootDir: "/var/lib/kubelet/"
+
+  # NodeGetVolumestats will be called by default, set true to disable the call
+  disableNodeGetVolumeStats: false
+
+  # CSP client timeout for HPE Alletra 9000, Primera and 3PAR (60-360 seconds)
+  cspClientTimeout: 60

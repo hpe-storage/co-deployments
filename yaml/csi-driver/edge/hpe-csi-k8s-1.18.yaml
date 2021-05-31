@@ -121,7 +121,7 @@ spec:
             value: "1"
       containers:
         - name: csi-provisioner
-          image: quay.io/k8scsi/csi-provisioner:v1.5.0
+          image: k8s.gcr.io/sig-storage/csi-provisioner:v1.5.0
           args:
             - "--csi-address=$(ADDRESS)"
             - "--v=5"
@@ -135,7 +135,7 @@ spec:
             - name: socket-dir
               mountPath: /var/lib/csi/sockets/pluginproxy/
         - name: csi-attacher
-          image: quay.io/k8scsi/csi-attacher:v2.1.1
+          image: k8s.gcr.io/sig-storage/csi-attacher:v2.2.0
           args:
             - "--v=5"
             - "--csi-address=$(ADDRESS)"
@@ -159,7 +159,7 @@ spec:
             - name: socket-dir
               mountPath: /var/lib/csi/sockets/pluginproxy/
         - name: csi-resizer
-          image: quay.io/k8scsi/csi-resizer:v0.4.0
+          image: k8s.gcr.io/sig-storage/csi-resizer:v0.4.0
           args:
             - "--csi-address=$(ADDRESS)"
             - "--v=5"
@@ -171,12 +171,13 @@ spec:
             - name: socket-dir
               mountPath: /var/lib/csi/sockets/pluginproxy/
         - name: hpe-csi-driver
-          image: quay.io/hpestorage/csi-driver:v1.5.0-beta
+          image: quay.io/hpestorage/csi-driver:v2.0.0-beta
           args :
             - "--endpoint=$(CSI_ENDPOINT)"
             - "--flavor=kubernetes"
             - "--pod-monitor"
             - "--pod-monitor-interval=30"
+            - "--csp-client-timeout=60s"
           env:
             - name: CSI_ENDPOINT
               value: unix:///var/lib/csi/sockets/pluginproxy/csi.sock
@@ -284,6 +285,9 @@ metadata:
   name: hpe-csi-provisioner-role
 rules:
   - apiGroups: [""]
+    resources: ["secrets"]
+    verbs: ["get", "list"]
+  - apiGroups: [""]
     resources: ["namespaces"]
     verbs: ["get", "list", "create"]
   - apiGroups: [""]
@@ -363,6 +367,9 @@ rules:
   - apiGroups: ["storage.k8s.io"]
     resources: ["volumeattachments/status"]
     verbs: ["get", "list", "watch", "update", "create", "delete"]
+  - apiGroups: [""]
+    resources: ["secrets"]
+    verbs: ["get", "watch", "list"]
 
 ---
 
@@ -439,6 +446,9 @@ apiVersion: rbac.authorization.k8s.io/v1
 metadata:
   name: external-resizer-role
 rules:
+  - apiGroups: [""]
+    resources: ["secrets"]
+    verbs: ["get", "list", "watch"]
   - apiGroups: [""]
     resources: ["persistentvolumes"]
     verbs: ["get", "list", "watch", "update", "patch"]
@@ -539,6 +549,9 @@ rules:
   - apiGroups: [""]
     resources: ["events"]
     verbs: ["list", "watch", "create", "update", "patch"]
+  - apiGroups: [""]
+    resources: ["secrets"]
+    verbs: ["get"]
   - apiGroups: ["apiextensions.k8s.io"]
     resources: ["customresourcedefinitions"]
     verbs: ["create", "list", "watch", "delete", "get", "update"]
@@ -599,6 +612,9 @@ rules:
   - apiGroups: [""]
     resources: ["events"]
     verbs: ["list", "watch", "create", "update", "patch"]
+  - apiGroups: [""]
+    resources: ["secrets"]
+    verbs: ["get"]
   - apiGroups: ["apiextensions.k8s.io"]
     resources: ["customresourcedefinitions"]
     verbs: ["create", "list", "watch", "delete", "get", "update"]
@@ -653,6 +669,9 @@ metadata:
   name: csi-mutator-role
 rules:
   - apiGroups: [""]
+    resources: ["secrets"]
+    verbs: ["get", "list", "watch"]
+  - apiGroups: [""]
     resources: ["persistentvolumes"]
     verbs: ["get", "list", "watch", "update", "patch"]
   - apiGroups: [""]
@@ -692,9 +711,9 @@ metadata:
   namespace: hpe-storage
   name: csi-mutator-cfg
 rules:
-- apiGroups: ["coordination.k8s.io"]
-  resources: ["leases"]
-  verbs: ["get", "watch", "list", "delete", "update", "create"]
+  - apiGroups: ["coordination.k8s.io"]
+    resources: ["leases"]
+    verbs: ["get", "watch", "list", "delete", "update", "create"]
 
 ---
 kind: RoleBinding
@@ -725,6 +744,9 @@ rules:
   - apiGroups: [""]
     resources: ["pods"]
     verbs: ["get", "list"]
+  - apiGroups: [""]
+    resources: ["secrets"]
+    verbs: ["get"]
   - apiGroups: [""]
     resources: ["services"]
     verbs: ["get"]
@@ -787,7 +809,7 @@ spec:
             value: "1"
       containers:
         - name: csi-node-driver-registrar
-          image: quay.io/k8scsi/csi-node-driver-registrar:v2.0.1
+          image: k8s.gcr.io/sig-storage/csi-node-driver-registrar:v2.0.1
           args:
             - "--csi-address=$(ADDRESS)"
             - "--kubelet-registration-path=$(DRIVER_REG_SOCK_PATH)"
@@ -803,11 +825,12 @@ spec:
             - name: registration-dir
               mountPath: /registration
         - name: hpe-csi-driver
-          image: quay.io/hpestorage/csi-driver:v1.5.0-beta
+          image: quay.io/hpestorage/csi-driver:v2.0.0-beta
           args :
             - "--endpoint=$(CSI_ENDPOINT)"
             - "--node-service"
             - "--flavor=kubernetes"
+            - "--csp-client-timeout=60s"
           env:
             - name: CSI_ENDPOINT
               value: unix:///csi/csi.sock
@@ -940,63 +963,4 @@ subjects:
 roleRef:
   kind: ClusterRole
   name: hpe-csi-driver-role
-  apiGroup: rbac.authorization.k8s.io
-
----
-
-kind: Role
-apiVersion: rbac.authorization.k8s.io/v1
-metadata:
-  name: hpe-csi-secret-get
-  namespace: hpe-storage
-rules:
-  - apiGroups: [""]
-    resources: ["secrets"]
-    verbs: ["get", "list"]
-
----
-
-kind: RoleBinding
-apiVersion: rbac.authorization.k8s.io/v1
-metadata:
-  name: hpe-csi-secret-get-binding
-  namespace: hpe-storage
-subjects:
-  - kind: ServiceAccount
-    name: hpe-csi-node-sa
-    namespace: hpe-storage
-  - kind: ServiceAccount
-    name: hpe-csp-sa
-    namespace: hpe-storage
-roleRef:
-  kind: Role
-  name: hpe-csi-secret-get
-  apiGroup: rbac.authorization.k8s.io
-
----
-
-kind: Role
-apiVersion: rbac.authorization.k8s.io/v1
-metadata:
-  name: hpe-csi-secret-watch
-  namespace: hpe-storage
-rules:
-  - apiGroups: [""]
-    resources: ["secrets"]
-    verbs: ["get", "list", "watch"]
-
----
-
-kind: RoleBinding
-apiVersion: rbac.authorization.k8s.io/v1
-metadata:
-  name: hpe-csi-secret-watch-binding
-  namespace: hpe-storage
-subjects:
-  - kind: ServiceAccount
-    name: hpe-csi-controller-sa
-    namespace: hpe-storage
-roleRef:
-  kind: Role
-  name: hpe-csi-secret-watch
   apiGroup: rbac.authorization.k8s.io
