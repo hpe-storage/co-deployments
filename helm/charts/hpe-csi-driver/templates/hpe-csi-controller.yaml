@@ -74,17 +74,17 @@ spec:
         - name: csi-snapshotter
         {{- if and (eq .Capabilities.KubeVersion.Major "1") ( ge  ( trimSuffix "+" .Capabilities.KubeVersion.Minor ) "20") }}
           {{- if and (.Values.registry) (eq .Values.registry "quay.io") }}
-          image: k8s.gcr.io/sig-storage/csi-snapshotter:v4.1.0
+          image: k8s.gcr.io/sig-storage/csi-snapshotter:v4.0.0
           {{- else if .Values.registry }}
-          image: {{ .Values.registry }}/k8scsi/csi-snapshotter:v4.1.0
+          image: {{ .Values.registry }}/k8scsi/csi-snapshotter:v4.0.0
           {{- else }}
-          image: k8s.gcr.io/sig-storage/csi-snapshotter:v4.1.0
+          image: k8s.gcr.io/sig-storage/csi-snapshotter:v4.0.0
           {{- end }}
         {{- else if and (eq .Capabilities.KubeVersion.Major "1") ( ge  ( trimSuffix "+" .Capabilities.KubeVersion.Minor ) "17") }}
          {{- if .Values.registry }}
-          image: {{ .Values.registry }}/k8scsi/csi-snapshotter:v3.0.2
+          image: {{ .Values.registry }}/k8scsi/csi-snapshotter:v3.0.3
           {{- else }}
-          image: quay.io/k8scsi/csi-snapshotter:v3.0.2
+          image: quay.io/k8scsi/csi-snapshotter:v3.0.3
           {{- end }}
         {{- end }}
           args:
