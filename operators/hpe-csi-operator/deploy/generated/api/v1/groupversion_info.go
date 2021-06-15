@@ -1,4 +1,5 @@
 /*
+Copyright 2021.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -13,9 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-// Package v1 contains API Schema definitions for the storagehpecom v1 API group
-// +kubebuilder:object:generate=true
-// +groupName=storage.hpe.com
+// Package v1 contains API Schema definitions for the storage.hpe.com v1 API group
+//+kubebuilder:object:generate=true
+//+groupName=storage.hpe.com
 package v1
 
 import (
