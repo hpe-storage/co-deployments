@@ -1,4 +1,5 @@
 /*
+Copyright 2021.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -22,11 +23,12 @@ import (
 // EDIT THIS FILE!  THIS IS SCAFFOLDING FOR YOU TO OWN!
 // NOTE: json tags are required.  Any new fields you add must have json tags for the fields to be serialized.
 
-// HpecsidriverSpec defines the desired state of Hpecsidriver
+// HPECSIDriverSpec defines the desired state of HPECSIDriver
 type HPECSIDriverSpec struct {
 	// INSERT ADDITIONAL SPEC FIELDS - desired state of cluster
 	// Important: Run "make" to regenerate code after modifying this file
-
+	// Control CSP Service and Deployments for HPE storage products
+	Disable DisableInfo `json:"disable"`
 	// Image Pull Policy for HPE CSI driver images
 	ImagePullPolicy string `json:"imagePullPolicy"`
 	// Default logLevel for HPE CSI driver deployments
@@ -35,8 +37,22 @@ type HPECSIDriverSpec struct {
 	DisableNodeConformance bool `json:"disableNodeConformance"`
 	// Iscsi parameters to be configured
 	Iscsi IscsiInfo `json:"iscsi"`
-	// Registry prefix for csi images
+	// Registry prefix for CSI driver images
 	Registry string `json:"registry"`
+	// Kubelet root directory path
+	KubeletRootDir string `json:"kubeletRootDir"`
+	// DisableNodeGetVolumeStats will be called by default, set true to disable the call
+	DisableNodeGetVolumeStats string `json:"disableNodeGetVolumeStats"`
+	// CSP client timeout for HPE Alletra 9000, Primera and 3PAR (60-360 seconds)
+	CspClientTimeout string `json:"cspClientTimeout"`
+}
+
+// DisableInfo defines different CSP services which can be disabled
+type DisableInfo struct {
+	Nimble      string `json:"nimble"`
+	Primera     string `json:"primera"`
+	Alletra6000 string `json:"alletra6000"`
+	Alletra9000 string `json:"alletra9000"`
 }
 
 // IscsiInfo defines different Iscsi parameters which can be configured
@@ -63,7 +79,7 @@ type HelmAppRelease struct {
 	Manifest string `json:"manifest,omitempty"`
 }
 
-// HpecsidriverStatus defines the observed state of Hpecsidriver
+// HPECSIDriverStatus defines the observed state of HPECSIDriver
 type HPECSIDriverStatus struct {
 	// HPE CSI Driver helm release status
 	Conditions []HelmAppCondition `json:"conditions"`
@@ -71,7 +87,8 @@ type HPECSIDriverStatus struct {
 	DeployedRelease *HelmAppRelease `json:"deployedRelease,omitempty"`
 }
 
-// +kubebuilder:object:root=true
+//+kubebuilder:object:root=true
+//+kubebuilder:subresource:status
 
 // HPECSIDriver is the Schema for the hpecsidrivers API
 type HPECSIDriver struct {
@@ -82,9 +99,9 @@ type HPECSIDriver struct {
 	Status HPECSIDriverStatus `json:"status,omitempty"`
 }
 
-// +kubebuilder:object:root=true
+//+kubebuilder:object:root=true
 
-// HPECSIDriverList contains a list of Hpecsidriver
+// HPECSIDriverList contains a list of HPECSIDriver
 type HPECSIDriverList struct {
 	metav1.TypeMeta `json:",inline"`
 	metav1.ListMeta `json:"metadata,omitempty"`

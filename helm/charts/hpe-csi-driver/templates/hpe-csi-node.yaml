@@ -66,9 +66,9 @@ spec:
               mountPath: /registration
         - name: hpe-csi-driver
           {{- if .Values.registry }}
-          image: {{ .Values.registry }}/hpestorage/csi-driver:v2.0.0-beta
+          image: {{ .Values.registry }}/hpestorage/csi-driver:v2.0.0
           {{- else }}
-          image: quay.io/hpestorage/csi-driver:v2.0.0-beta
+          image: quay.io/hpestorage/csi-driver:v2.0.0
           {{- end}}        
           args :
             - "--endpoint=$(CSI_ENDPOINT)"
