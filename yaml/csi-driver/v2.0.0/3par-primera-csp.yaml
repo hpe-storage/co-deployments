@@ -158,6 +158,7 @@ spec:
     metadata:
       labels:
         app: primera3par-csp
+    spec:
       serviceAccountName: hpe-csp-sa
       priorityClassName: system-cluster-critical
       containers:
