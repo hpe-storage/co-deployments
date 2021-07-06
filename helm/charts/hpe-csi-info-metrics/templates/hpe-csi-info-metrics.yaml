@@ -55,7 +55,7 @@ spec:
       containers:
         - name: csi-info-metrics
           {{- if .Values.registry }}
-          image: {{ .Values.registry }}/hpestorage/csi-info-metrics:rkumpf
+          image: {{ .Values.registry }}/hpestorage/csi-info-metrics:v1.0.0
           {{- else }}
           image: quay.io/hpestorage/csi-info-metrics:v1.0.0
           {{- end }}
