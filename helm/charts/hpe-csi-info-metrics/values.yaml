@@ -1,0 +1,37 @@
+# Settings for the HPE CSI Info Metrics Provider for Prometheus Helm chart
+
+# IMPORTANT:
+# Confirm your acceptance of the HPE End User License Agreement at
+# https://www.hpe.com/us/en/software/licensing.html by setting this
+# value to true.
+acceptEula: false
+
+# Container image repository
+registry: "quay.io"
+
+# Container image pull policy
+imagePullPolicy: "IfNotPresent"
+
+# Minimum severity of messages to output
+logLevel: "info"
+
+# Settings for the Service providing access to info metrics.
+service:
+  # The type of Service to create, ClusterIP (the default) for access
+  # solely from within the cluster or NodePort to provide access from
+  # outside the cluster.
+  type: "ClusterIP"
+
+  # The TCP port at which to expose access to info metrics within the
+  # cluster (default 9090).
+  port: 9090
+
+  # The TCP port at which to expose access to info metrics externally
+  # at each cluster node, if the Service type is NodePort and
+  # automatic assignment is not desired.
+  #nodePort:
+
+  # Labels to add to the Service, for example to include target labels
+  # in a ServiceMonitor scrape configuration.
+  #customLabels:
+  #  k8s_cluster: mycluster
