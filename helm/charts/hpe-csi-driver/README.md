@@ -64,7 +64,7 @@ kubectl create ns hpe-storage
 helm install my-hpe-csi-driver hpe-storage/hpe-csi-driver -n hpe-storage -f myvalues.yaml
 ```
 
-**Note**: `myvalues.yaml` is optional if no parameters are overridden from defaults. Also pay attention to what the latest version of the chart is. If it's labeled with `pre-prelease` and a "beta" tag, add `--version X.Y.Z` to install a "stable" chart.
+**Note**: `myvalues.yaml` is optional if no parameters are overridden from defaults. Also pay attention to what the latest version of the chart is. If it's labeled with `prerelease` and a "beta" tag, add `--version X.Y.Z` to install a "stable" chart.
 
 ### Upgrading the chart
 
