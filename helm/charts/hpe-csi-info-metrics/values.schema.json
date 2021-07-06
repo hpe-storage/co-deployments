@@ -1,0 +1,106 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema",
+    "$id": "http://example.com/example.json",
+    "title": "HPE CSI Info Metrics Provider for Prometheus Helm Chart JSON Schema",
+    "type": "object",
+    "default": 
+        {
+            "acceptEula": false,
+            "registry": "quay.io",
+            "imagePullPolicy": "IfNotPresent",
+            "logLevel": "info",
+            "service": {
+                "type": "ClusterIP",
+                "port": "9090"
+            }
+        },
+    "required": [
+        "acceptEula",
+        "registry",
+        "imagePullPolicy",
+        "logLevel",
+        "service"
+    ],
+    "properties": {
+        "acceptEula": {
+            "$id": "#/properties/acceptEula",
+            "title": "Accept the HPE End User License Agreement",
+            "description": "Confirm your acceptance of the HPE End User License Agreement at https://www.hpe.com/us/en/software/licensing.html by setting this value to true.",
+            "type": "boolean",
+            "default": false
+        },
+        "registry": {
+            "$id": "#/properties/registry",
+            "title": "Container image repository",
+            "description": "The repository from which to pull container images.",
+            "type": "string",
+            "default": "quay.io"
+        },
+        "imagePullPolicy": {
+            "$id": "#/properties/imagePullPolicy",
+            "title": "Container image pull policy",
+            "type": "string",
+            "default": "IfNotPresent",
+            "enum": [ "Always", "IfNotPresent", "Never" ]
+        },
+        "logLevel": {
+            "$id": "#/properties/logLevel",
+            "title": "Logging level",
+            "description": "Minimum severity of messages to output.",
+            "type": "string",
+            "default": "info",
+            "enum": [ "info", "debug", "trace", "warn", "error" ]
+        },
+        "service": {
+            "$id": "#/properties/service",
+            "title": "Service settings",
+            "description": "Settings for the Service providing access to info metrics.",
+            "type": "object",
+            "default": 
+                {
+                    "type": "ClusterIP",
+                    "port": "9090"
+                },
+            "required": [
+                "type",
+                "port"
+            ],
+            "properties": {
+                "type": {
+                    "$id": "#/properties/service/properties/type",
+                    "title": "Service type",
+                    "description": "The type of Service to create, ClusterIP for access solely from within the cluster or NodePort to provide access from outside the cluster.",
+                    "type": "string",
+                    "default": "ClusterIP",
+                    "enum": [ "ClusterIP", "NodePort" ]
+                },
+                "port": {
+                    "$id": "#/properties/service/properties/port",
+                    "title": "Service port",
+                    "description": "The TCP port at which to expose access to info metrics within the cluster.",
+                    "type": "integer",
+                    "default": 9090,
+                    "minimum": 0,
+                    "maximum": 65535
+                },
+                "nodePort": {
+                    "$id": "#/properties/service/properties/nodePort",
+                    "title": "Node port",
+                    "description": "The TCP port at which to expose access to info metrics externally at each cluster node, if the Service type is NodePort and automatic assignment is not desired.",
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 65535
+                },
+                "customLabels": {
+                    "$id": "#/properties/service/properties/customLabels",
+                    "title": "Custom labels",
+                    "description": "Labels to add to the Service, for example to include target labels in a ServiceMonitor scrape configuration.",
+                    "type": "object",
+                    "additionalProperties": true
+                }
+            },
+            "additionalProperties": false
+        }
+    },
+    "additionalProperties": false
+}
