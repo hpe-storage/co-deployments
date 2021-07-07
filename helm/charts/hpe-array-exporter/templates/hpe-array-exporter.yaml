@@ -1,0 +1,80 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: {{ template "hpe-array-exporter.fullname" . }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app: {{ template "hpe-array-exporter.name" . }}
+    chart: {{ template "hpe-array-exporter.chart" . }}
+    heritage: {{ .Release.Service }}
+    release: {{ .Release.Name }}
+spec:
+  selector:
+    matchLabels:
+      app: hpe-array-exporter
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: {{ template "hpe-array-exporter.name" . }}
+        release: {{ .Release.Name }}
+    spec:
+      containers:
+        - name: array-exporter
+          {{- if .Values.registry }}
+          image: {{ .Values.registry }}/hpestorage/array-exporter:v1.0.0
+          {{- else }}
+          image: quay.io/hpestorage/array-exporter:v1.0.0
+          {{- end }}
+          ports:
+            - containerPort: 8080
+          args:
+            - "--telemetry.addr=:8080"
+            - "--telemetry.path=/metrics"
+            {{- if .Values.acceptEula }}
+            - "--accept-eula"
+            {{- end }}
+            - "/etc/config"
+          env:
+            - name: LOG_LEVEL
+              value: {{ .Values.logLevel }}
+          imagePullPolicy: {{ .Values.imagePullPolicy | quote }}
+          volumeMounts:
+            - name: storage-system-config
+              mountPath: /etc/config
+      volumes:
+        - name: storage-system-config
+          secret:
+            secretName: {{ .Values.arraySecret | quote }}
+
+---
+{{- $service := .Values.service | default dict }}
+kind: Service
+apiVersion: v1
+metadata:
+  name: {{ template "hpe-array-exporter.fullname" . }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app: {{ template "hpe-array-exporter.name" . }}
+    chart: {{ template "hpe-array-exporter.chart" . }}
+    heritage: {{ .Release.Service }}
+    release: {{ .Release.Name }}
+    {{- range $key, $value := $service.customLabels }}
+    {{ $key }}: {{ $value | quote }}
+    {{- end }}
+spec:
+  {{- $serviceType := $service.type | default "ClusterIP" }}
+  type: {{ $serviceType | quote }}
+  ports:
+    - name: http-metrics
+      port: {{ $service.port | default 9090 }}
+      {{- if eq $serviceType "NodePort" }}
+      {{- if $service.nodePort }}
+      nodePort: {{ $service.nodePort }}
+      {{- end }}
+      {{- end }}
+      protocol: TCP
+      targetPort: 8080
+  selector:
+    app: {{ template "hpe-array-exporter.name" . }}
+    release: {{ .Release.Name }}
