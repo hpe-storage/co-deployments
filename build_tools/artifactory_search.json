@@ -183,6 +183,22 @@
             ],
             "sortOrder": "desc",
             "limit": 1
+        },
+        {
+            "pattern": "dcs-docker-local/hpestorage/array-exporter/v1.0.0-*",
+            "sortBy": [
+                "created"
+            ],
+            "sortOrder": "desc",
+            "limit": 1
+        },
+        {
+            "pattern": "dcs-docker-local/hpestorage/csi-info-metrics/v1.0.0-*",
+            "sortBy": [
+                "created"
+            ],
+            "sortOrder": "desc",
+            "limit": 1
         }
     ]
 }
