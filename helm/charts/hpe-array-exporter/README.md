@@ -26,7 +26,7 @@ The chart has these configurable parameters and default values.
 
 Use of a values.yaml file is recommended.  Download and edit [a sample values.yaml file](https://github.com/hpe-storage/co-deployments/blob/master/helm/values/array-exporter) corresponding to the chart version and edit the settings according to the deployment environment.
 
-The `arraySecret` parameter is required and has no default value.  A Secret used by the [HPE CSI Driver for Kubernetes](https://scod.hpedev.io/csi_driver/index.html) can be reused here without modification.
+The `arraySecret` parameter is required and has no default value.  A Secret used by the [HPE CSI Driver for Kubernetes](https://scod.hpedev.io/csi_driver/index.html) can be reused without modification.  Otherwise, use [this example](https://github.com/hpe-storage/co-deployments/blob/master/yaml/array-exporter/edge/hpe-array-exporter-secret.yaml) to create a new one.
 
 **Important**: The `acceptEula` value must be set to `true` manually, confirming your acceptance of the [HPE End User License Agreement](https://www.hpe.com/us/en/software/licensing.html).
 

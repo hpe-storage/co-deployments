@@ -3,7 +3,7 @@
 # Modify this sample file to:
 # - Uncomment the --accept-eula option in the Deployment to indicate
 #   your acceptance of the HPE End User License Agreement at
-#   https://www.hpe.com/us/en/software/licensing.html.
+#   https://www.hpe.com/us/en/software/licensing.html
 # - Specify the name of a Secret containing storage array access
 #   information in the storage-system-config volume spec
 # - Optionally set the Service type to NodePort, if necessary for
