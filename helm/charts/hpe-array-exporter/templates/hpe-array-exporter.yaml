@@ -21,11 +21,7 @@ spec:
     spec:
       containers:
         - name: array-exporter
-          {{- if .Values.registry }}
           image: {{ .Values.registry }}/hpestorage/array-exporter:v1.0.0
-          {{- else }}
-          image: quay.io/hpestorage/array-exporter:v1.0.0
-          {{- end }}
           ports:
             - containerPort: 8080
           args:
@@ -59,8 +55,8 @@ metadata:
     chart: {{ template "hpe-array-exporter.chart" . }}
     heritage: {{ .Release.Service }}
     release: {{ .Release.Name }}
-    {{- range $key, $value := $service.customLabels }}
-    {{ $key }}: {{ $value | quote }}
+    {{- with $service.customLabels }}
+{{ toYaml . | indent 4 }}
     {{- end }}
 spec:
   {{- $serviceType := $service.type | default "ClusterIP" }}
