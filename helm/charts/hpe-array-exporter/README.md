@@ -22,7 +22,7 @@ The chart has these configurable parameters and default values.
 | service.type | The type of Service to create, ClusterIP for access solely from within the cluster or NodePort to provide access from outside the cluster (`ClusterIP`, `NodePort`). | ClusterIP |
 | service.port | The TCP port at which to expose access to storage array metrics within the cluster. | 9090 |
 | service.nodePort | The TCP port at which to expose access to storage array metrics externally at each cluster node, if the Service type is NodePort and automatic assignment is not desired. | *none* |
-| service.customLabels | Labels to add to the Service, for example to include target labels in a ServiceMonitor scrape configuration. | *none* |
+| service.customLabels | Labels to add to the Service, for example to include target labels in a ServiceMonitor scrape configuration. | {} |
 
 Use of a values.yaml file is recommended.  Download and edit [a sample values.yaml file](https://github.com/hpe-storage/co-deployments/blob/master/helm/values/array-exporter) corresponding to the chart version and edit the settings according to the deployment environment.
 
