@@ -33,5 +33,5 @@ service:
 
   # Labels to add to the Service, for example to include target labels
   # in a ServiceMonitor scrape configuration.
-  #customLabels:
+  customLabels: {}
   #  k8s_cluster: mycluster

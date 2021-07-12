@@ -54,11 +54,7 @@ spec:
       serviceAccount: hpe-csi-info-metrics-serviceaccount
       containers:
         - name: csi-info-metrics
-          {{- if .Values.registry }}
           image: {{ .Values.registry }}/hpestorage/csi-info-metrics:v1.0.0
-          {{- else }}
-          image: quay.io/hpestorage/csi-info-metrics:v1.0.0
-          {{- end }}
           ports:
           - containerPort: 9099
           args:
@@ -80,9 +76,9 @@ metadata:
   name: hpe-csi-info-metrics-service
   namespace: {{ .Release.Namespace }}
   labels:
-    app: hpe-csi-info-metrics-service
-    {{- range $key, $value := $service.customLabels }}
-    {{ $key }}: {{ $value | quote }}
+    app: hpe-csi-info-metrics
+    {{- with $service.customLabels }}
+{{ toYaml . | indent 4 }}
     {{- end }}
 spec:
   {{- $serviceType := $service.type | default "ClusterIP" }}

@@ -38,5 +38,5 @@ service:
 
   # Labels to add to the Service, for example to include target labels
   # in a ServiceMonitor scrape configuration.
-  #customLabels:
+  customLabels: {}
   #  array: 192.168.0.1

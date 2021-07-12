@@ -59,10 +59,10 @@ spec:
 kind: Service
 apiVersion: v1
 metadata:
-  name: hpe-array-exporter-service
+  name: hpe-array-exporter
   namespace: hpe-storage
   labels:
-    app: hpe-array-exporter-service
+    app: hpe-array-exporter
     # Optionally add labels, for example to be included in Prometheus
     # metrics via a targetLabels setting in a ServiceMonitor spec
     #array: 192.168.0.1
