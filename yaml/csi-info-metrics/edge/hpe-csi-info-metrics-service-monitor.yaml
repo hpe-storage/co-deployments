@@ -28,7 +28,7 @@ spec:
       - hpe-storage
   selector:
     matchLabels:
-      app: hpe-csi-info-metrics-service
+      app: hpe-csi-info-metrics
   endpoints:
     - port: http-metrics
       scheme: http

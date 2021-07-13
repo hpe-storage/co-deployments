@@ -87,7 +87,7 @@ metadata:
   name: hpe-csi-info-metrics-service
   namespace: hpe-storage
   labels:
-    app: hpe-csi-info-metrics-service
+    app: hpe-csi-info-metrics
     # Optionally add labels, for example to be included in Prometheus
     # metrics via a targetLabels setting in a ServiceMonitor spec
     #k8s_cluster: example-1
