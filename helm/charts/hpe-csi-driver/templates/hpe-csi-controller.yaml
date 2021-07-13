@@ -76,7 +76,7 @@ spec:
           {{- if and (.Values.registry) (eq .Values.registry "quay.io") }}
           image: k8s.gcr.io/sig-storage/csi-snapshotter:v4.0.0
           {{- else if .Values.registry }}
-          image: {{ .Values.registry }}/k8scsi/csi-snapshotter:v4.0.0
+          image: {{ .Values.registry }}/sig-storage/csi-snapshotter:v4.0.0
           {{- else }}
           image: k8s.gcr.io/sig-storage/csi-snapshotter:v4.0.0
           {{- end }}
