@@ -21,7 +21,7 @@ spec:
     spec:
       containers:
         - name: array-exporter
-          image: {{ .Values.registry }}/hpestorage/array-exporter:v1.0.0
+          image: {{ .Values.registry }}/hpestorage/array-exporter:v1.0.0-edge
           ports:
             - containerPort: 8080
           args:
@@ -29,6 +29,11 @@ spec:
             - "--telemetry.path=/metrics"
             {{- if .Values.acceptEula }}
             - "--accept-eula"
+            {{- end }}
+            {{- if .Values.metrics }}
+            {{- if .Values.metrics.disableIntrospection }}
+            - "--metrics.disable-introspection"
+            {{- end }}
             {{- end }}
             - "/etc/config"
           env:
