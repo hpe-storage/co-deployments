@@ -20,6 +20,7 @@
         "registry",
         "imagePullPolicy",
         "logLevel",
+        "metrics",
         "service"
     ],
     "properties": {
@@ -60,6 +61,29 @@
             "type": "string",
             "default": "info",
             "enum": [ "info", "debug", "trace", "warn", "error" ]
+        },
+        "metrics": {
+            "$id": "#/properties/metrics",
+            "title": "Metrics customization",
+            "description": "Customization of the metrics provided.",
+            "type": "object",
+            "default":
+                {
+                    "disableIntrospection": false
+                },
+            "required": [
+                "disableIntrospection"
+            ],
+            "properties": {
+                "disableIntrospection": {
+                    "$id": "#/properties/metrics/properties/disableIntrospection",
+                    "title": "Disable introspection metrics",
+                    "description": "Exclude metrics about the metrics provider itself, with prefixes such as \"promhttp\", \"process\", and \"go\".",
+                    "type": "boolean",
+                    "default": false
+                }
+            },
+            "additionalProperties": false
         },
         "service": {
             "$id": "#/properties/service",
