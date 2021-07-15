@@ -19,6 +19,7 @@ The chart has these configurable parameters and default values.
 | registry | The repository from which to pull container images. | quay.io |
 | imagePullPolicy | Container image pull policy (`Always`, `IfNotPresent`, `Never`). | IfNotPresent |
 | logLevel | Minimum severity of messages to output (`info`, `debug`, `trace`, `warn`, `error`). | info |
+| metrics.disableIntrospection | Exclude metrics about the metrics provider itself, with prefixes such as `promhttp`, `process`, and `go`. | false |
 | service.type | The type of Service to create, ClusterIP for access solely from within the cluster or NodePort to provide access from outside the cluster (`ClusterIP`, `NodePort`). | ClusterIP |
 | service.port | The TCP port at which to expose access to storage array metrics within the cluster. | 9090 |
 | service.nodePort | The TCP port at which to expose access to storage array metrics externally at each cluster node, if the Service type is NodePort and automatic assignment is not desired. | *none* |

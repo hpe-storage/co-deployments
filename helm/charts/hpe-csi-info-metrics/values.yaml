@@ -15,6 +15,11 @@ imagePullPolicy: "IfNotPresent"
 # Minimum severity of messages to output
 logLevel: "info"
 
+# Customization of the metrics provided.
+metrics:
+  # Exclude metrics about the metrics provider itself, with prefixes such as "promhttp", "process", and "go".
+  disableIntrospection: false
+
 # Settings for the Service providing access to info metrics.
 service:
   # The type of Service to create, ClusterIP (the default) for access

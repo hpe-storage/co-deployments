@@ -54,7 +54,7 @@ spec:
       serviceAccount: hpe-csi-info-metrics-serviceaccount
       containers:
         - name: csi-info-metrics
-          image: {{ .Values.registry }}/hpestorage/csi-info-metrics:v1.0.0
+          image: {{ .Values.registry }}/hpestorage/csi-info-metrics:v1.0.0-edge
           ports:
           - containerPort: 9099
           args:
@@ -62,6 +62,11 @@ spec:
             - "--telemetry.path=/metrics"
             {{- if .Values.acceptEula }}
             - "--accept-eula"
+            {{- end }}
+            {{- if .Values.metrics }}
+            {{- if .Values.metrics.disableIntrospection }}
+            - "--metrics.disable-introspection"
+            {{- end }}
             {{- end }}
           env:
             - name: LOG_LEVEL
