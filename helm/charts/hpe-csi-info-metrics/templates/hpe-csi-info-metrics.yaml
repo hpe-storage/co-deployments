@@ -54,7 +54,7 @@ spec:
       serviceAccount: hpe-csi-info-metrics-serviceaccount
       containers:
         - name: csi-info-metrics
-          image: {{ .Values.registry }}/hpestorage/csi-info-metrics:v1.0.0-edge
+          image: {{ .Values.image.registry }}/hpestorage/csi-info-metrics:v1.0.0-edge
           ports:
           - containerPort: 9099
           args:
@@ -71,7 +71,7 @@ spec:
           env:
             - name: LOG_LEVEL
               value: {{ .Values.logLevel }}
-          imagePullPolicy: {{ .Values.imagePullPolicy | quote }}
+          imagePullPolicy: {{ .Values.image.pullPolicy | quote }}
 
 ---
 {{- $service := .Values.service | default dict }}
@@ -82,7 +82,11 @@ metadata:
   namespace: {{ .Release.Namespace }}
   labels:
     app: hpe-csi-info-metrics
-    {{- with $service.customLabels }}
+    {{- with $service.labels }}
+{{ toYaml . | indent 4 }}
+    {{- end }}
+  annotations:
+    {{- with $service.annotations }}
 {{ toYaml . | indent 4 }}
     {{- end }}
 spec:

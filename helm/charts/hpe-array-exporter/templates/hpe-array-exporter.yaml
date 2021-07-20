@@ -21,7 +21,7 @@ spec:
     spec:
       containers:
         - name: array-exporter
-          image: {{ .Values.registry }}/hpestorage/array-exporter:v1.0.0-edge
+          image: {{ .Values.image.registry }}/hpestorage/array-exporter:v1.0.0-edge
           ports:
             - containerPort: 8080
           args:
@@ -39,7 +39,7 @@ spec:
           env:
             - name: LOG_LEVEL
               value: {{ .Values.logLevel }}
-          imagePullPolicy: {{ .Values.imagePullPolicy | quote }}
+          imagePullPolicy: {{ .Values.image.pullPolicy | quote }}
           volumeMounts:
             - name: storage-system-config
               mountPath: /etc/config
@@ -60,7 +60,11 @@ metadata:
     chart: {{ template "hpe-array-exporter.chart" . }}
     heritage: {{ .Release.Service }}
     release: {{ .Release.Name }}
-    {{- with $service.customLabels }}
+    {{- with $service.labels }}
+{{ toYaml . | indent 4 }}
+    {{- end }}
+  annotations:
+    {{- with $service.annotations }}
 {{ toYaml . | indent 4 }}
     {{- end }}
 spec:
