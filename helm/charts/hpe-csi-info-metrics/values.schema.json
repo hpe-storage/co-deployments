@@ -6,8 +6,10 @@
     "default": 
         {
             "acceptEula": false,
-            "registry": "quay.io",
-            "imagePullPolicy": "IfNotPresent",
+            "image": {
+                "registry": "quay.io",
+                "pullPolicy": "IfNotPresent"
+            },
             "logLevel": "info",
             "service": {
                 "type": "ClusterIP",
@@ -16,8 +18,7 @@
         },
     "required": [
         "acceptEula",
-        "registry",
-        "imagePullPolicy",
+        "image",
         "logLevel",
         "metrics",
         "service"
@@ -30,19 +31,35 @@
             "type": "boolean",
             "default": false
         },
-        "registry": {
-            "$id": "#/properties/registry",
-            "title": "Container image repository",
-            "description": "The repository from which to pull container images.",
-            "type": "string",
-            "default": "quay.io"
-        },
-        "imagePullPolicy": {
-            "$id": "#/properties/imagePullPolicy",
-            "title": "Container image pull policy",
-            "type": "string",
-            "default": "IfNotPresent",
-            "enum": [ "Always", "IfNotPresent", "Never" ]
+        "image": {
+            "$id": "#/properties/image",
+            "title": "Container image configuration",
+            "type": "object",
+            "default": {
+                "registry": "quay.io",
+                "pullPolicy": "IfNotPresent"
+            },
+            "required": [
+                "registry",
+                "pullPolicy"
+            ],
+            "properties": {
+                "registry": {
+                    "$id": "#/properties/image/properties/registry",
+                    "title": "Container image registry",
+                    "description": "The registry from which to pull container images.",
+                    "type": "string",
+                    "default": "quay.io"
+                },
+                "pullPolicy": {
+                    "$id": "#/properties/image/properties/pullPolicy",
+                    "title": "Container image pull policy",
+                    "type": "string",
+                    "default": "IfNotPresent",
+                    "enum": [ "Always", "IfNotPresent", "Never" ]
+                }
+            },
+            "additionalProperties": false
         },
         "logLevel": {
             "$id": "#/properties/logLevel",
@@ -57,10 +74,9 @@
             "title": "Metrics customization",
             "description": "Customization of the metrics provided.",
             "type": "object",
-            "default":
-                {
-                    "disableIntrospection": false
-                },
+            "default": {
+                "disableIntrospection": false
+            },
             "required": [
                 "disableIntrospection"
             ],
@@ -80,11 +96,10 @@
             "title": "Service settings",
             "description": "Settings for the Service providing access to info metrics.",
             "type": "object",
-            "default": 
-                {
-                    "type": "ClusterIP",
-                    "port": "9090"
-                },
+            "default": {
+                "type": "ClusterIP",
+                "port": "9090"
+            },
             "required": [
                 "type",
                 "port"
@@ -115,10 +130,17 @@
                     "minimum": 0,
                     "maximum": 65535
                 },
-                "customLabels": {
-                    "$id": "#/properties/service/properties/customLabels",
+                "labels": {
+                    "$id": "#/properties/service/properties/labels",
                     "title": "Custom labels",
                     "description": "Labels to add to the Service, for example to include target labels in a ServiceMonitor scrape configuration.",
+                    "type": "object",
+                    "additionalProperties": true
+                },
+                "annotations": {
+                    "$id": "#/properties/service/properties/annotations",
+                    "title": "Custom annotations",
+                    "description": "Annotations to add to the Service, for example to configure it as a scrape target when using the Prometheus Helm chart's default configuration.",
                     "type": "object",
                     "additionalProperties": true
                 }

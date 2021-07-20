@@ -91,6 +91,11 @@ metadata:
     # Optionally add labels, for example to be included in Prometheus
     # metrics via a targetLabels setting in a ServiceMonitor spec
     #k8s_cluster: example-1
+  # Optionally add annotations, for example to configure it as a
+  # scrape target when using the Prometheus Helm chart's default
+  # configuration.
+  #annotations:
+  #  "prometheus.io/scrape": "true"
 spec:
   # Optionally expose the metrics service outside the cluster
   #type: NodePort

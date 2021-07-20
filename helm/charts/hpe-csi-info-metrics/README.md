@@ -16,14 +16,15 @@ The chart has these configurable parameters and default values.
 | Parameter | Description | Default |
 |---------------------------|------------------------------------------------------------------------|------------------|
 | acceptEula | Confirm your acceptance of the HPE End User License Agreement at https://www.hpe.com/us/en/software/licensing.html by setting this value to true. | false |
-| registry | The repository from which to pull container images. | quay.io |
-| imagePullPolicy | Container image pull policy (`Always`, `IfNotPresent`, `Never`). | IfNotPresent |
+| image.registry | The registry from which to pull container images. | quay.io |
+| image.pullPolicy | Container image pull policy (`Always`, `IfNotPresent`, `Never`). | IfNotPresent |
 | logLevel | Minimum severity of messages to output (`info`, `debug`, `trace`, `warn`, `error`). | info |
 | metrics.disableIntrospection | Exclude metrics about the metrics provider itself, with prefixes such as `promhttp`, `process`, and `go`. | false |
 | service.type | The type of Service to create, ClusterIP for access solely from within the cluster or NodePort to provide access from outside the cluster (`ClusterIP`, `NodePort`). | ClusterIP |
 | service.port | The TCP port at which to expose access to info metrics within the cluster. | 9090 |
 | service.nodePort | The TCP port at which to expose access to info metrics externally at each cluster node, if the Service type is NodePort and automatic assignment is not desired. | *none* |
-| service.customLabels | Labels to add to the Service, for example to include target labels in a ServiceMonitor scrape configuration. | {} |
+| service.labels | Labels to add to the Service, for example to include target labels in a ServiceMonitor scrape configuration. | {} |
+| service.annotations | Annotations to add to the Service, for example to configure it as a scrape target when using the Prometheus Helm chart's default configuration. | {} |
 
 Use of a values.yaml file is recommended.  Download and edit [a sample values.yaml file](https://github.com/hpe-storage/co-deployments/blob/master/helm/values/csi-info-metrics) corresponding to the chart version and edit the settings according to the deployment environment.
 
@@ -54,7 +55,7 @@ helm install my-hpe-csi-info-metrics hpe-storage/hpe-csi-info-metrics -n hpe-sto
   --set acceptEula=xxxx
 ```
 
-**Note**: If the latest version of the chart is labeled with `prerelease` and a "beta" tag, add `--version X.Y.Z` to install a "stable" chart.
+**Note**: Add a `--devel` or `--version` option to install a pre-release chart.
 
 ### Uninstalling the chart
 
