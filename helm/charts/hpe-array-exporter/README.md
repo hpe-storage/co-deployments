@@ -4,67 +4,72 @@ The [HPE Storage Array Exporter for Prometheus](https://hpe-storage.github.io/ar
 
 ## Prerequisites
 
-- Upstream Kubernetes version >= 1.18
-- Most Kubernetes distributions are supported
-- Helm 3 (version >= 3.2.0)
+- Kubernetes 1.18+ (most distributions)
+- Helm 3 (3.2.0+)
 
-## Configuration and installation
+## Configuration
 
 The chart has these configurable parameters and default values.
 
 | Parameter | Description | Default |
 |---------------------------|------------------------------------------------------------------------|------------------|
-| acceptEula | Confirm your acceptance of the HPE End User License Agreement at https://www.hpe.com/us/en/software/licensing.html by setting this value to true. | false |
+| acceptEula | Confirm your acceptance of the HPE End User License Agreement at https://www.hpe.com/us/en/software/licensing.html by setting this value to `true`. | `false` |
 | arraySecret | The name of a Secret in the same namespace as the Helm chart installation providing storage array access information: `address` (or `backend`), `username`, and `password`. | *none* |
-| image.registry | The registry from which to pull container images. | quay.io |
-| image.pullPolicy | Container image pull policy (`Always`, `IfNotPresent`, `Never`). | IfNotPresent |
-| logLevel | Minimum severity of messages to output (`info`, `debug`, `trace`, `warn`, `error`). | info |
-| metrics.disableIntrospection | Exclude metrics about the metrics provider itself, with prefixes such as `promhttp`, `process`, and `go`. | false |
-| service.type | The type of Service to create, ClusterIP for access solely from within the cluster or NodePort to provide access from outside the cluster (`ClusterIP`, `NodePort`). | ClusterIP |
-| service.port | The TCP port at which to expose access to storage array metrics within the cluster. | 9090 |
+| image.registry | The registry from which to pull container images. | `quay.io` |
+| image.pullPolicy | Container image pull policy (`Always`, `IfNotPresent`, `Never`). | `IfNotPresent` |
+| logLevel | Minimum severity of messages to output (`info`, `debug`, `trace`, `warn`, `error`). | `info` |
+| metrics.disableIntrospection | Exclude metrics about the metrics provider itself, with prefixes such as `promhttp`, `process`, and `go`. | `false` |
+| service.type | The type of Service to create, ClusterIP for access solely from within the cluster or NodePort to provide access from outside the cluster (`ClusterIP`, `NodePort`). | `ClusterIP` |
+| service.port | The TCP port at which to expose access to storage array metrics within the cluster. | `9090` |
 | service.nodePort | The TCP port at which to expose access to storage array metrics externally at each cluster node, if the Service type is NodePort and automatic assignment is not desired. | *none* |
-| service.labels | Labels to add to the Service, for example to include target labels in a ServiceMonitor scrape configuration. | {} |
-| service.annotations | Annotations to add to the Service, for example to configure it as a scrape target when using the Prometheus Helm chart's default configuration. | {} |
-
-Use of a values.yaml file is recommended.  Download and edit [a sample values.yaml file](https://github.com/hpe-storage/co-deployments/blob/master/helm/values/array-exporter) corresponding to the chart version and edit the settings according to the deployment environment.
+| service.labels | Labels to add to the Service, for example to include target labels in a ServiceMonitor scrape configuration. | `{}` |
+| service.annotations | Annotations to add to the Service, for example to configure it as a scrape target when using the Prometheus Helm chart's default configuration. | `{}` |
 
 The `arraySecret` parameter is required and has no default value.  A Secret used by the [HPE CSI Driver for Kubernetes](https://scod.hpedev.io/csi_driver/index.html) can be reused without modification.  Otherwise, use [this example](https://github.com/hpe-storage/co-deployments/blob/master/yaml/array-exporter/edge/hpe-array-exporter-secret.yaml) to create a new one.
 
-**Important**: The `acceptEula` value must be set to `true` manually, confirming your acceptance of the [HPE End User License Agreement](https://www.hpe.com/us/en/software/licensing.html).
+The `acceptEula` value must be set to `true`, confirming your acceptance of the [HPE End User License Agreement](https://www.hpe.com/us/en/software/licensing.html).
 
-### Installing the chart
+## Installation
 
-To install the chart with the name `my-hpe-array-exporter`:
-
-Add HPE Helm repo:
+### Add the HPE Storage Helm Repo
 
 ```
 helm repo add hpe-storage https://hpe-storage.github.io/co-deployments/
 helm repo update
 ```
 
-Install the latest chart:
+### Customize Settings
+
+Use of a values.yaml file is recommended.  Retrieve the values.yaml file for the [latest version](https://github.com/hpe-storage/co-deployments/blob/master/helm/charts/hpe-array-exporter/values.yaml) or for the specific version you will install:
+
+```
+helm show values hpe-storage/hpe-array-exporter --version X.Y.Z > myvalues.yaml
+```
+
+Edit the values according to the deployment environment, including identifying (or creating) an `arraySecret` and setting `acceptEula` to confirm your acceptance of the [HPE End User License Agreement](https://www.hpe.com/us/en/software/licensing.html).
+
+### Install
+
+The latest release is installed by default.  Add a `--version` or `--devel` option to install a specific version or the latest pre-release chart.
+
+Use a customized values.yaml file:
 
 ```
 kubectl create ns hpe-storage
-helm install my-hpe-array-exporter hpe-storage/hpe-array-exporter -n hpe-storage -f myvalues.yaml
+helm install [RELEASE_NAME] hpe-storage/hpe-array-exporter -n hpe-storage -f myvalues.yaml
 ```
 
-Alternatively, specify each parameter using the `--set key=value[,key=value]` option in lieu of a values.yaml file:
+Or use command line options:
 
 ```
-helm install my-hpe-array-exporter hpe-storage/hpe-array-exporter -n hpe-storage \
-  --set acceptEula=xxxx --set arraySecret=my-array-secret
+helm install [RELEASE_NAME] hpe-storage/hpe-array-exporter -n hpe-storage \
+  --set acceptEula=xxxx,arraySecret=my-array-secret
 ```
 
-**Note**: Add a `--devel` or `--version` option to install a pre-release chart.
-
-### Uninstalling the chart
-
-To uninstall the `my-hpe-array-exporter` chart:
+## Uninstallation
 
 ```
-helm uninstall my-hpe-array-exporter -n hpe-storage
+helm uninstall [RELEASE_NAME] -n hpe-storage
 ```
 
 ## Support
@@ -73,12 +78,12 @@ The HPE Storage Array Exporter for Prometheus Helm chart is fully supported by H
 
 ## Community
 
-Please file any issues, questions or feature requests you may have [here](https://github.com/hpe-storage/co-deployments/issues). However, see [SCOD](https://scod.hpedev.io/legal/support) for support inquiries related to your HPE storage product. You may also join our Slack community to chat with HPE folks close to this project. We hang out in `#NimbleStorage`, `#3par-primera`, and `#Kubernetes`. Sign up at [slack.hpedev.io](https://slack.hpedev.io/) and login at [hpedev.slack.com](https://hpedev.slack.com/)
+Submit issues, questions, and feature requests [here](https://github.com/hpe-storage/co-deployments/issues). However, see [SCOD](https://scod.hpedev.io/legal/support) for support inquiries related to your HPE storage product. You may also join our Slack community to chat with HPE folks close to this project. We hang out in `#NimbleStorage`, `#3par-primera`, and `#Kubernetes`. Sign up at [slack.hpedev.io](https://slack.hpedev.io/) and login at [hpedev.slack.com](https://hpedev.slack.com/).
 
 ## Contributing
 
-We value all feedback and contributions. If you find any issues or want to contribute, please feel free to open an issue or file a PR. More details in [CONTRIBUTING.md](https://github.com/hpe-storage/co-deployments/blob/master/CONTRIBUTING.md)
+We value feedback and contributions. If you find an issue or want to contribute, please open an issue or file a PR as described in [CONTRIBUTING.md](https://github.com/hpe-storage/co-deployments/blob/master/CONTRIBUTING.md).
 
 ## License
 
-This is open source software licensed using the Apache License 2.0. Please see [LICENSE](https://github.com/hpe-storage/co-deployments/blob/master/LICENSE) for details.
+This chart is open source software licensed using the Apache License 2.0. See the [LICENSE](https://github.com/hpe-storage/co-deployments/blob/master/LICENSE) for details.
