@@ -53,7 +53,7 @@ spec:
             # Specify the name of a Secret in the same namespace as this
             # deployment providing storage array access information:
             # "address" (or "backend"), "username", and "password".
-            secretName: my-array-secret
+            secretName: hpe-backend
 
 ---
 kind: Service
