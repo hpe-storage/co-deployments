@@ -9,7 +9,7 @@ acceptEula: false
 # The name of a Secret in the same namespace as the Helm chart installation
 # providing storage array access information: "address" (or "backend"),
 # "username", and "password".
-arraySecret: my-array-secret
+arraySecret: hpe-backend
 
 image:
   # Container image registry

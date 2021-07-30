@@ -27,8 +27,10 @@ spec:
           args:
             - "--telemetry.addr=:8080"
             - "--telemetry.path=/metrics"
-            {{- if .Values.acceptEula }}
+            {{- if eq .Values.acceptEula true }}
             - "--accept-eula"
+            {{- else }}
+            {{- fail "\n\nERROR: The acceptEula value must be set to true to confirm acceptance.\n\n" }}
             {{- end }}
             {{- if .Values.metrics }}
             {{- if .Values.metrics.disableIntrospection }}

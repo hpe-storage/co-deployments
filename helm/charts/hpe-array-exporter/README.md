@@ -14,7 +14,7 @@ The chart has these configurable parameters and default values.
 | Parameter | Description | Default |
 |---------------------------|------------------------------------------------------------------------|------------------|
 | acceptEula | Confirm your acceptance of the HPE End User License Agreement at https://www.hpe.com/us/en/software/licensing.html by setting this value to `true`. | `false` |
-| arraySecret | The name of a Secret in the same namespace as the Helm chart installation providing storage array access information: `address` (or `backend`), `username`, and `password`. | *none* |
+| arraySecret | The name of a Secret in the same namespace as the Helm chart installation providing storage array access information: `address` (or `backend`), `username`, and `password`. | hpe-backend |
 | image.registry | The registry from which to pull container images. | `quay.io` |
 | image.pullPolicy | Container image pull policy (`Always`, `IfNotPresent`, `Never`). | `IfNotPresent` |
 | logLevel | Minimum severity of messages to output (`info`, `debug`, `trace`, `warn`, `error`). | `info` |
