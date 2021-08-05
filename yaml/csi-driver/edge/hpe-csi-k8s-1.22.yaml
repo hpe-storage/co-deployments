@@ -1,5 +1,5 @@
 # Configuration to deploy the HPE CSI driver compatible with
-# Kubernetes = v1.21
+# Kubernetes = v1.22
 #
 # example usage: kubectl create -f <this_file>
 
