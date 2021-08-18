@@ -391,10 +391,10 @@ entries:
       artifacthub.io/prerelease: "true"
     apiVersion: v2
     appVersion: 1.0.0-edge
-    created: "2021-08-18T15:26:50.442828-07:00"
+    created: "2021-08-18T16:57:43.932414-07:00"
     description: A Helm chart for installing the HPE CSI Info Metrics Provider for
       Prometheus
-    digest: 737e384e40a31543eea52e68acd597be43827135fa7918c6638ff799571b2ab0
+    digest: 9de76a246692b71c83d320316c051a7f52189a21e1c054adbb1fe6ede8d9bbb8
     home: https://hpe.com/storage/containers
     icon: https://raw.githubusercontent.com/hpe-storage/co-deployments/master/docs/assets/hpedev.png
     keywords:
@@ -460,4 +460,4 @@ entries:
     urls:
     - hpe-flexvolume-driver-3.0.0.tgz
     version: 3.0.0
-generated: "2021-08-18T15:27:00.974001-07:00"
+generated: "2021-08-18T16:57:43.931632-07:00"
