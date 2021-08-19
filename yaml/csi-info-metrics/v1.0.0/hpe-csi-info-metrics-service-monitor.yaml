@@ -36,4 +36,4 @@ spec:
   # Corresponding labels on the CSI Info Metrics service are added to
   # the scraped metrics
   #targetLabels:
-  #  - k8s_cluster
+  #  - cluster

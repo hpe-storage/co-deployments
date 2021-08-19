@@ -1,6 +1,6 @@
 # HPE CSI Info Metrics Provider for Prometheus Helm chart
 
-The [HPE CSI Info Metrics Provider for Prometheus](https://scod.hpedev.io/) provides [HPE CSI Driver for Kubernetes](https://scod.hpedev.io/csi_driver/index.html) information in the form of [Prometheus](https://prometheus.io/) metrics.  It can be used in combination with [HPE Storage Array Exporter for Prometheus](https://hpe-storage.github.io/array-exporter) metrics to focus on storage resources used within a Kubernetes cluster.
+The [HPE CSI Info Metrics Provider for Prometheus](https://scod.hpedev.io/csi_driver/metrics.html) provides [HPE CSI Driver for Kubernetes](https://scod.hpedev.io/csi_driver/index.html) information in the form of [Prometheus](https://prometheus.io/) metrics. It can be used in combination with [HPE Storage Array Exporter for Prometheus](https://hpe-storage.github.io/array-exporter) metrics to focus on storage resources used within a Kubernetes cluster.
 
 ## Prerequisites
 
@@ -28,6 +28,8 @@ The chart has these configurable parameters and default values.
 The `acceptEula` value must be set to `true`, confirming your acceptance of the [HPE End User License Agreement](https://www.hpe.com/us/en/software/licensing.html).
 
 ## Installation
+
+It's beneficial to understand how certain `Service` annotations and labels affect the deployment of the HPE CSI Info Metrics Provider. Visit the [official documentation](https://scod.hpedev.io/csi_driver/metrics.html) to learn more.
 
 ### Add the HPE Storage Helm Repo
 
@@ -69,13 +71,19 @@ helm install [RELEASE_NAME] hpe-storage/hpe-csi-info-metrics -n hpe-storage --se
 helm uninstall [RELEASE_NAME] -n hpe-storage
 ```
 
+## Using CSI Info Metrics Provider
+
+Visit the HPE Storage Container Orchestration Documentation (SCOD) for more information.
+
+- [HPE CSI Info Metrics Provider for Prometheus](https://scod.hpedev.io/csi_driver/metrics.html) on SCOD
+
 ## Support
 
 The HPE CSI Info Metrics Provider for Prometheus Helm chart is fully supported by HPE. A formal support facility for HPE storage products can be found at [SCOD](https://scod.hpedev.io/legal/support).
 
 ## Community
 
-Submit issues, questions, and feature requests [here](https://github.com/hpe-storage/co-deployments/issues). However, see [SCOD](https://scod.hpedev.io/legal/support) for support inquiries related to your HPE storage product. You may also join our Slack community to chat with HPE folks close to this project. We hang out in `#NimbleStorage`, `#3par-primera`, and `#Kubernetes`. Sign up at [slack.hpedev.io](https://slack.hpedev.io/) and login at [hpedev.slack.com](https://hpedev.slack.com/).
+Submit issues, questions, and feature requests [here](https://github.com/hpe-storage/co-deployments/issues). However, see [SCOD](https://scod.hpedev.io/legal/support) for support inquiries related to your HPE storage product. You may also join our Slack community to chat with HPE folks close to this project. We hang out in `#Alletra`, `#NimbleStorage`, `#3par-primera`, and `#Kubernetes`. Sign up at [slack.hpedev.io](https://slack.hpedev.io/) and login at [hpedev.slack.com](https://hpedev.slack.com/).
 
 ## Contributing
 
