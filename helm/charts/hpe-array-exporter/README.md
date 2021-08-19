@@ -1,6 +1,6 @@
 # HPE Storage Array Exporter for Prometheus Helm chart
 
-The [HPE Storage Array Exporter for Prometheus](https://hpe-storage.github.io/array-exporter) provides storage system information in the form of [Prometheus](https://prometheus.io/) metrics.  It can be used in combination with [HPE CSI Info Metrics Provider for Prometheus](https://scod.hpedev.io/) metrics to focus on storage resources used within a Kubernetes cluster.
+The [HPE Storage Array Exporter for Prometheus](https://hpe-storage.github.io/array-exporter) provides storage system information in the form of [Prometheus](https://prometheus.io/) metrics.  It can be used in combination with [HPE CSI Info Metrics Provider for Prometheus](https://scod.hpedev.io/csi_driver/metrics.html) metrics to focus on storage resources used within a Kubernetes cluster.
 
 ## Prerequisites
 
@@ -30,6 +30,8 @@ The `arraySecret` parameter is required and has no default value.  A Secret used
 The `acceptEula` value must be set to `true`, confirming your acceptance of the [HPE End User License Agreement](https://www.hpe.com/us/en/software/licensing.html).
 
 ## Installation
+
+It's beneficial to understand how certain `Service` annotations and labels affect the deployment of the HPE Storage Array Exporter. Visit the [official documentation](https://hpe-storage.github.io/array-exporter) to learn more.
 
 ### Add the HPE Storage Helm Repo
 
@@ -72,13 +74,19 @@ helm install [RELEASE_NAME] hpe-storage/hpe-array-exporter -n hpe-storage \
 helm uninstall [RELEASE_NAME] -n hpe-storage
 ```
 
+## Using the HPE Storage Array Exporter
+
+Visit the official documentation for guidance on usage.
+
+- [HPE Storage Array Exporter for Prometheus](https://hpe-storage.github.io/array-exporter)
+
 ## Support
 
 The HPE Storage Array Exporter for Prometheus Helm chart is fully supported by HPE. A formal support facility for HPE storage products can be found at [SCOD](https://scod.hpedev.io/legal/support).
 
 ## Community
 
-Submit issues, questions, and feature requests [here](https://github.com/hpe-storage/co-deployments/issues). However, see [SCOD](https://scod.hpedev.io/legal/support) for support inquiries related to your HPE storage product. You may also join our Slack community to chat with HPE folks close to this project. We hang out in `#NimbleStorage`, `#3par-primera`, and `#Kubernetes`. Sign up at [slack.hpedev.io](https://slack.hpedev.io/) and login at [hpedev.slack.com](https://hpedev.slack.com/).
+Submit issues, questions, and feature requests [here](https://github.com/hpe-storage/co-deployments/issues). However, see [SCOD](https://scod.hpedev.io/legal/support) for support inquiries related to your HPE storage product. You may also join our Slack community to chat with HPE folks close to this project. We hang out in `#Alletra`, `#NimbleStorage`, `#3par-primera`, and `#Kubernetes`. Sign up at [slack.hpedev.io](https://slack.hpedev.io/) and login at [hpedev.slack.com](https://hpedev.slack.com/).
 
 ## Contributing
 

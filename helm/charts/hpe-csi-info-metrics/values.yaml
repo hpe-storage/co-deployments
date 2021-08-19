@@ -41,7 +41,7 @@ service:
   # Labels to add to the Service, for example to include target labels
   # in a ServiceMonitor scrape configuration.
   labels: {}
-  #  k8s_cluster: mycluster
+  #  cluster: mycluster
 
   # Annotations to add to the Service, for example to configure it as
   # a scrape target when using the Prometheus Helm chart's default

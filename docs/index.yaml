@@ -9,9 +9,9 @@ entries:
       artifacthub.io/prerelease: "true"
     apiVersion: v2
     appVersion: 1.0.0-edge
-    created: "2021-07-28T16:01:43.566088-07:00"
+    created: "2021-08-18T15:27:00.974841-07:00"
     description: A Helm chart for installing the HPE Storage Array Exporter for Prometheus
-    digest: c61379f2d978fbef3de7f16553a383571f82e028f655ec7ecc2be1d19f0579c9
+    digest: c9a4e5042b3c381dec6078dac0430f626d534cc216bed537f41b0c3809e4ce62
     home: https://hpe.com/storage/containers
     icon: https://raw.githubusercontent.com/hpe-storage/co-deployments/master/docs/assets/hpedev.png
     keywords:
@@ -391,10 +391,10 @@ entries:
       artifacthub.io/prerelease: "true"
     apiVersion: v2
     appVersion: 1.0.0-edge
-    created: "2021-07-29T12:43:48.802939-07:00"
+    created: "2021-08-18T16:57:43.932414-07:00"
     description: A Helm chart for installing the HPE CSI Info Metrics Provider for
       Prometheus
-    digest: dce01c65888ff6229fc98e22b87046ce5cc66579bf8022192aa1824b2b005f34
+    digest: 9de76a246692b71c83d320316c051a7f52189a21e1c054adbb1fe6ede8d9bbb8
     home: https://hpe.com/storage/containers
     icon: https://raw.githubusercontent.com/hpe-storage/co-deployments/master/docs/assets/hpedev.png
     keywords:
@@ -460,4 +460,4 @@ entries:
     urls:
     - hpe-flexvolume-driver-3.0.0.tgz
     version: 3.0.0
-generated: "2021-07-29T12:43:48.802212-07:00"
+generated: "2021-08-18T16:57:43.931632-07:00"
