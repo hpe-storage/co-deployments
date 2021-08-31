@@ -63,9 +63,9 @@ spec:
       containers:
         - name: primera3par-csp
           {{- if .Values.registry }}
-          image: {{ .Values.registry }}/bhagyashree_sarawate/csp_crd_v2:test
+          image: {{ .Values.registry }}/bhagyashree_sarawate/alletra-9000-primera-and-3par-csp:test
           {{- else }}
-          image:  quay.io/bhagyashree_sarawate/csp_crd_v2:test
+          image:  quay.io/bhagyashree_sarawate/alletra-9000-primera-and-3par-csp:test
           {{- end }}        
           imagePullPolicy: {{ .Values.imagePullPolicy | quote }}
           ports:
