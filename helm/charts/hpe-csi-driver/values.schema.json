@@ -163,7 +163,8 @@
             "default": 60,
             "minimum": 60,
             "maximum": 360
-        }
+        },
+	"global": {}
     },
     "additionalProperties": false
 }
