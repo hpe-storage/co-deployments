@@ -165,6 +165,9 @@ spec:
         - name: primera3par-csp
           image: quay.io/hpestorage/alletra-9000-primera-and-3par-csp:v2.0.0
           imagePullPolicy: Always
+          env:
+            - name: LOG_LEVEL
+              value: {{ .Values.logLevel }}
           ports:
           - containerPort: 8080
           volumeMounts:
