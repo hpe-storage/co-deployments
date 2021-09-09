@@ -164,7 +164,7 @@
             "minimum": 60,
             "maximum": 360
         },
-	"global": {}
+        "global": {}
     },
     "additionalProperties": false
 }
