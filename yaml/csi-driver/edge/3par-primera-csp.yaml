@@ -167,7 +167,7 @@ spec:
           imagePullPolicy: Always
           env:
             - name: LOG_LEVEL
-              value: {{ .Values.logLevel }}
+              value: trace
           ports:
           - containerPort: 8080
           volumeMounts:
