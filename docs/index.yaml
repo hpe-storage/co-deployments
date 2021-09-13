@@ -28,6 +28,33 @@ entries:
     urls:
     - hpe-array-exporter-1.0.0-edge.tgz
     version: 1.0.0-edge
+  - annotations:
+      artifacthub.io/license: Apache-2.0
+      artifacthub.io/links: |
+        - name: Documentation
+          url: https://hpe-storage.github.io/array-exporter
+      artifacthub.io/prerelease: "true"
+    apiVersion: v2
+    appVersion: 1.0.0-beta
+    created: "2021-09-09T15:50:15.058029-07:00"
+    description: A Helm chart for installing the HPE Storage Array Exporter for Prometheus
+    digest: d597d9baac06f12307e854274495388e5fda20d5f20e1e444621b10505e67f20
+    home: https://hpe.com/storage/containers
+    icon: https://raw.githubusercontent.com/hpe-storage/co-deployments/master/docs/assets/hpedev.png
+    keywords:
+    - HPE
+    - Storage
+    - Prometheus
+    kubeVersion: '>= 1.18.0'
+    maintainers:
+    - email: hpe-containers-dev@hpe.com
+      name: rkumpf
+    name: hpe-array-exporter
+    sources:
+    - https://github.com/hpe-storage/co-deployments
+    urls:
+    - hpe-array-exporter-1.0.0-beta.tgz
+    version: 1.0.0-beta
   hpe-csi-driver:
   - annotations:
       artifacthub.io/license: Apache-2.0
@@ -412,6 +439,35 @@ entries:
     urls:
     - hpe-csi-info-metrics-1.0.0-edge.tgz
     version: 1.0.0-edge
+  - annotations:
+      artifacthub.io/license: Apache-2.0
+      artifacthub.io/links: |
+        - name: Documentation
+          url: https://scod.hpedev.io/
+      artifacthub.io/prerelease: "true"
+    apiVersion: v2
+    appVersion: 1.0.0-beta
+    created: "2021-09-09T15:49:55.435263-07:00"
+    description: A Helm chart for installing the HPE CSI Info Metrics Provider for
+      Prometheus
+    digest: a99643d57e3530333404f284906d1d72934eb59975a3fb971fc632f15bbf2610
+    home: https://hpe.com/storage/containers
+    icon: https://raw.githubusercontent.com/hpe-storage/co-deployments/master/docs/assets/hpedev.png
+    keywords:
+    - HPE
+    - Storage
+    - CSI
+    - Prometheus
+    kubeVersion: '>= 1.18.0'
+    maintainers:
+    - email: hpe-containers-dev@hpe.com
+      name: rkumpf
+    name: hpe-csi-info-metrics
+    sources:
+    - https://github.com/hpe-storage/co-deployments
+    urls:
+    - hpe-csi-info-metrics-1.0.0-beta.tgz
+    version: 1.0.0-beta
   hpe-flexvolume-driver:
   - apiVersion: v1
     appVersion: "3.1"
@@ -460,4 +516,4 @@ entries:
     urls:
     - hpe-flexvolume-driver-3.0.0.tgz
     version: 3.0.0
-generated: "2021-08-18T16:57:43.931632-07:00"
+generated: "2021-09-09T15:50:15.057442-07:00"
