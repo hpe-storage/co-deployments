@@ -1,7 +1,7 @@
 apiVersion: v2
 name: hpe-csi-info-metrics
-version: "1.0.0-edge"
-appVersion: "1.0.0-edge"
+version: "1.0.0-beta"
+appVersion: "1.0.0-beta"
 kubeVersion: ">= 1.18.0"
 annotations:
   artifacthub.io/prerelease: "true"

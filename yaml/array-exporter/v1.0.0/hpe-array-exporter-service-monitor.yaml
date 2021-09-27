@@ -1,10 +1,10 @@
-# A Service Monitor can enable a Prometheus instance within the cluster
+# A Service Monitor can enable a Prometheus Operator within the cluster
 # to discover the HPE Storage Array Exporter for Prometheus as a scrape
 # target.
 #
 # Modify this sample file to:
 # - Match the namespace of the hpe-array-exporter-service
-# - Match the selector used by the Prometheus installation
+# - Match the selector used by the Prometheus Operator installation
 # - Customize the scrape configuration, including desired target labels
 
 ---
@@ -14,10 +14,10 @@ metadata:
   name: hpe-array-exporter-servicemonitor
   namespace: hpe-storage
   labels:
-    # A selector for this label is used by a Prometheus Operator,
+    # A selector for this label is used by a Prometheus Operator
     # installed via OLM
     k8s-app: prometheus
-    # A "release" label selector is used by the Prometheus Helm chart,
+    # A "release" label selector is used by the Helm Kube Prometheus Stack,
     # with the value as the release specified on chart installation
     release: prometheus
 spec:
