@@ -150,7 +150,7 @@ spec:
               mountPath: /host
         - name: csi-volume-mutator
           {{- if .Values.registry }}
-          image: {{ .Values.registry }}/hpestorage/volume-mutator:v1.2.0
+          image: {{ .Values.registry }}/bhagyashree_sarawate/volume-mutator:edge
           {{- else }}
           image: quay.io/hpestorage/volume-mutator:v1.2.0
           {{- end }}
