@@ -18,7 +18,7 @@ spec:
       serviceAccountName: hpe-csp-sa
       containers:
         - name: primera3par-rcg-info
-          image: quay.io/bhagyashree_sarawate/rcg-info:test
+          image: quay.io/hpestorage/rcg-info:v1.0.0
           imagePullPolicy: Always
           volumeMounts:
             - name: log-dir
