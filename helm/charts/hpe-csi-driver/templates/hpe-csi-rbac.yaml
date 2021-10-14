@@ -94,7 +94,7 @@ rules:
     verbs: ["get", "list", "watch", "update", "patch"]
   - apiGroups: ["storage.k8s.io"]
     resources: ["volumeattachments/status"]
-    verbs: ["get", "list", "watch", "update", "create", "delete"]
+    verbs: ["get", "list", "watch", "update", "create", "delete", "patch"]
   - apiGroups: [""]
     resources: ["secrets"]
     verbs: ["get", "watch", "list"]
