@@ -70,6 +70,14 @@ helm install my-hpe-csi-driver hpe-storage/hpe-csi-driver -n hpe-storage -f myva
 
 Due to the [helm limitation](https://helm.sh/docs/chart_best_practices/custom_resource_definitions/#some-caveats-and-explanations) to not support upgrade of CRDs between different chart versions, helm chart upgrade is not supported.
 
+For the upgradtion of chart from 2.0.0 to 2.1.0 we need to apply Primera3PAR metata CRDs before the uninstallation of driver as mentioned in steps below:
+```
+kubectl apply -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/helm/charts/hpe-csi-driver/crds/hpevolumeinfos_v2_crd.yaml
+kubectl apply -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/helm/charts/hpe-csi-driver/crds/hpevolumegroupinfos_v2_crd.yaml
+kubectl apply -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/helm/charts/hpe-csi-driver/crds/snapshotgroupinfos_v2_crd.yaml
+kubectl apply -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/helm/charts/hpe-csi-driver/crds/hpereplicated_deviceinfo_v2_crd.yaml
+```
+
 Our recommendation is to uninstall the existing chart and install the chart with the desired version. CRDs will be preserved between uninstall and install.
 
 ### Uninstalling the chart
