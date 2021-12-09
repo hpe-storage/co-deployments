@@ -77,8 +77,20 @@ kubectl apply -f https://raw.githubusercontent.com/hpe-storage/co-deployments/ma
 kubectl apply -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/helm/charts/hpe-csi-driver/crds/snapshotgroupinfos_v2_crd.yaml
 kubectl apply -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/helm/charts/hpe-csi-driver/crds/hpereplicated_deviceinfo_v2_crd.yaml
 ```
+For the upgradtion of the chart from 2.0.0 to 2.1.0 with replication information follow the below steps before the uninstalltion of the driver.  
+```
+Create the deployment using the below command, which will modify the rcg-info record to the new key RCGCreatedByCSP.
+kubectl create -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/yaml/csi-driver/primera3par/convert-rcg-info.yaml
 
-Our recommendation is to uninstall the existing chart and install the chart with the desired version. CRDs will be preserved between uninstall and install.
+Once the record is modified, delete the above deployment.
+kubectl delete -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/yaml/csi-driver/primera3par/convert-rcg-info.yaml
+
+Apply the CRDS
+kubectl apply -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/helm/charts/hpe-csi-driver/crds/hpevolumeinfos_v2_crd.yaml
+kubectl apply -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/helm/charts/hpe-csi-driver/crds/hpevolumegroupinfos_v2_crd.yaml
+kubectl apply -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/helm/charts/hpe-csi-driver/crds/snapshotgroupinfos_v2_crd.yaml
+kubectl apply -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/helm/charts/hpe-csi-driver/crds/hpereplicated_deviceinfo_v2_crd.yaml
+```
 
 ### Uninstalling the chart
 
