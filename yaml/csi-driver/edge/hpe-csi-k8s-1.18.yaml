@@ -517,7 +517,6 @@ kind: ClusterRole
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
   name: hpe-csi-volumegroup-role
-  namespace: hpe-storage
 rules:
   - apiGroups: ["storage.hpe.com"]
     resources: ["volumegroups"]
@@ -580,7 +579,6 @@ kind: ClusterRole
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
   name: hpe-csi-snapshotgroup-role
-  namespace: hpe-storage
 rules:
   - apiGroups: ["storage.hpe.com"]
     resources: ["snapshotgroups"]
@@ -736,7 +734,6 @@ kind: ClusterRole
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
   name: hpe-csi-driver-role
-  namespace: hpe-storage
 rules:
   - apiGroups: ["storage.hpe.com"]
     resources: ["hpenodeinfos"]
