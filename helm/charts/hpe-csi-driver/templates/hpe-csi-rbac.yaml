@@ -485,7 +485,6 @@ kind: ClusterRole
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
   name: hpe-csi-driver-role
-  namespace: {{ .Release.Namespace }}
 rules:
   - apiGroups: ["storage.hpe.com"]
     resources: ["hpenodeinfos"]
