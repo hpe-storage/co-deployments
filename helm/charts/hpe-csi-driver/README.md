@@ -69,23 +69,25 @@ helm install my-hpe-csi-driver hpe-storage/hpe-csi-driver -n hpe-storage -f myva
 ### Upgrading the chart
 
 Due to the [helm limitation](https://helm.sh/docs/chart_best_practices/custom_resource_definitions/#some-caveats-and-explanations) to not support upgrade of CRDs between different chart versions, helm chart upgrade is not supported.
+Our recommendation is to uninstall the existing chart and install the chart with the desired version. CRDs will be preserved between uninstall and install.
 
-For the upgradtion of chart from 2.0.0 to 2.1.0 we need to apply Primera3PAR metata CRDs before the uninstallation of driver as mentioned in steps below:
+## Upgrading 2.0.0 to 2.1.0
+Before version 2.0.0 is uninstalled, the following CRDs needs to be updated.
 ```
 kubectl apply -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/helm/charts/hpe-csi-driver/crds/hpevolumeinfos_v2_crd.yaml
 kubectl apply -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/helm/charts/hpe-csi-driver/crds/hpevolumegroupinfos_v2_crd.yaml
 kubectl apply -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/helm/charts/hpe-csi-driver/crds/snapshotgroupinfos_v2_crd.yaml
 kubectl apply -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/helm/charts/hpe-csi-driver/crds/hpereplicated_deviceinfo_v2_crd.yaml
 ```
-For the upgradtion of the chart from 2.0.0 to 2.1.0 with replication information follow the below steps before the uninstalltion of the driver.  
+If there are HPE Alletra 9000, Primera or 3PAR Remote Copy Groups configured on the cluster, follow the below steps before uninstallation
 ```
 Create the deployment using the below command, which will modify the rcg-info record to the new key RCGCreatedByCSP.
-kubectl create -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/yaml/csi-driver/primera3par/convert-rcg-info.yaml
+kubectl create -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/yaml/rcg-info/v1.0.0/convert-rcg-info.yaml
 
 Once the record is modified, delete the above deployment.
-kubectl delete -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/yaml/csi-driver/primera3par/convert-rcg-info.yaml
+kubectl delete -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/yaml/rcg-info/v1.0.0/convert-rcg-info.yaml
 
-Apply the below CRDS
+Next, apply the new CRDS
 kubectl apply -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/helm/charts/hpe-csi-driver/crds/hpevolumeinfos_v2_crd.yaml
 kubectl apply -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/helm/charts/hpe-csi-driver/crds/hpevolumegroupinfos_v2_crd.yaml
 kubectl apply -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/helm/charts/hpe-csi-driver/crds/snapshotgroupinfos_v2_crd.yaml
