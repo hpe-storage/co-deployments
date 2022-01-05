@@ -81,11 +81,9 @@ kubectl apply -f https://raw.githubusercontent.com/hpe-storage/co-deployments/ma
 ```
 If there are HPE Alletra 9000, Primera or 3PAR Remote Copy Groups configured on the cluster, follow the below steps before uninstallation
 ```
-Create the deployment using the below command, which will modify the rcg-info record to the new key RCGCreatedByCSP.
+Create the job using the below command, which will modify the rcg-info record to the new key RCGCreatedByCSP.
 kubectl create -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/yaml/rcg-info/v1.0.0/convert-rcg-info.yaml
-
-Once the record is modified, delete the above deployment.
-kubectl delete -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/yaml/rcg-info/v1.0.0/convert-rcg-info.yaml
+Note: By default above job is created in hpe-storage namespace, modify the job if namespace is other than hpe-storage.
 
 Next, apply the new CRDS
 kubectl apply -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/helm/charts/hpe-csi-driver/crds/hpevolumeinfos_v2_crd.yaml
