@@ -79,18 +79,23 @@ kubectl apply -f https://raw.githubusercontent.com/hpe-storage/co-deployments/ma
 kubectl apply -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/helm/charts/hpe-csi-driver/crds/snapshotgroupinfos_v2_crd.yaml
 kubectl apply -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/helm/charts/hpe-csi-driver/crds/hpereplicated_deviceinfo_v2_crd.yaml
 ```
-If there are HPE Alletra 9000, Primera or 3PAR Remote Copy Groups configured on the cluster, follow the below steps before uninstallation
+If there are HPE Alletra 9000, Primera or 3PAR Remote Copy Groups configured on the cluster, follow the below steps before uninstallation.
+
+Change kubectl context into the Namespace where the HPE CSI Driver is installed. The most common is "hpe-storage".
 ```
-Create the job using the below commands, which will modify the rcg-info record to the new key RCGCreatedByCSP.
-curl -O  https://raw.githubusercontent.com/hpe-storage/co-deployments/master/yaml/rcg-info/v1.0.0/convert-rcg-info.yaml
-Note: If namespace is other than hpe-storage modify the namespace parameter in convert-rcg-info.yaml file.
-kubectl create -f convert-rcg-info.yaml
+kubectl config set-context --current --namespace=hpe-storage
+```
+Create the Job using the below commands, which will modify the "rcg-info" record to the new key "RCGCreatedByCSP".
+```
+kubectl apply -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/yaml/rcg-info/v1.0.0/convert-rcg-info.yaml
+```
 
-Completion of job status can be verified using below command
-kubectl wait --for=condition=complete --timeout=600s job/primera3par-rcg-info -n hpe-storage
-job.batch/primera3par-rcg-info condition met
-
-Next, apply the new CRDS
+Completion of job status can be verified using the below command.
+```
+kubectl wait --for=condition=complete --timeout=600s job/primera3par-rcg-info
+```
+Next, apply the new CRDS.
+```
 kubectl apply -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/helm/charts/hpe-csi-driver/crds/hpevolumeinfos_v2_crd.yaml
 kubectl apply -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/helm/charts/hpe-csi-driver/crds/hpevolumegroupinfos_v2_crd.yaml
 kubectl apply -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/helm/charts/hpe-csi-driver/crds/snapshotgroupinfos_v2_crd.yaml

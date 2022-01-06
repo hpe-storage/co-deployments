@@ -2,7 +2,6 @@ apiVersion: batch/v1
 kind: Job
 metadata:
  name: primera3par-rcg-info
- namespace: hpe-storage
 spec:
   backoffLimit: 4
   template:
