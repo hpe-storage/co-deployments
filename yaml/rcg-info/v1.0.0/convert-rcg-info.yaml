@@ -1,24 +1,17 @@
-kind: Deployment
-apiVersion: apps/v1
+apiVersion: batch/v1
+kind: Job
 metadata:
-  name: primera3par-rcg-info
-  namespace: hpe-storage
-  labels:
-    app: primera3par-rcg-info
+ name: primera3par-rcg-info
 spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app: primera3par-rcg-info
+  backoffLimit: 4
   template:
     metadata:
-      labels:
-        app: primera3par-rcg-info
+      name : primera3par-rcg-info
     spec:
       serviceAccountName: hpe-csp-sa
       containers:
         - name: primera3par-rcg-info
-          image: quay.io/hpestorage/rcg-info:v1.0.0
+          image: quay.io/hpestorage/rcg-info:v1.0.1
           imagePullPolicy: Always
           volumeMounts:
             - name: log-dir
@@ -27,3 +20,4 @@ spec:
         - name: log-dir
           hostPath:
             path: /var/log
+      restartPolicy: Never
