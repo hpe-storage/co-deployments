@@ -1,5 +1,5 @@
 # Configuration to deploy the HPE CSI driver compatible with
-# Kubernetes = v1.20
+# Kubernetes = v1.19
 #
 # example usage: kubectl create -f <this_file>
 
@@ -146,7 +146,7 @@ spec:
             - name: socket-dir
               mountPath: /var/lib/csi/sockets/pluginproxy/
         - name: csi-snapshotter
-          image: k8s.gcr.io/sig-storage/csi-snapshotter:v4.0.0
+          image: quay.io/k8scsi/csi-snapshotter:v3.0.3
           args:
             - "--v=5"
             - "--csi-address=$(ADDRESS)"
@@ -170,7 +170,7 @@ spec:
             - name: socket-dir
               mountPath: /var/lib/csi/sockets/pluginproxy/
         - name: hpe-csi-driver
-          image: quay.io/hpestorage/csi-driver:v2.1.0-beta
+          image: quay.io/hpestorage/csi-driver:v2.1.0
           args :
             - "--endpoint=$(CSI_ENDPOINT)"
             - "--flavor=kubernetes"
@@ -758,6 +758,12 @@ rules:
   - apiGroups: ["storage.hpe.com"]
     resources: ["hpereplicationdeviceinfos"]
     verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+  - apiGroups: ["storage.hpe.com"]
+    resources: ["hpevolumegroupinfos"]
+    verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+  - apiGroups: ["storage.hpe.com"]
+    resources: ["hpesnapshotgroupinfos"]
+    verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]    
   - apiGroups: [""]
     resources: ["persistentvolumeclaims"]
     verbs: ["get", "list"]
@@ -815,7 +821,7 @@ spec:
             - name: registration-dir
               mountPath: /registration
         - name: hpe-csi-driver
-          image: quay.io/hpestorage/csi-driver:v2.1.0-beta
+          image: quay.io/hpestorage/csi-driver:v2.1.0
           args :
             - "--endpoint=$(CSI_ENDPOINT)"
             - "--node-service"

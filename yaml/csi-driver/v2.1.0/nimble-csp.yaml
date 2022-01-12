@@ -1,12 +1,19 @@
-{{- if not .Values.disable.alletra6000 }}
+# Configuration to deploy the HPE Nimble Storage CSP service
+#
+# example usage: kubectl create -f <this_file>
+
 
 ---
-### Alletra 6000 CSP Service ###
+
+###################################################
+############ Alletra 6000 CSP Service  ############
+###################################################
+
 kind: Service
 apiVersion: v1
 metadata:
   name: alletra6000-csp-svc
-  namespace: {{ .Release.Namespace }}
+  namespace: hpe-storage
   labels:
     app: alletra6000-csp-svc
 spec:
@@ -14,17 +21,21 @@ spec:
   - port: 8080
     protocol: TCP
   selector:
-    app:  nimble-csp
-{{- end }}
+    app: nimble-csp
 
-{{- if not .Values.disable.nimble }}
+
+
 ---
-### Nimble CSP Service ###
+
+#############################################
+############ Nimble CSP Service  ############
+#############################################
+
 kind: Service
 apiVersion: v1
 metadata:
   name: nimble-csp-svc
-  namespace: {{ .Release.Namespace }}
+  namespace: hpe-storage
   labels:
     app: nimble-csp-svc
 spec:
@@ -33,17 +44,18 @@ spec:
     protocol: TCP
   selector:
     app: nimble-csp
-{{- end }}
 
-
-{{- if or (not .Values.disable.alletra6000) (not .Values.disable.nimble) }}
 ---
-### CSP deployment ###
+
+##########################################
+############  CSP Deployment  ############
+##########################################
+
 kind: Deployment
 apiVersion: apps/v1
 metadata:
   name: nimble-csp
-  namespace: {{ .Release.Namespace }}
+  namespace: hpe-storage
 spec:
   selector:
     matchLabels:
@@ -55,19 +67,13 @@ spec:
         app: nimble-csp
     spec:
       serviceAccountName: hpe-csp-sa
-      {{- if and (eq .Capabilities.KubeVersion.Major "1") ( ge  ( trimSuffix "+" .Capabilities.KubeVersion.Minor ) "17") }}
       priorityClassName: system-cluster-critical
-      {{- end }}
       containers:
         - name: nimble-csp
-          {{- if .Values.registry }}
-          image: {{ .Values.registry }}/hpestorage/alletra-6000-and-nimble-csp:v2.1.0
-          {{- else }}
           image: quay.io/hpestorage/alletra-6000-and-nimble-csp:v2.1.0
-          {{- end }}
-          imagePullPolicy: {{ .Values.imagePullPolicy | quote }}
+          imagePullPolicy: Always
           ports:
-            - containerPort: 8080
+          - containerPort: 8080
           volumeMounts:
             - name: log-dir
               mountPath: /var/log
@@ -84,4 +90,3 @@ spec:
           key: node.kubernetes.io/unreachable
           operator: Exists
           tolerationSeconds: 30
-{{- end }}
