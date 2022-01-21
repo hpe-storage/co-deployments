@@ -1,5 +1,5 @@
 # Configuration to deploy the HPE CSI driver compatible with
-# Kubernetes = v1.18
+# Kubernetes = v1.22
 #
 # example usage: kubectl create -f <this_file>
 
@@ -77,7 +77,6 @@ status:
   storedVersions: []
 
 ---
-
 ################# CSI Driver CRD ###########
 apiVersion: storage.k8s.io/v1
 kind: CSIDriver
@@ -135,7 +134,7 @@ spec:
             - name: socket-dir
               mountPath: /var/lib/csi/sockets/pluginproxy/
         - name: csi-attacher
-          image: k8s.gcr.io/sig-storage/csi-attacher:v2.2.0
+          image: k8s.gcr.io/sig-storage/csi-attacher:v3.2.1
           args:
             - "--v=5"
             - "--csi-address=$(ADDRESS)"
@@ -147,7 +146,7 @@ spec:
             - name: socket-dir
               mountPath: /var/lib/csi/sockets/pluginproxy/
         - name: csi-snapshotter
-          image: quay.io/k8scsi/csi-snapshotter:v3.0.3
+          image: k8s.gcr.io/sig-storage/csi-snapshotter:v4.0.0
           args:
             - "--v=5"
             - "--csi-address=$(ADDRESS)"
@@ -171,7 +170,7 @@ spec:
             - name: socket-dir
               mountPath: /var/lib/csi/sockets/pluginproxy/
         - name: hpe-csi-driver
-          image: quay.io/hpestorage/csi-driver:v2.1.0-beta
+          image: quay.io/hpestorage/csi-driver:v2.1.0
           args :
             - "--endpoint=$(CSI_ENDPOINT)"
             - "--flavor=kubernetes"
@@ -196,7 +195,7 @@ spec:
             - name: root-dir
               mountPath: /host
         - name: csi-volume-mutator
-          image: quay.io/hpestorage/volume-mutator:v1.0.0
+          image: quay.io/hpestorage/volume-mutator:v1.3.0
           args:
             - "--v=5"
             - "--csi-address=$(ADDRESS)"
@@ -366,7 +365,7 @@ rules:
     verbs: ["get", "list", "watch", "update", "patch"]
   - apiGroups: ["storage.k8s.io"]
     resources: ["volumeattachments/status"]
-    verbs: ["get", "list", "watch", "update", "create", "delete"]
+    verbs: ["get", "list", "watch", "update", "create", "delete", "patch"]
   - apiGroups: [""]
     resources: ["secrets"]
     verbs: ["get", "watch", "list"]
@@ -773,7 +772,7 @@ rules:
     verbs: ["get", "list"]
   - apiGroups: ["storage.k8s.io"]
     resources: ["storageclasses"]
-    verbs: ["get", "list", "watch"]    
+    verbs: ["get", "list", "watch"]
 
 ---
 
@@ -822,7 +821,7 @@ spec:
             - name: registration-dir
               mountPath: /registration
         - name: hpe-csi-driver
-          image: quay.io/hpestorage/csi-driver:v2.1.0-beta
+          image: quay.io/hpestorage/csi-driver:v2.1.0
           args :
             - "--endpoint=$(CSI_ENDPOINT)"
             - "--node-service"
