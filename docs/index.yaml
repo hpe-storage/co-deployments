@@ -34,12 +34,39 @@ entries:
       artifacthub.io/links: |
         - name: Documentation
           url: https://scod.hpedev.io/csi_driver
+      artifacthub.io/prerelease: "false"
+    apiVersion: v1
+    appVersion: 2.1.0
+    created: "2022-01-20T14:57:15.941557-08:00"
+    description: A Helm chart for installing the HPE CSI Driver for Kubernetes
+    digest: 6e0fcc90a4f41cff07a0465cf02fa28ec81108b6f7038f31db73b16a1648aaac
+    home: https://hpe.com/storage/containers
+    icon: https://raw.githubusercontent.com/hpe-storage/co-deployments/master/docs/assets/hpedev.png
+    keywords:
+    - HPE
+    - Storage
+    - CSI
+    maintainers:
+    - email: hpe-containers-dev@hpe.com
+      name: raunakkumar
+    name: hpe-csi-driver
+    sources:
+    - https://github.com/hpe-storage/co-deployments
+    - https://github.com/hpe-storage/csi-driver
+    urls:
+    - hpe-csi-driver-2.1.0.tgz
+    version: 2.1.0
+  - annotations:
+      artifacthub.io/license: Apache-2.0
+      artifacthub.io/links: |
+        - name: Documentation
+          url: https://scod.hpedev.io/csi_driver
       artifacthub.io/prerelease: "true"
     apiVersion: v1
     appVersion: 2.1.0-beta
-    created: "2021-12-15T08:16:06.672129-08:00"
+    created: "2022-01-12T10:46:34.476112-08:00"
     description: A Helm chart for installing the HPE CSI Driver for Kubernetes
-    digest: 8cc013cf2d0384361a666b6162629babec05cff02c60fd58baea354336b6a5b3
+    digest: b90b8e4425a51963964546480bee195cc428715522e817322ce2c0c575141789
     home: https://hpe.com/storage/containers
     icon: https://raw.githubusercontent.com/hpe-storage/co-deployments/master/docs/assets/hpedev.png
     keywords:
@@ -487,4 +514,4 @@ entries:
     urls:
     - hpe-flexvolume-driver-3.0.0.tgz
     version: 3.0.0
-generated: "2021-12-15T08:16:06.668766-08:00"
+generated: "2022-01-20T14:57:15.940249-08:00"
