@@ -21,7 +21,7 @@ spec:
     spec:
       containers:
         - name: array-exporter
-          image: {{ .Values.image.registry }}/hpestorage/array-exporter:v1.0.0-edge
+          image: {{ .Values.image.registry }}/hpestorage/array-exporter:v1.0.0
           ports:
             - containerPort: 8080
           args:

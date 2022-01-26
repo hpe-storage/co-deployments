@@ -1,10 +1,9 @@
 apiVersion: v2
 name: hpe-array-exporter
-version: "1.0.0-beta"
-appVersion: "1.0.0-beta"
-kubeVersion: ">= 1.18.0"
+version: "1.0.0"
+appVersion: "1.0.0"
 annotations:
-  artifacthub.io/prerelease: "true"
+  artifacthub.io/prerelease: "false"
   artifacthub.io/license: Apache-2.0
   artifacthub.io/links: |
     - name: Documentation
