@@ -54,7 +54,7 @@ spec:
       serviceAccount: hpe-csi-info-metrics-serviceaccount
       containers:
         - name: csi-info-metrics
-          image: {{ .Values.image.registry }}/hpestorage/csi-info-metrics:v1.0.0-edge
+          image: {{ .Values.image.registry }}/hpestorage/csi-info-metrics:v1.0.0
           ports:
           - containerPort: 9099
           args:
