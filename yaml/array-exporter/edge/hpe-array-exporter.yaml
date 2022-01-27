@@ -1,0 +1,87 @@
+# Deploy the HPE Storage Array Exporter for Prometheus.
+#
+# Modify this sample file to:
+# - Uncomment the --accept-eula option in the Deployment to indicate
+#   your acceptance of the HPE End User License Agreement at
+#   https://www.hpe.com/us/en/software/licensing.html
+# - Specify the name of a Secret containing storage array access
+#   information in the storage-system-config volume spec
+# - Optionally set the Service type to NodePort, if necessary for
+#   access by a Prometheus instance running outside the cluster
+# - Optionally add labels to the Service, for example to facilitate
+#   the use of targetLabels in a ServiceMonitor spec
+
+---
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: hpe-array-exporter
+  namespace: hpe-storage
+spec:
+  selector:
+    matchLabels:
+      app: hpe-array-exporter
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: hpe-array-exporter
+    spec:
+      containers:
+        - name: array-exporter
+          image: quay.io/hpestorage/array-exporter:v1.0.0
+          ports:
+          - containerPort: 8080
+          args:
+            - "--telemetry.addr=:8080"
+            - "--telemetry.path=/metrics"
+            # IMPORTANT: Uncomment this argument to confirm your
+            # acceptance of the HPE End User License Agreement at
+            # https://www.hpe.com/us/en/software/licensing.html
+            #- "--accept-eula"
+            - "/etc/config"
+          env:
+            - name: LOG_LEVEL
+              value: info
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: storage-system-config
+              mountPath: /etc/config
+      volumes:
+        - name: storage-system-config
+          secret:
+            # Specify the name of a Secret in the same namespace as this
+            # deployment providing storage array access information:
+            # "address" (or "backend"), "username", and "password".
+            secretName: hpe-backend
+
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: hpe-array-exporter
+  namespace: hpe-storage
+  labels:
+    app: hpe-array-exporter
+    # Optionally add labels, for example to be included in Prometheus
+    # metrics via a targetLabels setting in a ServiceMonitor spec
+    #array: 192.168.0.1
+  # Optionally add annotations, for example to configure it as a
+  # scrape target when using the Prometheus Helm chart's default
+  # configuration.
+  #annotations:
+  #  "prometheus.io/scrape": "true"
+spec:
+  # Optionally expose the metrics service outside the cluster
+  #type: NodePort
+  ports:
+    - name: http-metrics
+      port: 9090
+      # Optionally choose a TCP port at which to expose the metrics
+      # service externally at each cluster node, when the Service
+      # type is NodePort
+      #nodePort: 30902
+      protocol: TCP
+      targetPort: 8080
+  selector:
+    app: hpe-array-exporter

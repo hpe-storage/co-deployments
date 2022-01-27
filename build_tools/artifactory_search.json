@@ -97,6 +97,30 @@
             "limit": 1
         },
         {
+            "pattern": "dcs-docker-local/hpestorage/alletra-9000-primera-and-3par-csp/edge-*",
+            "sortBy": [
+                "created"
+            ],
+            "sortOrder": "desc",
+            "limit": 1
+        },
+        {
+            "pattern": "dcs-docker-local/hpestorage/alletra-9000-primera-and-3par-csp/edge-*",
+            "sortBy": [
+                "created"
+            ],
+            "sortOrder": "desc",
+            "limit": 1
+        },
+        {
+            "pattern": "dcs-docker-local/hpestorage/alletra-9000-primera-and-3par-csp/edge-*",
+            "sortBy": [
+                "created"
+            ],
+            "sortOrder": "desc",
+            "limit": 1
+        },
+        {
             "pattern": "dcs-docker-local/hpestorage/volume-mutator/v1.0.0*",
             "sortBy": [
                 "created"
@@ -178,6 +202,22 @@
         },
         {
             "pattern": "dcs-docker-local/hpestorage/k8s-dynamic-provisioner/",
+            "sortBy": [
+                "created"
+            ],
+            "sortOrder": "desc",
+            "limit": 1
+        },
+        {
+            "pattern": "dcs-docker-local/hpestorage/array-exporter/v1.0.0-*",
+            "sortBy": [
+                "created"
+            ],
+            "sortOrder": "desc",
+            "limit": 1
+        },
+        {
+            "pattern": "dcs-docker-local/hpestorage/csi-info-metrics/v1.0.0-*",
             "sortBy": [
                 "created"
             ],

@@ -147,7 +147,7 @@ spec:
             - name: socket-dir
               mountPath: /var/lib/csi/sockets/pluginproxy/
         - name: csi-snapshotter
-          image: quay.io/k8scsi/csi-snapshotter:v3.0.2
+          image: quay.io/k8scsi/csi-snapshotter:v3.0.3
           args:
             - "--v=5"
             - "--csi-address=$(ADDRESS)"
@@ -171,7 +171,7 @@ spec:
             - name: socket-dir
               mountPath: /var/lib/csi/sockets/pluginproxy/
         - name: hpe-csi-driver
-          image: quay.io/hpestorage/csi-driver:v2.0.0-beta
+          image: quay.io/hpestorage/csi-driver:v2.0.0
           args :
             - "--endpoint=$(CSI_ENDPOINT)"
             - "--flavor=kubernetes"
@@ -208,7 +208,7 @@ spec:
             - name: socket-dir
               mountPath: /var/lib/csi/sockets/pluginproxy/
         - name: csi-volume-group-snapshotter
-          image: quay.io/hpestorage/volume-group-snapshotter:v1.0.0-beta
+          image: quay.io/hpestorage/volume-group-snapshotter:v1.0.0
           args:
             - "--v=5"
             - "--csi-address=$(ADDRESS)"
@@ -220,7 +220,7 @@ spec:
             - name: socket-dir
               mountPath: /var/lib/csi/sockets/pluginproxy/
         - name: csi-volume-group-provisioner
-          image: quay.io/hpestorage/volume-group-provisioner:v1.0.0-beta
+          image: quay.io/hpestorage/volume-group-provisioner:v1.0.0
           args:
             - "--v=5"
             - "--csi-address=$(ADDRESS)"
@@ -232,7 +232,7 @@ spec:
             - name: socket-dir
               mountPath: /var/lib/csi/sockets/pluginproxy/
         - name: csi-extensions
-          image: quay.io/hpestorage/csi-extensions:v1.2.0-beta
+          image: quay.io/hpestorage/csi-extensions:v1.2.0
           args:
             - "--v=5"
             - "--endpoint=$(CSI_ENDPOINT)"
@@ -825,7 +825,7 @@ spec:
             - name: registration-dir
               mountPath: /registration
         - name: hpe-csi-driver
-          image: quay.io/hpestorage/csi-driver:v2.0.0-beta
+          image: quay.io/hpestorage/csi-driver:v2.0.0
           args :
             - "--endpoint=$(CSI_ENDPOINT)"
             - "--node-service"

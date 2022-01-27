@@ -1,0 +1,23 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+ name: primera3par-rcg-info
+spec:
+  backoffLimit: 4
+  template:
+    metadata:
+      name : primera3par-rcg-info
+    spec:
+      serviceAccountName: hpe-csp-sa
+      containers:
+        - name: primera3par-rcg-info
+          image: quay.io/hpestorage/rcg-info:v1.0.1
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: log-dir
+              mountPath: /var/log
+      volumes:
+        - name: log-dir
+          hostPath:
+            path: /var/log
+      restartPolicy: Never

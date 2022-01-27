@@ -1,9 +1,9 @@
-FROM quay.io/operator-framework/helm-operator:v1.3.0
+FROM quay.io/operator-framework/helm-operator:v1.8
 LABEL name="csi-driver-operator" \
       maintainer="HPE Storage Containers Team" \
       vendor="HPE" \
-      version="1.4.1" \
-      release="1.4" \
+      version="2.0.0" \
+      release="2.0" \
       summary="HPE CSI Operator" \
       description="HPE CSI Operator for Kubernetes" \
       io.k8s.display-name="HPE CSI Operator for Kubernetes" \

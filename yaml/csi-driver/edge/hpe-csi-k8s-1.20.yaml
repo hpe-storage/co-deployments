@@ -146,7 +146,7 @@ spec:
             - name: socket-dir
               mountPath: /var/lib/csi/sockets/pluginproxy/
         - name: csi-snapshotter
-          image: k8s.gcr.io/sig-storage/csi-snapshotter:v4.1.0
+          image: k8s.gcr.io/sig-storage/csi-snapshotter:v4.0.0
           args:
             - "--v=5"
             - "--csi-address=$(ADDRESS)"
@@ -170,7 +170,7 @@ spec:
             - name: socket-dir
               mountPath: /var/lib/csi/sockets/pluginproxy/
         - name: hpe-csi-driver
-          image: quay.io/hpestorage/csi-driver:v2.0.0-beta
+          image: quay.io/hpestorage/csi-driver:v2.1.0-beta
           args :
             - "--endpoint=$(CSI_ENDPOINT)"
             - "--flavor=kubernetes"
@@ -195,7 +195,7 @@ spec:
             - name: root-dir
               mountPath: /host
         - name: csi-volume-mutator
-          image: quay.io/hpestorage/volume-mutator:v1.0.0
+          image: quay.io/hpestorage/volume-mutator:v1.3.0
           args:
             - "--v=5"
             - "--csi-address=$(ADDRESS)"
@@ -207,7 +207,7 @@ spec:
             - name: socket-dir
               mountPath: /var/lib/csi/sockets/pluginproxy/
         - name: csi-volume-group-snapshotter
-          image: quay.io/hpestorage/volume-group-snapshotter:v1.0.0-beta
+          image: quay.io/hpestorage/volume-group-snapshotter:v1.0.0
           args:
             - "--v=5"
             - "--csi-address=$(ADDRESS)"
@@ -219,7 +219,7 @@ spec:
             - name: socket-dir
               mountPath: /var/lib/csi/sockets/pluginproxy/
         - name: csi-volume-group-provisioner
-          image: quay.io/hpestorage/volume-group-provisioner:v1.0.0-beta
+          image: quay.io/hpestorage/volume-group-provisioner:v1.0.0
           args:
             - "--v=5"
             - "--csi-address=$(ADDRESS)"
@@ -231,7 +231,7 @@ spec:
             - name: socket-dir
               mountPath: /var/lib/csi/sockets/pluginproxy/
         - name: csi-extensions
-          image: quay.io/hpestorage/csi-extensions:v1.2.0-beta
+          image: quay.io/hpestorage/csi-extensions:v1.2.0
           args:
             - "--v=5"
             - "--endpoint=$(CSI_ENDPOINT)"
@@ -516,7 +516,6 @@ kind: ClusterRole
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
   name: hpe-csi-volumegroup-role
-  namespace: hpe-storage
 rules:
   - apiGroups: ["storage.hpe.com"]
     resources: ["volumegroups"]
@@ -579,7 +578,6 @@ kind: ClusterRole
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
   name: hpe-csi-snapshotgroup-role
-  namespace: hpe-storage
 rules:
   - apiGroups: ["storage.hpe.com"]
     resources: ["snapshotgroups"]
@@ -735,7 +733,6 @@ kind: ClusterRole
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
   name: hpe-csi-driver-role
-  namespace: hpe-storage
 rules:
   - apiGroups: ["storage.hpe.com"]
     resources: ["hpenodeinfos"]
@@ -818,7 +815,7 @@ spec:
             - name: registration-dir
               mountPath: /registration
         - name: hpe-csi-driver
-          image: quay.io/hpestorage/csi-driver:v2.0.0-beta
+          image: quay.io/hpestorage/csi-driver:v2.1.0-beta
           args :
             - "--endpoint=$(CSI_ENDPOINT)"
             - "--node-service"

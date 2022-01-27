@@ -1,6 +1,141 @@
 apiVersion: v1
 entries:
+  hpe-array-exporter:
+  - annotations:
+      artifacthub.io/license: Apache-2.0
+      artifacthub.io/links: |
+        - name: Documentation
+          url: https://hpe-storage.github.io/array-exporter
+      artifacthub.io/prerelease: "false"
+    apiVersion: v2
+    appVersion: 1.0.0
+    created: "2022-01-25T13:52:09.404881-08:00"
+    description: A Helm chart for installing the HPE Storage Array Exporter for Prometheus
+    digest: b86016a72d02074500ccaa9595193f35bb928fa43587d9c90c19b132d294a6eb
+    home: https://hpe.com/storage/containers
+    icon: https://raw.githubusercontent.com/hpe-storage/co-deployments/master/docs/assets/hpedev.png
+    keywords:
+    - HPE
+    - Storage
+    - Prometheus
+    maintainers:
+    - email: hpe-containers-dev@hpe.com
+      name: rkumpf
+    name: hpe-array-exporter
+    sources:
+    - https://github.com/hpe-storage/co-deployments
+    urls:
+    - hpe-array-exporter-1.0.0.tgz
+    version: 1.0.0
+  - annotations:
+      artifacthub.io/license: Apache-2.0
+      artifacthub.io/links: |
+        - name: Documentation
+          url: https://hpe-storage.github.io/array-exporter
+      artifacthub.io/prerelease: "true"
+    apiVersion: v2
+    appVersion: 1.0.0-beta
+    created: "2021-09-09T15:50:15.058029-07:00"
+    description: A Helm chart for installing the HPE Storage Array Exporter for Prometheus
+    digest: d597d9baac06f12307e854274495388e5fda20d5f20e1e444621b10505e67f20
+    home: https://hpe.com/storage/containers
+    icon: https://raw.githubusercontent.com/hpe-storage/co-deployments/master/docs/assets/hpedev.png
+    keywords:
+    - HPE
+    - Storage
+    - Prometheus
+    kubeVersion: '>= 1.18.0'
+    maintainers:
+    - email: hpe-containers-dev@hpe.com
+      name: rkumpf
+    name: hpe-array-exporter
+    sources:
+    - https://github.com/hpe-storage/co-deployments
+    urls:
+    - hpe-array-exporter-1.0.0-beta.tgz
+    version: 1.0.0-beta
   hpe-csi-driver:
+  - annotations:
+      artifacthub.io/license: Apache-2.0
+      artifacthub.io/links: |
+        - name: Documentation
+          url: https://scod.hpedev.io/csi_driver
+      artifacthub.io/prerelease: "false"
+    apiVersion: v1
+    appVersion: 2.1.0
+    created: "2022-01-20T14:57:15.941557-08:00"
+    description: A Helm chart for installing the HPE CSI Driver for Kubernetes
+    digest: 6e0fcc90a4f41cff07a0465cf02fa28ec81108b6f7038f31db73b16a1648aaac
+    home: https://hpe.com/storage/containers
+    icon: https://raw.githubusercontent.com/hpe-storage/co-deployments/master/docs/assets/hpedev.png
+    keywords:
+    - HPE
+    - Storage
+    - CSI
+    maintainers:
+    - email: hpe-containers-dev@hpe.com
+      name: raunakkumar
+    name: hpe-csi-driver
+    sources:
+    - https://github.com/hpe-storage/co-deployments
+    - https://github.com/hpe-storage/csi-driver
+    urls:
+    - hpe-csi-driver-2.1.0.tgz
+    version: 2.1.0
+  - annotations:
+      artifacthub.io/license: Apache-2.0
+      artifacthub.io/links: |
+        - name: Documentation
+          url: https://scod.hpedev.io/csi_driver
+      artifacthub.io/prerelease: "true"
+    apiVersion: v1
+    appVersion: 2.1.0-beta
+    created: "2022-01-12T10:46:34.476112-08:00"
+    description: A Helm chart for installing the HPE CSI Driver for Kubernetes
+    digest: b90b8e4425a51963964546480bee195cc428715522e817322ce2c0c575141789
+    home: https://hpe.com/storage/containers
+    icon: https://raw.githubusercontent.com/hpe-storage/co-deployments/master/docs/assets/hpedev.png
+    keywords:
+    - HPE
+    - Storage
+    - CSI
+    maintainers:
+    - email: hpe-containers-dev@hpe.com
+      name: raunakkumar
+    name: hpe-csi-driver
+    sources:
+    - https://github.com/hpe-storage/co-deployments
+    - https://github.com/hpe-storage/csi-driver
+    urls:
+    - hpe-csi-driver-2.1.0-beta.tgz
+    version: 2.1.0-beta
+  - annotations:
+      artifacthub.io/license: Apache-2.0
+      artifacthub.io/links: |
+        - name: Documentation
+          url: https://scod.hpedev.io/csi_driver
+      artifacthub.io/prerelease: "false"
+    apiVersion: v1
+    appVersion: 2.0.0
+    created: "2021-06-14T11:35:26.73652-07:00"
+    description: A Helm chart for installing the HPE CSI Driver for Kubernetes
+    digest: a33651ee35b0531a7dbeec7dad0c8166625cc55fba94deecb5157bac4d34dc1a
+    home: https://hpe.com/storage/containers
+    icon: https://raw.githubusercontent.com/hpe-storage/co-deployments/master/docs/assets/hpedev.png
+    keywords:
+    - HPE
+    - Storage
+    - CSI
+    maintainers:
+    - email: hpe-containers-dev@hpe.com
+      name: raunakkumar
+    name: hpe-csi-driver
+    sources:
+    - https://github.com/hpe-storage/co-deployments
+    - https://github.com/hpe-storage/csi-driver
+    urls:
+    - hpe-csi-driver-2.0.0.tgz
+    version: 2.0.0
   - annotations:
       artifacthub.io/license: Apache-2.0
       artifacthub.io/links: |
@@ -9,9 +144,9 @@ entries:
       artifacthub.io/prerelease: "true"
     apiVersion: v1
     appVersion: 2.0.0-beta
-    created: "2021-05-28T03:20:33.634361577-04:00"
+    created: "2021-05-28T14:25:49.709047-07:00"
     description: A Helm chart for installing the HPE CSI Driver for Kubernetes
-    digest: fcb70a6b6b1259f91cc0c8f16579b092c8d68969c7f51a6aac119b8d88c5b175
+    digest: bf29a8ee738b585f25b25c048695b6114cee310de3fcfcfb3855809bfe8b2e9d
     home: https://hpe.com/storage/containers
     icon: https://raw.githubusercontent.com/hpe-storage/co-deployments/master/docs/assets/hpedev.png
     keywords:
@@ -327,6 +462,64 @@ entries:
     urls:
     - hpe-csi-driver-1.0.0.tgz
     version: 1.0.0
+  hpe-csi-info-metrics:
+  - annotations:
+      artifacthub.io/license: Apache-2.0
+      artifacthub.io/links: |
+        - name: Documentation
+          url: https://scod.hpedev.io/
+      artifacthub.io/prerelease: "false"
+    apiVersion: v2
+    appVersion: 1.0.0
+    created: "2022-01-25T13:52:14.414365-08:00"
+    description: A Helm chart for installing the HPE CSI Info Metrics Provider for
+      Prometheus
+    digest: b75c26a519228eeda7e707c319ab83810a64b32bd1615d408a77a6d3020c7ecd
+    home: https://hpe.com/storage/containers
+    icon: https://raw.githubusercontent.com/hpe-storage/co-deployments/master/docs/assets/hpedev.png
+    keywords:
+    - HPE
+    - Storage
+    - CSI
+    - Prometheus
+    maintainers:
+    - email: hpe-containers-dev@hpe.com
+      name: rkumpf
+    name: hpe-csi-info-metrics
+    sources:
+    - https://github.com/hpe-storage/co-deployments
+    urls:
+    - hpe-csi-info-metrics-1.0.0.tgz
+    version: 1.0.0
+  - annotations:
+      artifacthub.io/license: Apache-2.0
+      artifacthub.io/links: |
+        - name: Documentation
+          url: https://scod.hpedev.io/
+      artifacthub.io/prerelease: "true"
+    apiVersion: v2
+    appVersion: 1.0.0-beta
+    created: "2021-09-09T15:49:55.435263-07:00"
+    description: A Helm chart for installing the HPE CSI Info Metrics Provider for
+      Prometheus
+    digest: a99643d57e3530333404f284906d1d72934eb59975a3fb971fc632f15bbf2610
+    home: https://hpe.com/storage/containers
+    icon: https://raw.githubusercontent.com/hpe-storage/co-deployments/master/docs/assets/hpedev.png
+    keywords:
+    - HPE
+    - Storage
+    - CSI
+    - Prometheus
+    kubeVersion: '>= 1.18.0'
+    maintainers:
+    - email: hpe-containers-dev@hpe.com
+      name: rkumpf
+    name: hpe-csi-info-metrics
+    sources:
+    - https://github.com/hpe-storage/co-deployments
+    urls:
+    - hpe-csi-info-metrics-1.0.0-beta.tgz
+    version: 1.0.0-beta
   hpe-flexvolume-driver:
   - apiVersion: v1
     appVersion: "3.1"
@@ -375,4 +568,4 @@ entries:
     urls:
     - hpe-flexvolume-driver-3.0.0.tgz
     version: 3.0.0
-generated: "2021-05-28T03:20:33.63213788-04:00"
+generated: "2022-01-25T13:52:14.412919-08:00"

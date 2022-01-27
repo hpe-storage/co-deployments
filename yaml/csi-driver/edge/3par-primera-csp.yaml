@@ -158,11 +158,12 @@ spec:
     metadata:
       labels:
         app: primera3par-csp
+    spec:
       serviceAccountName: hpe-csp-sa
       priorityClassName: system-cluster-critical
       containers:
         - name: primera3par-csp
-          image: quay.io/hpestorage/alletra-9000-primera-and-3par-csp:v2.0.0-beta
+          image: quay.io/hpestorage/alletra-9000-primera-and-3par-csp:v2.1.0-beta
           imagePullPolicy: Always
           ports:
           - containerPort: 8080
