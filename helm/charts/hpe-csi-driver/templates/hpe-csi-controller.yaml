@@ -64,7 +64,9 @@ spec:
           args:
             - "--v=5"
             - "--csi-address=$(ADDRESS)"
-            - "--timeoout=180"
+            {{- if .Values.csiAttacherTimeout }}
+            - "--timeoout=={{ .Values.csiAttacherTimeout }}s"
+            {{- end }}
           env:
             - name: ADDRESS
               value: /var/lib/csi/sockets/pluginproxy/csi.sock
