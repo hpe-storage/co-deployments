@@ -33,4 +33,4 @@ kubeletRootDir: "/var/lib/kubelet/"
 disableNodeGetVolumeStats: false
 
 # CSP client timeout for HPE Alletra 9000, Primera and 3PAR (60-360 seconds)
-cspClientTimeout: 60
+cspClientTimeout: 360
