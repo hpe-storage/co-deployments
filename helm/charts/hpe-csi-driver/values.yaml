@@ -36,4 +36,4 @@ disableNodeGetVolumeStats: false
 cspClientTimeout: 60
 
 # CSI Attacher timeout for HPE Alletra 9000, Primera and 3PAR (in seconds)
-csiAttacherTimeout: 180
+csiAttacherTimeout: 15
