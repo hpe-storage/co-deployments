@@ -131,8 +131,7 @@ spec:
             - "--flavor=kubernetes"
             - "--pod-monitor"
             - "--pod-monitor-interval=30"
-            {{- if .Values.cspClientTimeout }}
-            - "--csp-client-timeout={{ .Values.cspClientTimeout }}s"
+            - "--csp-client-timeout=60s"
             {{- end }}
           env:
             - name: CSI_ENDPOINT
