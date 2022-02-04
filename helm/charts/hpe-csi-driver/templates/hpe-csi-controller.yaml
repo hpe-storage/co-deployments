@@ -131,7 +131,7 @@ spec:
             - "--flavor=kubernetes"
             - "--pod-monitor"
             - "--pod-monitor-interval=30"
-            - "--csp-client-timeout=60s"
+            - "--csp-client-timeout=360s"
           env:
             - name: CSI_ENDPOINT
               value: unix:///var/lib/csi/sockets/pluginproxy/csi.sock
