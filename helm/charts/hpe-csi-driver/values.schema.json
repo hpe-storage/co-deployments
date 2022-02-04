@@ -21,7 +21,7 @@
             "registry": "quay.io",
             "kubeletRootDir": "/var/lib/kubelet/",
             "disableNodeGetVolumeStats": false,
-            "csiAttacherTimeout": 180
+            "csiAttacherTimeout": 15
         },
     "required": [
         "disable",
