@@ -132,7 +132,6 @@ spec:
             - "--pod-monitor"
             - "--pod-monitor-interval=30"
             - "--csp-client-timeout=60s"
-            {{- end }}
           env:
             - name: CSI_ENDPOINT
               value: unix:///var/lib/csi/sockets/pluginproxy/csi.sock
