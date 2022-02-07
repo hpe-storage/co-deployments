@@ -158,7 +158,7 @@
         "csiAttacherTimeout": {
             "$id": "#/properties/csiAttacherTimeout",
             "title": "CSI attacher timeout",
-            "description": "Change the CSI attacher timeout for HPE Alletra 9000, Primera and 3PAR systems",
+            "description": "Change the CSI attacher timeout",
             "type": "integer",
             "default": 15,
             "minimum": 15,
