@@ -821,7 +821,6 @@ spec:
             - "--endpoint=$(CSI_ENDPOINT)"
             - "--node-service"
             - "--flavor=kubernetes"
-            - "--csp-client-timeout=60s"
           env:
             - name: CSI_ENDPOINT
               value: unix:///csi/csi.sock

@@ -74,7 +74,6 @@ spec:
             - "--endpoint=$(CSI_ENDPOINT)"
             - "--node-service"
             - "--flavor=kubernetes"
-            - "--csp-client-timeout=360s"
             {{- end }}
           env:
             - name: CSI_ENDPOINT
