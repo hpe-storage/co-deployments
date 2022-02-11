@@ -71,7 +71,7 @@ spec:
           env:
             - name: CRD_CLIENT_CONFIG_QPS
               value: 35
-              name: CRD_CLIENT_CONFIG_BURST
+            - name: CRD_CLIENT_CONFIG_BURST
               value: 20
           ports:
             - containerPort: 8080
