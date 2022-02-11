@@ -33,7 +33,6 @@ The following table lists the configurable parameters of the chart and their def
 | registry                  | Registry to pull HPE CSI Driver container images from.                 | quay.io          |
 | kubeletRootDir            | The kubelet root directory path.                                       | /var/lib/kubelet |
 
-
 It's recommended to create a [values.yaml](https://github.com/hpe-storage/co-deployments/blob/master/helm/values/csi-driver) file from the corresponding release of the chart and edit it to fit the environment the chart is being deployed to. Download and edit [a sample file](https://github.com/hpe-storage/co-deployments/blob/master/helm/values/csi-driver).
 
 These are the bare minimum required parameters for a successful deployment to an iSCSI environment if CHAP authentication is required.
