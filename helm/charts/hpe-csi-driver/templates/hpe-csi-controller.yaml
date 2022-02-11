@@ -64,8 +64,8 @@ spec:
           args:
             - "--v=5"
             - "--csi-address=$(ADDRESS)"
-            {{- if .Values.csiAttacherTimeout }}
-            - "--timeout={{ .Values.csiAttacherTimeout }}s"
+            {{- if or (not .Values.disable.alletra9000) (not .Values.disable.primera) and (.Values.disable.alletra6000) (.Values.disable.nimble)}}
+            - "--timeout=180s"
             {{- end }}
           env:
             - name: ADDRESS

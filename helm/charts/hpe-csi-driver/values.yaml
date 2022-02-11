@@ -32,5 +32,3 @@ kubeletRootDir: "/var/lib/kubelet/"
 # NodeGetVolumestats will be called by default, set true to disable the call 
 disableNodeGetVolumeStats: false
 
-# CSI Attacher timeout (in seconds)
-csiAttacherTimeout: 15

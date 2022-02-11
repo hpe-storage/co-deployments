@@ -20,8 +20,7 @@
             "logLevel": "info",
             "registry": "quay.io",
             "kubeletRootDir": "/var/lib/kubelet/",
-            "disableNodeGetVolumeStats": false,
-            "csiAttacherTimeout": 15
+            "disableNodeGetVolumeStats": false
         },
     "required": [
         "disable",
@@ -31,8 +30,7 @@
         "logLevel",
         "registry",
         "kubeletRootDir",
-        "disableNodeGetVolumeStats",
-        "csiAttacherTimeout"
+        "disableNodeGetVolumeStats"
     ],
     "properties": {
         "disable": {
@@ -154,15 +152,6 @@
             "description": "In very large environments, disabling this feature may alleviate pressure on the CSP.",
             "type": "boolean",
             "default": false
-        },
-        "csiAttacherTimeout": {
-            "$id": "#/properties/csiAttacherTimeout",
-            "title": "CSI attacher timeout",
-            "description": "Change the CSI attacher timeout",
-            "type": "integer",
-            "default": 15,
-            "minimum": 15,
-            "maximum": 180
         },
         "global": {}
     },

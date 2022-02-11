@@ -70,9 +70,9 @@ spec:
           imagePullPolicy: {{ .Values.imagePullPolicy | quote }}
           env:
             - name: CRD_CLIENT_CONFIG_QPS
-              value: 35
+              value: "35"
             - name: CRD_CLIENT_CONFIG_BURST
-              value: 20
+              value: "20"
           ports:
             - containerPort: 8080
           volumeMounts:
