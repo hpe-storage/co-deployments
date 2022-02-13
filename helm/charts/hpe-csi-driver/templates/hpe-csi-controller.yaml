@@ -64,7 +64,7 @@ spec:
           args:
             - "--v=5"
             - "--csi-address=$(ADDRESS)"
-            {{- if or (not .Values.disable.alletra9000) (not .Values.disable.primera) and (.Values.disable.alletra6000) (.Values.disable.nimble)}}
+            {{- if and ( or (eq .Values.disable.primera false) (eq .Values.disable.alletra9000 false) ) ( or (eq .Values.disable.nimble true) (eq .Values.disable.alletra6000 true) ) }}
             - "--timeout=180s"
             {{- end }}
           env:
