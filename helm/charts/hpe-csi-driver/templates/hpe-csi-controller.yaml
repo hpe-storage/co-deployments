@@ -64,6 +64,9 @@ spec:
           args:
             - "--v=5"
             - "--csi-address=$(ADDRESS)"
+            {{- if and ( or (eq .Values.disable.primera false) (eq .Values.disable.alletra9000 false) ) ( or (eq .Values.disable.nimble true) (eq .Values.disable.alletra6000 true) ) }}
+            - "--timeout=180s"
+            {{- end }}
           env:
             - name: ADDRESS
               value: /var/lib/csi/sockets/pluginproxy/csi.sock
@@ -128,9 +131,6 @@ spec:
             - "--flavor=kubernetes"
             - "--pod-monitor"
             - "--pod-monitor-interval=30"
-            {{- if .Values.cspClientTimeout }}
-            - "--csp-client-timeout={{ .Values.cspClientTimeout }}s"
-            {{- end }}
           env:
             - name: CSI_ENDPOINT
               value: unix:///var/lib/csi/sockets/pluginproxy/csi.sock
@@ -150,9 +150,9 @@ spec:
               mountPath: /host
         - name: csi-volume-mutator
           {{- if .Values.registry }}
-          image: {{ .Values.registry }}/hpestorage/volume-mutator:v1.3.0
+          image: {{ .Values.registry }}/hpestorage/volume-mutator:v1.3.1-beta
           {{- else }}
-          image: quay.io/hpestorage/volume-mutator:v1.3.0
+          image: quay.io/hpestorage/volume-mutator:v1.3.1-beta
           {{- end }}
           args:
             - "--v=5"
@@ -166,9 +166,9 @@ spec:
               mountPath: /var/lib/csi/sockets/pluginproxy/
         - name: csi-volume-group-snapshotter
           {{- if .Values.registry }}
-          image: {{ .Values.registry }}/hpestorage/volume-group-snapshotter:v1.0.0
+          image: {{ .Values.registry }}/hpestorage/volume-group-snapshotter:v1.0.1-beta
           {{- else }}
-          image: quay.io/hpestorage/volume-group-snapshotter:v1.0.0
+          image: quay.io/hpestorage/volume-group-snapshotter:v1.0.1-beta
           {{- end }}
           args:
             - "--v=5"
@@ -182,9 +182,9 @@ spec:
               mountPath: /var/lib/csi/sockets/pluginproxy/
         - name: csi-volume-group-provisioner
           {{- if .Values.registry }}
-          image: {{ .Values.registry }}/hpestorage/volume-group-provisioner:v1.0.0
+          image: {{ .Values.registry }}/hpestorage/volume-group-provisioner:v1.0.1-beta
           {{- else }}
-          image: quay.io/hpestorage/volume-group-provisioner:v1.0.0
+          image: quay.io/hpestorage/volume-group-provisioner:v1.0.1-beta
           {{- end }}
           args:
             - "--v=5"
@@ -198,9 +198,9 @@ spec:
               mountPath: /var/lib/csi/sockets/pluginproxy/
         - name: csi-extensions
           {{- if .Values.registry }}
-          image: {{ .Values.registry }}/hpestorage/csi-extensions:v1.2.0
+          image: {{ .Values.registry }}/hpestorage/csi-extensions:v1.2.1-beta
           {{- else }}
-          image: quay.io/hpestorage/csi-extensions:v1.2.0
+          image: quay.io/hpestorage/csi-extensions:v1.2.1-beta
           {{- end }}  
           args:
             - "--v=5"

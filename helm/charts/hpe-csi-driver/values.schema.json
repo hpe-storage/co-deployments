@@ -20,8 +20,7 @@
             "logLevel": "info",
             "registry": "quay.io",
             "kubeletRootDir": "/var/lib/kubelet/",
-            "disableNodeGetVolumeStats": false,
-            "cspClientTimeout": 60
+            "disableNodeGetVolumeStats": false
         },
     "required": [
         "disable",
@@ -31,8 +30,7 @@
         "logLevel",
         "registry",
         "kubeletRootDir",
-        "disableNodeGetVolumeStats",
-        "cspClientTimeout"
+        "disableNodeGetVolumeStats"
     ],
     "properties": {
         "disable": {
@@ -154,15 +152,6 @@
             "description": "In very large environments, disabling this feature may alleviate pressure on the CSP.",
             "type": "boolean",
             "default": false
-        },
-        "cspClientTimeout": {
-            "$id": "#/properties/cspClientTimeout",
-            "title": "CSP client timeout",
-            "description": "Change the CSP client timeout for HPE Alletra 9000, Primera and 3PAR systems",
-            "type": "integer",
-            "default": 60,
-            "minimum": 60,
-            "maximum": 360
         },
         "global": {}
     },

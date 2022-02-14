@@ -46,8 +46,13 @@ spec:
       priorityClassName: system-cluster-critical
       containers:
         - name: primera3par-csp
-          image: quay.io/hpestorage/alletra-9000-primera-and-3par-csp:v2.1.0-beta
+          image: quay.io/hpestorage/alletra-9000-primera-and-3par-csp:v2.1.1-beta
           imagePullPolicy: Always
+          env:
+          - name: CRD_CLIENT_CONFIG_QPS
+            value: "35"
+          - name: CRD_CLIENT_CONFIG_BURST
+            value: "20"
           ports:
           - containerPort: 8080
           volumeMounts:
