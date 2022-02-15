@@ -35,10 +35,6 @@ spec:
           spec:
             description: HPECSIDriverSpec defines the desired state of HPECSIDriver
             properties:
-              cspClientTimeout:
-                description: CSP client timeout for HPE Alletra 9000, Primera and
-                  3PAR (60-360 seconds)
-                type: integer
               disable:
                 description: 'INSERT ADDITIONAL SPEC FIELDS - desired state of cluster
                   Important: Run "make" to regenerate code after modifying this file
@@ -90,7 +86,6 @@ spec:
                 description: Registry prefix for CSI driver images
                 type: string
             required:
-            - cspClientTimeout
             - disable
             - disableNodeConformance
             - disableNodeGetVolumeStats
