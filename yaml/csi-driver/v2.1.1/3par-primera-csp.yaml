@@ -1,11 +1,16 @@
-{{- if not .Values.disable.alletra9000 }}
----
-### Alletra9000 CSP Service ###
+# Configuration to deploy the HPE 3PAR Primera Storage CSP service
+#
+# example usage: kubectl create -f <this_file>
+
+####################################################
+############  Alletra 9000 CSP Service  ############
+####################################################
+
 kind: Service
 apiVersion: v1
 metadata:
   name: alletra9000-csp-svc
-  namespace: {{ .Release.Namespace }}
+  namespace: hpe-storage
   labels:
     app: alletra9000-csp-svc
 spec:
@@ -15,16 +20,18 @@ spec:
   selector:
     app: primera3par-csp
 
-{{- end }}
 
-{{- if not .Values.disable.primera }}
 ---
-### Primera3par CSP Service ###
+
+####################################################
+############  Primera3Par CSP Service  ############
+####################################################
+
 kind: Service
 apiVersion: v1
 metadata:
   name: primera3par-csp-svc
-  namespace: {{ .Release.Namespace }}
+  namespace: hpe-storage
   labels:
     app: primera3par-csp-svc
 spec:
@@ -33,19 +40,18 @@ spec:
     protocol: TCP
   selector:
     app: primera3par-csp
-{{- end }}
-
-{{- if or (not .Values.disable.alletra9000) (not .Values.disable.primera) }}
 
 ---
-### CSP deployment ###
+
+##########################################
+############  CSP Deployment  ############
+##########################################
+
 kind: Deployment
 apiVersion: apps/v1
 metadata:
   name: primera3par-csp
-  labels:
-    app: primera3par-csp
-  namespace: {{ .Release.Namespace }}
+  namespace: hpe-storage
 spec:
   selector:
     matchLabels:
@@ -57,24 +63,13 @@ spec:
         app: primera3par-csp
     spec:
       serviceAccountName: hpe-csp-sa
-      {{- if and (eq .Capabilities.KubeVersion.Major "1") ( ge  ( trimSuffix "+" .Capabilities.KubeVersion.Minor ) "17") }}
       priorityClassName: system-cluster-critical
-      {{- end }}
       containers:
         - name: primera3par-csp
-          {{- if .Values.registry }}
-          image: {{ .Values.registry }}/hpestorage/alletra-9000-primera-and-3par-csp:v2.1.1
-          {{- else }}
           image: quay.io/hpestorage/alletra-9000-primera-and-3par-csp:v2.1.1
-          {{- end }}        
-          imagePullPolicy: {{ .Values.imagePullPolicy | quote }}
-          env:
-            - name: CRD_CLIENT_CONFIG_QPS
-              value: "35"
-            - name: CRD_CLIENT_CONFIG_BURST
-              value: "20"
+          imagePullPolicy: Always
           ports:
-            - containerPort: 8080
+          - containerPort: 8080
           volumeMounts:
             - name: log-dir
               mountPath: /var/log
@@ -91,4 +86,3 @@ spec:
           key: node.kubernetes.io/unreachable
           operator: Exists
           tolerationSeconds: 30
-{{- end }}
