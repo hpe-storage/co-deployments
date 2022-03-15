@@ -20,7 +20,26 @@
             "logLevel": "info",
             "registry": "quay.io",
             "kubeletRootDir": "/var/lib/kubelet/",
-            "disableNodeGetVolumeStats": false
+            "disableNodeGetVolumeStats": false,
+            "csp": {
+                "nodeSelector": {},
+                "tolerations": {},
+                "affinity": {},
+                "labels": {}
+            },
+            "controller": {
+                "nodeSelector": {},
+                "tolerations": {},
+                "affinity": {},
+                "labels": {}
+            },
+            "node": {
+                "nodeSelector": {},
+                "tolerations": {},
+                "affinity": {},
+                "labels": {}
+            }
+
         },
     "required": [
         "disable",
@@ -30,7 +49,11 @@
         "logLevel",
         "registry",
         "kubeletRootDir",
-        "disableNodeGetVolumeStats"
+        "disableNodeGetVolumeStats",
+        "csp",
+        "controller",
+        "node"
+
     ],
     "properties": {
         "disable": {
@@ -152,6 +175,99 @@
             "description": "In very large environments, disabling this feature may alleviate pressure on the CSP.",
             "type": "boolean",
             "default": false
+        },
+        "csp": {
+            "nodeSelector": {
+                "$id": "#/properties/csp/properties/nodeSelector",
+                "title": "nodeSelector",
+                "description": "nodeSelector.",
+                "type": "object",
+                "default": {}
+            },
+            "tolerations": {
+                "$id": "#/properties/csp/properties/tolerations",
+                "title": "tolerations",
+                "description": "tolerations.",
+                "type": "object",
+                "default": {}
+            },
+            "affinity": {
+                "$id": "#/properties/csp/properties/affinity",
+                "title": "affinity",
+                "description": "affinity.",
+                "type": "object",
+                "default": {}
+            },
+            "labels": {
+                "$id": "#/properties/csp/properties/labels",
+                "title": "labels",
+                "description": "labels.",
+                "type": "object",
+                "default": {}
+            }
+
+        },
+        "controller": {
+            "nodeSelector": {
+                "$id": "#/properties/controller/properties/nodeSelector",
+                "title": "nodeSelector",
+                "description": "nodeSelector.",
+                "type": "object",
+                "default": {}
+            },
+            "tolerations": {
+                "$id": "#/properties/controller/properties/tolerations",
+                "title": "tolerations",
+                "description": "tolerations.",
+                "type": "object",
+                "default": {}
+            },
+            "affinity": {
+                "$id": "#/properties/controller/properties/affinity",
+                "title": "affinity",
+                "description": "affinity.",
+                "type": "object",
+                "default": {}
+            },
+            "labels": {
+                "$id": "#/properties/controller/properties/labels",
+                "title": "labels",
+                "description": "labels.",
+                "type": "object",
+                "default": {}
+            }
+
+        },
+        "node": {
+            "nodeSelector": {
+                "$id": "#/properties/node/properties/nodeSelector",
+                "title": "nodeSelector",
+                "description": "nodeSelector.",
+                "type": "object",
+                "default": {}
+            },
+            "tolerations": {
+                "$id": "#/properties/node/properties/tolerations",
+                "title": "tolerations",
+                "description": "tolerations.",
+                "type": "object",
+                "default": {}
+            },
+            "affinity": {
+                "$id": "#/properties/node/properties/affinity",
+                "title": "affinity",
+                "description": "affinity.",
+                "type": "object",
+                "default": {}
+            },
+            "labels": {
+                "$id": "#/properties/node/properties/labels",
+                "title": "labels",
+                "description": "labels.",
+                "type": "object",
+                "default": {}
+            }
+
         },
         "global": {}
     },

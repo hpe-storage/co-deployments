@@ -32,3 +32,53 @@ kubeletRootDir: "/var/lib/kubelet/"
 # NodeGetVolumestats will be called by default, set true to disable the call 
 disableNodeGetVolumeStats: false
 
+
+
+controller:
+  labels: {
+    infra: storage
+  }
+  nodeSelector: {
+    disktype: ssd
+  }
+  tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 30
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 30
+  affinity: {}
+
+csp:
+  labels: {
+    infra: storage
+  }
+  nodeSelector: {
+    disktype: ssd
+  }
+  tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 30
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 30
+  affinity: {}
+
+node:
+  labels: {
+    infra: storage
+  }
+  nodeSelector: {}
+  # disktype: ssd
+  tolerations:
+    - effect: NoSchedule
+      key: node-role.kubernetes.io/master
+      operator: Exists
+  # These values map directly to yaml in the deployment spec, see the kubernetes docs for info
+  affinity: {}
