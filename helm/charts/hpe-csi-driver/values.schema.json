@@ -179,15 +179,15 @@
         "csp": {
             "nodeSelector": {
                 "$id": "#/properties/csp/properties/nodeSelector",
-                "title": "nodeSelector",
-                "description": "nodeSelector.",
+                "title": "Select nodeSelector for deploying the PODS",
+                "description": "Selector which must match a node's labels for the pod to be scheduled on that node.",
                 "type": "object",
                 "default": {}
             },
             "tolerations": {
                 "$id": "#/properties/csp/properties/tolerations",
-                "title": "tolerations",
-                "description": "tolerations.",
+                "title": "Tolerations is the list of tolerations for the csp pods",
+                "description": "Tolerations is the list of tolerations for the csp pods.",
                 "type": "object",
                 "default": {}
             },
@@ -211,14 +211,14 @@
             "nodeSelector": {
                 "$id": "#/properties/controller/properties/nodeSelector",
                 "title": "nodeSelector",
-                "description": "nodeSelector.",
+                "description": "Selector which must match a node's labels for the pod to be scheduled on that node..",
                 "type": "object",
                 "default": {}
             },
             "tolerations": {
                 "$id": "#/properties/controller/properties/tolerations",
-                "title": "tolerations",
-                "description": "tolerations.",
+                "title": "Tolerations is the list of tolerations for the driver pods",
+                "description": "Tolerations is the list of tolerations for the driver pods.",
                 "type": "object",
                 "default": {}
             },
@@ -242,16 +242,16 @@
             "nodeSelector": {
                 "$id": "#/properties/node/properties/nodeSelector",
                 "title": "nodeSelector",
-                "description": "nodeSelector.",
+                "description": "Selector which must match a node's labels for the pod to be scheduled on that node..",
                 "type": "object",
                 "default": {}
             },
             "tolerations": {
                 "$id": "#/properties/node/properties/tolerations",
-                "title": "tolerations",
-                "description": "tolerations.",
-                "type": "object",
-                "default": {}
+                "title": "Tolerations is the list of tolerations for the node pods",
+                "description": "Tolerations is the list of tolerations for the node pods.",
+                "type": "array",
+                "default": []
             },
             "affinity": {
                 "$id": "#/properties/node/properties/affinity",
