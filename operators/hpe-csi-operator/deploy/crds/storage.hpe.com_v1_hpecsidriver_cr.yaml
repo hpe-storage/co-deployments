@@ -38,3 +38,56 @@ spec:
   # NodeGetVolumestats will be called by default, set true to disable the call
   disableNodeGetVolumeStats: false
 
+  csp:
+    labels: {
+      #infra: storage
+    }
+    nodeSelector: {
+      #disktype: ssd
+    }
+    tolerations:
+      - effect: NoExecute
+        key: node.kubernetes.io/not-ready
+        operator: Exists
+        tolerationSeconds: 30
+      - effect: NoExecute
+        key: node.kubernetes.io/unreachable
+        operator: Exists
+        tolerationSeconds: 30
+    affinity: { }
+
+  controller:
+    labels: {
+      #infra: storage
+    }
+    nodeSelector: {
+      #disktype: ssd
+    }
+    tolerations:
+      - effect: NoExecute
+        key: node.kubernetes.io/not-ready
+        operator: Exists
+        tolerationSeconds: 30
+      - effect: NoExecute
+        key: node.kubernetes.io/unreachable
+        operator: Exists
+        tolerationSeconds: 30
+    affinity: { }
+
+  node:
+    labels: {
+      #infra: storage
+    }
+    nodeSelector: {
+      #disktype: ssd
+    }
+    tolerations:
+      - effect: NoExecute
+        key: node.kubernetes.io/not-ready
+        operator: Exists
+      - effect: NoExecute
+        key: node.kubernetes.io/unreachable
+        operator: Exists
+    affinity: { }
+
+
