@@ -55,6 +55,9 @@ spec:
     metadata:
       labels:
         app: primera3par-csp
+        {{- if .Values.csp.labels }}
+{{ toYaml .Values.csp.labels | indent 8 }}
+        {{- end }}
     spec:
       serviceAccountName: hpe-csp-sa
       {{- if and (eq .Capabilities.KubeVersion.Major "1") ( ge  ( trimSuffix "+" .Capabilities.KubeVersion.Minor ) "17") }}

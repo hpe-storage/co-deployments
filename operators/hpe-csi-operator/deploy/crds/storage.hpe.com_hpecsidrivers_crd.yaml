@@ -91,6 +91,7 @@ spec:
                   labels:
                     type: object
                   nodeSelector:
+                    description: Node selector to control the selection of nodes (optional)
                     type: object
                   tolerations:
                     description: tolerations for csp
@@ -111,6 +112,7 @@ spec:
                         - effect
                     type: array
                   affinity:
+                    description: Node affinity for csp plugin (optional)
                     type: object
                 type: object
               controller:
@@ -119,9 +121,10 @@ spec:
                   labels:
                     type: object
                   nodeSelector:
+                    description: Node selector to control the selection of nodes (optional)
                     type: object
                   tolerations:
-                    description: tolerations for csp
+                    description: Set tolerations for the csp pods(optional)
                     items:
                       properties:
                         key:
@@ -133,12 +136,9 @@ spec:
                         tolerationSeconds:
                           type: integer
                       type: object
-                      required:
-                        - key
-                        - operator
-                        - effect
                     type: array
                   affinity:
+                    description: Node affinity for controller plugin (optional)
                     type: object
                 type: object
               node:
@@ -147,9 +147,10 @@ spec:
                   labels:
                     type: object
                   nodeSelector:
+                    description: Node selector to control the selection of nodes (optional)
                     type: object
                   tolerations:
-                    description: tolerations for csp
+                    description: Set tolerations for the csp pods(optional)
                     items:
                       properties:
                         key:
@@ -167,10 +168,9 @@ spec:
                         - effect
                     type: array
                   affinity:
+                    description: Node affinity for node plugin (optional)
                     type: object
                 type: object
-
-
             required:
             - disable
             - disableNodeConformance
@@ -181,6 +181,8 @@ spec:
             - logLevel
             - registry
             - csp
+            - controller
+            - node
             type: object
           status:
             description: HpecsidriverStatus defines the observed state of HPECSIDriver
