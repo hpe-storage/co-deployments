@@ -86,6 +86,74 @@
             "type": "boolean",
             "default": false
         },
+        "hpeCSIController": {
+            "$id": "#/properties/hpeCSIController",
+            "title": "Disable node conformance",
+            "description": "Disabling node conformance forces the cluster administrator to install required packages and ensure the correct node services are started to use external block storage.",
+            "type": "object",
+            "default": {},
+            "properties": {
+                "affinity": {
+                    "$id": "#/properties/hpeCSIController/properties/affinity",
+                    "title": "Affinity for the hpe-csi-controller deployment",
+                    "type": "object",
+                    "default": {}
+                },
+                "annotations": {
+                    "$id": "#/properties/hpeCSIController/properties/annotations",
+                    "title": "Annotations for the hpe-csi-controller deployment",
+                    "type": "object",
+                    "default": {}
+                },
+                "nodeSelector": {
+                    "$id": "#/properties/hpeCSIController/properties/nodeSelector",
+                    "title": "NodeSelector for the hpe-csi-controller deployment",
+                    "type": "object",
+                    "default": {}
+                },
+                "tolerations": {
+                    "$id": "#/properties/hpeCSIController/properties/tolerations",
+                    "title": "Tolerations for the hpe-csi-controller deployment",
+                    "type": "array",
+                    "default": []
+                }
+            },
+            "additionalProperties": false
+        },
+        "hpeCSINode": {
+            "$id": "#/properties/hpeCSINode",
+            "title": "Disable node conformance",
+            "description": "Disabling node conformance forces the cluster administrator to install required packages and ensure the correct node services are started to use external block storage.",
+            "type": "object",
+            "default": {},
+            "properties": {
+                "affinity": {
+                    "$id": "#/properties/hpeCSINode/properties/affinity",
+                    "title": "Affinity for the hpe-csi-node daemonset",
+                    "type": "object",
+                    "default": {}
+                },
+                "annotations": {
+                    "$id": "#/properties/hpeCSINode/properties/annotations",
+                    "title": "Annotations for the hpe-csi-node daemonset",
+                    "type": "object",
+                    "default": {}
+                },
+                "nodeSelector": {
+                    "$id": "#/properties/hpeCSINode/properties/nodeSelector",
+                    "title": "NodeSelector for the hpe-csi-node daemonset",
+                    "type": "object",
+                    "default": {}
+                },
+                "tolerations": {
+                    "$id": "#/properties/hpeCSINode/properties/tolerations",
+                    "title": "Tolerations for the hpe-csi-node daemonset",
+                    "type": "array",
+                    "default": []
+                }
+            },
+            "additionalProperties": false
+        },
         "imagePullPolicy": {
             "$id": "#/properties/imagePullPolicy",
             "title": "CSI driver image pull policy",
@@ -130,6 +198,74 @@
             "type": "string",
             "default": "info",
             "enum": [ "info", "debug", "trace", "warn", "error" ]
+        },
+        "nimleCSP": {
+            "$id": "#/properties/nimleCSP",
+            "title": "Disable node conformance",
+            "description": "Disabling node conformance forces the cluster administrator to install required packages and ensure the correct node services are started to use external block storage.",
+            "type": "object",
+            "default": {},
+            "properties": {
+                "affinity": {
+                    "$id": "#/properties/nimleCSP/properties/affinity",
+                    "title": "Affinity for the nimble-csp deployment",
+                    "type": "object",
+                    "default": {}
+                },
+                "annotations": {
+                    "$id": "#/properties/nimleCSP/properties/annotations",
+                    "title": "Annotations for the nimble-csp deployment",
+                    "type": "object",
+                    "default": {}
+                },
+                "nodeSelector": {
+                    "$id": "#/properties/nimleCSP/properties/nodeSelector",
+                    "title": "NodeSelector for the nimble-csp deployment",
+                    "type": "object",
+                    "default": {}
+                },
+                "tolerations": {
+                    "$id": "#/properties/nimleCSP/properties/tolerations",
+                    "title": "Tolerations for the nimble-csp deployment",
+                    "type": "array",
+                    "default": []
+                }
+            },
+            "additionalProperties": false
+        },
+        "primera3parCSP": {
+            "$id": "#/properties/primera3parCSP",
+            "title": "Disable node conformance",
+            "description": "Disabling node conformance forces the cluster administrator to install required packages and ensure the correct node services are started to use external block storage.",
+            "type": "object",
+            "default": {},
+            "properties": {
+                "affinity": {
+                    "$id": "#/properties/primera3parCSP/properties/affinity",
+                    "title": "Affinity for the primera3par-csp deployment",
+                    "type": "object",
+                    "default": {}
+                },
+                "annotations": {
+                    "$id": "#/properties/primera3parCSP/properties/annotations",
+                    "title": "Annotations for the primera3par-csp deployment",
+                    "type": "object",
+                    "default": {}
+                },
+                "nodeSelector": {
+                    "$id": "#/properties/primera3parCSP/properties/nodeSelector",
+                    "title": "NodeSelector for the primera3par-csp deployment",
+                    "type": "object",
+                    "default": {}
+                },
+                "tolerations": {
+                    "$id": "#/properties/primera3parCSP/properties/tolerations",
+                    "title": "Tolerations for the primera3par-csp deployment",
+                    "type": "array",
+                    "default": []
+                }
+            },
+            "additionalProperties": false
         },
         "registry": {
             "$id": "#/properties/registry",

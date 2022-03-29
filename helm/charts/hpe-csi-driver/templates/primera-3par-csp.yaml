@@ -52,10 +52,18 @@ spec:
       app: primera3par-csp
   replicas: 1
   template:
+{{- with (.Values.primera3parCSP).annotations }}
+    annotations:
+{{ toYaml . | indent 6}}
+{{- end }}
     metadata:
       labels:
         app: primera3par-csp
     spec:
+{{- with (.Values.primera3parCSP).affinity }}
+      affinity:
+{{ toYaml . | indent 8}}
+{{- end }}
       serviceAccountName: hpe-csp-sa
       {{- if and (eq .Capabilities.KubeVersion.Major "1") ( ge  ( trimSuffix "+" .Capabilities.KubeVersion.Minor ) "17") }}
       priorityClassName: system-cluster-critical
@@ -78,6 +86,10 @@ spec:
           volumeMounts:
             - name: log-dir
               mountPath: /var/log
+{{- with (.Values.primera3parCSP).nodeSelector }}
+      nodeSelector:
+{{ toYaml . | indent 8}}
+{{- end }}
       volumes:
         - name: log-dir
           hostPath:
@@ -91,4 +103,7 @@ spec:
           key: node.kubernetes.io/unreachable
           operator: Exists
           tolerationSeconds: 30
+{{- with (.Values.primera3parCSP).tolerations }}
+{{ toYaml . | indent 8}}
+{{ end }}
 {{- end }}

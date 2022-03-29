@@ -15,11 +15,19 @@ spec:
     matchLabels:
       app: hpe-csi-controller
   template:
+{{- with (.Values.hpeCSIController).annotations }}
+    annotations:
+{{ toYaml . | indent 6}}
+{{- end }}
     metadata:
       labels:
         app: hpe-csi-controller
         role: hpe-csi
     spec:
+{{- with (.Values.hpeCSIController).affinity }}
+      affinity:
+{{ toYaml . | indent 8}}
+{{- end }}
       serviceAccountName: hpe-csi-controller-sa
       {{- if and (eq .Capabilities.KubeVersion.Major "1") ( ge  ( trimSuffix "+" .Capabilities.KubeVersion.Minor ) "17") }}
       priorityClassName: system-cluster-critical
@@ -214,6 +222,10 @@ spec:
           volumeMounts:
             - name: socket-dir
               mountPath: /var/lib/csi/sockets/pluginproxy/
+{{- with (.Values.hpeCSIController).nodeSelector }}
+      nodeSelector:
+{{ toYaml . | indent 8}}
+{{- end }}
       volumes:
         - name: socket-dir
           emptyDir: {}
@@ -238,3 +250,6 @@ spec:
           key: node.kubernetes.io/unreachable
           operator: Exists
           tolerationSeconds: 30
+{{- with (.Values.hpeCSIController).tolerations }}
+{{ toYaml . | indent 8}}
+{{ end }}

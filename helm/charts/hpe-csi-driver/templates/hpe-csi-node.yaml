@@ -14,11 +14,19 @@ spec:
     matchLabels:
       app: hpe-csi-node
   template:
+{{- with (.Values.hpeCSINode).annotations }}
+    annotations:
+{{ toYaml . | indent 6}}
+{{- end }}
     metadata:
       labels:
         app: hpe-csi-node
         role: hpe-csi
     spec:
+{{- with (.Values.hpeCSINode).affinity }}
+      affinity:
+{{ toYaml . | indent 8}}
+{{- end }}
       serviceAccountName: hpe-csi-node-sa
       {{- if and (eq .Capabilities.KubeVersion.Major "1") ( ge  ( trimSuffix "+" .Capabilities.KubeVersion.Minor ) "17") }}
       priorityClassName: system-node-critical
@@ -139,6 +147,10 @@ spec:
             - name: linux-config-file
               mountPath: /opt/hpe-storage/nimbletune/config.json
               subPath: config.json
+{{- with (.Values.hpeCSINode).nodeSelector }}
+      nodeSelector:
+{{ toYaml . | indent 8}}
+{{- end }}
       volumes:
         - name: registration-dir
           hostPath:
@@ -199,3 +211,6 @@ spec:
           key: node.kubernetes.io/unreachable
           operator: Exists
           tolerationSeconds: 30
+{{- with (.Values.hpeCSINode).tolerations }}
+{{ toYaml . | indent 8}}
+{{ end }}
