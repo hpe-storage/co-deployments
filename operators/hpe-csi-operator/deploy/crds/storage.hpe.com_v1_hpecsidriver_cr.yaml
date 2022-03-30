@@ -40,15 +40,15 @@ spec:
 
   controller:
     # These values map directly to yaml in the deployment spec, see the kubernetes docs for info
-    labels: { }
+    labels: {}
     # infra: storage
 
     # These values map directly to yaml in the deployment spec, see the kubernetes docs for info
-    nodeSelector: { }
+    nodeSelector: {}
     # disktype: ssd
 
     # These values map directly to yaml in the deployment spec, see the kubernetes docs for info
-    tolerations: [ ]
+    tolerations: []
 
       #  - effect: NoExecute
       #    key: node.kubernetes.io/not-ready
@@ -58,7 +58,7 @@ spec:
       #    key: node.kubernetes.io/unreachable
     #    operator: Exists
     #   tolerationSeconds: 30
-    affinity: { }
+    affinity: {}
     # nodeAffinity:
     #   requiredDuringSchedulingIgnoredDuringExecution:
     #     nodeSelectorTerms:
@@ -71,15 +71,15 @@ spec:
 
   csp:
     # These values map directly to yaml in the deployment spec, see the kubernetes docs for info
-    labels: { }
+    labels: {}
     # infra: storage
 
     # These values map directly to yaml in the deployment spec, see the kubernetes docs for info
-    nodeSelector: { }
+    nodeSelector: {}
     # disktype: ssd
 
     # These values map directly to yaml in the deployment spec, see the kubernetes docs for info
-    tolerations: [ ]
+    tolerations: []
 
       #  - effect: NoExecute
       #    key: node.kubernetes.io/not-ready
@@ -89,7 +89,7 @@ spec:
     #    key: node.kubernetes.io/unreachable
     #    operator: Exists
     #   tolerationSeconds: 30
-    affinity: { }
+    affinity: {}
     # nodeAffinity:
     #   requiredDuringSchedulingIgnoredDuringExecution:
     #     nodeSelectorTerms:
@@ -102,15 +102,15 @@ spec:
 
   node:
     # These values map directly to yaml in the deployment spec, see the kubernetes docs for info
-    labels: { }
+    labels: {}
     # infra: storage
 
     # These values map directly to yaml in the deployment spec, see the kubernetes docs for info
-    nodeSelector: { }
+    nodeSelector: {}
     # disktype: ssd
 
     # These values map directly to yaml in the deployment spec, see the kubernetes docs for info
-    tolerations: [ ]
+    tolerations: []
 
       #  - effect: NoExecute
       #    key: node.kubernetes.io/not-ready
@@ -120,7 +120,7 @@ spec:
       #    key: node.kubernetes.io/unreachable
       #    operator: Exists
       #   tolerationSeconds: 30
-    affinity: { }
+    affinity: {}
     # nodeAffinity:
     #   requiredDuringSchedulingIgnoredDuringExecution:
     #     nodeSelectorTerms:

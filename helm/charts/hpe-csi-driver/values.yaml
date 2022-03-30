@@ -107,7 +107,7 @@ node:
   #disktype: ssd
 
   # These values map directly to yaml in the deployment spec, see the kubernetes docs for info
-  tolerations: [ ]
+  tolerations: []
 
     #  - effect: NoExecute
     #    key: node.kubernetes.io/not-ready

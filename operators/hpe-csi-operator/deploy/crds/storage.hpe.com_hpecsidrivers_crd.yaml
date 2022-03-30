@@ -106,10 +106,6 @@ spec:
                         tolerationSeconds:
                           type: integer
                       type: object
-                      required:
-                        - key
-                        - operator
-                        - effect
                     type: array
                   affinity:
                     description: Node affinity for csp plugin (optional)
@@ -162,10 +158,6 @@ spec:
                         tolerationSeconds:
                           type: integer
                       type: object
-                      required:
-                        - key
-                        - operator
-                        - effect
                     type: array
                   affinity:
                     description: Node affinity for node plugin (optional)
