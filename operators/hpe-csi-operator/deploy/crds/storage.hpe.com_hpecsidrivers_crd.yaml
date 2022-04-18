@@ -85,6 +85,84 @@ spec:
               registry:
                 description: Registry prefix for CSI driver images
                 type: string
+              csp:
+                description: CSP parameters to be configured
+                properties:
+                  labels:
+                    type: object
+                  nodeSelector:
+                    description: Node selector to control the selection of nodes (optional)
+                    type: object
+                  tolerations:
+                    description: tolerations for csp
+                    items:
+                      properties:
+                        key:
+                          type: string
+                        operator:
+                          type: string
+                        effect:
+                          type: string
+                        tolerationSeconds:
+                          type: integer
+                      type: object
+                    type: array
+                  affinity:
+                    description: Node affinity for csp plugin (optional)
+                    type: object
+                type: object
+              controller:
+                description: Controller parameters to be configured
+                properties:
+                  labels:
+                    type: object
+                  nodeSelector:
+                    description: Node selector to control the selection of nodes (optional)
+                    type: object
+                  tolerations:
+                    description: Set tolerations for the csp pods(optional)
+                    items:
+                      properties:
+                        key:
+                          type: string
+                        operator:
+                          type: string
+                        effect:
+                          type: string
+                        tolerationSeconds:
+                          type: integer
+                      type: object
+                    type: array
+                  affinity:
+                    description: Node affinity for controller plugin (optional)
+                    type: object
+                type: object
+              node:
+                description: Node  parameters to be configured
+                properties:
+                  labels:
+                    type: object
+                  nodeSelector:
+                    description: Node selector to control the selection of nodes (optional)
+                    type: object
+                  tolerations:
+                    description: Set tolerations for the csp pods(optional)
+                    items:
+                      properties:
+                        key:
+                          type: string
+                        operator:
+                          type: string
+                        effect:
+                          type: string
+                        tolerationSeconds:
+                          type: integer
+                      type: object
+                    type: array
+                  affinity:
+                    description: Node affinity for node plugin (optional)
+                    type: object
+                type: object
             required:
             - disable
             - disableNodeConformance
@@ -94,6 +172,9 @@ spec:
             - kubeletRootDir
             - logLevel
             - registry
+            - csp
+            - controller
+            - node
             type: object
           status:
             description: HpecsidriverStatus defines the observed state of HPECSIDriver

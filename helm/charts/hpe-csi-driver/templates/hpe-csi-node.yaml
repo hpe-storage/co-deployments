@@ -18,6 +18,9 @@ spec:
       labels:
         app: hpe-csi-node
         role: hpe-csi
+        {{- if .Values.node.labels }}
+{{ toYaml .Values.node.labels | indent 8 }}
+        {{- end }}
     spec:
       serviceAccountName: hpe-csi-node-sa
       {{- if and (eq .Capabilities.KubeVersion.Major "1") ( ge  ( trimSuffix "+" .Capabilities.KubeVersion.Minor ) "17") }}
@@ -190,12 +193,15 @@ spec:
         - name: linux-config-file
           configMap:
             name: hpe-linux-config
+      {{- if .Values.node.nodeSelector }}
+      nodeSelector:
+{{ toYaml .Values.node.nodeSelector | indent 8 }}
+      {{- end }}
+      {{- if .Values.node.tolerations }}
       tolerations:
-        - effect: NoExecute
-          key: node.kubernetes.io/not-ready
-          operator: Exists
-          tolerationSeconds: 30
-        - effect: NoExecute
-          key: node.kubernetes.io/unreachable
-          operator: Exists
-          tolerationSeconds: 30
+{{ toYaml .Values.node.tolerations | indent 8 }}
+      {{- end }}
+      {{- if .Values.node.affinity }}
+      affinity:
+{{ toYaml .Values.node.affinity | indent 8 }}
+      {{- end }}

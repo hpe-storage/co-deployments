@@ -19,6 +19,9 @@ spec:
       labels:
         app: hpe-csi-controller
         role: hpe-csi
+        {{- if .Values.controller.labels }}
+{{ toYaml .Values.controller.labels | indent 8 }}
+        {{- end }}
     spec:
       serviceAccountName: hpe-csi-controller-sa
       {{- if and (eq .Capabilities.KubeVersion.Major "1") ( ge  ( trimSuffix "+" .Capabilities.KubeVersion.Minor ) "17") }}
@@ -229,12 +232,15 @@ spec:
         - name: root-dir
           hostPath:
             path: /
+      {{- if .Values.controller.nodeSelector }}
+      nodeSelector:
+{{ toYaml .Values.controller.nodeSelector | indent 8 }}
+      {{- end }}
+      {{- if .Values.controller.tolerations }}
       tolerations:
-        - effect: NoExecute
-          key: node.kubernetes.io/not-ready
-          operator: Exists
-          tolerationSeconds: 30
-        - effect: NoExecute
-          key: node.kubernetes.io/unreachable
-          operator: Exists
-          tolerationSeconds: 30
+{{ toYaml .Values.controller.tolerations | indent 8 }}
+      {{- end }}
+      {{- if .Values.controller.affinity }}
+      affinity:
+{{ toYaml .Values.controller.affinity | indent 8 }}
+      {{- end }}

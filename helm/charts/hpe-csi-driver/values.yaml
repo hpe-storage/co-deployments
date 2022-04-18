@@ -32,3 +32,98 @@ kubeletRootDir: "/var/lib/kubelet/"
 # NodeGetVolumestats will be called by default, set true to disable the call 
 disableNodeGetVolumeStats: false
 
+controller:
+
+  # These values map directly to yaml in the deployment spec, see the kubernetes docs for info
+  labels: {}
+  #infra: storage
+
+  # These values map directly to yaml in the deployment spec, see the kubernetes docs for info
+  nodeSelector: {}
+  #disktype: ssd
+
+  # These values map directly to yaml in the deployment spec, see the kubernetes docs for info
+  tolerations: []
+
+  #  - effect: NoExecute
+  #    key: node.kubernetes.io/not-ready
+  #    operator: Exists
+  #    tolerationSeconds: 30
+  #  - effect: NoExecute
+  #    key: node.kubernetes.io/unreachable
+  #    operator: Exists
+   #   tolerationSeconds: 30
+  affinity: {}
+  # nodeAffinity:
+  #   requiredDuringSchedulingIgnoredDuringExecution:
+  #     nodeSelectorTerms:
+  #     - matchExpressions:
+  #       - key: az
+  #         operator: In
+  #         values:
+  #         - az-east
+  #         - az-west
+
+csp:
+
+  # These values map directly to yaml in the deployment spec, see the kubernetes docs for info
+  labels: {}
+  #infra: storage
+
+  # These values map directly to yaml in the deployment spec, see the kubernetes docs for info
+  nodeSelector: {}
+  #disktype: ssd
+
+  # These values map directly to yaml in the deployment spec, see the kubernetes docs for info
+  tolerations: []
+
+    #  - effect: NoExecute
+    #    key: node.kubernetes.io/not-ready
+    #    operator: Exists
+    #    tolerationSeconds: 30
+    #  - effect: NoExecute
+    #    key: node.kubernetes.io/unreachable
+    #    operator: Exists
+  #   tolerationSeconds: 30
+  affinity: {}
+  # nodeAffinity:
+  #   requiredDuringSchedulingIgnoredDuringExecution:
+  #     nodeSelectorTerms:
+  #     - matchExpressions:
+  #       - key: az
+  #         operator: In
+  #         values:
+  #         - az-east
+  #         - az-west
+
+node:
+
+  # These values map directly to yaml in the deployment spec, see the kubernetes docs for info
+  labels: {}
+  #infra: storage
+
+  # These values map directly to yaml in the deployment spec, see the kubernetes docs for info
+  nodeSelector: {}
+  #disktype: ssd
+
+  # These values map directly to yaml in the deployment spec, see the kubernetes docs for info
+  tolerations: []
+
+    #  - effect: NoExecute
+    #    key: node.kubernetes.io/not-ready
+    #    operator: Exists
+    #    tolerationSeconds: 30
+    #  - effect: NoExecute
+    #    key: node.kubernetes.io/unreachable
+  #    operator: Exists
+  #   tolerationSeconds: 30
+  affinity: {}
+  # nodeAffinity:
+  #   requiredDuringSchedulingIgnoredDuringExecution:
+  #     nodeSelectorTerms:
+  #     - matchExpressions:
+  #       - key: az
+  #         operator: In
+  #         values:
+  #         - az-east
+  #         - az-west
