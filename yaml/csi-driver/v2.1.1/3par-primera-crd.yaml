@@ -69,7 +69,7 @@ status:
     plural: ""
   conditions: []
   storedVersions: []
-----
+---
 
 ####################################################
 ############  HpeVolumeGroupInfos Crd  ############
@@ -433,5 +433,5 @@ status:
     kind: ""
     plural: ""
   conditions: []
-  storedVersions: []                        
----
+  storedVersions: []
+
