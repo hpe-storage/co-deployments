@@ -1,4 +1,7 @@
-######## HpeVolumeInfos Crd ################
+####################################################
+############  HpeVolumeInfos Crd  ############
+####################################################
+
 apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
@@ -68,7 +71,10 @@ status:
   storedVersions: []
 ----
 
-######## HpeVolumeGroupInfos Crd ################
+####################################################
+############  HpeVolumeGroupInfos Crd  ############
+####################################################
+
 apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
@@ -194,7 +200,10 @@ status:
   storedVersions: []
 ---
 
-######## SnapshotGroupInfos Crd ################
+####################################################
+############  SnapshotGroupInfos Crd  ############
+####################################################
+
 apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
@@ -308,7 +317,10 @@ status:
   storedVersions: []
 ---
 
-######## HpeReplicatedDeviceInfos Crd ################
+####################################################
+############ HpeReplicatedDeviceInfos Crd  ############
+####################################################
+
 apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
