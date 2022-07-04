@@ -125,9 +125,9 @@ spec:
         {{- end }}
         - name: hpe-csi-driver
          {{- if .Values.registry }}
-          image: {{ .Values.registry }}/hpestorage/csi-driver:v2.2.0-beta
+          image: {{ .Values.registry }}/hpestorage/csi-driver:v2.2.0
          {{- else }}
-          image: quay.io/hpestorage/csi-driver:v2.2.0-beta
+          image: quay.io/hpestorage/csi-driver:v2.2.0
          {{- end }}
           args :
             - "--endpoint=$(CSI_ENDPOINT)"
@@ -153,9 +153,9 @@ spec:
               mountPath: /host
         - name: csi-volume-mutator
           {{- if .Values.registry }}
-          image: {{ .Values.registry }}/hpestorage/volume-mutator:v1.3.1
+          image: {{ .Values.registry }}/hpestorage/volume-mutator:v1.3.2
           {{- else }}
-          image: quay.io/hpestorage/volume-mutator:v1.3.1
+          image: quay.io/hpestorage/volume-mutator:v1.3.2
           {{- end }}
           args:
             - "--v=5"
@@ -169,9 +169,9 @@ spec:
               mountPath: /var/lib/csi/sockets/pluginproxy/
         - name: csi-volume-group-snapshotter
           {{- if .Values.registry }}
-          image: {{ .Values.registry }}/hpestorage/volume-group-snapshotter:v1.0.1
+          image: {{ .Values.registry }}/hpestorage/volume-group-snapshotter:v1.0.2
           {{- else }}
-          image: quay.io/hpestorage/volume-group-snapshotter:v1.0.1
+          image: quay.io/hpestorage/volume-group-snapshotter:v1.0.2
           {{- end }}
           args:
             - "--v=5"
@@ -185,9 +185,9 @@ spec:
               mountPath: /var/lib/csi/sockets/pluginproxy/
         - name: csi-volume-group-provisioner
           {{- if .Values.registry }}
-          image: {{ .Values.registry }}/hpestorage/volume-group-provisioner:v1.0.1
+          image: {{ .Values.registry }}/hpestorage/volume-group-provisioner:v1.0.2
           {{- else }}
-          image: quay.io/hpestorage/volume-group-provisioner:v1.0.1
+          image: quay.io/hpestorage/volume-group-provisioner:v1.0.2
           {{- end }}
           args:
             - "--v=5"
@@ -201,9 +201,9 @@ spec:
               mountPath: /var/lib/csi/sockets/pluginproxy/
         - name: csi-extensions
           {{- if .Values.registry }}
-          image: {{ .Values.registry }}/hpestorage/csi-extensions:v1.2.1
+          image: {{ .Values.registry }}/hpestorage/csi-extensions:v1.2.2
           {{- else }}
-          image: quay.io/hpestorage/csi-extensions:v1.2.1
+          image: quay.io/hpestorage/csi-extensions:v1.2.2
           {{- end }}  
           args:
             - "--v=5"
