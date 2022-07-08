@@ -85,3 +85,39 @@ spec:
   selector:
     app: {{ template "hpe-array-exporter.name" . }}
     release: {{ .Release.Name }}
+    
+# Source: hpe-array-exporter/templates/hpe-array-exporter.yaml
+kind: ServiceMonitor
+apiVersion: monitoring.coreos.com/v1
+metadata:
+  name: mdc-3par01-hpe-array-exporter-servicemonitor
+  namespace: monitoring
+  labels:
+    # A selector for this label is used by a Prometheus Operator
+    # installed via OLM
+    k8s-app: prometheus
+    # A "release" label selector is used by the Helm Kube Prometheus Stack,
+    # with the value as the release specified on chart installation
+    release: prometheus
+spec:
+  # Match the namespace of the target Array Exporter service,
+  # or omit the namespaceSelector
+  namespaceSelector:
+    matchNames:
+      - monitoring
+  selector:
+    matchLabels:
+      app: hpe-array-exporter
+  endpoints:
+    - port: http-metrics
+      scheme: http
+      interval: 1m
+  # Corresponding labels on the Array Exporter service are added to
+  # the scraped metrics
+  #targetLabels:
+  #  - array
+
+NOTES:
+Use of this software is governed by the HPE End User License Agreement at
+https://www.hpe.com/us/en/software/licensing.html.
+    
