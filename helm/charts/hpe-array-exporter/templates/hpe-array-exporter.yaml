@@ -91,7 +91,7 @@ kind: ServiceMonitor
 apiVersion: monitoring.coreos.com/v1
 metadata:
   name: mdc-3par01-hpe-array-exporter-servicemonitor
-  namespace: monitoring
+  namespace: {{ .Release.Namespace }}
   labels:
     # A selector for this label is used by a Prometheus Operator
     # installed via OLM
@@ -104,7 +104,7 @@ spec:
   # or omit the namespaceSelector
   namespaceSelector:
     matchNames:
-      - monitoring
+      - {{ .Release.Namespace }}
   selector:
     matchLabels:
       app: hpe-array-exporter
