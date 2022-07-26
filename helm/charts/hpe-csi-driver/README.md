@@ -32,6 +32,18 @@ The following table lists the configurable parameters of the chart and their def
 | logLevel                  | Log level. Can be one of `info`, `debug`, `trace`, `warn` and `error`. | info             |
 | registry                  | Registry to pull HPE CSI Driver container images from.                 | quay.io          |
 | kubeletRootDir            | The kubelet root directory path.                                       | /var/lib/kubelet |
+| controller.labels         | Additional labels for HPE CSI Driver controller Pods.                  | {}               |
+| controller.nodeSelector   | Node labels for HPE CSI Driver controller Pods assignment.             | {}               |
+| controller.affinity       | Affinity rules for the HPE CSI Driver controller Pods.                 | {}               |
+| controller.tolerations    | Node taints to tolerate for the HPE CSI Driver controller Pods.        | []               |
+| csp.labels                | Additional labels for CSP Pods.                                        | {}               |
+| csp.nodeSelector          | Node labels for CSP Pods assignment.                                   | {}               |
+| csp.affinity              | Affinity rules for the CSP Pods.                                       | {}               |
+| csp.tolerations           | Node taints to tolerate for the CSP Pods.                              | []               |
+| node.labels               | Additional labels for HPE CSI Driver node Pods.                        | {}               |
+| node.nodeSelector         | Node labels for HPE CSI Driver node Pods assignment.                   | {}               |
+| node.affinity             | Affinity rules for the HPE CSI Driver node Pods.                       | {}               |
+| node.tolerations          | Node taints to tolerate for the HPE CSI Driver node Pods.              | []               |
 
 It's recommended to create a [values.yaml](https://github.com/hpe-storage/co-deployments/blob/master/helm/values/csi-driver) file from the corresponding release of the chart and edit it to fit the environment the chart is being deployed to. Download and edit [a sample file](https://github.com/hpe-storage/co-deployments/blob/master/helm/values/csi-driver).
 
