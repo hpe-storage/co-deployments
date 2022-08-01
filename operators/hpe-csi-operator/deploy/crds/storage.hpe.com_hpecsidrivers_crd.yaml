@@ -107,6 +107,8 @@ spec:
                           type: string
                         tolerationSeconds:
                           type: integer
+                        value:
+                          type: string
                       type: object
                     type: array
                   affinity:
@@ -473,6 +475,8 @@ spec:
                           type: string
                         tolerationSeconds:
                           type: integer
+                        value:
+                          type: string
                       type: object
                     type: array
                   affinity:
@@ -839,6 +843,8 @@ spec:
                           type: string
                         tolerationSeconds:
                           type: integer
+                        value:
+                          type: string
                       type: object
                     type: array
                   affinity:
