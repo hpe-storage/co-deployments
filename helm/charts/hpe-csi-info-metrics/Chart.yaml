@@ -4,10 +4,14 @@ version: "1.0.0"
 appVersion: "1.0.0"
 annotations:
   artifacthub.io/prerelease: "false"
+  artifacthub.io/containsSecurityUpdates: "true"
   artifacthub.io/license: Apache-2.0
   artifacthub.io/links: |
     - name: Documentation
       url: https://scod.hpedev.io/
+  artifacthub.io/recommendations: |
+    - url: https://artifacthub.io/packages/helm/hpe-storage/hpe-csi-driver
+    - url: https://artifacthub.io/packages/helm/hpe-storage/hpe-array-exporter
 description: A Helm chart for installing the HPE CSI Info Metrics Provider for Prometheus
 icon: https://raw.githubusercontent.com/hpe-storage/co-deployments/master/docs/assets/hpedev.png
 maintainers:

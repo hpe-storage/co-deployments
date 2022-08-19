@@ -3,10 +3,15 @@ version: "2.2.0"
 appVersion: "2.2.0"
 annotations:
   artifacthub.io/prerelease: "false"
+  artifacthub.io/containsSecurityUpdates: "true"
   artifacthub.io/license: Apache-2.0
   artifacthub.io/links: |
     - name: Documentation
       url: https://scod.hpedev.io/csi_driver
+  artifacthub.io/recommendations: |
+    - url: https://artifacthub.io/packages/olm/community-operators/hpe-csi-operator
+    - url: https://artifacthub.io/packages/helm/hpe-storage/hpe-csi-info-metrics
+    - url: https://artifacthub.io/packages/helm/hpe-storage/hpe-array-exporter
 description: A Helm chart for installing the HPE CSI Driver for Kubernetes
 icon: https://raw.githubusercontent.com/hpe-storage/co-deployments/master/docs/assets/hpedev.png
 maintainers:
