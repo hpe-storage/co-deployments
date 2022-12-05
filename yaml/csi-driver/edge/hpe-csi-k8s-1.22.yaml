@@ -120,7 +120,7 @@ spec:
             value: "1"
       containers:
         - name: csi-provisioner
-          image: k8s.gcr.io/sig-storage/csi-provisioner:v3.1.0
+          image: k8s.gcr.io/sig-storage/csi-provisioner:v3.3.0
           args:
             - "--csi-address=$(ADDRESS)"
             - "--v=5"
@@ -134,7 +134,7 @@ spec:
             - name: socket-dir
               mountPath: /var/lib/csi/sockets/pluginproxy/
         - name: csi-attacher
-          image: k8s.gcr.io/sig-storage/csi-attacher:v3.4.0
+          image: k8s.gcr.io/sig-storage/csi-attacher:v3.5.0
           args:
             - "--v=5"
             - "--csi-address=$(ADDRESS)"
@@ -158,7 +158,7 @@ spec:
             - name: socket-dir
               mountPath: /var/lib/csi/sockets/pluginproxy/
         - name: csi-resizer
-          image: k8s.gcr.io/sig-storage/csi-resizer:v1.4.0
+          image: k8s.gcr.io/sig-storage/csi-resizer:v1.6.0
           args:
             - "--csi-address=$(ADDRESS)"
             - "--v=5"
@@ -170,7 +170,7 @@ spec:
             - name: socket-dir
               mountPath: /var/lib/csi/sockets/pluginproxy/
         - name: hpe-csi-driver
-          image: quay.io/hpestorage/csi-driver:v2.2.0
+          image: quay.io/hpestorage/csi-driver:v2.3.0-beta
           args :
             - "--endpoint=$(CSI_ENDPOINT)"
             - "--flavor=kubernetes"
@@ -194,7 +194,7 @@ spec:
             - name: root-dir
               mountPath: /host
         - name: csi-volume-mutator
-          image: quay.io/hpestorage/volume-mutator:v1.3.2
+          image: quay.io/hpestorage/volume-mutator:v1.3.3-beta
           args:
             - "--v=5"
             - "--csi-address=$(ADDRESS)"
@@ -206,7 +206,7 @@ spec:
             - name: socket-dir
               mountPath: /var/lib/csi/sockets/pluginproxy/
         - name: csi-volume-group-snapshotter
-          image: quay.io/hpestorage/volume-group-snapshotter:v1.0.2
+          image: quay.io/hpestorage/volume-group-snapshotter:v1.0.3-beta
           args:
             - "--v=5"
             - "--csi-address=$(ADDRESS)"
@@ -218,7 +218,7 @@ spec:
             - name: socket-dir
               mountPath: /var/lib/csi/sockets/pluginproxy/
         - name: csi-volume-group-provisioner
-          image: quay.io/hpestorage/volume-group-provisioner:v1.0.2
+          image: quay.io/hpestorage/volume-group-provisioner:v1.0.3-beta
           args:
             - "--v=5"
             - "--csi-address=$(ADDRESS)"
@@ -230,7 +230,7 @@ spec:
             - name: socket-dir
               mountPath: /var/lib/csi/sockets/pluginproxy/
         - name: csi-extensions
-          image: quay.io/hpestorage/csi-extensions:v1.2.2
+          image: quay.io/hpestorage/csi-extensions:v1.2.4-beta
           args:
             - "--v=5"
             - "--endpoint=$(CSI_ENDPOINT)"
@@ -804,7 +804,7 @@ spec:
             value: "1"
       containers:
         - name: csi-node-driver-registrar
-          image: k8s.gcr.io/sig-storage/csi-node-driver-registrar:v2.5.0
+          image: k8s.gcr.io/sig-storage/csi-node-driver-registrar:v2.6.1
           args:
             - "--csi-address=$(ADDRESS)"
             - "--kubelet-registration-path=$(DRIVER_REG_SOCK_PATH)"
@@ -820,7 +820,7 @@ spec:
             - name: registration-dir
               mountPath: /registration
         - name: hpe-csi-driver
-          image: quay.io/hpestorage/csi-driver:v2.2.0-beta
+          image: quay.io/hpestorage/csi-driver:v2.3.0-beta
           args :
             - "--endpoint=$(CSI_ENDPOINT)"
             - "--node-service"
