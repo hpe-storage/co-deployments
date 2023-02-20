@@ -58,11 +58,11 @@ spec:
               mountPath: /var/lib/csi/sockets/pluginproxy
         - name: csi-attacher
           {{- if and (.Values.registry) (eq .Values.registry "quay.io") }}
-          image: registry.k8s.io/sig-storage/csi-attacher:v3.5.0
+          image: registry.k8s.io/sig-storage/csi-attacher:v3.5.1
           {{- else if .Values.registry }}
-          image: {{ .Values.registry }}/sig-storage/csi-attacher:v3.5.0
+          image: {{ .Values.registry }}/sig-storage/csi-attacher:v3.5.1
           {{- else }}
-          image: registry.k8s.io/sig-storage/csi-attacher:v3.5.0
+          image: registry.k8s.io/sig-storage/csi-attacher:v3.5.1
           {{- end }}
           args:
             - "--v=5"
