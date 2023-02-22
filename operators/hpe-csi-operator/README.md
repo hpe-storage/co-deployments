@@ -1,5 +1,11 @@
 # HPE CSI Operator for Kubernetes
 
+The upstream HPE CSI Operator for OperatorHub.io is maintained below.
+
+- https://github.com/k8s-operatorhub/community-operators
+
+This tree should be maintained with the same content along with tools to build the Operator.
+
 ## Overview
 
 The HPE CSI Operator packages, deploys, manages, upgrades HPE CSI Driver on Kubernetes and OpenShift for dynamic provisioning of persistent volumes on HPE storage systems.
