@@ -10,12 +10,12 @@ metadata:
     app.kubernetes.io/instance: hpe-csi-operator
     app.kubernetes.io/managed-by: hpe-csi-operator
 subjects:
-- kind: ServiceAccount
-  name: hpe-csi-operator-sa
-  namespace: hpe-csi
-- kind: ServiceAccount
-  name: hpe-csp-sa
-  namespace: hpe-csi
+  - kind: ServiceAccount
+    name: hpe-csi-operator-sa
+    namespace: hpe-csi
+  - kind: ServiceAccount
+    name: hpe-csp-sa
+    namespace: hpe-csi
 roleRef:
   kind: ClusterRole
   name: hpe-csi-operator-role
@@ -23,7 +23,7 @@ roleRef:
 
 ---
 kind: RoleBinding
-apiVersion: rbac.authorization.k8s.io/v1beta1
+apiVersion: rbac.authorization.k8s.io/v1
 metadata:
   name: hpe-csi-operator
   labels:
@@ -33,12 +33,12 @@ metadata:
     app.kubernetes.io/instance: hpe-csi-operator
     app.kubernetes.io/managed-by: hpe-csi-operator
 subjects:
-- kind: ServiceAccount
-  name: hpe-csi-operator-sa
-  namespace: hpe-csi
-- kind: ServiceAccount
-  name: hpe-csp-sa
-  namespace: hpe-csi
+  - kind: ServiceAccount
+    name: hpe-csi-operator-sa
+    namespace: hpe-csi
+  - kind: ServiceAccount
+    name: hpe-csp-sa
+    namespace: hpe-csi
 roleRef:
   kind: Role
   name: hpe-csi-operator-role
