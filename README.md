@@ -1,11 +1,3 @@
-# Historical archive
-
-The operator bundle is no longer generated from this tree. See:
-
-- https://github.com/k8s-operatorhub/community-operators
-
----
-
 # Container orchestrator (CO) deployment declarations
 
 This repository contains the source declarations to deploy CO drivers (CSI and FlexVolume) and metrics providers (Array Exporter and CSI Info Metrics Provider) for HPE storage platforms.

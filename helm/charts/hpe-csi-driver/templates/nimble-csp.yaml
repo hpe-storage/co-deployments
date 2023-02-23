@@ -1,7 +1,7 @@
 {{- if not .Values.disable.alletra6000 }}
 
 ---
-### Alletra 6000 CSP Service ###
+### Alletra 5000/6000 CSP Service ###
 kind: Service
 apiVersion: v1
 metadata:
