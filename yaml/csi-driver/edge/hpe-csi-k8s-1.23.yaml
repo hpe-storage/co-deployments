@@ -170,7 +170,7 @@ spec:
             - name: socket-dir
               mountPath: /var/lib/csi/sockets/pluginproxy/
         - name: hpe-csi-driver
-          image: quay.io/hpestorage/csi-driver:v2.3.0-beta
+          image: quay.io/hpestorage/csi-driver:v2.3.0
           args :
             - "--endpoint=$(CSI_ENDPOINT)"
             - "--flavor=kubernetes"
@@ -194,7 +194,7 @@ spec:
             - name: root-dir
               mountPath: /host
         - name: csi-volume-mutator
-          image: quay.io/hpestorage/volume-mutator:v1.3.3-beta
+          image: quay.io/hpestorage/volume-mutator:v1.3.3
           args:
             - "--v=5"
             - "--csi-address=$(ADDRESS)"
@@ -206,7 +206,7 @@ spec:
             - name: socket-dir
               mountPath: /var/lib/csi/sockets/pluginproxy/
         - name: csi-volume-group-snapshotter
-          image: quay.io/hpestorage/volume-group-snapshotter:v1.0.3-beta
+          image: quay.io/hpestorage/volume-group-snapshotter:v1.0.3
           args:
             - "--v=5"
             - "--csi-address=$(ADDRESS)"
@@ -218,7 +218,7 @@ spec:
             - name: socket-dir
               mountPath: /var/lib/csi/sockets/pluginproxy/
         - name: csi-volume-group-provisioner
-          image: quay.io/hpestorage/volume-group-provisioner:v1.0.3-beta
+          image: quay.io/hpestorage/volume-group-provisioner:v1.0.3
           args:
             - "--v=5"
             - "--csi-address=$(ADDRESS)"
@@ -230,7 +230,7 @@ spec:
             - name: socket-dir
               mountPath: /var/lib/csi/sockets/pluginproxy/
         - name: csi-extensions
-          image: quay.io/hpestorage/csi-extensions:v1.2.4-beta
+          image: quay.io/hpestorage/csi-extensions:v1.2.4
           args:
             - "--v=5"
             - "--endpoint=$(CSI_ENDPOINT)"
@@ -762,7 +762,7 @@ rules:
     verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
   - apiGroups: ["storage.hpe.com"]
     resources: ["hpesnapshotgroupinfos"]
-    verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]    
+    verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
   - apiGroups: [""]
     resources: ["persistentvolumeclaims"]
     verbs: ["get", "list"]
@@ -820,7 +820,7 @@ spec:
             - name: registration-dir
               mountPath: /registration
         - name: hpe-csi-driver
-          image: quay.io/hpestorage/csi-driver:v2.3.0-beta
+          image: quay.io/hpestorage/csi-driver:v2.3.0
           args :
             - "--endpoint=$(CSI_ENDPOINT)"
             - "--node-service"
