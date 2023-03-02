@@ -21,4 +21,3 @@ helm repo index --merge ${CHART_BASE_DIR}/../../docs/index.yaml .
 mv *.tgz ${CHART_BASE_DIR}/../../docs/
 mv index.yaml ${CHART_BASE_DIR}/../../docs/
 echo "Successfully generated chart for $1 and updated docs/index.yaml"
-
