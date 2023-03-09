@@ -64,9 +64,9 @@ spec:
       containers:
         - name: nimble-csp
           {{- if .Values.registry }}
-          image: {{ .Values.registry }}/hpestorage/alletra-6000-and-nimble-csp:v2.3.0-beta
+          image: {{ .Values.registry }}/hpestorage/alletra-6000-and-nimble-csp:v2.3.0
           {{- else }}
-          image: quay.io/hpestorage/alletra-6000-and-nimble-csp:v2.3.0-beta
+          image: quay.io/hpestorage/alletra-6000-and-nimble-csp:v2.3.0
           {{- end }}
           imagePullPolicy: {{ .Values.imagePullPolicy | quote }}
           ports:
@@ -91,4 +91,3 @@ spec:
 {{ toYaml .Values.csp.affinity | indent 8 }}
       {{- end }}
 {{- end }}
-

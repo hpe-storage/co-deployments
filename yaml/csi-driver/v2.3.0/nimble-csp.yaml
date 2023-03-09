@@ -1,25 +1,49 @@
-# Configuration to deploy the HPE 3PAR Primera Storage CSP service
+# Configuration to deploy the HPE Nimble Storage CSP service
 #
 # example usage: kubectl create -f <this_file>
 
 
-####################################################
-############  Primera3Par CSP Service  ############
-####################################################
+---
+
+###################################################
+############ Alletra 5000/6000 CSP Service  #######
+###################################################
 
 kind: Service
 apiVersion: v1
 metadata:
-  name: primera3par-csp-svc
+  name: alletra6000-csp-svc
   namespace: hpe-storage
   labels:
-    app: primera3par-csp-svc
+    app: alletra6000-csp-svc
 spec:
   ports:
   - port: 8080
     protocol: TCP
   selector:
-    app: primera3par-csp
+    app: nimble-csp
+
+
+
+---
+
+#############################################
+############ Nimble CSP Service  ############
+#############################################
+
+kind: Service
+apiVersion: v1
+metadata:
+  name: nimble-csp-svc
+  namespace: hpe-storage
+  labels:
+    app: nimble-csp-svc
+spec:
+  ports:
+  - port: 8080
+    protocol: TCP
+  selector:
+    app: nimble-csp
 
 ---
 
@@ -30,29 +54,24 @@ spec:
 kind: Deployment
 apiVersion: apps/v1
 metadata:
-  name: primera3par-csp
+  name: nimble-csp
   namespace: hpe-storage
 spec:
   selector:
     matchLabels:
-      app: primera3par-csp
+      app: nimble-csp
   replicas: 1
   template:
     metadata:
       labels:
-        app: primera3par-csp
+        app: nimble-csp
     spec:
       serviceAccountName: hpe-csp-sa
       priorityClassName: system-cluster-critical
       containers:
-        - name: primera3par-csp
-          image: quay.io/hpestorage/alletra-9000-primera-and-3par-csp:v2.3.0
-          imagePullPolicy: IfNotPresent
-          env:
-          - name: CRD_CLIENT_CONFIG_QPS
-            value: "35"
-          - name: CRD_CLIENT_CONFIG_BURST
-            value: "20"
+        - name: nimble-csp
+          image: quay.io/hpestorage/alletra-6000-and-nimble-csp:v2.3.0
+          imagePullPolicy: Always
           ports:
           - containerPort: 8080
           volumeMounts:
