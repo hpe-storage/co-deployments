@@ -71,7 +71,7 @@ spec:
       containers:
         - name: nimble-csp
           image: quay.io/hpestorage/alletra-6000-and-nimble-csp:v2.3.0
-          imagePullPolicy: Always
+          imagePullPolicy: IfNotPresent
           ports:
           - containerPort: 8080
           volumeMounts:
