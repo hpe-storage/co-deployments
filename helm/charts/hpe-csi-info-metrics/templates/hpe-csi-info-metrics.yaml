@@ -54,7 +54,7 @@ spec:
       serviceAccount: hpe-csi-info-metrics-serviceaccount
       containers:
         - name: csi-info-metrics
-          image: {{ .Values.image.registry }}/hpestorage/csi-info-metrics:v1.0.0
+          image: {{ .Values.image.registry }}/hpestorage/csi-info-metrics:v1.0.1
           ports:
           - containerPort: 9099
           args:
@@ -106,3 +106,31 @@ spec:
       targetPort: 9099
   selector:
     app: hpe-csi-info-metrics
+{{- if .Values.serviceMonitor.enable }}
+{{- $targetlabels := .Values.serviceMonitor.targetLabels | default list }}
+---
+kind: ServiceMonitor
+apiVersion: monitoring.coreos.com/v1
+metadata:
+  name: hpe-csi-info-metrics
+  namespace: {{ .Release.Namespace }}
+  labels:
+    k8s-app: prometheus
+    release: prometheus
+    app: hpe-csi-info-metrics
+spec:
+  namespaceSelector:
+    matchNames:
+      - {{ .Release.Namespace }}
+  selector:
+    matchLabels:
+      app: hpe-csi-info-metrics
+  endpoints:
+    - port: http-metrics
+      scheme: http
+      interval: 1m
+  targetLabels:
+    {{- with $targetlabels }}
+{{ toYaml . | indent 4 }}
+    {{- end }}
+{{- end }}
