@@ -156,7 +156,35 @@
                 }
             },
             "additionalProperties": false
-        }
+        },
+        "serviceMonitor": {
+            "$id": "#/properties/serviceMonitor",
+            "title": "ServiceMonitor settings",
+            "description": "Settings for the ServiceMonitor scraped by the Prometheus Operator.",
+            "type": "object",
+            "default": {
+		"enable": false,
+		"targetLabels": []
+	    },
+            "properties": {
+                "enable": {
+                    "$id": "#/properties/serviceMonitor/properties/enable",
+                    "title": "Enable ServiceMonitor for Array Exporter",
+                    "description": "description",
+                    "type": "boolean",
+                    "additionalProperties": true
+                },
+                "targetLabels": {
+                    "$id": "#/properties/serviceMonitor/properties/targetLabels",
+                    "title": "Service target labels",
+                    "description": "Labels from the Service to add to the scraped metric labels.",
+                    "type": "array",
+                    "additionalProperties": true
+                }
+            },
+            "additionalProperties": false
+        },
+        "global": {}
     },
     "additionalProperties": false
 }

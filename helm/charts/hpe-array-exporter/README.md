@@ -24,6 +24,8 @@ The chart has these configurable parameters and default values.
 | service.nodePort | The TCP port at which to expose access to storage array metrics externally at each cluster node, if the Service type is NodePort and automatic assignment is not desired. | *none* |
 | service.labels | Labels to add to the Service, for example to include target labels in a ServiceMonitor scrape configuration. | `{}` |
 | service.annotations | Annotations to add to the Service, for example to configure it as a scrape target when using the Prometheus Helm chart's default configuration. | `{}` |
+| serviceMonitor.enable | Create a ServiceMonitor custom resource (used with the Prometheus Operator). | `false` |
+| serviceMonitor.targetLabels | List of labels on the service to add to the scraped metric. | `[]` |
 
 The `arraySecret` parameter is required and has no default value.  A Secret used by the [HPE CSI Driver for Kubernetes](https://scod.hpedev.io/csi_driver/index.html) can be reused without modification.  Otherwise, use [this example](https://github.com/hpe-storage/co-deployments/blob/master/yaml/array-exporter/edge/hpe-array-exporter-secret.yaml) to create a new one.
 

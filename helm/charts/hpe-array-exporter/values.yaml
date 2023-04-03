@@ -53,3 +53,13 @@ service:
   # configuration.
   annotations: {}
   #  "prometheus.io/scrape": "true"
+
+# A Service Monitor can enable a Prometheus Operator within the cluster
+# to discover the HPE Storage Array Exporter for Prometheus as a scrape
+# target.
+serviceMonitor:
+  enable: false
+
+  # Corresponding labels on the Array Exporter service are added to
+  # the scraped metrics
+  targetLabels: []

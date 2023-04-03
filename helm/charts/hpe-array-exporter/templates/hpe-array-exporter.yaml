@@ -21,7 +21,7 @@ spec:
     spec:
       containers:
         - name: array-exporter
-          image: {{ .Values.image.registry }}/hpestorage/array-exporter:v1.0.0
+          image: {{ .Values.image.registry }}/hpestorage/array-exporter:v1.0.1
           ports:
             - containerPort: 8080
           args:
@@ -85,3 +85,32 @@ spec:
   selector:
     app: {{ template "hpe-array-exporter.name" . }}
     release: {{ .Release.Name }}
+{{- if .Values.serviceMonitor.enable }}
+{{- $targetlabels := .Values.serviceMonitor.targetLabels | default list }}
+---
+kind: ServiceMonitor
+apiVersion: monitoring.coreos.com/v1
+metadata:
+  name: {{ template "hpe-array-exporter.fullname" . }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+    k8s-app: prometheus
+    release: prometheus
+    app: {{ template "hpe-array-exporter.name" . }}
+    chart: {{ template "hpe-array-exporter.chart" . }}
+spec:
+  namespaceSelector:
+    matchNames:
+      - {{ .Release.Namespace }}
+  selector:
+    matchLabels:
+      app: {{ template "hpe-array-exporter.name" . }}
+  endpoints:
+    - port: http-metrics
+      scheme: http
+      interval: 1m
+  targetLabels:
+    {{- with $targetlabels }}
+{{ toYaml . | indent 4 }}
+    {{- end }}
+{{- end }}

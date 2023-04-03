@@ -24,6 +24,8 @@ The chart has these configurable parameters and default values.
 | service.nodePort | The TCP port at which to expose access to info metrics externally at each cluster node, if the Service type is NodePort and automatic assignment is not desired. | *none* |
 | service.labels | Labels to add to the Service, for example to include target labels in a ServiceMonitor scrape configuration. | `{}` |
 | service.annotations | Annotations to add to the Service, for example to configure it as a scrape target when using the Prometheus Helm chart's default configuration. | `{}` |
+| serviceMonitor.enable | Create a ServiceMonitor custom resource (used with the Prometheus Operator). | `false` |
+| serviceMonitor.targetLabels | List of labels on the service to add to the scraped metric. | `[]` |
 
 The `acceptEula` value must be set to `true`, confirming your acceptance of the [HPE End User License Agreement](https://www.hpe.com/us/en/software/licensing.html).
 

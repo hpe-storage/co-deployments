@@ -48,3 +48,13 @@ service:
   # configuration.
   annotations: {}
   #  "prometheus.io/scrape": "true"
+
+# A Service Monitor can enable a Prometheus Operator within the cluster
+# to discover the HPE CSI Info Metrics Provider for Prometheus as a scrape
+# target.
+serviceMonitor:
+  enable: false
+
+  # Corresponding labels on the CSI Info Metrics Provider service are added to
+  # the scraped metrics
+  targetLabels: []
