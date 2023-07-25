@@ -36,11 +36,11 @@ spec:
       containers:
         - name: csi-provisioner
           {{- if and (.Values.registry) (eq .Values.registry "quay.io") }}
-          image: registry.k8s.io/sig-storage/csi-provisioner:v3.3.0
+          image: registry.k8s.io/sig-storage/csi-provisioner:v3.5.0
           {{- else if .Values.registry }}
-          image: {{ .Values.registry }}/sig-storage/csi-provisioner:v3.3.0
+          image: {{ .Values.registry }}/sig-storage/csi-provisioner:v3.5.0
           {{- else }}
-          image: registry.k8s.io/sig-storage/csi-provisioner:v3.3.0
+          image: registry.k8s.io/sig-storage/csi-provisioner:v3.5.0
           {{- end }}
           args:
             - "--csi-address=$(ADDRESS)"
@@ -58,11 +58,11 @@ spec:
               mountPath: /var/lib/csi/sockets/pluginproxy
         - name: csi-attacher
           {{- if and (.Values.registry) (eq .Values.registry "quay.io") }}
-          image: registry.k8s.io/sig-storage/csi-attacher:v3.5.1
+          image: registry.k8s.io/sig-storage/csi-attacher:v4.3.0
           {{- else if .Values.registry }}
-          image: {{ .Values.registry }}/sig-storage/csi-attacher:v3.5.1
+          image: {{ .Values.registry }}/sig-storage/csi-attacher:v4.3.0
           {{- else }}
-          image: registry.k8s.io/sig-storage/csi-attacher:v3.5.1
+          image: registry.k8s.io/sig-storage/csi-attacher:v4.3.0
           {{- end }}
           args:
             - "--v=5"
@@ -80,11 +80,11 @@ spec:
         - name: csi-snapshotter
         {{- if and (eq .Capabilities.KubeVersion.Major "1") ( ge  ( trimSuffix "+" .Capabilities.KubeVersion.Minor ) "20") }}
           {{- if and (.Values.registry) (eq .Values.registry "quay.io") }}
-          image: registry.k8s.io/sig-storage/csi-snapshotter:v5.0.1
+          image: registry.k8s.io/sig-storage/csi-snapshotter:v6.2.2
           {{- else if .Values.registry }}
-          image: {{ .Values.registry }}/sig-storage/csi-snapshotter:v5.0.1
+          image: {{ .Values.registry }}/sig-storage/csi-snapshotter:v6.2.2
           {{- else }}
-          image: registry.k8s.io/sig-storage/csi-snapshotter:v5.0.1
+          image: registry.k8s.io/sig-storage/csi-snapshotter:v6.2.2
           {{- end }}
         {{- end }}
           args:
@@ -100,11 +100,11 @@ spec:
         {{- if and (eq .Capabilities.KubeVersion.Major "1") ( ge  ( trimSuffix "+" .Capabilities.KubeVersion.Minor ) "15") }}
         - name: csi-resizer
           {{- if and (.Values.registry) (eq .Values.registry "quay.io") }}
-          image: registry.k8s.io/sig-storage/csi-resizer:v1.6.0
+          image: registry.k8s.io/sig-storage/csi-resizer:v1.8.0
           {{- else if .Values.registry }}
-          image: {{ .Values.registry }}/sig-storage/csi-resizer:v1.6.0
+          image: {{ .Values.registry }}/sig-storage/csi-resizer:v1.8.0
           {{- else }}
-          image: registry.k8s.io/sig-storage/csi-resizer:v1.6.0
+          image: registry.k8s.io/sig-storage/csi-resizer:v1.8.0
           {{- end }}
           args:
             - "--csi-address=$(ADDRESS)"

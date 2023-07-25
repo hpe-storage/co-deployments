@@ -35,11 +35,11 @@ spec:
       containers:
         - name: csi-node-driver-registrar
           {{- if and (.Values.registry) (eq .Values.registry "quay.io") }}
-          image: registry.k8s.io/sig-storage/csi-node-driver-registrar:v2.6.1
+          image: registry.k8s.io/sig-storage/csi-node-driver-registrar:v2.8.0
           {{- else if .Values.registry }}
-          image: {{ .Values.registry }}/sig-storage/csi-node-driver-registrar:v2.6.1
+          image: {{ .Values.registry }}/sig-storage/csi-node-driver-registrar:v2.8.0
           {{- else }}
-          image: registry.k8s.io/sig-storage/csi-node-driver-registrar:v2.6.1
+          image: registry.k8s.io/sig-storage/csi-node-driver-registrar:v2.8.0
           {{- end}}
           args:
             - "--csi-address=$(ADDRESS)"
