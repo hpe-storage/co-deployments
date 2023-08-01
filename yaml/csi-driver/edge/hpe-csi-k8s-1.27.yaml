@@ -4,7 +4,6 @@
 # example usage: kubectl create -f <this_file>
 
 ---
-
 #############################################
 ############  HPE Node Info CRD  ############
 #############################################
@@ -85,11 +84,10 @@ metadata:
 spec:
   podInfoOnMount: true
   volumeLifecycleModes:
-  - Persistent
-  - Ephemeral
+    - Persistent
+    - Ephemeral
 
 ---
-
 #############################################
 ############  Controller driver  ############
 #############################################
@@ -170,8 +168,8 @@ spec:
             - name: socket-dir
               mountPath: /var/lib/csi/sockets/pluginproxy/
         - name: hpe-csi-driver
-          image: quay.io/hpestorage/csi-driver:v2.3.0
-          args :
+          image: quay.io/hpestorage/csi-driver:edge
+          args:
             - "--endpoint=$(CSI_ENDPOINT)"
             - "--flavor=kubernetes"
             - "--pod-monitor"
@@ -251,13 +249,13 @@ spec:
             path: /var/log
         - name: k8s
           hostPath:
-             path: /etc/kubernetes/
+            path: /etc/kubernetes/
         - name: hpeconfig
           hostPath:
-              path: /etc/hpe-storage/
+            path: /etc/hpe-storage/
         - name: root-dir
           hostPath:
-              path: /
+            path: /
       tolerations:
         - effect: NoExecute
           key: node.kubernetes.io/not-ready
@@ -268,7 +266,6 @@ spec:
           operator: Exists
           tolerationSeconds: 30
 ---
-
 kind: ServiceAccount
 apiVersion: v1
 metadata:
@@ -276,7 +273,6 @@ metadata:
   namespace: hpe-storage
 
 ---
-
 kind: ClusterRole
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
@@ -329,7 +325,6 @@ rules:
     verbs: ["get", "list", "watch", "update", "patch", "delete"]
 
 ---
-
 kind: ClusterRoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
@@ -344,7 +339,6 @@ roleRef:
   apiGroup: rbac.authorization.k8s.io
 
 ---
-
 kind: ClusterRole
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
@@ -370,7 +364,6 @@ rules:
     verbs: ["get", "watch", "list"]
 
 ---
-
 kind: ClusterRoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
@@ -385,7 +378,6 @@ roleRef:
   apiGroup: rbac.authorization.k8s.io
 
 ---
-
 kind: ClusterRole
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
@@ -423,7 +415,6 @@ rules:
     verbs: ["get", "watch", "list", "delete", "update", "create"]
 
 ---
-
 kind: ClusterRoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
@@ -464,7 +455,6 @@ rules:
     verbs: ["list", "watch", "create", "update", "patch"]
 
 ---
-
 kind: ClusterRoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
@@ -479,7 +469,6 @@ roleRef:
   apiGroup: rbac.authorization.k8s.io
 
 ---
-
 # Resizer must be able to work with end point in current namespace
 # if (and only if) leadership election is enabled
 kind: Role
@@ -493,7 +482,6 @@ rules:
     verbs: ["get", "watch", "list", "delete", "update", "create"]
 
 ---
-
 kind: RoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
@@ -507,7 +495,6 @@ roleRef:
   kind: Role
   name: external-resizer-cfg
   apiGroup: rbac.authorization.k8s.io
-
 
 ---
 # cluster role to support volumegroup
@@ -557,7 +544,6 @@ rules:
     verbs: ["get", "watch", "list", "delete", "update", "create"]
 
 ---
-
 kind: ClusterRoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
@@ -643,7 +629,6 @@ rules:
     verbs: ["get", "list"]
 
 ---
-
 kind: ClusterRoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
@@ -727,7 +712,6 @@ roleRef:
   apiGroup: rbac.authorization.k8s.io
 
 ---
-
 kind: ClusterRole
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
@@ -774,7 +758,6 @@ rules:
     verbs: ["get", "list", "watch"]
 
 ---
-
 #######################################
 ############  Node driver  ############
 #######################################
@@ -820,8 +803,8 @@ spec:
             - name: registration-dir
               mountPath: /registration
         - name: hpe-csi-driver
-          image: quay.io/hpestorage/csi-driver:v2.3.0
-          args :
+          image: quay.io/hpestorage/csi-driver:edge
+          args:
             - "--endpoint=$(CSI_ENDPOINT)"
             - "--node-service"
             - "--flavor=kubernetes"
@@ -839,6 +822,8 @@ spec:
             - name: CHAP_PASSWORD
               value: ""
             - name: DISABLE_NODE_CONFORMANCE
+              value: "false"
+            - name: DISABLE_NODE_CONFIGURATION
               value: "false"
           imagePullPolicy: "IfNotPresent"
           securityContext:
@@ -923,7 +908,6 @@ spec:
           operator: Exists
           tolerationSeconds: 30
 ---
-
 apiVersion: v1
 kind: ServiceAccount
 metadata:
@@ -931,7 +915,6 @@ metadata:
   namespace: hpe-storage
 
 ---
-
 kind: ServiceAccount
 apiVersion: v1
 metadata:
@@ -939,7 +922,6 @@ metadata:
   namespace: hpe-storage
 
 ---
-
 kind: ClusterRoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
