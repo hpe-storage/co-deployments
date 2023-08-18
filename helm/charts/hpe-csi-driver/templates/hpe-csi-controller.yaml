@@ -45,6 +45,7 @@ spec:
           args:
             - "--csi-address=$(ADDRESS)"
             - "--v=5"
+            - "--extra-create-metadata"
             {{- if and (eq .Capabilities.KubeVersion.Major "1") ( ge  ( trimSuffix "+" .Capabilities.KubeVersion.Minor ) "13") }}
             - "--timeout=30s"
             - "--worker-threads=16"
