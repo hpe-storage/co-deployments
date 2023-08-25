@@ -908,6 +908,9 @@ spec:
           key: node.kubernetes.io/unreachable
           operator: Exists
           tolerationSeconds: 30
+        - effect: NoSchedule
+          key: csi.hpe.com/hpe-nfs
+          operator: Exists
 ---
 apiVersion: v1
 kind: ServiceAccount

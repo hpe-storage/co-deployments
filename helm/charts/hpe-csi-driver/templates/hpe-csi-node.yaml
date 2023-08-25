@@ -197,8 +197,11 @@ spec:
       nodeSelector:
 {{ toYaml .Values.node.nodeSelector | indent 8 }}
       {{- end }}
-      {{- if .Values.node.tolerations }}
       tolerations:
+        - effect: NoSchedule
+          key: csi.hpe.com/hpe-nfs
+          operator: Exists
+      {{- if .Values.node.tolerations }}
 {{ toYaml .Values.node.tolerations | indent 8 }}
       {{- end }}
       {{- if .Values.node.affinity }}
