@@ -96,6 +96,10 @@ spec:
             - name: DISABLE_NODE_CONFORMANCE
               value: "true"
             {{- end }}
+            {{ if .Values.disableNodeConfiguration -}}
+            - name: DISABLE_NODE_CONFIGURATION
+              value: "true"
+            {{- end }}
             {{- if .Values.kubeletRootDir }}
             - name: KUBELET_ROOT_DIR
               value: {{ .Values.kubeletRootDir }}

@@ -25,7 +25,8 @@ The following table lists the configurable parameters of the chart and their def
 | disable.primera           | Disable HPE Primera (and 3PAR) CSP `Service`.                          | false            |
 | disable.alletra6000       | Disable HPE Alletra 5000/6000 CSP `Service`.                           | false            |
 | disable.alletra9000       | Disable HPE Alletra 9000 CSP `Service`.                                | false            |
-| disableNodeConformance    | Disable automatic installation of iSCSI/Multipath Packages.            | false            |
+| disableNodeConformance    | Disable automatic installation of iSCSI/multipath packages.            | false            |
+| disableNodeConfiguration  | Disable automatic configuration iSCSI/multipath services.              | false            |
 | disableNodeGetVolumeStats | Disable NodeGetVolumeStats call to CSI driver.                         | false            |
 | imagePullPolicy           | Image pull policy (`Always`, `IfNotPresent`, `Never`).                 | IfNotPresent     |
 | iscsi.chapUser            | Username for iSCSI CHAP authentication.                                | ""               |
