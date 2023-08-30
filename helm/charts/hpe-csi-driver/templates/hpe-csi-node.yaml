@@ -69,9 +69,9 @@ spec:
               mountPath: /registration
         - name: hpe-csi-driver
           {{- if .Values.registry }}
-          image: {{ .Values.registry }}/hpestorage/csi-driver:v2.3.0
+          image: {{ .Values.registry }}/hpestorage/csi-driver:v2.4.0-beta
           {{- else }}
-          image: quay.io/hpestorage/csi-driver:v2.3.0
+          image: quay.io/hpestorage/csi-driver:v2.4.0-beta
           {{- end}}
           args :
             - "--endpoint=$(CSI_ENDPOINT)"
@@ -94,6 +94,10 @@ spec:
             {{- end }}
             {{ if .Values.disableNodeConformance -}}
             - name: DISABLE_NODE_CONFORMANCE
+              value: "true"
+            {{- end }}
+            {{ if .Values.disableNodeConfiguration -}}
+            - name: DISABLE_NODE_CONFIGURATION
               value: "true"
             {{- end }}
             {{- if .Values.kubeletRootDir }}
