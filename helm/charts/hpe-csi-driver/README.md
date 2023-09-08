@@ -25,8 +25,8 @@ The following table lists the configurable parameters of the chart and their def
 | disable.primera           | Disable HPE Primera (and 3PAR) CSP `Service`.                          | false            |
 | disable.alletra6000       | Disable HPE Alletra 5000/6000 CSP `Service`.                           | false            |
 | disable.alletra9000       | Disable HPE Alletra 9000 CSP `Service`.                                | false            |
-| disableNodeConformance    | Disable automatic installation of iSCSI/multipath packages.            | false            |
-| disableNodeConfiguration  | Disable automatic configuration iSCSI/multipath services.              | false            |
+| disableNodeConformance    | Disable automatic installation of iSCSI, multipath and NFS packages.   | false            |
+| disableNodeConfiguration  | Disables node conformance and configuration.*                          | false            |
 | disableNodeGetVolumeStats | Disable NodeGetVolumeStats call to CSI driver.                         | false            |
 | imagePullPolicy           | Image pull policy (`Always`, `IfNotPresent`, `Never`).                 | IfNotPresent     |
 | iscsi.chapUser            | Username for iSCSI CHAP authentication.                                | ""               |
@@ -46,6 +46,8 @@ The following table lists the configurable parameters of the chart and their def
 | node.nodeSelector         | Node labels for HPE CSI Driver node Pods assignment.                   | {}               |
 | node.affinity             | Affinity rules for the HPE CSI Driver node Pods.                       | {}               |
 | node.tolerations          | Node taints to tolerate for the HPE CSI Driver node Pods.              | []               |
+
+* = Disabling node conformance and configuration may prevent the CSI driver from functioning properly. See the [manual node configuration](https://scod.hpedev.io/csi_driver/operations.html#manual_node_configuration) section on SCOD to understand the consequences.
 
 It's recommended to create a [values.yaml](https://github.com/hpe-storage/co-deployments/blob/master/helm/values/csi-driver) file from the corresponding release of the chart and edit it to fit the environment the chart is being deployed to. Download and edit [a sample file](https://github.com/hpe-storage/co-deployments/blob/master/helm/values/csi-driver).
 
@@ -73,11 +75,10 @@ helm repo update
 Install the latest chart:
 
 ```
-kubectl create ns hpe-storage
-helm install my-hpe-csi-driver hpe-storage/hpe-csi-driver -n hpe-storage -f myvalues.yaml
+helm install --create-namespace -n hpe-storage my-hpe-csi-driver hpe-storage/hpe-csi-driver
 ```
 
-**Note**: `myvalues.yaml` is optional if no parameters are overridden from defaults. Also pay attention to what the latest version of the chart is. If it's labeled with `prerelease` and a "beta" tag, add `--version X.Y.Z` to install a "stable" chart.
+**Note**: By default, the latest stable chart will be installed. If it's labeled with `prerelease` and a "beta" version tag, add `--version X.Y.Z-beta` to the command line to install a "beta" chart.
 
 ### Upgrading the chart
 
