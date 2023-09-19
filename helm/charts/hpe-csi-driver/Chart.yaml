@@ -1,10 +1,11 @@
 apiVersion: v1
-version: "2.4.0-beta2"
-appVersion: "2.4.0-beta2"
+version: "2.4.0"
+appVersion: "2.4.0"
 annotations:
-  artifacthub.io/prerelease: "true"
+  artifacthub.io/prerelease: "false"
   artifacthub.io/containsSecurityUpdates: "true"
   artifacthub.io/license: Apache-2.0
+  artifacthub.io/category: storage
   artifacthub.io/links: |
     - name: Documentation
       url: https://scod.hpedev.io/csi_driver
@@ -15,8 +16,8 @@ annotations:
 description: A Helm chart for installing the HPE CSI Driver for Kubernetes
 icon: https://raw.githubusercontent.com/hpe-storage/co-deployments/master/docs/assets/hpedev.png
 maintainers:
-- name: raunakkumar
-  email: hpe-containers-dev@hpe.com
+- name: datamattsson
+  email: dev-hi-containers@hpe.com
 sources:
 - https://github.com/hpe-storage/co-deployments
 - https://github.com/hpe-storage/csi-driver
