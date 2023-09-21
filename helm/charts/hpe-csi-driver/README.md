@@ -26,7 +26,7 @@ The following table lists the configurable parameters of the chart and their def
 | disable.alletra6000       | Disable HPE Alletra 5000/6000 CSP `Service`.                           | false            |
 | disable.alletra9000       | Disable HPE Alletra 9000 CSP `Service`.                                | false            |
 | disableNodeConformance    | Disable automatic installation of iSCSI, multipath and NFS packages.   | false            |
-| disableNodeConfiguration  | Disables node conformance and configuration.*                          | false            |
+| disableNodeConfiguration  | Disables node conformance and configuration.`*`                        | false            |
 | disableNodeGetVolumeStats | Disable NodeGetVolumeStats call to CSI driver.                         | false            |
 | imagePullPolicy           | Image pull policy (`Always`, `IfNotPresent`, `Never`).                 | IfNotPresent     |
 | iscsi.chapUser            | Username for iSCSI CHAP authentication.                                | ""               |
@@ -47,7 +47,7 @@ The following table lists the configurable parameters of the chart and their def
 | node.affinity             | Affinity rules for the HPE CSI Driver node Pods.                       | {}               |
 | node.tolerations          | Node taints to tolerate for the HPE CSI Driver node Pods.              | []               |
 
-* = Disabling node conformance and configuration may prevent the CSI driver from functioning properly. See the [manual node configuration](https://scod.hpedev.io/csi_driver/operations.html#manual_node_configuration) section on SCOD to understand the consequences.
+`*` = Disabling node conformance and configuration may prevent the CSI driver from functioning properly. See the [manual node configuration](https://scod.hpedev.io/csi_driver/operations.html#manual_node_configuration) section on SCOD to understand the consequences.
 
 It's recommended to create a [values.yaml](https://github.com/hpe-storage/co-deployments/blob/master/helm/values/csi-driver) file from the corresponding release of the chart and edit it to fit the environment the chart is being deployed to. Download and edit [a sample file](https://github.com/hpe-storage/co-deployments/blob/master/helm/values/csi-driver).
 
