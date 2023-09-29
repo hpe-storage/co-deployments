@@ -20,4 +20,7 @@ cp ${IMG_DIR}/../../LICENSE ${IMG_DIR}/
 cp -r ${HELM_DIR}/charts/hpe-csi-driver ${IMG_DIR}/helm-charts
 
 # build an operator
-docker build -t ${REPO_NAME}/${HPE_CSI_OPERATOR_IMAGE}:${HPE_CSI_OPERATOR_TAG} ${IMG_DIR}
+docker-buildx build --platform=linux/amd64,linux/arm64 --progress=plain \
+	--build-arg=https_proxy=${https_proxy} \
+        --build-arg=http_proxy=${http_proxy} \
+	--provenance=false ${1} -t ${REPO_NAME}/${HPE_CSI_OPERATOR_IMAGE}:${HPE_CSI_OPERATOR_TAG} ${IMG_DIR}
