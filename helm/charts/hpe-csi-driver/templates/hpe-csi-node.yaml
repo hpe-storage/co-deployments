@@ -86,6 +86,10 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: spec.nodeName
+            - name: POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
             {{ if and .Values.iscsi.chapUser .Values.iscsi.chapPassword }}
             - name: CHAP_USER
               value: {{ .Values.iscsi.chapUser }}
