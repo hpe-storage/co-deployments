@@ -58,6 +58,10 @@ spec:
                 description: DisableNodeConformance disables automatic installation
                   of iscsi/multipath packages
                 type: boolean
+              disableNodeConfiguration:
+                description: DisableNodeConfiguration disables default configurations
+                  performed by CSI plugin on node(s)
+                type: boolean
               disableNodeGetVolumeStats:
                 description: DisableNodeGetVolumeStats will be called by default,
                   set true to disable the call
@@ -1192,6 +1196,7 @@ spec:
             required:
             - disable
             - disableNodeConformance
+            - disableNodeConfiguration
             - disableNodeGetVolumeStats
             - imagePullPolicy
             - iscsi
