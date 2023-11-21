@@ -35,6 +35,8 @@ type HPECSIDriverSpec struct {
 	LogLevel string `json:"logLevel"`
 	// DisableNodeConformance disables automatic installation of iscsi/multipath packages
 	DisableNodeConformance bool `json:"disableNodeConformance"`
+	// DisableNodeConfiguration disables default configurations performed by CSI plugin on node(s)
+	DisableNodeConfiguration bool `json:"disableNodeConfiguration"`
 	// Iscsi parameters to be configured
 	Iscsi IscsiInfo `json:"iscsi"`
 	// Registry prefix for CSI driver images
