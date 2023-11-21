@@ -24,6 +24,9 @@ spec:
   ## For controlling automatic iscsi/multipath package installation (default: false)
   disableNodeConformance: false
 
+  ## For controlling default configurations performed by HPE CSI plugin on node(s)
+  disableNodeConfiguration: false
+
   # values for CHAP Authentication
   iscsi:
     chapUser: ""
