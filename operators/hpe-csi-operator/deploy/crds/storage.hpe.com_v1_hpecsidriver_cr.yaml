@@ -27,6 +27,8 @@ spec:
   ## For controlling default configurations performed by HPE CSI plugin on node(s)
   disableNodeConfiguration: false
 
+  ## For disabling the node panic and force reboot the node if there are any hung tasks.
+  disableNodePanic: false
   # values for CHAP Authentication
   iscsi:
     chapUser: ""

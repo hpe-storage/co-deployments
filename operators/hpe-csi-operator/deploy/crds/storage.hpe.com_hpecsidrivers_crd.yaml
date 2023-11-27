@@ -62,6 +62,10 @@ spec:
                 description: DisableNodeConfiguration disables default configurations
                   performed by CSI plugin on node(s)
                 type: boolean
+              disableNodePanic:
+                description: DisableNodePanic disables node panic and allows CSI driver 
+                  to reboot the node if there are any hung tasks
+                type: boolean
               disableNodeGetVolumeStats:
                 description: DisableNodeGetVolumeStats will be called by default,
                   set true to disable the call
@@ -1197,6 +1201,7 @@ spec:
             - disable
             - disableNodeConformance
             - disableNodeConfiguration
+            - disableNodePanic
             - disableNodeGetVolumeStats
             - imagePullPolicy
             - iscsi

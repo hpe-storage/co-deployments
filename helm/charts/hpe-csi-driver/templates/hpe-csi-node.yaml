@@ -99,6 +99,9 @@ spec:
             {{ if .Values.disableNodeConfiguration -}}
             - name: DISABLE_NODE_CONFIGURATION
               value: "true"
+            {{ if .Values.disableNodePanic -}}
+            - name: DISABLE_NODE_PANIC
+              value: "true"
             {{- end }}
             {{- if .Values.kubeletRootDir }}
             - name: KUBELET_ROOT_DIR

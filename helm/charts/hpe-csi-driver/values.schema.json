@@ -13,6 +13,7 @@
             },
             "disableNodeConformance": false,
             "disableNodeConfiguration": false,
+            "disableNodePanic": false,
             "imagePullPolicy": "IfNotPresent",
             "iscsi": {
                 "chapUser": "",
@@ -46,6 +47,7 @@
         "disable",
         "disableNodeConformance",
         "disableNodeConfiguration",
+        "disableNodePanic",
         "imagePullPolicy",
         "iscsi",
         "logLevel",
@@ -114,6 +116,13 @@
             "$id": "#/properties/disableNodeConfiguration",
             "title": "Disable node configuration",
             "description": "Disabling node configuration forces the cluster administrator to ensure all node services are configured and started to use external block storage.",
+            "type": "boolean",
+            "default": false
+        },
+        "disableNodePanic": {
+            "$id": "#/properties/disableNodePanic",
+            "title": "Disable node panic",
+            "description": "Disabling node panic forces the CSI driver to reboot the node if there are any hung tasks.",
             "type": "boolean",
             "default": false
         },
