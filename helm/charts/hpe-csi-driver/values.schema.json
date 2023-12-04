@@ -13,7 +13,7 @@
             },
             "disableNodeConformance": false,
             "disableNodeConfiguration": false,
-            "disableNodePanic": false,
+            "enableNodePanic": false,
             "imagePullPolicy": "IfNotPresent",
             "iscsi": {
                 "chapUser": "",
@@ -47,7 +47,7 @@
         "disable",
         "disableNodeConformance",
         "disableNodeConfiguration",
-        "disableNodePanic",
+        "enableNodePanic",
         "imagePullPolicy",
         "iscsi",
         "logLevel",
@@ -119,10 +119,10 @@
             "type": "boolean",
             "default": false
         },
-        "disableNodePanic": {
-            "$id": "#/properties/disableNodePanic",
-            "title": "Disable node panic",
-            "description": "Disabling node panic forces the CSI driver to reboot the node if there are any hung tasks.",
+        "enableNodePanic": {
+            "$id": "#/properties/enableNodePanic",
+            "title": "Enable node panic",
+            "description": "Enables node kernel panic when processes are hung (waiting for IO) for more than 5 minutes",
             "type": "boolean",
             "default": false
         },

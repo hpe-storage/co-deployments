@@ -37,8 +37,8 @@ type HPECSIDriverSpec struct {
 	DisableNodeConformance bool `json:"disableNodeConformance"`
 	// DisableNodeConfiguration disables default configurations performed by CSI plugin on node(s)
 	DisableNodeConfiguration bool `json:"disableNodeConfiguration"`
-	// DisableNodePanic disables node panic and allows CSI driver to reboot the node if there are any hung tasks
-	DisableNodePanic bool `json:"disableNodePanic"`
+	// EnableNodePanic enables node kernel panic when processes are hung (waiting for IO) for more than 5 minutes
+	EnableNodePanic bool `json:"enableNodePanic"`
 	// Iscsi parameters to be configured
 	Iscsi IscsiInfo `json:"iscsi"`
 	// Registry prefix for CSI driver images

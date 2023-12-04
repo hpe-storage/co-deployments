@@ -15,8 +15,8 @@ disableNodeConformance: false
 # For controlling automatic iscsi/multipath service configuration
 disableNodeConfiguration: false
 
-# For disabling the node panic and force reboot the node if there are any hung tasks.
-disableNodePanic: false
+# For enabling the node kernel panic when processes are hung (waiting for IO) for more than 5 minutes
+enableNodePanic: false
 
 # imagePullPolicy applied for all hpe-csi-driver images
 imagePullPolicy: "IfNotPresent"
