@@ -1,5 +1,5 @@
 # Configuration to deploy the HPE CSI driver compatible with
-# Kubernetes = v1.25
+# Kubernetes = v1.29
 #
 # example usage: kubectl create -f <this_file>
 
@@ -169,7 +169,7 @@ spec:
             - name: socket-dir
               mountPath: /var/lib/csi/sockets/pluginproxy/
         - name: hpe-csi-driver
-          image: quay.io/hpestorage/csi-driver:v2.4.0
+          image: quay.io/hpestorage/csi-driver:edge
           args:
             - "--endpoint=$(CSI_ENDPOINT)"
             - "--flavor=kubernetes"
@@ -786,6 +786,30 @@ spec:
         options:
           - name: ndots
             value: "1"
+      initContainers:
+        - name: hpe-csi-node-init
+          image: quay.io/hpestorage/csi-driver:edge
+          args: ['--node-init']
+          volumeMounts:
+            - name: root-dir
+              mountPath: /host
+              mountPropagation: "Bidirectional"
+            - name: device-dir
+              mountPath: /dev
+            - name: sys
+              mountPath: /sys
+            - name: etc-hpe-storage-dir
+              mountPath: /etc/hpe-storage
+            - name: runsystemd
+              mountPath: /run/systemd
+            - name: etcsystemd
+              mountPath: /etc/systemd/system
+          imagePullPolicy: "IfNotPresent"
+          securityContext:
+            privileged: true
+            capabilities:
+              add: ["SYS_ADMIN"]
+            allowPrivilegeEscalation: true
       containers:
         - name: csi-node-driver-registrar
           image: registry.k8s.io/sig-storage/csi-node-driver-registrar:v2.8.0
@@ -804,7 +828,7 @@ spec:
             - name: registration-dir
               mountPath: /registration
         - name: hpe-csi-driver
-          image: quay.io/hpestorage/csi-driver:v2.4.0
+          image: quay.io/hpestorage/csi-driver:edge
           args:
             - "--endpoint=$(CSI_ENDPOINT)"
             - "--node-service"
