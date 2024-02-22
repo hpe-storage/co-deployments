@@ -1,14 +1,20 @@
 apiVersion: v1
-version: "2.4.1-beta"
-appVersion: "2.4.1-beta"
+version: "2.4.1-beta2"
+appVersion: "2.4.1-beta2"
 annotations:
   artifacthub.io/prerelease: "true"
   artifacthub.io/containsSecurityUpdates: "true"
   artifacthub.io/license: Apache-2.0
   artifacthub.io/category: storage
   artifacthub.io/links: |
+    - name: Release Highlights
+      url: https://scod.hpedev.io/csi_driver/index.html#latest_release
+    - name: Release Notes
+      url: https://github.com/hpe-storage/csi-driver/tree/master/release-notes
     - name: Documentation
       url: https://scod.hpedev.io/csi_driver
+    - name: Chart Source
+      name: https://github.com/hpe-storage/co-deployment
   artifacthub.io/recommendations: |
     - url: https://artifacthub.io/packages/olm/community-operators/hpe-csi-operator
     - url: https://artifacthub.io/packages/helm/hpe-storage/hpe-csi-info-metrics
@@ -19,7 +25,6 @@ maintainers:
 - name: datamattsson
   email: dev-hi-containers@hpe.com
 sources:
-- https://github.com/hpe-storage/co-deployments
 - https://github.com/hpe-storage/csi-driver
 name: hpe-csi-driver
 home: https://hpe.com/storage/containers

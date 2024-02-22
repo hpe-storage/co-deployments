@@ -169,7 +169,7 @@ spec:
             - name: socket-dir
               mountPath: /var/lib/csi/sockets/pluginproxy/
         - name: hpe-csi-driver
-          image: quay.io/hpestorage/csi-driver:v2.4.1-beta
+          image: quay.io/hpestorage/csi-driver:v2.4.1-beta2
           args:
             - "--endpoint=$(CSI_ENDPOINT)"
             - "--flavor=kubernetes"
@@ -193,7 +193,7 @@ spec:
             - name: root-dir
               mountPath: /host
         - name: csi-volume-mutator
-          image: quay.io/hpestorage/volume-mutator:v1.3.5-beta
+          image: quay.io/hpestorage/volume-mutator:v1.3.5-beta2
           args:
             - "--v=5"
             - "--csi-address=$(ADDRESS)"
@@ -205,7 +205,7 @@ spec:
             - name: socket-dir
               mountPath: /var/lib/csi/sockets/pluginproxy/
         - name: csi-volume-group-snapshotter
-          image: quay.io/hpestorage/volume-group-snapshotter:v1.0.5-beta
+          image: quay.io/hpestorage/volume-group-snapshotter:v1.0.5-beta2
           args:
             - "--v=5"
             - "--csi-address=$(ADDRESS)"
@@ -217,7 +217,7 @@ spec:
             - name: socket-dir
               mountPath: /var/lib/csi/sockets/pluginproxy/
         - name: csi-volume-group-provisioner
-          image: quay.io/hpestorage/volume-group-provisioner:v1.0.5-beta
+          image: quay.io/hpestorage/volume-group-provisioner:v1.0.5-beta2
           args:
             - "--v=5"
             - "--csi-address=$(ADDRESS)"
@@ -229,7 +229,7 @@ spec:
             - name: socket-dir
               mountPath: /var/lib/csi/sockets/pluginproxy/
         - name: csi-extensions
-          image: quay.io/hpestorage/csi-extensions:v1.2.6-beta
+          image: quay.io/hpestorage/csi-extensions:v1.2.6-beta2
           args:
             - "--v=5"
             - "--endpoint=$(CSI_ENDPOINT)"
@@ -791,7 +791,7 @@ spec:
             value: "1"
       initContainers:
         - name: hpe-csi-node-init
-          image: quay.io/hpestorage/csi-driver:v2.4.1-beta
+          image: quay.io/hpestorage/csi-driver:v2.4.1-beta2
           args: ['--node-init']
           volumeMounts:
             - name: root-dir
@@ -831,7 +831,7 @@ spec:
             - name: registration-dir
               mountPath: /registration
         - name: hpe-csi-driver
-          image: quay.io/hpestorage/csi-driver:v2.4.1-beta
+          image: quay.io/hpestorage/csi-driver:v2.4.1-beta2
           args:
             - "--endpoint=$(CSI_ENDPOINT)"
             - "--node-service"

@@ -1,6 +1,14 @@
 # HPE CSI Driver for Kubernetes Helm chart
 
-The [HPE CSI Driver for Kubernetes](https://scod.hpedev.io/csi_driver/index.html) leverages Hewlett Packard Enterprise storage platforms to provide scalable and persistent storage for stateful applications.
+The [HPE CSI Driver for Kubernetes](https://scod.hpedev.io/csi_driver/index.html) leverages Hewlett Packard Enterprise primary storage platforms to provide scalable and persistent storage for stateful and ephemeral applications. Currently supported storage platforms include HPE GreenLake for Block Storage powered by HPE Alletra Storage MP, HPE Alletra 5000/6000/9000, HPE Nimble Storage, HPE Primera and HPE 3PAR.
+
+## Release highlights
+
+The HPE CSI Driver for Kubernetes Helm chart is the primary delivery vehicle for the HPE CSI Driver.
+
+- All resources for the HPE CSI Driver is available on [HPE Storage Container Orchestrator Documentation](https://scod.hpedev.io/) (SCOD).
+- Visit [the latest release](https://scod.hpedev.io/csi_driver/index.html#latest_release) on SCOD to learn what's new in this chart.
+- The release notes for the HPE CSI Driver are hosted on [GitHub](https://github.com/hpe-storage/csi-driver/tree/master/release-notes).
 
 ## Prerequisites
 
@@ -8,12 +16,12 @@ The [HPE CSI Driver for Kubernetes](https://scod.hpedev.io/csi_driver/index.html
 - Recent Ubuntu, SLES or RHEL (and its derives) compute nodes connected to their respective official package repositories
 - Helm 3 (Version >= 3.2.0 required)
 
-Refer to [Compatibility & Support](https://scod.hpedev.io/csi_driver/index.html#compatibility_and_support) on [SCOD](https://scod.hpedev.io/) for currently supported versions of Kubernetes and compute nodes.
+Refer to [Compatibility & Support](https://scod.hpedev.io/csi_driver/index.html#compatibility_and_support) for currently supported versions of Kubernetes and compute node operating systems.
 
 Depending on which [Container Storage Provider](https://scod.hpedev.io/container_storage_provider/index.html) (CSP) is being used, other prerequisites and requirements may apply, such as storage platform OS and features.
 
-- [HPE Alletra 5000/6000 and Nimble Storage](https://scod.hpedev.io/container_storage_provider/hpe_nimble_storage/index.html)
-- [HPE Alletra Storage MP, Alletra 9000, Primera and 3PAR](https://scod.hpedev.io/container_storage_provider/hpe_3par_primera/index.html)
+- [HPE Alletra 5000/6000 and Nimble Storage](https://scod.hpedev.io/container_storage_provider/hpe_alletra_6000/index.html)
+- [HPE Alletra Storage MP, Alletra 9000, Primera and 3PAR](https://scod.hpedev.io/container_storage_provider/hpe_alletra_storage_mp/index.html)
 
 ## Configuration and installation
 
@@ -149,7 +157,7 @@ helm install my-hpe-csi-driver hpe-storage/hpe-csi-driver -n hpe-storage \
 
 ## Using persistent storage with Kubernetes
 
-Enable dynamic provisioning of persistent storage by creating a `StorageClass` API object that references a `Secret` which maps to a supported HPE primary storage backend. Refer to the [HPE CSI Driver for Kubernetes](https://scod.hpedev.io/csi_driver/deployment.html#add_a_hpe_storage_backend) documentation on [HPE Storage Container Orchestration Documentation](https://scod.hpedev.io/). Also, it's helpful to be familiar with [persistent storage concepts](https://kubernetes.io/docs/concepts/storage/volumes/) in Kubernetes prior to deploying stateful workloads.
+Enable dynamic provisioning of persistent storage by creating a `StorageClass` API object that references a `Secret` which maps to a supported HPE primary storage backend. Refer to the [HPE CSI Driver for Kubernetes](https://scod.hpedev.io/csi_driver/deployment.html#add_a_hpe_storage_backend) documentation on SCOD. Also, it's helpful to be familiar with [persistent storage concepts](https://kubernetes.io/docs/concepts/storage/volumes/) in Kubernetes prior to deploying stateful workloads.
 
 ## Support
 
