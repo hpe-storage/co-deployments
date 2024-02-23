@@ -14,7 +14,7 @@ annotations:
     - name: Documentation
       url: https://scod.hpedev.io/csi_driver
     - name: Chart Source
-      name: https://github.com/hpe-storage/co-deployment
+      url: https://github.com/hpe-storage/co-deployments
   artifacthub.io/recommendations: |
     - url: https://artifacthub.io/packages/olm/community-operators/hpe-csi-operator
     - url: https://artifacthub.io/packages/helm/hpe-storage/hpe-csi-info-metrics

@@ -128,7 +128,7 @@ entries:
         - name: Documentation
           url: https://scod.hpedev.io/csi_driver
         - name: Chart Source
-          name: https://github.com/hpe-storage/co-deployment
+          url: https://github.com/hpe-storage/co-deployments
       artifacthub.io/prerelease: "true"
       artifacthub.io/recommendations: |
         - url: https://artifacthub.io/packages/olm/community-operators/hpe-csi-operator
@@ -136,9 +136,9 @@ entries:
         - url: https://artifacthub.io/packages/helm/hpe-storage/hpe-array-exporter
     apiVersion: v1
     appVersion: 2.4.1-beta2
-    created: "2024-02-21T11:09:05.024591-08:00"
+    created: "2024-02-22T21:50:20.101176-08:00"
     description: A Helm chart for installing the HPE CSI Driver for Kubernetes
-    digest: 375e2318361fd37dd7c3bbbeff16fe1d166bdcf325c72c89d2bf60c9c9dd2cd5
+    digest: 71a8874121042c69d63a7d324af5bb41e4e870728fdd6954206d0006a4a220ef
     home: https://hpe.com/storage/containers
     icon: https://raw.githubusercontent.com/hpe-storage/co-deployments/master/docs/assets/hpedev.png
     keywords:
@@ -1007,4 +1007,4 @@ entries:
     urls:
     - hpe-flexvolume-driver-3.0.0.tgz
     version: 3.0.0
-generated: "2024-02-21T11:09:05.023503-08:00"
+generated: "2024-02-22T21:50:20.100218-08:00"
