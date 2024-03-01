@@ -48,11 +48,14 @@ spec:
                     type: boolean
                   primera:
                     type: boolean
+                  alletraStorageMP:
+                    type: boolean
                 required:
                 - alletra6000
                 - alletra9000
                 - nimble
                 - primera
+                - alletraStorageMP
                 type: object
               disableNodeConformance:
                 description: DisableNodeConformance disables automatic installation

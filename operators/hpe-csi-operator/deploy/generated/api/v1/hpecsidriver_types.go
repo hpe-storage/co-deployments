@@ -51,10 +51,11 @@ type HPECSIDriverSpec struct {
 
 // DisableInfo defines different CSP services which can be disabled
 type DisableInfo struct {
-	Nimble      string `json:"nimble"`
-	Primera     string `json:"primera"`
-	Alletra6000 string `json:"alletra6000"`
-	Alletra9000 string `json:"alletra9000"`
+	Nimble           string `json:"nimble"`
+	Primera          string `json:"primera"`
+	Alletra6000      string `json:"alletra6000"`
+	Alletra9000      string `json:"alletra9000"`
+	AlletraStorageMP string `json:"alletraStorageMP"`
 }
 
 // IscsiInfo defines different Iscsi parameters which can be configured
