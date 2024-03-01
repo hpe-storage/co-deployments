@@ -35,9 +35,9 @@ spec:
       initContainers:
         - name: hpe-csi-node-init
           {{- if .Values.registry }}
-          image: {{ .Values.registry }}/hpestorage/csi-driver:v2.4.1-beta2
+          image: {{ .Values.registry }}/hpestorage/csi-driver:v2.4.1
           {{- else }}
-          image: quay.io/hpestorage/csi-driver:v2.4.1-beta2
+          image: quay.io/hpestorage/csi-driver:v2.4.1
           {{- end}}
           args: ['--node-init']
           volumeMounts:
@@ -97,9 +97,9 @@ spec:
               mountPath: /registration
         - name: hpe-csi-driver
           {{- if .Values.registry }}
-          image: {{ .Values.registry }}/hpestorage/csi-driver:v2.4.1-beta2
+          image: {{ .Values.registry }}/hpestorage/csi-driver:v2.4.1
           {{- else }}
-          image: quay.io/hpestorage/csi-driver:v2.4.1-beta2
+          image: quay.io/hpestorage/csi-driver:v2.4.1
           {{- end}}
           args :
             - "--endpoint=$(CSI_ENDPOINT)"
