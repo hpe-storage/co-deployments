@@ -1,4 +1,4 @@
-FROM quay.io/operator-framework/helm-operator:v1.31
+FROM quay.io/operator-framework/helm-operator:v1.34
 LABEL name="csi-driver-operator" \
       maintainer="HPE Storage Containers Team" \
       vendor="HPE" \
