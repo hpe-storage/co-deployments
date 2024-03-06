@@ -1,0 +1,39 @@
+apiVersion: storage.hpe.com/v1
+kind: HPECSIDriver
+metadata:
+  name: hpecsidriver-sample
+spec:
+  # Default values copied from <project_dir>/helm-charts/hpe-csi-driver/values.yaml
+  controller:
+    affinity: {}
+    labels: {}
+    nodeSelector: {}
+    tolerations: []
+  csp:
+    affinity: {}
+    labels: {}
+    nodeSelector: {}
+    tolerations: []
+  disable:
+    alletra6000: false
+    alletra9000: false
+    alletraStorageMP: false
+    nimble: false
+    primera: false
+  disableNodeConfiguration: false
+  disableNodeConformance: false
+  disableNodeGetVolumeStats: false
+  imagePullPolicy: IfNotPresent
+  iscsi:
+    chapPassword: ""
+    chapUser: ""
+  kubeletRootDir: /var/lib/kubelet/
+  logLevel: info
+  node:
+    affinity: {}
+    labels: {}
+    nodeSelector: {}
+    tolerations: []
+  registry: quay.io
+  
+  

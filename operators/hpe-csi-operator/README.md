@@ -114,4 +114,30 @@ In `destinations` are the current shipping versions of the Operator. Those needs
 
 A `git diff` should reveal all the work for the PR. Once PRs are approved in `co-deployments` and thoroughly tested, each bundle can be submitted to each upstream.
 
-**Note:** The CSV for community-operators changes the name for each release, ensure the new CSV is included in the PR.
+**Note:** The CSV for community-operators changes the name for each release, ensure the new CSV is included in the PR along with the CR sample for the version being submitted.
+
+## External Testing
+
+For testing and experimentation only the `operator-sdk` binary is required besides the cluster access with `kubectl` or `oc`.
+
+In a typical test scenario, these are the steps for each of the supported platforms on a blank cluster.
+
+Vanilla Kubernetes:
+
+```
+export VERSION=2.4.1
+operator-sdk install olm
+kubectl create ns hpe-storage
+operator-sdk run bundle -n hpe-storage quay.io/hpestorage/csi-driver-operator-bundle:v${VERSION}
+kubectl apply -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/operators/hpe-csi-operator/destinations/hpecsidriver-v${VERSION}-sample.yaml
+```
+
+OpenShift:
+
+```
+export VERSION=2.4.1
+oc create ns hpe-storage
+oc apply -f https://scod.hpedev.io/partners/redhat_openshift/examples/scc/hpe-csi-scc.yaml
+operator-sdk run bundle -n hpe-storage registry.connect.redhat.com/hpestorage/csi-driver-operator-bundle:v${VERSION}
+kubectl apply -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/operators/hpe-csi-operator/destinations/hpecsidriver-v${VERSION}-sample.yaml
+```

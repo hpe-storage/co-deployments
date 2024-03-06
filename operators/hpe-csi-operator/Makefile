@@ -30,12 +30,12 @@ init: clean
 build: init
 	# Populate with our sources
 	mkdir -p $(IMAGE_NAME)/config/manifests/bases
-	cp sources/hpecsidrivers.storage.hpe.com.crd.yaml \
+	cp -f sources/hpecsidrivers.storage.hpe.com.crd.yaml \
 		$(IMAGE_NAME)/config/crd/bases/storage.hpe.com_hpecsidrivers.yaml
 	sed -e "s/%SEMVER%/$(VERSION)/g" -e "s#%IMG%#$(IMG)#g" \
 		sources/hpe-csi-operator.csv.yaml \
 		> $(IMAGE_NAME)/config/manifests/bases/hpe-csi-operator.clusterserviceversion.yaml
-	cp sources/role.yaml $(IMAGE_NAME)/config/rbac/
+	cp -f sources/role.yaml $(IMAGE_NAME)/config/rbac/
 
 	# Fix memory on the manager.
 	sed -i.remove -e "s/memory: 128Mi/memory: 512Mi/g" $(IMAGE_NAME)/config/manager/manager.yaml && \
@@ -63,25 +63,31 @@ build: init
 
 	# Create bundle image for testing
 	cd $(IMAGE_NAME); make bundle-build bundle-push IMG="$(IMG)" BUNDLE_IMG="$(BUNDLE_IMG)" VERSION="$(VERSION)" USE_IMAGE_DIGESTS="true"
+
+	# Sample CSI driver instance
+	cp -f $(IMAGE_NAME)/config/samples/storage_v1_hpecsidriver.yaml \
+		destinations/hpecsidriver-v${VERSION}-sample.yaml
+	cp -f $(IMAGE_NAME)/config/samples/storage_v1_hpecsidriver.yaml \
+		destinations/hpecsidriver-latest-sample.yaml
 deploy:
 	# Run bundle
 	- kubectl create ns $(NAMESPACE)
 	cd $(IMAGE_NAME); operator-sdk run bundle $(BUNDLE_IMG) -n $(NAMESPACE)
 
 	# Instantiate HPECSIDriver
-	kubectl apply -n $(NAMESPACE) -f $(IMAGE_NAME)/config/samples/storage_v1_hpecsidriver.yaml
+	kubectl apply -n $(NAMESPACE) -f destinations/hpecsidriver-v${VERSION}-sample.yaml
 certified:
 	# Create certified-operators content
 	rm -rf destinations/certified-operators/current-version/*
-	cp -a $(IMAGE_NAME)/bundle/ destinations/certified-operators/current-version
+	cp -f -a $(IMAGE_NAME)/bundle/ destinations/certified-operators/current-version
 
 community:
 	# Create community-operators content
 	rm -rf destinations/community-operators/current-version/*	
-	cp -a $(IMAGE_NAME)/bundle/ destinations/community-operators/current-version
+	cp -f -a $(IMAGE_NAME)/bundle/ destinations/community-operators/current-version
 	mv destinations/community-operators/current-version/manifests/hpe-csi-operator.clusterserviceversion.yaml \
 		destinations/community-operators/current-version/manifests/hpe-csi-operator.v$(VERSION).clusterserviceversion.yaml 
-		cp $(IMAGE_NAME)/bundle.Dockerfile destinations/community-operators/current-version/Dockerfile
+		cp -f $(IMAGE_NAME)/bundle.Dockerfile destinations/community-operators/current-version/Dockerfile
 
 scorecard:
 	cd $(IMAGE_NAME); operator-sdk scorecard bundle -n $(NAMESPACE)
