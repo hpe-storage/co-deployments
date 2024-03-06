@@ -1,18 +1,19 @@
 # Operator SDK build and delivery process
 
-This README describes how to build an Operator from the HPE CSI Driver Helm chart host in this repository.
+This README describes how to build an Operator from the HPE CSI Driver Helm chart hosted in this repository.
 
-Source to get started with Operator Helm charts: https://sdk.operatorframework.io/docs/building-operators/helm/tutorial/
+Tutorial to get started with Operator Helm charts: https://sdk.operatorframework.io/docs/building-operators/helm/tutorial/
 
-The workflow breaks down to this workflow once you have two clusters installed and OLM running in the Vanilla cluster.
+The workflow breaks down to this flowchart once you have two clusters installed and OLM running in the Vanilla cluster.
 
 ```
 |-------------------------------------| 
 | export KUBECONFIG=my-vanilla.yaml   |  |-----------------|
 | export VERSION=2.4.2                |  | make deploy     |  |----------------|
 | export REPO_NAME=quay.io/hpestorage |->| # Perform tests |->| make community |
-| make build                          |  |-----------------|  |-------o--------|
-|-------------------------------------|                               |
+| make build                          |  | make scorecard  |  |-------o--------|
+|------------------------------------ |  |-----------------|          |
+                                                                      |
                  o----------------------------------------------------o
                  |
 |----------------V----------------------------------------| 
@@ -24,7 +25,6 @@ The workflow breaks down to this workflow once you have two clusters installed a
                                                                       |
                                                              |--------V--------|
                                                              | make certified  |
-                                                             | make community  |
                                                              |--------o--------|
                                                                       |       
                                                       |---------------V--------|
@@ -38,9 +38,7 @@ The workflow breaks down to this workflow once you have two clusters installed a
 
 ## Testing and building for OLM
 
-**Caution:** This workflow most like only work on Mac.
-
-Install the `operator sdk` on your computer, `make` and `sed` is also needed.
+Install the `operator-sdk` binary on your computer, `docker`, `docker-buildx`, `make` and `sed` is also needed.
 
 On you cluster, install OLM (ensure your KUBECONFIG points to a cluster).
 
@@ -48,7 +46,7 @@ On you cluster, install OLM (ensure your KUBECONFIG points to a cluster).
 operator-sdk olm install
 ```
 
-Next, figure out what destination repositories you want to use. For example, I use `quay.io/datamattsson/csi-driver-operator` and `quay.io/datamattsson/csi-driver-operator/bundle`
+Next, figure out what destination repositories you want to use. For example, I use `quay.io/datamattsson/csi-driver-operator` and `quay.io/datamattsson/csi-driver-operator-bundle`
 
 ```
 export REPO_NAME=quay.io/datamattsson
@@ -80,7 +78,13 @@ You should be able to see the Operator come to life including a fresh install of
 kubectl get pods -A -w
 ```
 
-Iterate this until it looks OK to submit.
+Iterate this until it looks OK to submit. For good measure, generate the scorecard and make sure all tests pass.
+
+```
+make scorecard
+```
+
+Create the bundle for community-operators.
 
 ```
 make community
@@ -90,7 +94,13 @@ make community
 
 Follow the same workflow as above, pointing to Red Hat's registry instead of Quay.
 
-OpenShift does not require OLM pre-installed. Simply point to your OpenShift cluster and `make deploy`.
+OpenShift does not require OLM pre-installed. Simply point to your OpenShift cluster run:
+
+```
+make build
+make deploy
+make scorecard
+```
 
 Once it looks good, build the output.
 
@@ -100,6 +110,8 @@ make certified
 
 ## Submitting a PR
 
-In `destinations` are the current shipping versions of the Operator. Those needs to be updated with the new version and included in the PR. Make sure the same environment variables are set from the Testing phase.
+In `destinations` are the current shipping versions of the Operator. Those needs to be updated with the new version and included in the PR. Make sure the same environment variables are set from the testing phases when making the community and certified targets.
 
 A `git diff` should reveal all the work for the PR. Once PRs are approved in `co-deployments` and thoroughly tested, each bundle can be submitted to each upstream.
+
+**Note:** The CSV for community-operators changes the name for each release, ensure the new CSV is included in the PR.
