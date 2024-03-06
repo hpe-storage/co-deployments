@@ -1,52 +1,65 @@
-# HPE CSI Operator for Kubernetes
+# Operator SDK build and delivery process
 
-The upstream HPE CSI Operator for OperatorHub.io is maintained below.
+This README describes how to build an Operator from the HPE CSI Driver Helm chart host in this repository.
 
-- https://github.com/k8s-operatorhub/community-operators
+Source to get started with Operator Helm charts: https://sdk.operatorframework.io/docs/building-operators/helm/tutorial/
 
-This tree should be maintained with the same content along with tools to build the Operator.
+## Testing on OLM
 
-## Overview
+**Caution:** This workflow most like only work on Mac.
 
-The HPE CSI Operator packages, deploys, manages, upgrades HPE CSI Driver on Kubernetes and OpenShift for dynamic provisioning of persistent volumes on HPE storage systems.
+Install the `operator sdk` on your computer, `make` and `sed` is also needed.
 
-This Operator is created as a [Custom Resource Definition](https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/custom-resources/#customresourcedefinitions) from the [hpe-csi-driver Helm chart](https://hub.helm.sh/charts/hpe-storage/hpe-csi-driver) using the [Operator-SDK](https://github.com/operator-framework/operator-sdk#overview).
+On you cluster, install OLM (ensure your KUBECONFIG points to a cluster).
 
-**Note:** This installation process does NOT require Helm. Also if need to install using OLM, please refer to install steps from [OperatorHub.io](https://operatorhub.io/operator/hpe-csi-operator) install page. If using OCP console, below steps doesn't apply as well.
-
-## Platform and Software Dependencies
-
-For platform dependencies for the HPE CSI Driver please refer to [compatability and support](https://scod.hpedev.io/csi_driver/index.html#compatibility_and_support).
-
-## Installation on OpenShift
-
-The HPE CSI Driver needs to run in privileged mode and needs access to host ports, host network and should be able to mount hostPath volumes. Hence, before deploying HPE CSI Operator on OCP, please create a `SecurityContextConstraints` to allow the CSI driver to be running with these privileges.
-
-Get SCC:
 ```
-curl -sL https://raw.githubusercontent.com/hpe-storage/co-deployments/master/operators/hpe-csi-operator/deploy/scc.yaml > hpe-csi-scc.yaml
+operator-sdk olm install
 ```
 
-Change `my-hpe-csi-driver-operator` to the name of the project(eg `my-project-name` below) where CSI operator is being deployed
-```
-sed -i 's/my-hpe-csi-driver-operator/my-project-name/g' hpe-csi-scc.yaml
-```
+Next, figure out what destination repositories you want to use. For example, I use `quay.io/datamattsson/csi-driver-operator` and `quay.io/datamattsson/csi-driver-operator/bundle`
 
-Deploy SCC:
 ```
-oc create -f hpe-csi-scc.yaml
+export REPO_NAME=quay.io/datamattsson
 ```
 
-Once the SCC has been deployed, please follow the official Red Hat OpenShift steps to deploy Operators through the OCP console from Operator catalog. It needs to be under the same project as specified in the SCC above. Once the Operator is deployed, create a HPECSIDriver instance with required values like `backendType`, `backend`, `username`, and `password`. This will deploy the HPE CSI Driver under the same project.
+Next, what version are we iterating on? Make sure to follow Semantic Versioning.
 
-## Installation on Kubernetes
+```
+export VERSION=0.0.0
+```
 
-Please follow the steps from the install page on [OperatorHub.io](https://operatorhub.io/operator/hpe-csi-operator). Once the operator is installed, `HPECSIDriver` `CustomResource` should be installed in namespace `my-hpe-csi-operator`. A `CustomResource` sample can be found at OperatorHub.io as well.
+If you're making changes to update the Operators. Patrol all the files in `sources` and update decorations as necessary.
 
-## Using the HPE CSI Driver for Kubernetes
+Next, build the Operator.
 
-Refer to the official [HPE CSI Driver for Kubernetes](https://scod.hpedev.io/csi_driver/index.html) for examples on usage and `StorageClass` examples for the various storage platforms supported by the driver.
+```
+make build
+```
 
-## License
+If there are no errors, go ahead and deploy the Operator on your test cluster.
 
-This is open source software licensed using the Apache License 2.0. See [LICENSE](https://github.com/hpe-storage/co-deployments/blob/master/LICENSE) for details.
+```
+make deploy
+```
+
+You should be able to see the Operator come to life including a fresh install of the HPE CSI Driver.
+
+```
+kubectl get pods -A -w
+```
+
+Iterate this until it looks OK to submit.
+
+## Testing on OpenShift
+
+OpenShift does not require OLM pre-installed. Simply point to your OpenShift cluster and `make deploy`.
+
+## Submit a PR
+
+In `destinations` are the current shipping versions of the Operator. Those needs to be updated with the new version and included in the PR. Make sure the same environment variables are set from the Testing phase.
+
+```
+make outputs
+```
+
+The respective Operator bundles are now updated. A `git diff` should reveal all the work for PR. Once PRs are approved in `co-deployments` and thoroughly tested. Once merged in `co-deployments`, each bundle can be submitted to each upstream.

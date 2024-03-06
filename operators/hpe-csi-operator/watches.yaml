@@ -1,5 +1,0 @@
----
-- version: v1
-  group: storage.hpe.com
-  kind: HPECSIDriver
-  chart: /opt/helm/helm-charts/hpe-csi-driver
