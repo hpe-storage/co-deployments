@@ -53,7 +53,7 @@ metadata:
     capabilities: Basic Install
     categories: Storage
     certified: "true"
-    createdAt: "2024-03-06T04:35:58Z"
+    createdAt: "2024-03-06T17:42:58Z"
     description: A Container Storage Interface (CSI) driver for HPE storage platforms. The CSI driver allows you to use HPE storage with your preferred container orchestrator.
     features.operators.openshift.io/cnf: "false"
     features.operators.openshift.io/cni: "false"
@@ -65,13 +65,13 @@ metadata:
     features.operators.openshift.io/token-auth-aws: "false"
     features.operators.openshift.io/token-auth-azure: "false"
     features.operators.openshift.io/token-auth-gcp: "false"
-    olm.skipRange: '>=1.0.0 <2.4.1'
+    olm.skipRange: '>=1.0.0 <0.0.0'
     operatorhub.io/ui-metadata-max-k8s-version: "1.29"
     operators.operatorframework.io/builder: operator-sdk-v1.34.1
     operators.operatorframework.io/project_layout: helm.sdk.operatorframework.io/v1
     repository: https://github.com/hpe-storage/co-deployments
     support: HPE
-  name: hpe-csi-operator.v2.4.1
+  name: hpe-csi-operator.v0.0.0
   namespace: placeholder
 spec:
   apiservicedefinitions: {}
@@ -154,6 +154,11 @@ spec:
             path: disableNodeConfiguration
             x-descriptors:
               - urn:alm:descriptor:com.tectonic.ui:booleanSwitch
+          - description: 'Disable NodeGetVolumeStats call to CSI driver. (default: false)'
+            displayName: Disable NodeGetVolumeStats RPC
+            path: disableNodeGetVolumeStats
+            x-descriptors:
+              - urn:alm:descriptor:com.tectonic.ui:booleanSwitch
           - description: iSCSI Configuration
             displayName: iSCSI Configuration
             path: iscsi
@@ -172,6 +177,80 @@ spec:
             path: registry
             x-descriptors:
               - urn:alm:descriptor:com.tectonic.ui:text
+          - description: The kubelet root directory path.
+            displayName: Kubelet root dir
+            path: kubeletRootDir
+            x-descriptors:
+              - urn:alm:descriptor:com.tectonic.ui:text
+          - description: Configure CSI controller decorations
+            displayName: CSI controller configuration
+            path: controller
+          - description: Sets a nodeSelector on the CSI controller Pod
+            displayName: CSI controller nodeSelector
+            path: controller.nodeSelector
+            x-descriptors:
+              - urn:alm:descriptor:com.tectonic.ui:text
+          - description: Sets tolerations on the CSI controller Pod
+            displayName: CSI controller tolerations
+            path: controller.tolerations
+            x-descriptors:
+              - urn:alm:descriptor:com.tectonic.ui:text
+          - description: Labels the CSI controller Pod
+            displayName: CSI controller labels
+            path: controller.labels
+            x-descriptors:
+              - urn:alm:descriptor:com.tectonic.ui:text
+          - description: Sets affinity rules on the CSI controller Pod
+            displayName: CSI controller affinity rules
+            path: controller.affinity
+            x-descriptors:
+              - urn:alm:descriptor:com.tectonic.ui:nodeAffinity
+          - description: Configure CSI node driver decorations
+            displayName: CSI node driver configuration
+            path: node
+          - description: Sets a nodeSelector on the CSI node driver Pods
+            displayName: CSI node driver nodeSelector
+            path: node.nodeSelector
+            x-descriptors:
+              - urn:alm:descriptor:com.tectonic.ui:text
+          - description: Sets tolerations on the CSI node driver Pods
+            displayName: CSI node driver tolerations
+            path: node.tolerations
+            x-descriptors:
+              - urn:alm:descriptor:com.tectonic.ui:text
+          - description: Labels the CSI node driver Pods
+            displayName: CSI node driver labels
+            path: node.labels
+            x-descriptors:
+              - urn:alm:descriptor:com.tectonic.ui:text
+          - description: Sets affinity rules on the CSI node driver Pods
+            displayName: CSI node driver affinity rules
+            path: node.affinity
+            x-descriptors:
+              - urn:alm:descriptor:com.tectonic.ui:nodeAffinity
+          - description: Configure CSP decorations
+            displayName: CSP configuration
+            path: csp
+          - description: Sets a nodeSelector on the CSP Pods
+            displayName: CSP nodeSelector
+            path: csp.nodeSelector
+            x-descriptors:
+              - urn:alm:descriptor:com.tectonic.ui:text
+          - description: Sets tolerations on the CSP Pods
+            displayName: CSP tolerations
+            path: csp.tolerations
+            x-descriptors:
+              - urn:alm:descriptor:com.tectonic.ui:text
+          - description: Labels the CSP Pods
+            displayName: CSP labels
+            path: csp.labels
+            x-descriptors:
+              - urn:alm:descriptor:com.tectonic.ui:text
+          - description: Sets affinity rules on the CSP Pods
+            displayName: CSP affinity rules
+            path: csp.affinity
+            x-descriptors:
+              - urn:alm:descriptor:com.tectonic.ui:nodeAffinity
         statusDescriptors:
           - description: HPE CSI Driver Helm release status
             displayName: Conditions
@@ -634,7 +713,7 @@ spec:
                       - --metrics-bind-address=127.0.0.1:8080
                       - --leader-elect
                       - --leader-election-id=hpe-csi-operator
-                    image: quay.io/datamattsson/csi-driver-operator@sha256:ccaa0f8844c60fc0f33ce6bfa9559b63976c942a42a7f2a8111c1464cb8e8f8f
+                    image: quay.io/datamattsson/csi-driver-operator@sha256:7f320d28a5845c2cb74bba6bcb906cea8c9b9115875594a978085bd9c48e3ae6
                     livenessProbe:
                       httpGet:
                         path: /healthz
@@ -720,13 +799,13 @@ spec:
     - email: dev-hi-containers@hpe.com
       name: HPE Storage Containers Team
   maturity: stable
-  minKubeVersion: 1.26.0
+  minKubeVersion: 1.25.0
   provider:
     name: HPE
   relatedImages:
     - image: gcr.io/kubebuilder/kube-rbac-proxy@sha256:d8cc6ffb98190e8dd403bfe67ddcb454e6127d32b87acc237b3e5240f70a20fb
       name: kube-rbac-proxy
-    - image: quay.io/datamattsson/csi-driver-operator@sha256:ccaa0f8844c60fc0f33ce6bfa9559b63976c942a42a7f2a8111c1464cb8e8f8f
+    - image: quay.io/datamattsson/csi-driver-operator@sha256:7f320d28a5845c2cb74bba6bcb906cea8c9b9115875594a978085bd9c48e3ae6
       name: manager
   selector: {}
-  version: 2.4.1
+  version: 0.0.0

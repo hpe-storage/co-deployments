@@ -19,10 +19,12 @@ The workflow breaks down to this workflow once you have two clusters installed a
 | export KUBECONFIG=my-ocp.yaml                           |  |-----------------|
 | export VERSION=2.4.2                                    |  | make deploy     |  
 | export REPO_NAME=registry.connect.redhat.com/hpestorage |->| # Perform tests |
-| make build                                              |  |--------o--------|  
-|---------------------------------------------------------|           |
+| make build                                              |  | make scorecard  |
+|-------------------------------------------------------- |  |--------o--------|  
+                                                                      |
                                                              |--------V--------|
                                                              | make certified  |
+                                                             | make community  |
                                                              |--------o--------|
                                                                       |       
                                                       |---------------V--------|

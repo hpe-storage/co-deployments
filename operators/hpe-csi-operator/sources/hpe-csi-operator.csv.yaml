@@ -59,7 +59,7 @@ spec:
 
   maturity: stable
   version: %SEMVER%
-  minKubeVersion: 1.26.0
+  minKubeVersion: 1.25.0
   keywords:
     - HPE
     - HPE CSI
@@ -158,6 +158,11 @@ spec:
             path: disableNodeConfiguration
             x-descriptors:
               - "urn:alm:descriptor:com.tectonic.ui:booleanSwitch"
+          - displayName: Disable NodeGetVolumeStats RPC
+            description: "Disable NodeGetVolumeStats call to CSI driver. (default: false)"
+            path: disableNodeGetVolumeStats
+            x-descriptors:
+              - "urn:alm:descriptor:com.tectonic.ui:booleanSwitch"
           - displayName: iSCSI Configuration
             description: "iSCSI Configuration"
             path: iscsi
@@ -176,6 +181,80 @@ spec:
             path: registry
             x-descriptors:
               - "urn:alm:descriptor:com.tectonic.ui:text"
+          - displayName: Kubelet root dir
+            description: "The kubelet root directory path."
+            path: kubeletRootDir
+            x-descriptors:
+              - "urn:alm:descriptor:com.tectonic.ui:text"
+          - displayName: CSI controller configuration
+            description: "Configure CSI controller decorations"
+            path: controller
+          - displayName: CSI controller nodeSelector
+            description: "Sets a nodeSelector on the CSI controller Pod"
+            path: controller.nodeSelector
+            x-descriptors:
+              - "urn:alm:descriptor:com.tectonic.ui:text"
+          - displayName: CSI controller tolerations
+            description: "Sets tolerations on the CSI controller Pod"
+            path: controller.tolerations
+            x-descriptors:
+              - "urn:alm:descriptor:com.tectonic.ui:text"
+          - displayName: CSI controller labels
+            description: "Labels the CSI controller Pod"
+            path: controller.labels
+            x-descriptors:
+              - "urn:alm:descriptor:com.tectonic.ui:text"
+          - displayName: CSI controller affinity rules
+            description: "Sets affinity rules on the CSI controller Pod"
+            path: controller.affinity
+            x-descriptors:
+              - "urn:alm:descriptor:com.tectonic.ui:nodeAffinity"
+          - displayName: CSI node driver configuration
+            description: "Configure CSI node driver decorations"
+            path: node
+          - displayName: CSI node driver nodeSelector
+            description: "Sets a nodeSelector on the CSI node driver Pods"
+            path: node.nodeSelector
+            x-descriptors:
+              - "urn:alm:descriptor:com.tectonic.ui:text"
+          - displayName: CSI node driver tolerations
+            description: "Sets tolerations on the CSI node driver Pods"
+            path: node.tolerations
+            x-descriptors:
+              - "urn:alm:descriptor:com.tectonic.ui:text"
+          - displayName: CSI node driver labels
+            description: "Labels the CSI node driver Pods"
+            path: node.labels
+            x-descriptors:
+              - "urn:alm:descriptor:com.tectonic.ui:text"
+          - displayName: CSI node driver affinity rules
+            description: "Sets affinity rules on the CSI node driver Pods"
+            path: node.affinity
+            x-descriptors:
+              - "urn:alm:descriptor:com.tectonic.ui:nodeAffinity"
+          - displayName: CSP configuration
+            description: "Configure CSP decorations"
+            path: csp
+          - displayName: CSP nodeSelector
+            description: "Sets a nodeSelector on the CSP Pods"
+            path: csp.nodeSelector
+            x-descriptors:
+              - "urn:alm:descriptor:com.tectonic.ui:text"
+          - displayName: CSP tolerations
+            description: "Sets tolerations on the CSP Pods"
+            path: csp.tolerations
+            x-descriptors:
+              - "urn:alm:descriptor:com.tectonic.ui:text"
+          - displayName: CSP labels
+            description: "Labels the CSP Pods"
+            path: csp.labels
+            x-descriptors:
+              - "urn:alm:descriptor:com.tectonic.ui:text"
+          - displayName: CSP affinity rules
+            description: "Sets affinity rules on the CSP Pods"
+            path: csp.affinity
+            x-descriptors:
+              - "urn:alm:descriptor:com.tectonic.ui:nodeAffinity"
         statusDescriptors:
           - displayName: Conditions
             description: HPE CSI Driver Helm release status

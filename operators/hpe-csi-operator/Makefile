@@ -1,12 +1,12 @@
 # Set these
 VERSION ?= 0.0.0
-REPO_NAME ?= quay.io/datamattsson
+REPO_NAME ?= quay.io/myrepo
 
 # Don't set these
 VANITY_NAME ?= hpe-csi-operator
 IMAGE_NAME ?= csi-driver-operator
 BUNDLE_NAME ?= csi-driver-operator-bundle
-IMG ?= $(REPO_NAME)/$(IMAGE_NAME)
+IMG ?= $(REPO_NAME)/$(IMAGE_NAME):v$(VERSION)
 BUNDLE_IMG ?= $(REPO_NAME)/$(BUNDLE_NAME):v$(VERSION)
 BUNDLE_CHANNELS ?= stable
 PLATFORMS ?= linux/arm64,linux/amd64
@@ -37,7 +37,8 @@ build: init
 	cp sources/role.yaml $(IMAGE_NAME)/config/rbac/
 
 	# Fix memory on the manager.
-	sed -i"" -e "s/memory: 128Mi/memory: 512Mi/g" $(IMAGE_NAME)/config/manager/manager.yaml
+	sed -i.remove -e "s/memory: 128Mi/memory: 512Mi/g" $(IMAGE_NAME)/config/manager/manager.yaml && \
+		rm -f $(IMAGE_NAME)/config/manager/manager.yaml.remove
 	
 	# Community and OpenShift Operators
 	cd $(IMAGE_NAME); docker-buildx build --progress=plain \
@@ -48,8 +49,10 @@ build: init
 
 	# Dockerfiles
 	sed -e "s|%FROM%|$(shell grep ^FROM $(IMAGE_NAME)/Dockerfile)|" sources/operator.Dockerfile > $(IMAGE_NAME)/Dockerfile
-	sed -i "" -e "s/%SEMVER%/$(VERSION)/g" $(IMAGE_NAME)/Dockerfile
-	sed -i "" -e "s/^FROM.*//g" $(IMAGE_NAME)/bundle.Dockerfile
+	sed -i.remove -e "s/%SEMVER%/$(VERSION)/g" $(IMAGE_NAME)/Dockerfile && \
+		rm -f $(IMAGE_NAME)/Dockerfile.remove
+	sed -i.remove -e "s/^FROM.*//g" $(IMAGE_NAME)/bundle.Dockerfile && \
+		rm -f $(IMAGE_NAME)/bundle.Dockerfile.remove
 	cat sources/bundle.Dockerfile $(IMAGE_NAME)/bundle.Dockerfile \
 		> $(IMAGE_NAME)/bundle.Dockerfile-tmp && \
 		mv $(IMAGE_NAME)/bundle.Dockerfile-tmp $(IMAGE_NAME)/bundle.Dockerfile
@@ -77,3 +80,6 @@ community:
 	mv destinations/community-operators/current-version/manifests/hpe-csi-operator.clusterserviceversion.yaml \
 		destinations/community-operators/current-version/manifests/hpe-csi-operator.v$(VERSION).clusterserviceversion.yaml 
 		cp $(IMAGE_NAME)/bundle.Dockerfile destinations/community-operators/current-version/Dockerfile
+
+scorecard:
+	cd $(IMAGE_NAME); operator-sdk scorecard bundle
