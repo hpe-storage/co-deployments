@@ -2,7 +2,8 @@
 VERSION ?= 0.0.0
 REPO_NAME ?= quay.io/myrepo
 
-# Don't set these
+# Don't set these, preferably
+NAMESPACE ?= hpe-storage
 VANITY_NAME ?= hpe-csi-operator
 IMAGE_NAME ?= csi-driver-operator
 BUNDLE_NAME ?= csi-driver-operator-bundle
@@ -12,7 +13,7 @@ BUNDLE_CHANNELS ?= stable
 PLATFORMS ?= linux/arm64,linux/amd64
 
 clean:
-	operator-sdk cleanup $(VANITY_NAME)
+	operator-sdk cleanup $(VANITY_NAME) -n $(NAMESPACE)
 	test -f $(IMAGE_NAME) || rm -rf $(IMAGE_NAME)
 init: clean
 	# Creat temp space
@@ -64,10 +65,11 @@ build: init
 	cd $(IMAGE_NAME); make bundle-build bundle-push IMG="$(IMG)" BUNDLE_IMG="$(BUNDLE_IMG)" VERSION="$(VERSION)" USE_IMAGE_DIGESTS="true"
 deploy:
 	# Run bundle
-	cd $(IMAGE_NAME); operator-sdk run bundle $(BUNDLE_IMG)
+	- kubectl create ns $(NAMESPACE)
+	cd $(IMAGE_NAME); operator-sdk run bundle $(BUNDLE_IMG) -n $(NAMESPACE)
 
 	# Instantiate HPECSIDriver
-	kubectl apply -f $(IMAGE_NAME)/config/samples/storage_v1_hpecsidriver.yaml
+	kubectl apply -n $(NAMESPACE) -f $(IMAGE_NAME)/config/samples/storage_v1_hpecsidriver.yaml
 certified:
 	# Create certified-operators content
 	rm -rf destinations/certified-operators/current-version/*
@@ -82,4 +84,4 @@ community:
 		cp $(IMAGE_NAME)/bundle.Dockerfile destinations/community-operators/current-version/Dockerfile
 
 scorecard:
-	cd $(IMAGE_NAME); operator-sdk scorecard bundle
+	cd $(IMAGE_NAME); operator-sdk scorecard bundle -n $(NAMESPACE)

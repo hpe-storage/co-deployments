@@ -53,7 +53,7 @@ metadata:
     capabilities: Basic Install
     categories: Storage
     certified: "true"
-    createdAt: "2024-03-06T17:42:58Z"
+    createdAt: "2024-03-06T18:34:32Z"
     description: A Container Storage Interface (CSI) driver for HPE storage platforms. The CSI driver allows you to use HPE storage with your preferred container orchestrator.
     features.operators.openshift.io/cnf: "false"
     features.operators.openshift.io/cni: "false"
