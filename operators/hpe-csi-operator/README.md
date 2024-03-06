@@ -4,7 +4,7 @@ This README describes how to build an Operator from the HPE CSI Driver Helm char
 
 Source to get started with Operator Helm charts: https://sdk.operatorframework.io/docs/building-operators/helm/tutorial/
 
-## Testing on OLM
+## Testing and building for OLM
 
 **Caution:** This workflow most like only work on Mac.
 
@@ -50,15 +50,19 @@ kubectl get pods -A -w
 
 Iterate this until it looks OK to submit.
 
-## Testing on OpenShift
+## Testing and Building for OpenShift
 
 OpenShift does not require OLM pre-installed. Simply point to your OpenShift cluster and `make deploy`.
+
+Follow the same workflow as above, pointing to Red Hat's registry and set `BUILD_OCP=true` in the shell or as a `make argument.
 
 ## Submit a PR
 
 In `destinations` are the current shipping versions of the Operator. Those needs to be updated with the new version and included in the PR. Make sure the same environment variables are set from the Testing phase.
 
 ```
+make outputs
+export BUILD_OCP=true # Also ensure the make build was run with the correct registry!
 make outputs
 ```
 
