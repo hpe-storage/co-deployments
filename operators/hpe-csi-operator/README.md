@@ -4,6 +4,36 @@ This README describes how to build an Operator from the HPE CSI Driver Helm char
 
 Source to get started with Operator Helm charts: https://sdk.operatorframework.io/docs/building-operators/helm/tutorial/
 
+The workflow breaks down to this workflow once you have two clusters installed and OLM running in the Vanilla cluster.
+
+```
+|-------------------------------------| 
+| export KUBECONFIG=my-vanilla.yaml   |  |-----------------|
+| export VERSION=2.4.2                |  | make deploy     |  |----------------|
+| export REPO_NAME=quay.io/hpestorage |->| # Perform tests |->| make community |
+| make build                          |  |-----------------|  |-------o--------|
+|-------------------------------------|                               |
+                 o----------------------------------------------------o
+                 |
+|----------------V----------------------------------------| 
+| export KUBECONFIG=my-ocp.yaml                           |  |-----------------|
+| export VERSION=2.4.2                                    |  | make deploy     |  
+| export REPO_NAME=registry.connect.redhat.com/hpestorage |->| # Perform tests |
+| make build                                              |  |--------o--------|  
+|---------------------------------------------------------|           |
+                                                             |--------V--------|
+                                                             | make certified  |
+                                                             |--------o--------|
+                                                                      |       
+                                                      |---------------V--------|
+                                                      | Submit Pull Requests:  |
+                                                      | - co-deployments       |
+                                                      | - certified-operators  |
+                                                      | - community-operators  |
+                                                      |------------------------|
+
+```
+
 ## Testing and building for OLM
 
 **Caution:** This workflow most like only work on Mac.
@@ -50,20 +80,24 @@ kubectl get pods -A -w
 
 Iterate this until it looks OK to submit.
 
+```
+make community
+```
+
 ## Testing and Building for OpenShift
+
+Follow the same workflow as above, pointing to Red Hat's registry instead of Quay.
 
 OpenShift does not require OLM pre-installed. Simply point to your OpenShift cluster and `make deploy`.
 
-Follow the same workflow as above, pointing to Red Hat's registry and set `BUILD_OCP=true` in the shell or as a `make argument.
+Once it looks good, build the output.
 
-## Submit a PR
+```
+make certified
+```
+
+## Submitting a PR
 
 In `destinations` are the current shipping versions of the Operator. Those needs to be updated with the new version and included in the PR. Make sure the same environment variables are set from the Testing phase.
 
-```
-make outputs
-export BUILD_OCP=true # Also ensure the make build was run with the correct registry!
-make outputs
-```
-
-The respective Operator bundles are now updated. A `git diff` should reveal all the work for PR. Once PRs are approved in `co-deployments` and thoroughly tested. Once merged in `co-deployments`, each bundle can be submitted to each upstream.
+A `git diff` should reveal all the work for the PR. Once PRs are approved in `co-deployments` and thoroughly tested, each bundle can be submitted to each upstream.
