@@ -192,18 +192,12 @@ spec:
           - displayName: CSI controller nodeSelector
             description: "Sets a nodeSelector on the CSI controller Pod"
             path: controller.nodeSelector
-            x-descriptors:
-              - "urn:alm:descriptor:com.tectonic.ui:text"
           - displayName: CSI controller tolerations
             description: "Sets tolerations on the CSI controller Pod"
             path: controller.tolerations
-            x-descriptors:
-              - "urn:alm:descriptor:com.tectonic.ui:text"
           - displayName: CSI controller labels
             description: "Labels the CSI controller Pod"
             path: controller.labels
-            x-descriptors:
-              - "urn:alm:descriptor:com.tectonic.ui:text"
           - displayName: CSI controller affinity rules
             description: "Sets affinity rules on the CSI controller Pod"
             path: controller.affinity
@@ -215,18 +209,12 @@ spec:
           - displayName: CSI node driver nodeSelector
             description: "Sets a nodeSelector on the CSI node driver Pods"
             path: node.nodeSelector
-            x-descriptors:
-              - "urn:alm:descriptor:com.tectonic.ui:text"
           - displayName: CSI node driver tolerations
             description: "Sets tolerations on the CSI node driver Pods"
             path: node.tolerations
-            x-descriptors:
-              - "urn:alm:descriptor:com.tectonic.ui:text"
           - displayName: CSI node driver labels
             description: "Labels the CSI node driver Pods"
             path: node.labels
-            x-descriptors:
-              - "urn:alm:descriptor:com.tectonic.ui:text"
           - displayName: CSI node driver affinity rules
             description: "Sets affinity rules on the CSI node driver Pods"
             path: node.affinity
@@ -238,18 +226,12 @@ spec:
           - displayName: CSP nodeSelector
             description: "Sets a nodeSelector on the CSP Pods"
             path: csp.nodeSelector
-            x-descriptors:
-              - "urn:alm:descriptor:com.tectonic.ui:text"
           - displayName: CSP tolerations
             description: "Sets tolerations on the CSP Pods"
             path: csp.tolerations
-            x-descriptors:
-              - "urn:alm:descriptor:com.tectonic.ui:text"
           - displayName: CSP labels
             description: "Labels the CSP Pods"
             path: csp.labels
-            x-descriptors:
-              - "urn:alm:descriptor:com.tectonic.ui:text"
           - displayName: CSP affinity rules
             description: "Sets affinity rules on the CSP Pods"
             path: csp.affinity

@@ -15,6 +15,7 @@ PLATFORMS ?= linux/arm64,linux/amd64
 clean:
 	operator-sdk cleanup $(VANITY_NAME) -n $(NAMESPACE)
 	test -f $(IMAGE_NAME) || rm -rf $(IMAGE_NAME)
+
 init: clean
 	# Creat temp space
 	mkdir $(IMAGE_NAME)
@@ -27,6 +28,7 @@ init: clean
 		--kind HPECSIDriver \
 		--project-name hpe-csi-operator \
 		--helm-chart=../../../helm/charts/hpe-csi-driver
+
 build: init
 	# Populate with our sources
 	mkdir -p $(IMAGE_NAME)/config/manifests/bases
@@ -69,13 +71,15 @@ build: init
 		destinations/hpecsidriver-v${VERSION}-sample.yaml
 	cp -f $(IMAGE_NAME)/config/samples/storage_v1_hpecsidriver.yaml \
 		destinations/hpecsidriver-latest-sample.yaml
+
 deploy:
 	# Run bundle
 	- kubectl create ns $(NAMESPACE)
-	cd $(IMAGE_NAME); operator-sdk run bundle $(BUNDLE_IMG) -n $(NAMESPACE)
+	operator-sdk run bundle $(BUNDLE_IMG) -n $(NAMESPACE)
 
 	# Instantiate HPECSIDriver
 	kubectl apply -n $(NAMESPACE) -f destinations/hpecsidriver-v${VERSION}-sample.yaml
+
 certified:
 	# Create certified-operators content
 	rm -rf destinations/certified-operators/current-version/*
@@ -90,4 +94,4 @@ community:
 		cp -f $(IMAGE_NAME)/bundle.Dockerfile destinations/community-operators/current-version/Dockerfile
 
 scorecard:
-	cd $(IMAGE_NAME); operator-sdk scorecard bundle -n $(NAMESPACE)
+	operator-sdk scorecard $(BUNDLE_IMG) -n $(NAMESPACE)

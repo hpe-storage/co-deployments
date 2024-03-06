@@ -53,7 +53,7 @@ metadata:
     capabilities: Basic Install
     categories: Storage
     certified: "true"
-    createdAt: "2024-03-06T21:38:21Z"
+    createdAt: "2024-03-06T22:55:47Z"
     description: A Container Storage Interface (CSI) driver for HPE storage platforms. The CSI driver allows you to use HPE storage with your preferred container orchestrator.
     features.operators.openshift.io/cnf: "false"
     features.operators.openshift.io/cni: "false"
@@ -188,18 +188,12 @@ spec:
           - description: Sets a nodeSelector on the CSI controller Pod
             displayName: CSI controller nodeSelector
             path: controller.nodeSelector
-            x-descriptors:
-              - urn:alm:descriptor:com.tectonic.ui:text
           - description: Sets tolerations on the CSI controller Pod
             displayName: CSI controller tolerations
             path: controller.tolerations
-            x-descriptors:
-              - urn:alm:descriptor:com.tectonic.ui:text
           - description: Labels the CSI controller Pod
             displayName: CSI controller labels
             path: controller.labels
-            x-descriptors:
-              - urn:alm:descriptor:com.tectonic.ui:text
           - description: Sets affinity rules on the CSI controller Pod
             displayName: CSI controller affinity rules
             path: controller.affinity
@@ -211,18 +205,12 @@ spec:
           - description: Sets a nodeSelector on the CSI node driver Pods
             displayName: CSI node driver nodeSelector
             path: node.nodeSelector
-            x-descriptors:
-              - urn:alm:descriptor:com.tectonic.ui:text
           - description: Sets tolerations on the CSI node driver Pods
             displayName: CSI node driver tolerations
             path: node.tolerations
-            x-descriptors:
-              - urn:alm:descriptor:com.tectonic.ui:text
           - description: Labels the CSI node driver Pods
             displayName: CSI node driver labels
             path: node.labels
-            x-descriptors:
-              - urn:alm:descriptor:com.tectonic.ui:text
           - description: Sets affinity rules on the CSI node driver Pods
             displayName: CSI node driver affinity rules
             path: node.affinity
@@ -234,18 +222,12 @@ spec:
           - description: Sets a nodeSelector on the CSP Pods
             displayName: CSP nodeSelector
             path: csp.nodeSelector
-            x-descriptors:
-              - urn:alm:descriptor:com.tectonic.ui:text
           - description: Sets tolerations on the CSP Pods
             displayName: CSP tolerations
             path: csp.tolerations
-            x-descriptors:
-              - urn:alm:descriptor:com.tectonic.ui:text
           - description: Labels the CSP Pods
             displayName: CSP labels
             path: csp.labels
-            x-descriptors:
-              - urn:alm:descriptor:com.tectonic.ui:text
           - description: Sets affinity rules on the CSP Pods
             displayName: CSP affinity rules
             path: csp.affinity
