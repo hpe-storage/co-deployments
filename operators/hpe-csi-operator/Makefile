@@ -3,6 +3,9 @@ VERSION ?= 0.0.0
 REPO_NAME ?= quay.io/myrepo
 
 # Don't set these, preferably
+RH_REPO_NAME=registry.connect.redhat.com/hpestorage
+COMMUNITY_OUTPUT=destinations/community-operators/current-version
+CERTIFIED_OUTPUT=destinations/certified-operators/current-version
 NAMESPACE ?= hpe-storage
 VANITY_NAME ?= hpe-csi-operator
 IMAGE_NAME ?= csi-driver-operator
@@ -12,8 +15,12 @@ BUNDLE_IMG ?= $(REPO_NAME)/$(BUNDLE_NAME):v$(VERSION)
 BUNDLE_CHANNELS ?= stable
 PLATFORMS ?= linux/arm64,linux/amd64
 
-clean:
+undeploy:
+	# Remove Operator from cluster
 	operator-sdk cleanup $(VANITY_NAME) -n $(NAMESPACE)
+
+clean: undeploy
+	# Delete build
 	test -f $(IMAGE_NAME) || rm -rf $(IMAGE_NAME)
 
 init: clean
@@ -75,23 +82,26 @@ build: init
 deploy:
 	# Run bundle
 	- kubectl create ns $(NAMESPACE)
-	operator-sdk run bundle $(BUNDLE_IMG) -n $(NAMESPACE)
+	operator-sdk run bundle --timeout 5m $(BUNDLE_IMG) -n $(NAMESPACE)
 
 	# Instantiate HPECSIDriver
 	kubectl apply -n $(NAMESPACE) -f destinations/hpecsidriver-v${VERSION}-sample.yaml
 
 certified:
 	# Create certified-operators content
-	rm -rf destinations/certified-operators/current-version/*
-	cp -f -a $(IMAGE_NAME)/bundle/ destinations/certified-operators/current-version
+	rm -rf $(CERTIFIED_OUTPUT)/*
+	cp -f -a $(IMAGE_NAME)/bundle/ $(CERTIFIED_OUTPUT)
+	sed -i.remove "s|$(REPO_NAME)|$(RH_REPO_NAME)|g" \
+		$(CERTIFIED_OUTPUT)/manifests/hpe-csi-operator.clusterserviceversion.yaml && \
+		rm -f $(CERTIFIED_OUTPUT)/manifests/hpe-csi-operator.clusterserviceversion.yaml.remove
 
 community:
 	# Create community-operators content
-	rm -rf destinations/community-operators/current-version/*	
-	cp -f -a $(IMAGE_NAME)/bundle/ destinations/community-operators/current-version
-	mv destinations/community-operators/current-version/manifests/hpe-csi-operator.clusterserviceversion.yaml \
-		destinations/community-operators/current-version/manifests/hpe-csi-operator.v$(VERSION).clusterserviceversion.yaml 
-		cp -f $(IMAGE_NAME)/bundle.Dockerfile destinations/community-operators/current-version/Dockerfile
+	rm -rf $(COMMUNITY_OUTPUT)/*
+	cp -f -a $(IMAGE_NAME)/bundle/ $(COMMUNITY_OUTPUT)
+	mv $(COMMUNITY_OUTPUT)/manifests/hpe-csi-operator.clusterserviceversion.yaml \
+		$(COMMUNITY_OUTPUT)/manifests/hpe-csi-operator.v$(VERSION).clusterserviceversion.yaml
+		cp -f $(IMAGE_NAME)/bundle.Dockerfile $(COMMUNITY_OUTPUT)/Dockerfile
 
 scorecard:
 	operator-sdk scorecard $(BUNDLE_IMG) -n $(NAMESPACE)

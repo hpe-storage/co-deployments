@@ -16,24 +16,24 @@ The workflow breaks down to this flowchart once you have two clusters installed 
                                                                       |
                  o----------------------------------------------------o
                  |
-|----------------V----------------------------------------| 
-| export KUBECONFIG=my-ocp.yaml                           |  |-----------------|
-| export VERSION=2.4.2                                    |  | make deploy     |  
-| export REPO_NAME=registry.connect.redhat.com/hpestorage |->| # Perform tests |
-| make build                                              |  | make scorecard  |
-|-------------------------------------------------------- |  |--------o--------|  
-                                                                      |
-                                                             |--------V--------|
-                                                             | make certified  |
-                                                             |--------o--------|
-                                                                      |       
-                                                      |---------------V--------|
-                                                      | Submit Pull Requests:  |
-                                                      | - co-deployments       |
-                                                      | - certified-operators  |
-                                                      | - community-operators  |
-                                                      |------------------------|
-
+|----------------V--------------|  |-----------------|  |----------------|
+| export KUBECONFIG=my-ocp.yaml |->| make deploy     |->| make certified |
+|-------------------------------|  | # Perform tests |  |--------o-------|
+                                   |-----------------|           |
+                                                                 |
+            o----------------------------------------------------o
+            |
+|-----------V----------|  |---------|
+| Submit Pull Request: |->| Reviews |
+| - co-deployments     |  |--o---o--|
+|----------------------|     |   |   |-----------------------|
+                             |   o-->| Red Hat Certification |
+            o----------------o       |-----------o-----------|
+            |                                    |
+|-----------V------------|           |-----------V-----------|
+| Submit Pull Request    |           | Submit Pull Request   |
+| - community-operators  |           | - certified-operators |
+|------------------------|           |-----------------------|
 ```
 
 ## Testing and building for OLM
@@ -138,6 +138,6 @@ OpenShift:
 export VERSION=2.4.1
 oc create ns hpe-storage
 oc apply -f https://scod.hpedev.io/partners/redhat_openshift/examples/scc/hpe-csi-scc.yaml
-operator-sdk run bundle -n hpe-storage registry.connect.redhat.com/hpestorage/csi-driver-operator-bundle:v${VERSION}
+operator-sdk run bundle -n hpe-storage quay.io/hpestorage/csi-driver-operator-bundle:v${VERSION}
 kubectl apply -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/operators/hpe-csi-operator/destinations/hpecsidriver-v${VERSION}-sample.yaml
 ```

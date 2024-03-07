@@ -53,7 +53,7 @@ metadata:
     capabilities: Basic Install
     categories: Storage
     certified: "true"
-    createdAt: "2024-03-06T22:55:47Z"
+    createdAt: "2024-03-07T07:15:27Z"
     description: A Container Storage Interface (CSI) driver for HPE storage platforms. The CSI driver allows you to use HPE storage with your preferred container orchestrator.
     features.operators.openshift.io/cnf: "false"
     features.operators.openshift.io/cni: "false"
@@ -65,13 +65,13 @@ metadata:
     features.operators.openshift.io/token-auth-aws: "false"
     features.operators.openshift.io/token-auth-azure: "false"
     features.operators.openshift.io/token-auth-gcp: "false"
-    olm.skipRange: '>=1.0.0 <0.0.0'
+    olm.skipRange: '>=1.0.0 <2.4.1'
     operatorhub.io/ui-metadata-max-k8s-version: "1.29"
     operators.operatorframework.io/builder: operator-sdk-v1.34.1
     operators.operatorframework.io/project_layout: helm.sdk.operatorframework.io/v1
     repository: https://github.com/hpe-storage/co-deployments
     support: HPE
-  name: hpe-csi-operator.v0.0.0
+  name: hpe-csi-operator.v2.4.1
   namespace: placeholder
 spec:
   apiservicedefinitions: {}
@@ -695,7 +695,7 @@ spec:
                       - --metrics-bind-address=127.0.0.1:8080
                       - --leader-elect
                       - --leader-election-id=hpe-csi-operator
-                    image: quay.io/datamattsson/csi-driver-operator@sha256:7f320d28a5845c2cb74bba6bcb906cea8c9b9115875594a978085bd9c48e3ae6
+                    image: registry.connect.redhat.com/hpestorage/csi-driver-operator@sha256:7f320d28a5845c2cb74bba6bcb906cea8c9b9115875594a978085bd9c48e3ae6
                     livenessProbe:
                       httpGet:
                         path: /healthz
@@ -787,7 +787,7 @@ spec:
   relatedImages:
     - image: gcr.io/kubebuilder/kube-rbac-proxy@sha256:d8cc6ffb98190e8dd403bfe67ddcb454e6127d32b87acc237b3e5240f70a20fb
       name: kube-rbac-proxy
-    - image: quay.io/datamattsson/csi-driver-operator@sha256:7f320d28a5845c2cb74bba6bcb906cea8c9b9115875594a978085bd9c48e3ae6
+    - image: registry.connect.redhat.com/hpestorage/csi-driver-operator@sha256:7f320d28a5845c2cb74bba6bcb906cea8c9b9115875594a978085bd9c48e3ae6
       name: manager
   selector: {}
-  version: 0.0.0
+  version: 2.4.1
