@@ -53,7 +53,7 @@ metadata:
     capabilities: Basic Install
     categories: Storage
     certified: "true"
-    createdAt: "2024-03-07T07:15:27Z"
+    createdAt: "2024-03-08T17:13:18Z"
     description: A Container Storage Interface (CSI) driver for HPE storage platforms. The CSI driver allows you to use HPE storage with your preferred container orchestrator.
     features.operators.openshift.io/cnf: "false"
     features.operators.openshift.io/cni: "false"
@@ -695,7 +695,7 @@ spec:
                       - --metrics-bind-address=127.0.0.1:8080
                       - --leader-elect
                       - --leader-election-id=hpe-csi-operator
-                    image: registry.connect.redhat.com/hpestorage/csi-driver-operator@sha256:7f320d28a5845c2cb74bba6bcb906cea8c9b9115875594a978085bd9c48e3ae6
+                    image: registry.connect.redhat.com/hpestorage/csi-driver-operator@sha256:4bbdd80230f7aa8eb2a2b4bcabaec2c4ab0583d68bd19b115007becdf5f38ed4
                     livenessProbe:
                       httpGet:
                         path: /healthz
@@ -787,7 +787,7 @@ spec:
   relatedImages:
     - image: gcr.io/kubebuilder/kube-rbac-proxy@sha256:d8cc6ffb98190e8dd403bfe67ddcb454e6127d32b87acc237b3e5240f70a20fb
       name: kube-rbac-proxy
-    - image: registry.connect.redhat.com/hpestorage/csi-driver-operator@sha256:7f320d28a5845c2cb74bba6bcb906cea8c9b9115875594a978085bd9c48e3ae6
+    - image: registry.connect.redhat.com/hpestorage/csi-driver-operator@sha256:4bbdd80230f7aa8eb2a2b4bcabaec2c4ab0583d68bd19b115007becdf5f38ed4
       name: manager
   selector: {}
   version: 2.4.1

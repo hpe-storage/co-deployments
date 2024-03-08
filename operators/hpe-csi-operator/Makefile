@@ -50,17 +50,20 @@ build: init
 	sed -i.remove -e "s/memory: 128Mi/memory: 512Mi/g" $(IMAGE_NAME)/config/manager/manager.yaml && \
 		rm -f $(IMAGE_NAME)/config/manager/manager.yaml.remove
 	
+	# Dockerfile for operator
+	sed -e "s|%FROM%|$(shell grep ^FROM $(IMAGE_NAME)/Dockerfile)|" sources/operator.Dockerfile > $(IMAGE_NAME)/Dockerfile
+	sed -i.remove -e "s/%SEMVER%/$(VERSION)/g" $(IMAGE_NAME)/Dockerfile && \
+		rm -f $(IMAGE_NAME)/Dockerfile.remove
+	cp -f sources/LICENSE $(IMAGE_NAME)/LICENSE
+
 	# Community and OpenShift Operators
-	cd $(IMAGE_NAME); docker-buildx build --progress=plain \
+	cd $(IMAGE_NAME); docker-buildx build --progress=plain --no-cache \
 	--provenance=false --push --platform=$(PLATFORMS) --tag ${IMG} -f Dockerfile .
 
 	# Create bundle manifests
 	cd $(IMAGE_NAME); make bundle CHANNELS=$(BUNDLE_CHANNELS) IMG="$(IMG)" BUNDLE_IMG="$(BUNDLE_IMG)" VERSION="$(VERSION)" USE_IMAGE_DIGESTS="true"
 
-	# Dockerfiles
-	sed -e "s|%FROM%|$(shell grep ^FROM $(IMAGE_NAME)/Dockerfile)|" sources/operator.Dockerfile > $(IMAGE_NAME)/Dockerfile
-	sed -i.remove -e "s/%SEMVER%/$(VERSION)/g" $(IMAGE_NAME)/Dockerfile && \
-		rm -f $(IMAGE_NAME)/Dockerfile.remove
+	# Dockerfile for bundle
 	sed -i.remove -e "s/^FROM.*//g" $(IMAGE_NAME)/bundle.Dockerfile && \
 		rm -f $(IMAGE_NAME)/bundle.Dockerfile.remove
 	cat sources/bundle.Dockerfile $(IMAGE_NAME)/bundle.Dockerfile \
@@ -90,7 +93,7 @@ deploy:
 certified:
 	# Create certified-operators content
 	rm -rf $(CERTIFIED_OUTPUT)/*
-	cp -f -a $(IMAGE_NAME)/bundle/ $(CERTIFIED_OUTPUT)
+	cp -f -a $(IMAGE_NAME)/bundle/* $(CERTIFIED_OUTPUT)
 	sed -i.remove "s|$(REPO_NAME)|$(RH_REPO_NAME)|g" \
 		$(CERTIFIED_OUTPUT)/manifests/hpe-csi-operator.clusterserviceversion.yaml && \
 		rm -f $(CERTIFIED_OUTPUT)/manifests/hpe-csi-operator.clusterserviceversion.yaml.remove
@@ -98,7 +101,7 @@ certified:
 community:
 	# Create community-operators content
 	rm -rf $(COMMUNITY_OUTPUT)/*
-	cp -f -a $(IMAGE_NAME)/bundle/ $(COMMUNITY_OUTPUT)
+	cp -f -a $(IMAGE_NAME)/bundle/* $(COMMUNITY_OUTPUT)
 	mv $(COMMUNITY_OUTPUT)/manifests/hpe-csi-operator.clusterserviceversion.yaml \
 		$(COMMUNITY_OUTPUT)/manifests/hpe-csi-operator.v$(VERSION).clusterserviceversion.yaml
 		cp -f $(IMAGE_NAME)/bundle.Dockerfile $(COMMUNITY_OUTPUT)/Dockerfile
