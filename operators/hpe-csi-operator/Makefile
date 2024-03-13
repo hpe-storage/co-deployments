@@ -82,6 +82,9 @@ build: init
 	cp -f $(IMAGE_NAME)/config/samples/storage_v1_hpecsidriver.yaml \
 		destinations/hpecsidriver-latest-sample.yaml
 
+        # Validate bundle
+	operator-sdk bundle validate $(BUNDLE_IMG) --select-optional suite=operatorframework
+
 deploy:
 	# Run bundle
 	- kubectl create ns $(NAMESPACE)
