@@ -134,6 +134,18 @@ spec:
               value: unix:///var/lib/csi/sockets/pluginproxy/csi.sock
             - name: LOG_LEVEL
               value: {{ .Values.logLevel }}
+            {{ if .Values.iscsi.chapSecretName }}
+            - name: CHAP_USER
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.iscsi.chapSecretName }}
+                  key: chapUser
+            - name: CHAP_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name:  {{ .Values.iscsi.chapSecretName }}
+                  key: chapPassword
+            {{- end }}
           imagePullPolicy: {{ .Values.imagePullPolicy | quote }}
           volumeMounts:
             - name: socket-dir

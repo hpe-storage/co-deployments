@@ -16,8 +16,7 @@
             "disableNodeConfiguration": false,
             "imagePullPolicy": "IfNotPresent",
             "iscsi": {
-                "chapUser": "",
-                "chapPassword": ""
+                "chapSecretName": ""
             },
             "logLevel": "info",
             "registry": "quay.io",
@@ -139,27 +138,17 @@
             "type": "object",
             "default": 
                 {
-                    "chapUser": "",
-                    "chapPassword": ""
+                    "chapSecretName": ""
                 },
             "required": [
-                "chapUser",
-                "chapPassword"
+                "chapSecretName"
             ],
             "properties": {
-                "chapUser": {
-                    "$id": "#/properties/iscsi/properties/chapUser",
-                    "title": "CHAP username",
+                "chapSecretName": {
+                    "$id": "#/properties/iscsi/properties/chapSecretName",
+                    "title": "CHAP secret name",
                     "type": "string",
                     "default": ""
-                },
-                "chapPassword": {
-                    "$id": "#/properties/iscsi/properties/chapPassword",
-                    "title": "CHAP password",
-                    "description": "Between 12 and 16 characters",
-                    "type": "string",
-                    "default": "",
-                    "pattern": "^$|^[a-zA-Z0-9+_)(*^%$#@!]{12,16}$"
                 }
             },
             "additionalProperties": false

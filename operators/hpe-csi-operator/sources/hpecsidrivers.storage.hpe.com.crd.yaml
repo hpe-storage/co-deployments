@@ -71,13 +71,10 @@ spec:
               iscsi:
                 description: Iscsi parameters to be configured
                 properties:
-                  chapPassword:
-                    type: string
-                  chapUser:
+                  chapSecretName:
                     type: string
                 required:
-                - chapPassword
-                - chapUser
+                - chapSecretName
                 type: object
               kubeletRootDir:
                 description: Kubelet root directory path
