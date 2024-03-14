@@ -37,12 +37,6 @@ spec:
             spec:
               description: "spec defines the desired characteristics of a HPE nodeinfo requested by a user."
               properties:
-                chapPassword:
-                  description: "The CHAP Password"
-                  type: string
-                chapUser:
-                  description: "The CHAP User Name"
-                  type: string
                 iqns:
                   description: "List of IQNs configured on the node."
                   items:
@@ -180,6 +174,16 @@ spec:
               value: unix:///var/lib/csi/sockets/pluginproxy/csi.sock
             - name: LOG_LEVEL
               value: trace
+            - name: CHAP_USER
+              valueFrom:
+                secretKeyRef:
+                  name: chap-secret
+                  key: chapUser
+            - name: CHAP_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: chap-secret
+                  key: chapPassword
           imagePullPolicy: "IfNotPresent"
           volumeMounts:
             - name: socket-dir
@@ -846,9 +850,15 @@ spec:
                 fieldRef:
                   fieldPath: spec.nodeName
             - name: CHAP_USER
-              value: ""
+              valueFrom:
+                secretKeyRef:
+                  name: chap-secret
+                  key: chapUser
             - name: CHAP_PASSWORD
-              value: ""
+              valueFrom:
+                secretKeyRef:
+                  name: chap-secret
+                  key: chapPassword
             - name: DISABLE_NODE_CONFORMANCE
               value: "false"
             - name: DISABLE_NODE_CONFIGURATION
