@@ -1,6 +1,8 @@
 apiVersion: operators.coreos.com/v1alpha1
 kind: ClusterServiceVersion
 metadata:
+  name: hpe-csi-operator.v0.0.0
+  namespace: placeholder
   annotations:
     features.operators.openshift.io/csi: "true"
     features.operators.openshift.io/disconnected: "false"
@@ -12,7 +14,6 @@ metadata:
     features.operators.openshift.io/token-auth-gcp: "false"
     features.operators.openshift.io/cnf: "false"
     features.operators.openshift.io/cni: "false"
-    operatorhub.io/ui-metadata-max-k8s-version: "1.29"
     olm.skipRange: ">=1.0.0 <%SEMVER%"
     alm-examples: '[]'
     capabilities: Basic Install
@@ -24,24 +25,17 @@ metadata:
     support: "HPE"
     repository: "https://github.com/hpe-storage/co-deployments"
     containerImage: %IMG%
-  name: hpe-csi-operator.v0.0.0
-  namespace: placeholder
+    # Update >>>
+    operatorhub.io/ui-metadata-max-k8s-version: "1.29"
 spec:
+  minKubeVersion: 1.25.0
+  replaces: hpe-csi-operator.v2.4.0
+  # <<< for each new release
   apiservicedefinitions: {}
-  customresourcedefinitions: {}
-  description: Bar
-  displayName: Foo
-  icon:
-  - base64data: ""
-    mediatype: ""
   install:
     spec:
       deployments: null
     strategy: ""
-  maturity: stable
-  provider:
-    name: HPE
-  version: 0.0.0
   displayName: HPE CSI Operator for Kubernetes
   description: >
     The HPE CSI Operator for Kubernetes deploys the HPE CSI Driver on
@@ -60,7 +54,6 @@ spec:
 
   maturity: stable
   version: %SEMVER%
-  minKubeVersion: 1.25.0
   keywords:
     - HPE
     - HPE CSI
