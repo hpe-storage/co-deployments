@@ -1,0 +1,502 @@
+---
+#############################################
+#######  HPE Snapshot Group Class CRD  ######
+#############################################
+
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  name: snapshotgroupclasses.storage.hpe.com
+spec:
+  conversion:
+    strategy: None
+  group: storage.hpe.com
+  names:
+    kind: SnapshotGroupClass
+    listKind: SnapshotGroupClassList
+    plural: snapshotgroupclasses
+    singular: snapshotgroupclass
+  scope: Cluster
+  versions:
+  - name: v1
+    schema:
+      openAPIV3Schema:
+        description: SnapshotGroupClass specifies parameters that a underlying
+          storage system uses when creating a volumegroup snapshot. A specific SnapshotGroupClass
+          is used by specifying its name in a VolumeGroupSnapshot object. SnapshotGroupClasses
+          are non-namespaced
+        properties:
+          apiVersion:
+            description: APIVersion defines the versioned schema of this representation
+              of an object.
+            type: string
+          deletionPolicy:
+            description: deletionPolicy determines whether a SnapshotGroupContent
+              created through the SnapshotGroupClass should be deleted when its
+              bound SnapshotGroup is deleted. Supported values are "Retain" and
+              "Delete". "Retain" means that the SnapshotGroupContent and its physical
+              snapshotGroup on underlying storage system are kept. "Delete" means that
+              the SnapshotGroupContent and its physical snapshotGroup on underlying
+              storage system are deleted. Required.
+            enum:
+            - Delete
+            - Retain
+            type: string
+          snapshotter:
+            description: snapshotter is the name of the storage driver that handles this
+              SnapshotGroupClass. Required.
+            type: string
+          kind:
+            description: Kind is a string value representing the REST resource
+              this object represents.
+            type: string
+          parameters:
+            additionalProperties:
+                type: string
+            description: parameters is a key-value map with storage driver specific
+              parameters for creating snapshotGroups. These values are opaque to Kubernetes.
+            type: object
+        required:
+        - deletionPolicy
+        - snapshotter
+        type: object
+    served: true
+    storage: true
+
+--- 
+#############################################
+###### HPE Snapshot Group Contents CRD ######
+#############################################
+
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  name: snapshotgroupcontents.storage.hpe.com
+spec:
+  conversion:
+    strategy: None
+  group: storage.hpe.com
+  names:
+    kind: SnapshotGroupContent
+    listKind: SnapshotGroupContentList
+    plural: snapshotgroupcontents
+    singular: snapshotgroupcontent
+  scope: Cluster
+  versions:
+  - name: v1
+    schema:
+      openAPIV3Schema:
+        description: SnapshotGroupContent represents the actual "on-disk" snapshotGroup
+          object in the underlying storage system
+        properties:
+          apiVersion:
+            description: 'APIVersion defines the versioned schema of this representation
+              of an object. Servers should convert recognized schemas to the latest
+              internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#resources'
+            type: string
+          kind:
+            description: 'Kind is a string value representing the REST resource
+              this object represents. Servers may infer this from the endpoint the
+              client submits requests to. Cannot be updated. In CamelCase. More
+              info: https://git.k8s.io/community/contributors/devel/api-conventions.md#types-kinds'
+            type: string
+          spec:
+            description: spec defines properties of a SnapshotGroupContent created
+              by the underlying storage system. Required.
+            properties:
+              deletionPolicy:
+                description: deletionPolicy determines whether this SnapshotGroupContent
+                  and its physical snapshotgroup on the underlying storage system should
+                  be deleted when its bound SnapshotGroup is deleted. Supported
+                  values are "Retain" and "Delete". "Retain" means that the SnapshotGroupContent
+                  and its physical snapshotGroup on underlying storage system are kept.
+                  "Delete" means that the SnapshotGroupContent and its physical
+                  snapshotGroup on underlying storage system are deleted.
+                  Required.
+                enum:
+                - Delete
+                - Retain
+                type: string
+              source:
+                description: source specifies from where a snapshotGroup will be created.Required.
+                properties:
+                  snapshotGroupHandle:
+                    description: snapshotGroupHandle specifies the snapshotGroup Id
+                      of a pre-existing snapshotGroup on the underlying storage system.
+                      This field is immutable.
+                    type: string
+                type: object
+              snapshotGroupClassName:
+                description: name of the SnapshotGroupClass to which this snapshotGroup belongs.
+                type: string
+              snapshotGroupRef:
+                description: snapshotGroupRef specifies the SnapshotGroup object
+                  to which this SnapshotGroupContent object is bound. SnapshotGroup.Spec.SnapshotGroupContentName
+                  field must reference to this SnapshotGroupContent's name for
+                  the bidirectional binding to be valid.
+                  Required.
+                properties:
+                  apiVersion:
+                    description: API version of the referent.
+                    type: string
+                  kind:
+                    description: 'Kind of the referent. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#types-kinds'
+                    type: string
+                  name:
+                    description: 'Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names'
+                    type: string
+                  namespace:
+                    description: 'Namespace of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/'
+                    type: string
+                  resourceVersion:
+                    description: 'Specific resourceVersion to which this reference
+                      is made, if any. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#concurrency-control-and-consistency'
+                    type: string
+                  uid:
+                    description: 'UID of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#uids'
+                    type: string
+                type: object
+              volumeSnapshotContentNames:
+                description: list of volumeSnapshotContentNames associated with this snapshotGroups
+                type: array
+                items: 
+                  type: string
+            required:
+            - deletionPolicy
+            - source
+            - snapshotGroupClassName
+            type: object
+        required:
+        - spec
+        type: object
+    served: true
+    storage: true
+
+---
+#############################################
+########### HPE Snapshot Group CRD ##########
+#############################################
+
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  name: snapshotgroups.storage.hpe.com
+spec:
+  conversion:
+    strategy: None
+  group: storage.hpe.com
+  names:
+    kind: SnapshotGroup
+    listKind: SnapshotGroupList
+    plural: snapshotgroups
+    singular: snapshotgroup
+  scope: Namespaced
+  versions:
+  - name: v1
+    schema:
+      openAPIV3Schema:
+        description: SnapshotGroup is a user's request for creating a snapshotgroup
+        properties:
+          apiVersion:
+            description: APIVersion defines the versioned schema of this representation
+              of an object.
+            type: string
+          kind:
+            description: 'Kind is a string value representing the REST resource
+              this object represents'
+            type: string
+          spec:
+            description: spec defines the desired characteristics of a snapshotGroup
+              requested by a user.
+              Required.
+            properties:
+              source:
+                description: source specifies where a snapshotGroup will be created.
+                  This field is immutable after creation. Required.
+                properties:
+                  kind:
+                    description: kind of the source (VolumeGroup) is the only supported one.
+                    type: string
+                  apiGroup:
+                    description:  apiGroup of the source. Current supported is storage.hpe.com
+                    type: string
+                  name:
+                    description: name specifies the volumeGroupName of the VolumeGroup object in the same namespace as the SnapshotGroup object where the snapshotGroup should be dynamically taken from. This field is immutable.
+                    type: string
+                type: object
+              volumeSnapshotClassName:
+                description: name of the volumeSnapshotClass to create pre-provisioned snapshots
+                type: string
+              snapshotGroupClassName:
+                description: snapshotGroupClassName is the name of the SnapshotGroupClass requested by the SnapshotGroup.
+                type: string
+              snapshotGroupContentName:
+                description: snapshotGroupContentName is the name of the snapshotGroupContent the snapshotGroup is bound.
+                type: string
+            required:
+            - source
+            - volumeSnapshotClassName
+            - snapshotGroupClassName
+            type: object
+          status:
+            description: status represents the current information of a snapshotGroup.
+            properties:
+              creationTime:
+                description: creationTime is the timestamp when the point-in-time
+                  snapshotGroup is taken by the underlying storage system.
+                format: date-time
+                type: string
+              phase:
+                description: the state of the snapshotgroup
+                enum:
+                - Pending
+                - Ready
+                - Failed
+                type: string
+            type: object
+        required:
+        - spec
+        type: object
+    served: true
+    storage: true
+
+--- 
+#############################################
+#######  HPE Volume Group Class CRD  ########
+#############################################
+
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  name: volumegroupclasses.storage.hpe.com
+spec:
+  conversion:
+    strategy: None
+  group: storage.hpe.com
+  names:
+    kind: VolumeGroupClass
+    listKind: VolumeGroupClassList
+    plural: volumegroupclasses
+    singular: volumegroupclass
+  scope: Cluster
+  versions:
+  - name: v1
+    schema:
+        openAPIV3Schema:
+          description: VolumeGroupClass specifies parameters that a underlying
+            storage system uses when creating a volumegroup. A specific VolumeGroupClass
+            is used by specifying its name in a VolumeGroup object. VolumeGroupClasses
+            are non-namespaced
+          properties:
+            apiVersion:
+              description: APIVersion defines the versioned schema of this representation
+                of an object.
+              type: string
+            deletionPolicy:
+              description: deletionPolicy determines whether a VolumeGroupContent
+                created through the VolumeGroupClass should be deleted when its
+                bound VolumeGroup is deleted. Supported values are "Retain" and
+                "Delete". "Retain" means that the VolumeGroupContent and its physical
+                volumeGroup on underlying storage system are kept. "Delete" means that
+                the VolumeGroupContent and its physical volumeGroup on underlying
+                storage system are deleted. Required.
+              enum:
+              - Delete
+              - Retain
+              type: string
+            provisioner:
+              description: provisioner is the name of the storage driver that handles this
+                VolumeGroupClass. Required.
+              type: string
+            kind:
+              description: Kind is a string value representing the REST resource
+                this object represents.
+              type: string
+            parameters:
+              additionalProperties:
+                  type: string
+              description: parameters is a key-value map with storage driver specific
+                parameters for creating volumeGroups. These values are opaque to Kubernetes.
+              type: object
+          required:
+          - deletionPolicy
+          - provisioner
+          type: object
+    served: true
+    storage: true
+
+--- 
+#############################################
+#####  HPE Volume Group Contents CRD  #######
+#############################################
+
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  name: volumegroupcontents.storage.hpe.com
+spec:
+  conversion:
+    strategy: None
+  group: storage.hpe.com
+  names:
+    kind: VolumeGroupContent
+    listKind: VolumeGroupContentList
+    plural: volumegroupcontents
+    singular: volumegroupcontent
+  scope: Cluster
+  versions:
+  - name: v1
+    schema:
+        openAPIV3Schema:
+          description: VolumeGroupContent represents the actual "on-disk" volumeGroup
+            object in the underlying storage system
+          properties:
+            apiVersion:
+              description: APIVersion defines the versioned schema of this representation
+                of an object.
+              type: string
+            kind:
+              description: Kind is a string value representing the REST resource
+                this object represents.
+              type: string
+            spec:
+              description: spec defines properties of a VolumeGroupContent created
+                by the underlying storage system. Required.
+              properties:
+                deletionPolicy:
+                  description: deletionPolicy determines whether this VolumeGroupContent
+                    and its physical volumegroup on the underlying storage system should
+                    be deleted when its bound VolumeGroup is deleted. Supported
+                    values are "Retain" and "Delete". "Retain" means that the VolumeGroupContent
+                    and its physical volumeGroup on underlying storage system are kept.
+                    "Delete" means that the VolumeGroupContent and its physical
+                    volumeGroup on underlying storage system are deleted.
+                    Required.
+                  enum:
+                  - Delete
+                  - Retain
+                  type: string
+                source:
+                  description: source specifies from where a volumeGroup will be created.Required.
+                  properties:
+                    volumeGroupHandle:
+                      description: volumeGroupHandle specifies the volumeGroup Id
+                        of a pre-existing volumeGroup on the underlying storage system.
+                        This field is immutable.
+                      type: string
+                  type: object
+                volumeGroupClassName:
+                  description: name of the VolumeGroupClass to which this volumeGroup belongs.
+                  type: string
+                volumeGroupRef:
+                  description: volumeGroupRef specifies the VolumeGroup object
+                    to which this VolumeGroupContent object is bound. VolumeGroup.Spec.VolumeGroupContentName
+                    field must reference to this VolumeGroupContent's name for
+                    the bidirectional binding to be valid.
+                    Required.
+                  properties:
+                    apiVersion:
+                      description: API version of the referent.
+                      type: string
+                    kind:
+                      description: 'Kind of the referent. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#types-kinds'
+                      type: string
+                    name:
+                      description: 'Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names'
+                      type: string
+                    namespace:
+                      description: 'Namespace of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/'
+                      type: string
+                    resourceVersion:
+                      description: 'Specific resourceVersion to which this reference
+                        is made, if any. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#concurrency-control-and-consistency'
+                      type: string
+                    uid:
+                      description: 'UID of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#uids'
+                      type: string
+                  type: object
+              required:
+              - deletionPolicy
+              - source
+              - volumeGroupClassName
+              type: object
+          required:
+          - spec
+          type: object
+    served: true
+    storage: true
+
+--- 
+#############################################
+########  HPE Volume Groups CRD  ############
+#############################################
+
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  name: volumegroups.storage.hpe.com
+spec:
+  conversion:
+    strategy: None
+  group: storage.hpe.com
+  names:
+    kind: VolumeGroup
+    listKind: VolumeGroupList
+    plural: volumegroups
+    singular: volumegroup
+  scope: Namespaced
+  versions:
+  - name: v1
+    schema:
+      openAPIV3Schema:
+        description: VolumeGroup is a user's request for creating a volumegroup
+        properties:
+          apiVersion:
+            description: APIVersion defines the versioned schema of this representation
+              of an object.
+            type: string
+          kind:
+            description: 'Kind is a string value representing the REST resource
+              this object represents'
+            type: string
+          spec:
+            description: spec defines the desired characteristics of a volumeGroup
+              requested by a user.
+              Required.
+            properties:
+              volumeGroupClassName:
+                description: name of the volumeGroupClassName to create volumeGroups
+                type: string
+              persistentVolumeClaimNames:
+                description: persistentVolumeClaimNames are the name of the PVC associated with this volumeGroup.
+                type: array
+                items:
+                  type: string
+              volumeGroupContentName:
+                description: volumeGroupContentName is the name of the volumeGroupContent to which the volumeGroup is bound.
+                type: string
+            required:
+            - volumeGroupClassName
+            type: object
+          status:
+            description: status represents the current information of a volumeGroup.
+            properties:
+              creationTime:
+                description: creationTime is the timestamp when the point-in-time
+                  volumeGroup is taken by the underlying storage system.
+                format: date-time
+                type: string
+              phase:
+                description: the state of the volumegroup
+                enum:
+                - Pending
+                - Ready
+                - Failed
+                type: string
+            type: object
+        required:
+        - spec
+        type: object
+    served: true
+    storage: true
+
