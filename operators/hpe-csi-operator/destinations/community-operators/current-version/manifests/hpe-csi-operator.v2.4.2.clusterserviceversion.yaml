@@ -53,8 +53,8 @@ metadata:
     capabilities: Basic Install
     categories: Storage
     certified: "true"
-    containerImage: quay.io/hpestorage/csi-driver-operator@sha256:4bbdd80230f7aa8eb2a2b4bcabaec2c4ab0583d68bd19b115007becdf5f38ed4
-    createdAt: "2024-03-08T17:13:18Z"
+    containerImage: quay.io/hpestorage/csi-driver-operator@sha256:0bf28949ea78579f8deccaa968a97e62d5d0901185640c911be3c24fa04f17c9
+    createdAt: "2024-04-09T19:42:44Z"
     description: A Container Storage Interface (CSI) driver for HPE storage platforms. The CSI driver allows you to use HPE storage with your preferred container orchestrator.
     features.operators.openshift.io/cnf: "false"
     features.operators.openshift.io/cni: "false"
@@ -66,13 +66,13 @@ metadata:
     features.operators.openshift.io/token-auth-aws: "false"
     features.operators.openshift.io/token-auth-azure: "false"
     features.operators.openshift.io/token-auth-gcp: "false"
-    olm.skipRange: '>=1.0.0 <2.4.1'
+    olm.skipRange: '>=1.0.0 <2.4.2'
     operatorhub.io/ui-metadata-max-k8s-version: "1.29"
     operators.operatorframework.io/builder: operator-sdk-v1.34.1
     operators.operatorframework.io/project_layout: helm.sdk.operatorframework.io/v1
     repository: https://github.com/hpe-storage/co-deployments
     support: HPE
-  name: hpe-csi-operator.v2.4.1
+  name: hpe-csi-operator.v2.4.2
   namespace: placeholder
 spec:
   apiservicedefinitions: {}
@@ -696,7 +696,7 @@ spec:
                       - --metrics-bind-address=127.0.0.1:8080
                       - --leader-elect
                       - --leader-election-id=hpe-csi-operator
-                    image: quay.io/hpestorage/csi-driver-operator@sha256:4bbdd80230f7aa8eb2a2b4bcabaec2c4ab0583d68bd19b115007becdf5f38ed4
+                    image: quay.io/hpestorage/csi-driver-operator@sha256:0bf28949ea78579f8deccaa968a97e62d5d0901185640c911be3c24fa04f17c9
                     livenessProbe:
                       httpGet:
                         path: /healthz
@@ -788,9 +788,10 @@ spec:
   relatedImages:
     - image: gcr.io/kubebuilder/kube-rbac-proxy@sha256:d8cc6ffb98190e8dd403bfe67ddcb454e6127d32b87acc237b3e5240f70a20fb
       name: kube-rbac-proxy
-    - image: quay.io/hpestorage/csi-driver-operator@sha256:4bbdd80230f7aa8eb2a2b4bcabaec2c4ab0583d68bd19b115007becdf5f38ed4
+    - image: quay.io/hpestorage/csi-driver-operator@sha256:0bf28949ea78579f8deccaa968a97e62d5d0901185640c911be3c24fa04f17c9
       name: manager
-    - image: quay.io/hpestorage/csi-driver-operator@sha256:4bbdd80230f7aa8eb2a2b4bcabaec2c4ab0583d68bd19b115007becdf5f38ed4
-      name: csi-driver-operator-4bbdd80230f7aa8eb2a2b4bcabaec2c4ab0583d68bd19b115007becdf5f38ed4-annotation
+    - image: quay.io/hpestorage/csi-driver-operator@sha256:0bf28949ea78579f8deccaa968a97e62d5d0901185640c911be3c24fa04f17c9
+      name: csi-driver-operator-0bf28949ea78579f8deccaa968a97e62d5d0901185640c911be3c24fa04f17c9-annotation
+  replaces: hpe-csi-operator.v2.4.1
   selector: {}
-  version: 2.4.1
+  version: 2.4.2
