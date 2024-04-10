@@ -34,11 +34,7 @@ spec:
             value: "1"
       initContainers:
         - name: hpe-csi-node-init
-          {{- if .Values.registry }}
-          image: {{ .Values.registry }}/hpestorage/csi-driver:v2.4.2
-          {{- else }}
-          image: quay.io/hpestorage/csi-driver:v2.4.2
-          {{- end}}
+          image: {{ .Values.images.csiNodeDriver | quote }}
           args: ['--node-init']
           volumeMounts:
             - name: root-dir
@@ -62,13 +58,7 @@ spec:
             allowPrivilegeEscalation: true
       containers:
         - name: csi-node-driver-registrar
-          {{- if and (.Values.registry) (eq .Values.registry "quay.io") }}
-          image: registry.k8s.io/sig-storage/csi-node-driver-registrar:v2.10.0
-          {{- else if .Values.registry }}
-          image: {{ .Values.registry }}/sig-storage/csi-node-driver-registrar:v2.10.0
-          {{- else }}
-          image: registry.k8s.io/sig-storage/csi-node-driver-registrar:v2.10.0
-          {{- end}}
+          image: {{ .Values.images.csiNodeDriverRegistrar | quote }}
           args:
             - "--csi-address=$(ADDRESS)"
             - "--kubelet-registration-path=$(DRIVER_REG_SOCK_PATH)"
@@ -96,11 +86,7 @@ spec:
             - name: registration-dir
               mountPath: /registration
         - name: hpe-csi-driver
-          {{- if .Values.registry }}
-          image: {{ .Values.registry }}/hpestorage/csi-driver:v2.4.2
-          {{- else }}
-          image: quay.io/hpestorage/csi-driver:v2.4.2
-          {{- end }}
+          image: {{ .Values.images.csiNodeDriver | quote }}
           args :
             - "--endpoint=$(CSI_ENDPOINT)"
             - "--node-service"

@@ -41,7 +41,6 @@ The following table lists the configurable parameters of the chart and their def
 | iscsi.chapUser            | Username for iSCSI CHAP authentication.                                | ""               |
 | iscsi.chapPassword        | Password for iSCSI CHAP authentication.                                | ""               |
 | logLevel                  | Log level. Can be one of `info`, `debug`, `trace`, `warn` and `error`. | info             |
-| registry                  | Registry to pull HPE CSI Driver container images from.                 | quay.io          |
 | kubeletRootDir            | The kubelet root directory path.                                       | /var/lib/kubelet |
 | controller.labels         | Additional labels for HPE CSI Driver controller Pods.                  | {}               |
 | controller.nodeSelector   | Node labels for HPE CSI Driver controller Pods assignment.             | {}               |
@@ -55,6 +54,7 @@ The following table lists the configurable parameters of the chart and their def
 | node.nodeSelector         | Node labels for HPE CSI Driver node Pods assignment.                   | {}               |
 | node.affinity             | Affinity rules for the HPE CSI Driver node Pods.                       | {}               |
 | node.tolerations          | Node taints to tolerate for the HPE CSI Driver node Pods.              | []               |
+| images                    | Key/value pairs of HPE CSI Driver runtime images.                      | From values.yaml |
 
 `*` = Disabling node conformance and configuration may prevent the CSI driver from functioning properly. See the [manual node configuration](https://scod.hpedev.io/csi_driver/operations.html#manual_node_configuration) section on SCOD to understand the consequences.
 
