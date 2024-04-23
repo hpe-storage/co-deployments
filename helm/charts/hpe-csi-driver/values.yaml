@@ -27,9 +27,6 @@ iscsi:
 # Log level for all hpe-csi-driver components
 logLevel: "info"
 
-# Registry prefix for hpe-csi-driver images
-registry: "quay.io"
-
 # Kubelet root directory path
 kubeletRootDir: "/var/lib/kubelet/"
 
@@ -48,7 +45,6 @@ controller:
   tolerations: []
 
   affinity: {}
-
 
 csp:
 
@@ -75,3 +71,20 @@ node:
   tolerations: []
 
   affinity: {}
+
+# Release images
+images:
+  csiNodeDriver: quay.io/hpestorage/csi-driver:v2.4.2
+  csiControllerDriver: quay.io/hpestorage/csi-driver:v2.4.2
+  nimbleCSP: quay.io/hpestorage/alletra-6000-and-nimble-csp:v2.4.1
+  primera3parCSP: quay.io/hpestorage/alletra-9000-primera-and-3par-csp:v2.4.2
+  nfsProvisioner: quay.io/hpestorage/nfs-provisioner:v3.0.4
+  csiExtensions: quay.io/hpestorage/csi-extensions:v1.2.6
+  csiVolumeGroupProvisioner: quay.io/hpestorage/volume-group-provisioner:v1.0.5
+  csiVolumeGroupSnapshotter: quay.io/hpestorage/volume-group-snapshotter:v1.0.5
+  csiVolumeMutator: quay.io/hpestorage/volume-mutator:v1.3.5
+  csiAttacher: registry.k8s.io/sig-storage/csi-attacher:v4.5.0
+  csiNodeDriverRegistrar: registry.k8s.io/sig-storage/csi-node-driver-registrar:v2.10.0
+  csiProvisioner: registry.k8s.io/sig-storage/csi-provisioner:v4.0.0
+  csiResizer: registry.k8s.io/sig-storage/csi-resizer:v1.9.3
+  csiSnapshotter: registry.k8s.io/sig-storage/csi-snapshotter:v6.3.3

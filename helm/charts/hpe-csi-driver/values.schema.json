@@ -20,7 +20,6 @@
                 "chapPassword": ""
             },
             "logLevel": "info",
-            "registry": "quay.io",
             "kubeletRootDir": "/var/lib/kubelet/",
             "disableNodeGetVolumeStats": false,
             "csp": {
@@ -40,8 +39,8 @@
                 "tolerations": [],
                 "affinity": {},
                 "labels": {}
-            }
-
+            },
+	    "images": {}
         },
     "required": [
         "disable",
@@ -50,12 +49,12 @@
         "imagePullPolicy",
         "iscsi",
         "logLevel",
-        "registry",
         "kubeletRootDir",
         "disableNodeGetVolumeStats",
         "csp",
         "controller",
-        "node"
+        "node",
+	"images"
     ],
     "properties": {
         "disable": {
@@ -171,13 +170,6 @@
             "default": "info",
             "enum": [ "info", "debug", "trace", "warn", "error" ]
         },
-        "registry": {
-            "$id": "#/properties/registry",
-            "title": "Pull images from a different registry than default",
-            "description": "SIG Storage images needs to be mirrored from k8s.gcr.io to this registry if this parameter is changed.",
-            "type": "string",
-            "default": "quay.io"
-        },
         "kubeletRootDir": {
             "$id": "#/properties/kubeletRootDir",
             "title": "Kubelet root directory",
@@ -218,7 +210,7 @@
             "labels": {
                 "$id": "#/properties/csp/properties/labels",
                 "title": "labels",
-                "description": "labels.",
+                "description": "Labels to apply to the CSPs.",
                 "type": "object",
                 "default": {}
             }
@@ -249,7 +241,7 @@
             "labels": {
                 "$id": "#/properties/controller/properties/labels",
                 "title": "labels",
-                "description": "labels.",
+                "description": "Labels to apply to the controller driver.",
                 "type": "object",
                 "default": {}
             }
@@ -280,11 +272,105 @@
             "labels": {
                 "$id": "#/properties/node/properties/labels",
                 "title": "labels",
-                "description": "labels.",
+                "description": "Labels to apply to the node driver.",
                 "type": "object",
                 "default": {}
             }
 
+        },
+        "images": {
+            "$id": "#/properties/images",
+            "title": "images",
+            "description": "Runtime images.",
+            "type": "object",
+            "required": [
+                "csiNodeDriver",
+                "csiControllerDriver",
+                "nimbleCSP",
+                "primera3parCSP",
+                "nfsProvisioner",
+                "csiExtensions",
+                "csiVolumeGroupProvisioner",
+                "csiVolumeGroupSnapshotter",
+                "csiVolumeMutator",
+                "csiAttacher",
+                "csiNodeDriverRegistrar",
+                "csiProvisioner",
+                "csiResizer",
+                "csiSnapshotter"
+            ],
+            "properties": {
+                "csiNodeDriver": {
+                    "$id": "#/properties/images/properties/csiNodeDriver",
+                    "title": "CSI Node Driver",
+                    "type": "string"
+                },
+                "csiControllerDriver": {
+                    "$id": "#/properties/images/properties/csiControllerDriver",
+                    "title": "CSI Controller Driver",
+                    "type": "string"
+                },
+                "nimbleCSP": {
+                    "$id": "#/properties/images/properties/nimbleCSP",
+                    "title": "Nimble and Alletra 5000/6000 CSP",
+                    "type": "string"
+                },
+                "primera3parCSP": {
+                    "$id": "#/properties/images/properties/primera3parCSP",
+                    "title": "3PAR, Primera, Alletra 9000 and Alletra Storage MP CSP",
+                    "type": "string"
+                },
+                "nfsProvisioner": {
+                    "$id": "#/properties/images/properties/nfsProvisioner",
+                    "title": "NFS Server Provisioner",
+                    "type": "string"
+                },
+                "csiExtensions": {
+                    "$id": "#/properties/images/properties/csiExtensions",
+                    "title": "HPE CSI Extensions",
+                    "type": "string"
+                },
+                "csiVolumeGroupProvisioner": {
+                    "$id": "#/properties/images/properties/csiVolumeGroupProvisioner",
+                    "title": "HPE CSI Volume Group Provisioner",
+                    "type": "string"
+                },
+                "csiVolumeGroupSnapshotter": {
+                    "$id": "#/properties/images/properties/csiVolumeGroupSnapshotter",
+                    "title": "HPE CSI Volume Group Snapshotter",
+                    "type": "string"
+                },
+                "csiVolumeMutator": {
+                    "$id": "#/properties/images/properties/csiVolumeMutator",
+                    "title": "HPE CSI Volume Mutator",
+                    "type": "string"
+                },
+                "csiAttacher": {
+                    "$id": "#/properties/images/properties/csiAttacher",
+                    "title": "SIG Storage CSI Attacher",
+                    "type": "string"
+                },
+                "csiNodeDriverRegistrar": {
+                    "$id": "#/properties/images/properties/csiNodeDriverRegistrar",
+                    "title": "SIG Storage CSI Driver Registrar",
+                    "type": "string"
+                },
+                "csiProvisioner": {
+                    "$id": "#/properties/images/properties/csiProvisioner",
+                    "title": "SIG Storage CSI Provisioner",
+                    "type": "string"
+                },
+                "csiResizer": {
+                    "$id": "#/properties/images/properties/csiResizer",
+                    "title": "SIG Storage CSI Resizer",
+                    "type": "string"
+                },
+                "csiSnapshotter": {
+                    "$id": "#/properties/images/properties/csiSnapshotter",
+                    "title": "SIG Storage CSI Snapshotter",
+                    "type": "string"
+                }
+	    }
         },
         "global": {}
     },
