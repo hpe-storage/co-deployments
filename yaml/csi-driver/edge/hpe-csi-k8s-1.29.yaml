@@ -174,16 +174,6 @@ spec:
               value: unix:///var/lib/csi/sockets/pluginproxy/csi.sock
             - name: LOG_LEVEL
               value: trace
-            - name: CHAP_USER
-              valueFrom:
-                secretKeyRef:
-                  name: chap-secret
-                  key: chapUser
-            - name: CHAP_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: chap-secret
-                  key: chapPassword
           imagePullPolicy: "IfNotPresent"
           volumeMounts:
             - name: socket-dir
@@ -849,16 +839,6 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: spec.nodeName
-            - name: CHAP_USER
-              valueFrom:
-                secretKeyRef:
-                  name: chap-secret
-                  key: chapUser
-            - name: CHAP_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: chap-secret
-                  key: chapPassword
             - name: DISABLE_NODE_CONFORMANCE
               value: "false"
             - name: DISABLE_NODE_CONFIGURATION

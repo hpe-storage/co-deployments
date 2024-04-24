@@ -114,18 +114,6 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: spec.nodeName
-            {{ if .Values.iscsi.chapSecretName }}
-            - name: CHAP_USER
-              valueFrom:
-                secretKeyRef:
-                  name: {{ .Values.iscsi.chapSecretName }}
-                  key: chapUser
-            - name: CHAP_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name:  {{ .Values.iscsi.chapSecretName }}
-                  key: chapPassword
-            {{- end }}
             {{ if .Values.disableNodeConformance -}}
             - name: DISABLE_NODE_CONFORMANCE
               value: "true"

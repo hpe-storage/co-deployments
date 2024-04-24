@@ -15,9 +15,6 @@
             "disableNodeConformance": false,
             "disableNodeConfiguration": false,
             "imagePullPolicy": "IfNotPresent",
-            "iscsi": {
-                "chapSecretName": ""
-            },
             "logLevel": "info",
             "registry": "quay.io",
             "kubeletRootDir": "/var/lib/kubelet/",
@@ -131,27 +128,6 @@
             "type": "string",
             "default": "IfNotPresent",
             "enum": [ "Always", "IfNotPresent", "Never" ]
-        },
-        "iscsi": {
-            "$id": "#/properties/iscsi",
-            "title": "iSCSI CHAP credentials",
-            "type": "object",
-            "default": 
-                {
-                    "chapSecretName": ""
-                },
-            "required": [
-                "chapSecretName"
-            ],
-            "properties": {
-                "chapSecretName": {
-                    "$id": "#/properties/iscsi/properties/chapSecretName",
-                    "title": "CHAP secret name",
-                    "type": "string",
-                    "default": ""
-                }
-            },
-            "additionalProperties": false
         },
         "logLevel": {
             "$id": "#/properties/logLevel",
