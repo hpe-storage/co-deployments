@@ -7,33 +7,34 @@ Tutorial to get started with Operator Helm charts: https://sdk.operatorframework
 The workflow breaks down to this flowchart once you have two clusters installed and OLM running in the Vanilla cluster.
 
 ```
-|-------------------------------------| 
-| export KUBECONFIG=my-vanilla.yaml   |  |-----------------|
-| export VERSION=2.4.2                |  | make deploy     |  |----------------|
-| export REPO_NAME=quay.io/hpestorage |->| # Perform tests |->| make community |
-| make build                          |  | make scorecard  |  |-------o--------|
-|------------------------------------ |  |-----------------|          |
-                                                                      |
-                 o----------------------------------------------------o
+o-------------------------------------o
+| export KUBECONFIG=vanilla.yaml      |  o--------------------------o
+| export VERSION=2.4.2                |->| make community-deploy    |
+| export REPO_NAME=quay.io/hpestorage |  | # Perform tests          |
+| make community                      |  | make community-scorecard |
+o-------------------------------------o  o------------v-------------o
+                                                      |
+                 o------------------------------------o
                  |
-|----------------V--------------|  |-----------------|  |----------------|
-| export KUBECONFIG=my-ocp.yaml |->| make deploy     |->| make certified |
-|-------------------------------|  | # Perform tests |  |--------o-------|
-                                   |-----------------|           |
-                                                                 |
-            o----------------------------------------------------o
+o----------------V-----------o  o--------------------------o
+| export KUBECONFIG=ocp.yaml |->| make certified-deploy    |
+| make certified             |  | # Perform tests          |
+o----------------------------o  | make certified-scorecard |
+                                o------------v-------------o
+                                             | 
+            o--------------------------------o
             |
-|-----------V----------|  |---------|
+o-----------V----------o  o---------o
 | Submit Pull Request: |->| Reviews |
-| - co-deployments     |  |--o---o--|
-|----------------------|     |   |   |-----------------------|
+| - co-deployments     |  o--v---v--o
+o----------------------o     |   |   o-----------------------o
                              |   o-->| Red Hat Certification |
-            o----------------o       |-----------o-----------|
+            o----------------o       o-----------v-----------o
             |                                    |
-|-----------V------------|           |-----------V-----------|
+o-----------V------------o           o-----------V-----------o
 | Submit Pull Request    |           | Submit Pull Request   |
 | - community-operators  |           | - certified-operators |
-|------------------------|           |-----------------------|
+o------------------------o           o-----------------------o
 ```
 
 ## Testing and building for OLM
@@ -55,6 +56,7 @@ export REPO_NAME=quay.io/datamattsson
 Next, what version are we iterating on? Make sure to follow Semantic Versioning.
 
 ```
+# Do not include the initial 'v' used in image tags
 export VERSION=0.0.0
 ```
 
@@ -63,31 +65,25 @@ If you're making changes to update the Operators. Patrol all the files in `sourc
 Next, build the Operator.
 
 ```
-make build
+make community
 ```
 
 If there are no errors, go ahead and deploy the Operator on your test cluster.
 
 ```
-make deploy
+make community-deploy
 ```
 
 You should be able to see the Operator come to life including a fresh install of the HPE CSI Driver.
 
 ```
-kubectl get pods -A -w
+kubectl get pods -n hpe-storage -w
 ```
 
 Iterate this until it looks OK to submit. For good measure, generate the scorecard and make sure all tests pass.
 
 ```
-make scorecard
-```
-
-Create the bundle for community-operators.
-
-```
-make community
+make comminity-scorecard
 ```
 
 ## Testing and Building for OpenShift
@@ -97,15 +93,9 @@ Follow the same workflow as above, pointing to Red Hat's registry instead of Qua
 OpenShift does not require OLM pre-installed. Simply point to your OpenShift cluster run:
 
 ```
-make build
-make deploy
-make scorecard
-```
-
-Once it looks good, build the output.
-
-```
 make certified
+make certified-deploy
+make certified-scorecard
 ```
 
 ## Submitting a PR
@@ -118,7 +108,7 @@ A `git diff` should reveal all the work for the PR. Once PRs are approved in `co
 
 ## External Testing
 
-For testing and experimentation only the `operator-sdk` binary is required besides the cluster access with `kubectl` or `oc`.
+For testing and experimentation only, the `operator-sdk` binary is required besides the cluster access with `kubectl` or `oc`.
 
 In a typical test scenario, these are the steps for each of the supported platforms on a blank cluster.
 
@@ -138,8 +128,8 @@ OpenShift:
 export VERSION=2.4.1
 oc create ns hpe-storage
 oc apply -f https://scod.hpedev.io/partners/redhat_openshift/examples/scc/hpe-csi-scc.yaml
-operator-sdk run bundle -n hpe-storage quay.io/hpestorage/csi-driver-operator-bundle:v${VERSION}
-kubectl apply -n hpe-storage -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/operators/hpe-csi-operator/destinations/hpecsidriver-v${VERSION}-sample.yaml
+operator-sdk run bundle -n hpe-storage quay.io/hpestorage/csi-driver-operator-bundle-ocp:v${VERSION}
+oc apply -n hpe-storage -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/operators/hpe-csi-operator/destinations/hpecsidriver-v${VERSION}-sample.yaml
 ```
 
 To cleanup or re-deploy (both Kubernetes and OpenShift):
