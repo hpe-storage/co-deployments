@@ -38,8 +38,6 @@ The following table lists the configurable parameters of the chart and their def
 | disableNodeConfiguration  | Disables node conformance and configuration.`*`                        | false            |
 | disableNodeGetVolumeStats | Disable NodeGetVolumeStats call to CSI driver.                         | false            |
 | imagePullPolicy           | Image pull policy (`Always`, `IfNotPresent`, `Never`).                 | IfNotPresent     |
-| iscsi.chapUser            | Username for iSCSI CHAP authentication.                                | ""               |
-| iscsi.chapPassword        | Password for iSCSI CHAP authentication.                                | ""               |
 | logLevel                  | Log level. Can be one of `info`, `debug`, `trace`, `warn` and `error`. | info             |
 | kubeletRootDir            | The kubelet root directory path.                                       | /var/lib/kubelet |
 | controller.labels         | Additional labels for HPE CSI Driver controller Pods.                  | {}               |
@@ -59,16 +57,6 @@ The following table lists the configurable parameters of the chart and their def
 `*` = Disabling node conformance and configuration may prevent the CSI driver from functioning properly. See the [manual node configuration](https://scod.hpedev.io/csi_driver/operations.html#manual_node_configuration) section on SCOD to understand the consequences.
 
 It's recommended to create a [values.yaml](https://github.com/hpe-storage/co-deployments/blob/master/helm/values/csi-driver) file from the corresponding release of the chart and edit it to fit the environment the chart is being deployed to. Download and edit [a sample file](https://github.com/hpe-storage/co-deployments/blob/master/helm/values/csi-driver).
-
-These are the bare minimum required parameters for a successful deployment to an iSCSI environment if CHAP authentication is required.
-
-```
-iscsi:
-  chapUser: "<username>"
-  chapPassword: "<password>"
-```
-
-Tweak any additional parameters to suit the environment or as prescribed by HPE.
 
 ### Installing the chart
 
@@ -151,8 +139,7 @@ In some cases it's more practical to provide the local configuration via the `he
 
 ```
 helm install my-hpe-csi-driver hpe-storage/hpe-csi-driver -n hpe-storage \
-  --set iscsi.chapUsername=admin \
-  --set iscsi.chapPassword=xxxxxxxx
+  --set logLevel=info
 ```
 
 ## Using persistent storage with Kubernetes

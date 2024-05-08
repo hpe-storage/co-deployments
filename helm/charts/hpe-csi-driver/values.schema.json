@@ -15,10 +15,6 @@
             "disableNodeConformance": false,
             "disableNodeConfiguration": false,
             "imagePullPolicy": "IfNotPresent",
-            "iscsi": {
-                "chapUser": "",
-                "chapPassword": ""
-            },
             "logLevel": "info",
             "kubeletRootDir": "/var/lib/kubelet/",
             "disableNodeGetVolumeStats": false,
@@ -131,37 +127,6 @@
             "type": "string",
             "default": "IfNotPresent",
             "enum": [ "Always", "IfNotPresent", "Never" ]
-        },
-        "iscsi": {
-            "$id": "#/properties/iscsi",
-            "title": "iSCSI CHAP credentials",
-            "type": "object",
-            "default": 
-                {
-                    "chapUser": "",
-                    "chapPassword": ""
-                },
-            "required": [
-                "chapUser",
-                "chapPassword"
-            ],
-            "properties": {
-                "chapUser": {
-                    "$id": "#/properties/iscsi/properties/chapUser",
-                    "title": "CHAP username",
-                    "type": "string",
-                    "default": ""
-                },
-                "chapPassword": {
-                    "$id": "#/properties/iscsi/properties/chapPassword",
-                    "title": "CHAP password",
-                    "description": "Between 12 and 16 characters",
-                    "type": "string",
-                    "default": "",
-                    "pattern": "^$|^[a-zA-Z0-9+_)(*^%$#@!]{12,16}$"
-                }
-            },
-            "additionalProperties": false
         },
         "logLevel": {
             "$id": "#/properties/logLevel",

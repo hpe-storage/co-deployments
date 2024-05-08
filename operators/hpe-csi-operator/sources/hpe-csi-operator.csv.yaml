@@ -155,19 +155,6 @@ spec:
             path: disableNodeGetVolumeStats
             x-descriptors:
               - "urn:alm:descriptor:com.tectonic.ui:booleanSwitch"
-          - displayName: iSCSI Configuration
-            description: "iSCSI Configuration"
-            path: iscsi
-          - displayName: iSCSI CHAP username
-            description: "Username for iSCSI CHAP authentication"
-            path: iscsi.chapUsername
-            x-descriptors:
-              - "urn:alm:descriptor:com.tectonic.ui:text"
-          - displayName: iSCSI CHAP password
-            description: "Password for iSCSI CHAP authentication"
-            path: iscsi.chapPassword
-            x-descriptors:
-              - "urn:alm:descriptor:com.tectonic.ui:password"
           - displayName: Registry
             description: "Registry for HPE CSI Driver (quay.io)"
             path: registry

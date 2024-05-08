@@ -100,12 +100,6 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: spec.nodeName
-            {{ if and .Values.iscsi.chapUser .Values.iscsi.chapPassword }}
-            - name: CHAP_USER
-              value: {{ .Values.iscsi.chapUser }}
-            - name: CHAP_PASSWORD
-              value: {{ .Values.iscsi.chapPassword }}
-            {{- end }}
             {{ if .Values.disableNodeConformance -}}
             - name: DISABLE_NODE_CONFORMANCE
               value: "true"

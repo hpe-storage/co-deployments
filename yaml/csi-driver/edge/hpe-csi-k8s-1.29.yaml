@@ -37,12 +37,6 @@ spec:
             spec:
               description: "spec defines the desired characteristics of a HPE nodeinfo requested by a user."
               properties:
-                chapPassword:
-                  description: "The CHAP Password"
-                  type: string
-                chapUser:
-                  description: "The CHAP User Name"
-                  type: string
                 iqns:
                   description: "List of IQNs configured on the node."
                   items:
@@ -845,10 +839,6 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: spec.nodeName
-            - name: CHAP_USER
-              value: ""
-            - name: CHAP_PASSWORD
-              value: ""
             - name: DISABLE_NODE_CONFORMANCE
               value: "false"
             - name: DISABLE_NODE_CONFIGURATION
