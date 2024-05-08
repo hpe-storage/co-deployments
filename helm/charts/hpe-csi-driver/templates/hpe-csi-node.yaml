@@ -35,7 +35,10 @@ spec:
       initContainers:
         - name: hpe-csi-node-init
           image: {{ .Values.images.csiNodeDriver | quote }}
-          args: ['--node-init']
+          args:
+            - --node-init
+            - --endpoint=$(CSI_ENDPOINT)
+            - --flavor=kubernetes
           volumeMounts:
             - name: root-dir
               mountPath: /host
@@ -50,6 +53,12 @@ spec:
               mountPath: /run/systemd
             - name: etcsystemd
               mountPath: /etc/systemd/system
+            - name: plugin-dir
+              mountPath: /csi
+            - name: pods-mount-dir
+              mountPath: /var/lib/kubelet
+            - name: log-dir
+              mountPath: /var/log
           imagePullPolicy: {{ .Values.imagePullPolicy | quote }}
           securityContext:
             privileged: true
@@ -91,6 +100,8 @@ spec:
             - "--endpoint=$(CSI_ENDPOINT)"
             - "--node-service"
             - "--flavor=kubernetes"
+            - "--node-monitor"
+            - "--node-monitor-interval=30"
           env:
             - name: CSI_ENDPOINT
               value: unix:///csi/csi.sock

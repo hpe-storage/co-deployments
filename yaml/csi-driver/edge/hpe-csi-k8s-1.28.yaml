@@ -169,7 +169,7 @@ spec:
             - name: socket-dir
               mountPath: /var/lib/csi/sockets/pluginproxy/
         - name: hpe-csi-driver
-          image: quay.io/hpestorage/csi-driver:v2.4.1-beta2
+          image: quay.io/hpestorage/csi-driver:v2.5.0-beta
           args:
             - "--endpoint=$(CSI_ENDPOINT)"
             - "--flavor=kubernetes"
@@ -791,8 +791,11 @@ spec:
             value: "1"
       initContainers:
         - name: hpe-csi-node-init
-          image: quay.io/hpestorage/csi-driver:v2.4.1-beta2
-          args: ['--node-init']
+          image: quay.io/hpestorage/csi-driver:v2.5.0-beta
+          args:
+            - --node-init
+            - --endpoint=$(CSI_ENDPOINT)
+            - --flavor=kubernetes
           volumeMounts:
             - name: root-dir
               mountPath: /host
@@ -807,6 +810,12 @@ spec:
               mountPath: /run/systemd
             - name: etcsystemd
               mountPath: /etc/systemd/system
+            - name: plugin-dir
+              mountPath: /csi
+            - name: pods-mount-dir
+              mountPath: /var/lib/kubelet
+            - name: log-dir
+              mountPath: /var/log
           imagePullPolicy: "IfNotPresent"
           securityContext:
             privileged: true
@@ -831,11 +840,13 @@ spec:
             - name: registration-dir
               mountPath: /registration
         - name: hpe-csi-driver
-          image: quay.io/hpestorage/csi-driver:v2.4.1-beta2
+          image: quay.io/hpestorage/csi-driver:v2.5.0-beta
           args:
             - "--endpoint=$(CSI_ENDPOINT)"
             - "--node-service"
             - "--flavor=kubernetes"
+            - "--node-monitor"
+            - "--node-monitor-interval=30"
           env:
             - name: CSI_ENDPOINT
               value: unix:///csi/csi.sock

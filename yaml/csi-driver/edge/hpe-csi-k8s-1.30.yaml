@@ -1,5 +1,5 @@
 # Configuration to deploy the HPE CSI driver compatible with
-# Kubernetes = v1.26
+# Kubernetes = v1.30
 #
 # example usage: kubectl create -f <this_file>
 
@@ -37,12 +37,6 @@ spec:
             spec:
               description: "spec defines the desired characteristics of a HPE nodeinfo requested by a user."
               properties:
-                chapPassword:
-                  description: "The CHAP Password"
-                  type: string
-                chapUser:
-                  description: "The CHAP User Name"
-                  type: string
                 iqns:
                   description: "List of IQNs configured on the node."
                   items:
@@ -792,7 +786,7 @@ spec:
       initContainers:
         - name: hpe-csi-node-init
           image: quay.io/hpestorage/csi-driver:v2.5.0-beta
-          args:
+          args: 
             - --node-init
             - --endpoint=$(CSI_ENDPOINT)
             - --flavor=kubernetes
@@ -810,6 +804,12 @@ spec:
               mountPath: /run/systemd
             - name: etcsystemd
               mountPath: /etc/systemd/system
+            - name: plugin-dir
+              mountPath: /csi
+            - name: pods-mount-dir
+              mountPath: /var/lib/kubelet
+            - name: log-dir
+              mountPath: /var/log
             - name: plugin-dir
               mountPath: /csi
             - name: pods-mount-dir
@@ -856,10 +856,6 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: spec.nodeName
-            - name: CHAP_USER
-              value: ""
-            - name: CHAP_PASSWORD
-              value: ""
             - name: DISABLE_NODE_CONFORMANCE
               value: "false"
             - name: DISABLE_NODE_CONFIGURATION
