@@ -44,19 +44,24 @@ The following table lists the configurable parameters of the chart and their def
 | controller.nodeSelector   | Node labels for HPE CSI Driver controller Pods assignment.             | {}               |
 | controller.affinity       | Affinity rules for the HPE CSI Driver controller Pods.                 | {}               |
 | controller.tolerations    | Node taints to tolerate for the HPE CSI Driver controller Pods.        | []               |
+| controller.resources      | A resource block with requests and limits for controller containers.   | From values.yaml |
 | csp.labels                | Additional labels for CSP Pods.                                        | {}               |
 | csp.nodeSelector          | Node labels for CSP Pods assignment.                                   | {}               |
 | csp.affinity              | Affinity rules for the CSP Pods.                                       | {}               |
 | csp.tolerations           | Node taints to tolerate for the CSP Pods.                              | []               |
+| csp.resources             | A resource block with requests and limits for CSP containers.          | From values.yaml |
 | node.labels               | Additional labels for HPE CSI Driver node Pods.                        | {}               |
 | node.nodeSelector         | Node labels for HPE CSI Driver node Pods assignment.                   | {}               |
 | node.affinity             | Affinity rules for the HPE CSI Driver node Pods.                       | {}               |
 | node.tolerations          | Node taints to tolerate for the HPE CSI Driver node Pods.              | []               |
+| node.resources            | A resource block with requests and limits for node containers.         | From values.yaml |
 | images                    | Key/value pairs of HPE CSI Driver runtime images.                      | From values.yaml |
 
 `*` = Disabling node conformance and configuration may prevent the CSI driver from functioning properly. See the [manual node configuration](https://scod.hpedev.io/csi_driver/operations.html#manual_node_configuration) section on SCOD to understand the consequences.
 
 It's recommended to create a [values.yaml](https://github.com/hpe-storage/co-deployments/blob/master/helm/values/csi-driver) file from the corresponding release of the chart and edit it to fit the environment the chart is being deployed to. Download and edit [a sample file](https://github.com/hpe-storage/co-deployments/blob/master/helm/values/csi-driver).
+
+**Note:** The chart is installed with all components and features enabled using reasonable defaults if no tweaks are needed.
 
 ### Installing the chart
 
@@ -133,15 +138,6 @@ helm uninstall my-hpe-csi-driver -n hpe-storage
 
 **Note**: Due to a limitation in Helm, CRDs are not deleted as part of the chart uninstall.
 
-### Alternative install method
-
-In some cases it's more practical to provide the local configuration via the `helm` CLI directly. Specify each parameter using the `--set key=value[,key=value]` argument to `helm install`. These will take precedence over entries in [values.yaml](https://github.com/hpe-storage/co-deployments/blob/master/helm/values/csi-driver). For example:
-
-```
-helm install my-hpe-csi-driver hpe-storage/hpe-csi-driver -n hpe-storage \
-  --set logLevel=info
-```
-
 ## Using persistent storage with Kubernetes
 
 Enable dynamic provisioning of persistent storage by creating a `StorageClass` API object that references a `Secret` which maps to a supported HPE primary storage backend. Refer to the [HPE CSI Driver for Kubernetes](https://scod.hpedev.io/csi_driver/deployment.html#add_a_hpe_storage_backend) documentation on SCOD. Also, it's helpful to be familiar with [persistent storage concepts](https://kubernetes.io/docs/concepts/storage/volumes/) in Kubernetes prior to deploying stateful workloads.
@@ -154,7 +150,7 @@ Formal support statements for each HPE supported CSP is [available on SCOD](http
 
 ## Community
 
-Please file any issues, questions or feature requests you may have [here](https://github.com/hpe-storage/co-deployments/issues) (do not use this facility for support inquiries of your HPE storage product, see [SCOD](https://scod.hpedev.io/legal/support) for support). You may also join our Slack community to chat with HPE folks close to this project. We hang out in `#NimbleStorage`, `#3par-primera`, and `#Kubernetes`. Sign up at [slack.hpedev.io](https://slack.hpedev.io/) and login at [hpedev.slack.com](https://hpedev.slack.com/)
+Please file any issues, questions or feature requests you may have [here](https://github.com/hpe-storage/co-deployments/issues) (do not use this facility for support inquiries of your HPE storage product, see [SCOD](https://scod.hpedev.io/legal/support) for support). You may also join our Slack community to chat with HPE folks close to this project. We hang out in `#Alletra`, `#NimbleStorage`, `#3par-primera`, and `#Kubernetes`. Sign up at [slack.hpedev.io](https://slack.hpedev.io/) and login at [hpedev.slack.com](https://hpedev.slack.com/)
 
 ## Contributing
 

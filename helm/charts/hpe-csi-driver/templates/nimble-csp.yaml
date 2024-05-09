@@ -58,12 +58,12 @@ spec:
         {{- end }}
     spec:
       serviceAccountName: hpe-csp-sa
-      {{- if and (eq .Capabilities.KubeVersion.Major "1") ( ge  ( trimSuffix "+" .Capabilities.KubeVersion.Minor ) "17") }}
       priorityClassName: system-cluster-critical
-      {{- end }}
       containers:
         - name: nimble-csp
           image: {{ .Values.images.nimbleCSP | quote }}
+          resources:
+            {{- toYaml .Values.csp.resources | nindent 12 }}
           imagePullPolicy: {{ .Values.imagePullPolicy | quote }}
           ports:
             - containerPort: 8080

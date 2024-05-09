@@ -1,5 +1,4 @@
 ---
-
 kind: ServiceAccount
 apiVersion: v1
 metadata:
@@ -7,7 +6,6 @@ metadata:
   namespace: {{ .Release.Namespace }}
 
 ---
-
 kind: ClusterRole
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
@@ -46,14 +44,12 @@ rules:
   - apiGroups: [""]
     resources: ["events"]
     verbs: ["list", "watch", "create", "update", "patch"]
-{{- if and (eq .Capabilities.KubeVersion.Major "1") ( ge  ( trimSuffix "+" .Capabilities.KubeVersion.Minor ) "17") }}
   - apiGroups: ["snapshot.storage.k8s.io"]
     resources: ["volumesnapshots"]
     verbs: ["get", "list"]
   - apiGroups: ["snapshot.storage.k8s.io"]
     resources: ["volumesnapshotcontents"]
     verbs: ["get", "list"]
-{{- end }}
   - apiGroups: [""]
     resources: ["pods"]
     verbs: ["get", "list", "delete"]
@@ -62,7 +58,6 @@ rules:
     verbs: ["get", "list", "watch", "update", "patch", "delete"]
 
 ---
-
 kind: ClusterRoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
@@ -77,7 +72,6 @@ roleRef:
   apiGroup: rbac.authorization.k8s.io
 
 ---
-
 kind: ClusterRole
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
@@ -98,21 +92,16 @@ rules:
   - apiGroups: [""]
     resources: ["secrets"]
     verbs: ["get", "watch", "list"]
-  {{- if and (eq .Capabilities.KubeVersion.Major "1") ( eq  ( trimSuffix "+" .Capabilities.KubeVersion.Minor ) "12") }}
     resources: ["csinodeinfos"]
     verbs: ["get", "list", "watch"]
-  {{- else if and (eq .Capabilities.KubeVersion.Major "1") ( eq  ( trimSuffix "+" .Capabilities.KubeVersion.Minor ) "13") }}
   - apiGroups: ["csi.storage.k8s.io"]
     resources: ["csinodeinfos"]
     verbs: ["get", "list", "watch"]
-  {{ else }}
   - apiGroups: ["storage.k8s.io"]
     resources: ["csinodes"]
     verbs: ["get", "list", "watch"]
-  {{- end }}
 
 ---
-
 kind: ClusterRoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
@@ -126,10 +115,7 @@ roleRef:
   name: hpe-csi-attacher-role
   apiGroup: rbac.authorization.k8s.io
 
-
-{{- if and (eq .Capabilities.KubeVersion.Major "1") ( ge  ( trimSuffix "+" .Capabilities.KubeVersion.Minor ) "17") }}
 ---
-
 kind: ClusterRole
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
@@ -170,7 +156,6 @@ rules:
     verbs: ["get", "list", "watch", "create", "delete", "update"]
 
 ---
-
 kind: ClusterRoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
@@ -184,15 +169,12 @@ roleRef:
   name: hpe-csi-snapshotter-role
   apiGroup: rbac.authorization.k8s.io
 
-{{- end }}
-
-{{- if and (eq .Capabilities.KubeVersion.Major "1") ( ge  ( trimSuffix "+" .Capabilities.KubeVersion.Minor ) "15") }}
 ---
 # Resizer must be able to work with PVCs, PVs, SCs.
 kind: ClusterRole
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
-  name: external-resizer-role
+  name: hpe-external-resizer-role
 rules:
   - apiGroups: [""]
     resources: ["secrets"]
@@ -214,18 +196,17 @@ rules:
     verbs: ["list", "watch", "create", "update", "patch"]
 
 ---
-
 kind: ClusterRoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
-  name: csi-resizer-role
+  name: hpe-csi-resizer-role
 subjects:
   - kind: ServiceAccount
     name: hpe-csi-controller-sa
     namespace: {{ .Release.Namespace }}
 roleRef:
   kind: ClusterRole
-  name: external-resizer-role
+  name: hpe-external-resizer-role
   apiGroup: rbac.authorization.k8s.io
 
 ---
@@ -236,18 +217,17 @@ kind: Role
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
   namespace: {{ .Release.Namespace }}
-  name: external-resizer-cfg
+  name: hpe-external-resizer-cfg
 rules:
   - apiGroups: ["coordination.k8s.io"]
     resources: ["leases"]
     verbs: ["get", "watch", "list", "delete", "update", "create"]
 
 ---
-
 kind: RoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
-  name: csi-resizer-role-cfg
+  name: hpe-csi-resizer-role-cfg
   namespace: {{ .Release.Namespace }}
 subjects:
   - kind: ServiceAccount
@@ -255,9 +235,8 @@ subjects:
     namespace: {{ .Release.Namespace }}
 roleRef:
   kind: Role
-  name: external-resizer-cfg
+  name: hpe-external-resizer-cfg
   apiGroup: rbac.authorization.k8s.io
-
 
 ---
 # cluster role to support volumegroup
@@ -307,7 +286,6 @@ rules:
     verbs: ["get", "watch", "list", "delete", "update", "create"]
 
 ---
-
 kind: ClusterRoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
@@ -412,7 +390,7 @@ roleRef:
 kind: ClusterRole
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
-  name: csi-mutator-role
+  name: hpe-csi-mutator-role
 rules:
   - apiGroups: [""]
     resources: ["secrets"]
@@ -437,7 +415,7 @@ rules:
 kind: ClusterRoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
-  name: csi-mutator-binding
+  name: hpe-csi-mutator-binding
 subjects:
   - kind: ServiceAccount
     name: hpe-csi-controller-sa
@@ -446,7 +424,7 @@ subjects:
 
 roleRef:
   kind: ClusterRole
-  name: csi-mutator-role
+  name: hpe-csi-mutator-role
   apiGroup: rbac.authorization.k8s.io
 
 ---
@@ -456,7 +434,7 @@ kind: Role
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
   namespace: {{ .Release.Namespace }}
-  name: csi-mutator-cfg
+  name: hpe-csi-mutator-cfg
 rules:
   - apiGroups: ["coordination.k8s.io"]
     resources: ["leases"]
@@ -466,7 +444,7 @@ rules:
 kind: RoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
-  name: csi-mutator-role-cfg
+  name: hpe-csi-mutator-role-cfg
   namespace: {{ .Release.Namespace }}
 subjects:
   - kind: ServiceAccount
@@ -475,12 +453,10 @@ subjects:
 
 roleRef:
   kind: Role
-  name: csi-mutator-cfg
+  name: hpe-csi-mutator-cfg
   apiGroup: rbac.authorization.k8s.io
-{{- end }}
 
 ---
-
 kind: ClusterRole
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
@@ -527,7 +503,6 @@ rules:
     verbs: ["get", "list", "watch"]
 
 ---
-
 apiVersion: v1
 kind: ServiceAccount
 metadata:
@@ -535,7 +510,6 @@ metadata:
   namespace: {{ .Release.Namespace }}
 
 ---
-
 kind: ClusterRoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
@@ -550,14 +524,12 @@ subjects:
   - kind: ServiceAccount
     name: hpe-csp-sa
     namespace: {{ .Release.Namespace }}
-
 roleRef:
   kind: ClusterRole
   name: hpe-csi-driver-role
   apiGroup: rbac.authorization.k8s.io
 
 ---
-
 kind: ServiceAccount
 apiVersion: v1
 metadata:

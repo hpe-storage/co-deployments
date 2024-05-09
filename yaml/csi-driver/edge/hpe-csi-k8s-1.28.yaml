@@ -5,268 +5,8 @@
 
 ---
 #############################################
-############  HPE Node Info CRD  ############
+############  HPE RBAC  #####################
 #############################################
-
-apiVersion: apiextensions.k8s.io/v1
-kind: CustomResourceDefinition
-metadata:
-  creationTimestamp: null
-  name: hpenodeinfos.storage.hpe.com
-spec:
-  group: storage.hpe.com
-  names:
-    kind: HPENodeInfo
-    plural: hpenodeinfos
-  scope: Cluster
-  versions:
-    - name: v1
-      # Each version can be enabled/disabled by Served flag.
-      served: true
-      # One and only one version must be marked as the storage version.
-      storage: true
-      schema:
-        openAPIV3Schema:
-          properties:
-            apiVersion:
-              description: "APIVersion defines the versioned schema of this representation of an object."
-              type: string
-            kind:
-              description: "Kind is a string value representing the REST resource this object represents"
-              type: string
-            spec:
-              description: "spec defines the desired characteristics of a HPE nodeinfo requested by a user."
-              properties:
-                chapPassword:
-                  description: "The CHAP Password"
-                  type: string
-                chapUser:
-                  description: "The CHAP User Name"
-                  type: string
-                iqns:
-                  description: "List of IQNs configured on the node."
-                  items:
-                    type: string
-                  type: array
-                networks:
-                  description: "List of networks configured on the node."
-                  items:
-                    type: string
-                  type: array
-                uuid:
-                  description: "The UUID of the node."
-                  type: string
-                wwpns:
-                  description: "List of WWPNs configured on the node."
-                  items:
-                    type: string
-                  type: array
-              required:
-                - uuid
-                - networks
-              type: object
-          required:
-            - spec
-          type: object
-status:
-  acceptedNames:
-    kind: ""
-    plural: ""
-  conditions: []
-  storedVersions: []
-
----
-################# CSI Driver CRD ###########
-apiVersion: storage.k8s.io/v1
-kind: CSIDriver
-metadata:
-  name: csi.hpe.com
-spec:
-  podInfoOnMount: true
-  volumeLifecycleModes:
-    - Persistent
-    - Ephemeral
-
----
-#############################################
-############  Controller driver  ############
-#############################################
-
-kind: Deployment
-apiVersion: apps/v1
-metadata:
-  name: hpe-csi-controller
-  namespace: hpe-storage
-spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app: hpe-csi-controller
-  template:
-    metadata:
-      labels:
-        app: hpe-csi-controller
-        role: hpe-csi
-    spec:
-      priorityClassName: system-cluster-critical
-      serviceAccountName: hpe-csi-controller-sa
-      hostNetwork: true
-      dnsPolicy: ClusterFirstWithHostNet
-      dnsConfig:
-        options:
-          - name: ndots
-            value: "1"
-      containers:
-        - name: csi-provisioner
-          image: registry.k8s.io/sig-storage/csi-provisioner:v4.0.0
-          args:
-            - "--csi-address=$(ADDRESS)"
-            - "--v=5"
-            - "--timeout=30s"
-            - "--worker-threads=16"
-            - "--extra-create-metadata"
-          env:
-            - name: ADDRESS
-              value: /var/lib/csi/sockets/pluginproxy/csi.sock
-          imagePullPolicy: "IfNotPresent"
-          volumeMounts:
-            - name: socket-dir
-              mountPath: /var/lib/csi/sockets/pluginproxy/
-        - name: csi-attacher
-          image: registry.k8s.io/sig-storage/csi-attacher:v4.5.0
-          args:
-            - "--v=5"
-            - "--csi-address=$(ADDRESS)"
-          env:
-            - name: ADDRESS
-              value: /var/lib/csi/sockets/pluginproxy/csi.sock
-          imagePullPolicy: "IfNotPresent"
-          volumeMounts:
-            - name: socket-dir
-              mountPath: /var/lib/csi/sockets/pluginproxy/
-        - name: csi-snapshotter
-          image: registry.k8s.io/sig-storage/csi-snapshotter:v6.3.3
-          args:
-            - "--v=5"
-            - "--csi-address=$(ADDRESS)"
-          env:
-            - name: ADDRESS
-              value: /var/lib/csi/sockets/pluginproxy/csi.sock
-          imagePullPolicy: "IfNotPresent"
-          volumeMounts:
-            - name: socket-dir
-              mountPath: /var/lib/csi/sockets/pluginproxy/
-        - name: csi-resizer
-          image: registry.k8s.io/sig-storage/csi-resizer:v1.9.3
-          args:
-            - "--csi-address=$(ADDRESS)"
-            - "--v=5"
-          env:
-            - name: ADDRESS
-              value: /var/lib/csi/sockets/pluginproxy/csi.sock
-          imagePullPolicy: "IfNotPresent"
-          volumeMounts:
-            - name: socket-dir
-              mountPath: /var/lib/csi/sockets/pluginproxy/
-        - name: hpe-csi-driver
-          image: quay.io/hpestorage/csi-driver:v2.5.0-beta
-          args:
-            - "--endpoint=$(CSI_ENDPOINT)"
-            - "--flavor=kubernetes"
-            - "--pod-monitor"
-            - "--pod-monitor-interval=30"
-          env:
-            - name: CSI_ENDPOINT
-              value: unix:///var/lib/csi/sockets/pluginproxy/csi.sock
-            - name: LOG_LEVEL
-              value: trace
-          imagePullPolicy: "IfNotPresent"
-          volumeMounts:
-            - name: socket-dir
-              mountPath: /var/lib/csi/sockets/pluginproxy/
-            - name: log-dir
-              mountPath: /var/log
-            - name: k8s
-              mountPath: /etc/kubernetes
-            - name: hpeconfig
-              mountPath: /etc/hpe-storage
-            - name: root-dir
-              mountPath: /host
-        - name: csi-volume-mutator
-          image: quay.io/hpestorage/volume-mutator:v1.3.5-beta2
-          args:
-            - "--v=5"
-            - "--csi-address=$(ADDRESS)"
-          env:
-            - name: ADDRESS
-              value: /var/lib/csi/sockets/pluginproxy/csi-extensions.sock
-          imagePullPolicy: "IfNotPresent"
-          volumeMounts:
-            - name: socket-dir
-              mountPath: /var/lib/csi/sockets/pluginproxy/
-        - name: csi-volume-group-snapshotter
-          image: quay.io/hpestorage/volume-group-snapshotter:v1.0.5-beta2
-          args:
-            - "--v=5"
-            - "--csi-address=$(ADDRESS)"
-          env:
-            - name: ADDRESS
-              value: /var/lib/csi/sockets/pluginproxy/csi-extensions.sock
-          imagePullPolicy: "IfNotPresent"
-          volumeMounts:
-            - name: socket-dir
-              mountPath: /var/lib/csi/sockets/pluginproxy/
-        - name: csi-volume-group-provisioner
-          image: quay.io/hpestorage/volume-group-provisioner:v1.0.5-beta2
-          args:
-            - "--v=5"
-            - "--csi-address=$(ADDRESS)"
-          env:
-            - name: ADDRESS
-              value: /var/lib/csi/sockets/pluginproxy/csi-extensions.sock
-          imagePullPolicy: "IfNotPresent"
-          volumeMounts:
-            - name: socket-dir
-              mountPath: /var/lib/csi/sockets/pluginproxy/
-        - name: csi-extensions
-          image: quay.io/hpestorage/csi-extensions:v1.2.6-beta2
-          args:
-            - "--v=5"
-            - "--endpoint=$(CSI_ENDPOINT)"
-          env:
-            - name: CSI_ENDPOINT
-              value: unix:///var/lib/csi/sockets/pluginproxy/csi-extensions.sock
-            - name: LOG_LEVEL
-              value: trace
-          imagePullPolicy: "IfNotPresent"
-          volumeMounts:
-            - name: socket-dir
-              mountPath: /var/lib/csi/sockets/pluginproxy/
-      volumes:
-        - name: socket-dir
-          emptyDir: {}
-        - name: log-dir
-          hostPath:
-            path: /var/log
-        - name: k8s
-          hostPath:
-            path: /etc/kubernetes/
-        - name: hpeconfig
-          hostPath:
-            path: /etc/hpe-storage/
-        - name: root-dir
-          hostPath:
-            path: /
-      tolerations:
-        - effect: NoExecute
-          key: node.kubernetes.io/not-ready
-          operator: Exists
-          tolerationSeconds: 30
-        - effect: NoExecute
-          key: node.kubernetes.io/unreachable
-          operator: Exists
-          tolerationSeconds: 30
----
 kind: ServiceAccount
 apiVersion: v1
 metadata:
@@ -352,9 +92,6 @@ rules:
     resources: ["nodes"]
     verbs: ["get", "list", "watch"]
   - apiGroups: ["storage.k8s.io"]
-    resources: ["csinodes"]
-    verbs: ["get", "list", "watch"]
-  - apiGroups: ["storage.k8s.io"]
     resources: ["volumeattachments"]
     verbs: ["get", "list", "watch", "update", "patch"]
   - apiGroups: ["storage.k8s.io"]
@@ -363,6 +100,14 @@ rules:
   - apiGroups: [""]
     resources: ["secrets"]
     verbs: ["get", "watch", "list"]
+    resources: ["csinodeinfos"]
+    verbs: ["get", "list", "watch"]
+  - apiGroups: ["csi.storage.k8s.io"]
+    resources: ["csinodeinfos"]
+    verbs: ["get", "list", "watch"]
+  - apiGroups: ["storage.k8s.io"]
+    resources: ["csinodes"]
+    verbs: ["get", "list", "watch"]
 
 ---
 kind: ClusterRoleBinding
@@ -437,7 +182,7 @@ roleRef:
 kind: ClusterRole
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
-  name: external-resizer-role
+  name: hpe-external-resizer-role
 rules:
   - apiGroups: [""]
     resources: ["secrets"]
@@ -462,24 +207,25 @@ rules:
 kind: ClusterRoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
-  name: csi-resizer-role
+  name: hpe-csi-resizer-role
 subjects:
   - kind: ServiceAccount
     name: hpe-csi-controller-sa
     namespace: hpe-storage
 roleRef:
   kind: ClusterRole
-  name: external-resizer-role
+  name: hpe-external-resizer-role
   apiGroup: rbac.authorization.k8s.io
 
 ---
+
 # Resizer must be able to work with end point in current namespace
 # if (and only if) leadership election is enabled
 kind: Role
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
   namespace: hpe-storage
-  name: external-resizer-cfg
+  name: hpe-external-resizer-cfg
 rules:
   - apiGroups: ["coordination.k8s.io"]
     resources: ["leases"]
@@ -489,7 +235,7 @@ rules:
 kind: RoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
-  name: csi-resizer-role-cfg
+  name: hpe-csi-resizer-role-cfg
   namespace: hpe-storage
 subjects:
   - kind: ServiceAccount
@@ -497,7 +243,7 @@ subjects:
     namespace: hpe-storage
 roleRef:
   kind: Role
-  name: external-resizer-cfg
+  name: hpe-external-resizer-cfg
   apiGroup: rbac.authorization.k8s.io
 
 ---
@@ -633,6 +379,7 @@ rules:
     verbs: ["get", "list"]
 
 ---
+
 kind: ClusterRoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
@@ -651,7 +398,7 @@ roleRef:
 kind: ClusterRole
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
-  name: csi-mutator-role
+  name: hpe-csi-mutator-role
 rules:
   - apiGroups: [""]
     resources: ["secrets"]
@@ -676,15 +423,16 @@ rules:
 kind: ClusterRoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
-  name: csi-mutator-binding
+  name: hpe-csi-mutator-binding
 subjects:
   - kind: ServiceAccount
     name: hpe-csi-controller-sa
     # replace with non-default namespace name
     namespace: hpe-storage
+
 roleRef:
   kind: ClusterRole
-  name: csi-mutator-role
+  name: hpe-csi-mutator-role
   apiGroup: rbac.authorization.k8s.io
 
 ---
@@ -694,7 +442,7 @@ kind: Role
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
   namespace: hpe-storage
-  name: csi-mutator-cfg
+  name: hpe-csi-mutator-cfg
 rules:
   - apiGroups: ["coordination.k8s.io"]
     resources: ["leases"]
@@ -704,15 +452,16 @@ rules:
 kind: RoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
-  name: csi-mutator-role-cfg
+  name: hpe-csi-mutator-role-cfg
   namespace: hpe-storage
 subjects:
   - kind: ServiceAccount
     name: hpe-csi-controller-sa
     namespace: hpe-storage
+
 roleRef:
   kind: Role
-  name: csi-mutator-cfg
+  name: hpe-csi-mutator-cfg
   apiGroup: rbac.authorization.k8s.io
 
 ---
@@ -724,21 +473,6 @@ rules:
   - apiGroups: ["storage.hpe.com"]
     resources: ["hpenodeinfos"]
     verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
-  - apiGroups: [""]
-    resources: ["pods"]
-    verbs: ["get", "list"]
-  - apiGroups: [""]
-    resources: ["secrets"]
-    verbs: ["get"]
-  - apiGroups: [""]
-    resources: ["services"]
-    verbs: ["get"]
-  - apiGroups: [""]
-    resources: ["persistentvolumes"]
-    verbs: ["get", "list"]
-  - apiGroups: [""]
-    resources: ["nodes"]
-    verbs: ["get", "list"]
   - apiGroups: ["storage.hpe.com"]
     resources: ["hpevolumeinfos"]
     verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
@@ -750,7 +484,22 @@ rules:
     verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
   - apiGroups: ["storage.hpe.com"]
     resources: ["hpesnapshotgroupinfos"]
-    verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+    verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]    
+  - apiGroups: [""]
+    resources: ["pods"]
+    verbs: ["get", "list"]
+  - apiGroups: [""]
+    resources: ["secrets"]
+    verbs: ["get", "list"]
+  - apiGroups: [""]
+    resources: ["services"]
+    verbs: ["get"]
+  - apiGroups: [""]
+    resources: ["persistentvolumes"]
+    verbs: ["get", "list"]
+  - apiGroups: [""]
+    resources: ["nodes"]
+    verbs: ["get", "list"]
   - apiGroups: [""]
     resources: ["persistentvolumeclaims"]
     verbs: ["get", "list"]
@@ -760,6 +509,362 @@ rules:
   - apiGroups: ["storage.k8s.io"]
     resources: ["storageclasses"]
     verbs: ["get", "list", "watch"]
+
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: hpe-csi-node-sa
+  namespace: hpe-storage
+
+---
+kind: ClusterRoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: hpe-csi-driver-binding
+subjects:
+  - kind: ServiceAccount
+    name: hpe-csi-controller-sa
+    namespace: hpe-storage
+  - kind: ServiceAccount
+    name: hpe-csi-node-sa
+    namespace: hpe-storage
+  - kind: ServiceAccount
+    name: hpe-csp-sa
+    namespace: hpe-storage
+roleRef:
+  kind: ClusterRole
+  name: hpe-csi-driver-role
+  apiGroup: rbac.authorization.k8s.io
+
+---
+kind: ServiceAccount
+apiVersion: v1
+metadata:
+  name: hpe-csp-sa
+  namespace: hpe-storage
+
+---
+#############################################
+############  HPE Node Info CRD  ############
+#############################################
+
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  creationTimestamp: null
+  name: hpenodeinfos.storage.hpe.com
+spec:
+  group: storage.hpe.com
+  names:
+    kind: HPENodeInfo
+    plural: hpenodeinfos
+  scope: Cluster
+  versions:
+    - name: v1
+      # Each version can be enabled/disabled by Served flag.
+      served: true
+      # One and only one version must be marked as the storage version.
+      storage: true
+      schema:
+        openAPIV3Schema:
+          properties:
+            apiVersion:
+              description: "APIVersion defines the versioned schema of this representation of an object."
+              type: string
+            kind:
+              description: "Kind is a string value representing the REST resource this object represents"
+              type: string
+            spec:
+              description: "spec defines the desired characteristics of a HPE nodeinfo requested by a user."
+              properties:
+                iqns:
+                  description: "List of IQNs configured on the node."
+                  items:
+                    type: string
+                  type: array
+                networks:
+                  description: "List of networks configured on the node."
+                  items:
+                    type: string
+                  type: array
+                uuid:
+                  description: "The UUID of the node."
+                  type: string
+                wwpns:
+                  description: "List of WWPNs configured on the node."
+                  items:
+                    type: string
+                  type: array
+              required:
+                - uuid
+                - networks
+              type: object
+          required:
+            - spec
+          type: object
+status:
+  acceptedNames:
+    kind: ""
+    plural: ""
+  conditions: []
+  storedVersions: []
+
+---
+################# CSI Driver CRD ###########
+apiVersion: storage.k8s.io/v1
+kind: CSIDriver
+metadata:
+  name: csi.hpe.com
+spec:
+  podInfoOnMount: true
+  volumeLifecycleModes:
+    - Persistent
+    - Ephemeral
+
+---
+#############################################
+############  Controller driver  ############
+#############################################
+
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: hpe-csi-controller
+  namespace: hpe-storage
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hpe-csi-controller
+  template:
+    metadata:
+      labels:
+        app: hpe-csi-controller
+        role: hpe-csi
+    spec:
+      priorityClassName: system-cluster-critical
+      serviceAccountName: hpe-csi-controller-sa
+      hostNetwork: true
+      dnsPolicy: ClusterFirstWithHostNet
+      dnsConfig:
+        options:
+          - name: ndots
+            value: "1"
+      containers:
+        - name: csi-provisioner
+          image: registry.k8s.io/sig-storage/csi-provisioner:v4.0.1
+          resources:
+            limits:
+              cpu: 2000m
+              memory: 1Gi
+            requests:
+              cpu: 100m
+              memory: 128Mi
+          args:
+            - "--csi-address=$(ADDRESS)"
+            - "--v=5"
+            - "--timeout=30s"
+            - "--worker-threads=16"
+            - "--extra-create-metadata"
+            - "--feature-gates=Topology=true"
+          env:
+            - name: ADDRESS
+              value: /var/lib/csi/sockets/pluginproxy/csi.sock
+          imagePullPolicy: "IfNotPresent"
+          volumeMounts:
+            - name: socket-dir
+              mountPath: /var/lib/csi/sockets/pluginproxy/
+        - name: csi-attacher
+          image: registry.k8s.io/sig-storage/csi-attacher:v4.5.1
+          resources:
+            limits:
+              cpu: 2000m
+              memory: 1Gi
+            requests:
+              cpu: 100m
+              memory: 128Mi
+          args:
+            - "--v=5"
+            - "--csi-address=$(ADDRESS)"
+          env:
+            - name: ADDRESS
+              value: /var/lib/csi/sockets/pluginproxy/csi.sock
+          imagePullPolicy: "IfNotPresent"
+          volumeMounts:
+            - name: socket-dir
+              mountPath: /var/lib/csi/sockets/pluginproxy/
+        - name: csi-snapshotter
+          image: registry.k8s.io/sig-storage/csi-snapshotter:v7.0.2
+          resources:
+            limits:
+              cpu: 2000m
+              memory: 1Gi
+            requests:
+              cpu: 100m
+              memory: 128Mi
+          args:
+            - "--v=5"
+            - "--csi-address=$(ADDRESS)"
+          env:
+            - name: ADDRESS
+              value: /var/lib/csi/sockets/pluginproxy/csi.sock
+          imagePullPolicy: "IfNotPresent"
+          volumeMounts:
+            - name: socket-dir
+              mountPath: /var/lib/csi/sockets/pluginproxy/
+        - name: csi-resizer
+          image: registry.k8s.io/sig-storage/csi-resizer:v1.10.1
+          resources:
+            limits:
+              cpu: 2000m
+              memory: 1Gi
+            requests:
+              cpu: 100m
+              memory: 128Mi
+          args:
+            - "--csi-address=$(ADDRESS)"
+            - "--v=5"
+          env:
+            - name: ADDRESS
+              value: /var/lib/csi/sockets/pluginproxy/csi.sock
+          imagePullPolicy: "IfNotPresent"
+          volumeMounts:
+            - name: socket-dir
+              mountPath: /var/lib/csi/sockets/pluginproxy/
+        - name: hpe-csi-driver
+          image: quay.io/hpestorage/csi-driver:v2.5.0-beta
+          resources:
+            limits:
+              cpu: 2000m
+              memory: 1Gi
+            requests:
+              cpu: 100m
+              memory: 128Mi
+          args:
+            - "--endpoint=$(CSI_ENDPOINT)"
+            - "--flavor=kubernetes"
+            - "--pod-monitor"
+            - "--pod-monitor-interval=30"
+          env:
+            - name: CSI_ENDPOINT
+              value: unix:///var/lib/csi/sockets/pluginproxy/csi.sock
+            - name: LOG_LEVEL
+              value: trace
+          imagePullPolicy: "IfNotPresent"
+          volumeMounts:
+            - name: socket-dir
+              mountPath: /var/lib/csi/sockets/pluginproxy/
+            - name: log-dir
+              mountPath: /var/log
+            - name: k8s
+              mountPath: /etc/kubernetes
+            - name: hpeconfig
+              mountPath: /etc/hpe-storage
+            - name: root-dir
+              mountPath: /host
+        - name: csi-volume-mutator
+          image: quay.io/hpestorage/volume-mutator:v1.3.6-beta
+          resources:
+            limits:
+              cpu: 2000m
+              memory: 1Gi
+            requests:
+              cpu: 100m
+              memory: 128Mi
+          args:
+            - "--v=5"
+            - "--csi-address=$(ADDRESS)"
+          env:
+            - name: ADDRESS
+              value: /var/lib/csi/sockets/pluginproxy/csi-extensions.sock
+          imagePullPolicy: "IfNotPresent"
+          volumeMounts:
+            - name: socket-dir
+              mountPath: /var/lib/csi/sockets/pluginproxy/
+        - name: csi-volume-group-snapshotter
+          image: quay.io/hpestorage/volume-group-snapshotter:v1.0.6-beta
+          resources:
+            limits:
+              cpu: 2000m
+              memory: 1Gi
+            requests:
+              cpu: 100m
+              memory: 128Mi
+          args:
+            - "--v=5"
+            - "--csi-address=$(ADDRESS)"
+          env:
+            - name: ADDRESS
+              value: /var/lib/csi/sockets/pluginproxy/csi-extensions.sock
+          imagePullPolicy: "IfNotPresent"
+          volumeMounts:
+            - name: socket-dir
+              mountPath: /var/lib/csi/sockets/pluginproxy/
+        - name: csi-volume-group-provisioner
+          image: quay.io/hpestorage/volume-group-provisioner:v1.0.6-beta
+          resources:
+            limits:
+              cpu: 2000m
+              memory: 1Gi
+            requests:
+              cpu: 100m
+              memory: 128Mi
+          args:
+            - "--v=5"
+            - "--csi-address=$(ADDRESS)"
+          env:
+            - name: ADDRESS
+              value: /var/lib/csi/sockets/pluginproxy/csi-extensions.sock
+          imagePullPolicy: "IfNotPresent"
+          volumeMounts:
+            - name: socket-dir
+              mountPath: /var/lib/csi/sockets/pluginproxy/
+        - name: csi-extensions
+          image: quay.io/hpestorage/csi-extensions:v1.2.7-beta
+          resources:
+            limits:
+              cpu: 2000m
+              memory: 1Gi
+            requests:
+              cpu: 100m
+              memory: 128Mi
+          args:
+            - "--v=5"
+            - "--endpoint=$(CSI_ENDPOINT)"
+          env:
+            - name: CSI_ENDPOINT
+              value: unix:///var/lib/csi/sockets/pluginproxy/csi-extensions.sock
+            - name: LOG_LEVEL
+              value: trace
+          imagePullPolicy: "IfNotPresent"
+          volumeMounts:
+            - name: socket-dir
+              mountPath: /var/lib/csi/sockets/pluginproxy/
+      volumes:
+        - name: socket-dir
+          emptyDir: {}
+        - name: log-dir
+          hostPath:
+            path: /var/log
+        - name: k8s
+          hostPath:
+            path: /etc/kubernetes/
+        - name: hpeconfig
+          hostPath:
+            path: /etc/hpe-storage/
+        - name: root-dir
+          hostPath:
+            path: /
+      tolerations:
+        - effect: NoExecute
+          key: node.kubernetes.io/not-ready
+          operator: Exists
+          tolerationSeconds: 30
+        - effect: NoExecute
+          key: node.kubernetes.io/unreachable
+          operator: Exists
+          tolerationSeconds: 30
 
 ---
 #######################################
@@ -792,7 +897,14 @@ spec:
       initContainers:
         - name: hpe-csi-node-init
           image: quay.io/hpestorage/csi-driver:v2.5.0-beta
-          args:
+          resources:
+            limits:
+              cpu: 2000m
+              memory: 1Gi
+            requests:
+              cpu: 100m
+              memory: 128Mi
+          args: 
             - --node-init
             - --endpoint=$(CSI_ENDPOINT)
             - --flavor=kubernetes
@@ -816,6 +928,9 @@ spec:
               mountPath: /var/lib/kubelet
             - name: log-dir
               mountPath: /var/log
+          env:
+            - name: CSI_ENDPOINT
+              value: unix:///csi/csi.sock
           imagePullPolicy: "IfNotPresent"
           securityContext:
             privileged: true
@@ -824,7 +939,14 @@ spec:
             allowPrivilegeEscalation: true
       containers:
         - name: csi-node-driver-registrar
-          image: registry.k8s.io/sig-storage/csi-node-driver-registrar:v2.10.0
+          image: registry.k8s.io/sig-storage/csi-node-driver-registrar:v2.10.1
+          resources:
+            limits:
+              cpu: 2000m
+              memory: 1Gi
+            requests:
+              cpu: 100m
+              memory: 128Mi
           args:
             - "--csi-address=$(ADDRESS)"
             - "--kubelet-registration-path=$(DRIVER_REG_SOCK_PATH)"
@@ -841,6 +963,13 @@ spec:
               mountPath: /registration
         - name: hpe-csi-driver
           image: quay.io/hpestorage/csi-driver:v2.5.0-beta
+          resources:
+            limits:
+              cpu: 2000m
+              memory: 1Gi
+            requests:
+              cpu: 100m
+              memory: 128Mi
           args:
             - "--endpoint=$(CSI_ENDPOINT)"
             - "--node-service"
@@ -856,10 +985,6 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: spec.nodeName
-            - name: CHAP_USER
-              value: ""
-            - name: CHAP_PASSWORD
-              value: ""
             - name: DISABLE_NODE_CONFORMANCE
               value: "false"
             - name: DISABLE_NODE_CONFIGURATION
@@ -949,36 +1074,3 @@ spec:
         - effect: NoSchedule
           key: csi.hpe.com/hpe-nfs
           operator: Exists
----
-apiVersion: v1
-kind: ServiceAccount
-metadata:
-  name: hpe-csi-node-sa
-  namespace: hpe-storage
-
----
-kind: ServiceAccount
-apiVersion: v1
-metadata:
-  name: hpe-csp-sa
-  namespace: hpe-storage
-
----
-kind: ClusterRoleBinding
-apiVersion: rbac.authorization.k8s.io/v1
-metadata:
-  name: hpe-csi-driver-binding
-subjects:
-  - kind: ServiceAccount
-    name: hpe-csi-controller-sa
-    namespace: hpe-storage
-  - kind: ServiceAccount
-    name: hpe-csi-node-sa
-    namespace: hpe-storage
-  - kind: ServiceAccount
-    name: hpe-csp-sa
-    namespace: hpe-storage
-roleRef:
-  kind: ClusterRole
-  name: hpe-csi-driver-role
-  apiGroup: rbac.authorization.k8s.io

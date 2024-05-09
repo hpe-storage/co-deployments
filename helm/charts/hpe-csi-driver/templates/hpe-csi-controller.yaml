@@ -24,9 +24,7 @@ spec:
         {{- end }}
     spec:
       serviceAccountName: hpe-csi-controller-sa
-      {{- if and (eq .Capabilities.KubeVersion.Major "1") ( ge  ( trimSuffix "+" .Capabilities.KubeVersion.Minor ) "17") }}
       priorityClassName: system-cluster-critical
-      {{- end }}
       hostNetwork: true
       dnsPolicy: ClusterFirstWithHostNet
       dnsConfig:
@@ -36,14 +34,15 @@ spec:
       containers:
         - name: csi-provisioner
           image: {{ .Values.images.csiProvisioner | quote }}
+          resources:
+            {{- toYaml .Values.controller.resources | nindent 12 }}
           args:
             - "--csi-address=$(ADDRESS)"
             - "--v=5"
             - "--extra-create-metadata"
-            {{- if and (eq .Capabilities.KubeVersion.Major "1") ( ge  ( trimSuffix "+" .Capabilities.KubeVersion.Minor ) "13") }}
             - "--timeout=30s"
             - "--worker-threads=16"
-            {{- end }}
+            - "--feature-gates=Topology=true"
           env:
             - name: ADDRESS
               value: /var/lib/csi/sockets/pluginproxy/csi.sock
@@ -53,6 +52,8 @@ spec:
               mountPath: /var/lib/csi/sockets/pluginproxy
         - name: csi-attacher
           image: {{ .Values.images.csiAttacher | quote }}
+          resources:
+            {{- toYaml .Values.controller.resources | nindent 12 }}
           args:
             - "--v=5"
             - "--csi-address=$(ADDRESS)"
@@ -67,9 +68,9 @@ spec:
             - name: socket-dir
               mountPath: /var/lib/csi/sockets/pluginproxy
         - name: csi-snapshotter
-        {{- if and (eq .Capabilities.KubeVersion.Major "1") ( ge  ( trimSuffix "+" .Capabilities.KubeVersion.Minor ) "20") }}
           image: {{ .Values.images.csiSnapshotter | quote }}
-        {{- end }}
+          resources:
+            {{- toYaml .Values.controller.resources | nindent 12 }}
           args:
             - "--v=5"
             - "--csi-address=$(ADDRESS)"
@@ -80,9 +81,10 @@ spec:
           volumeMounts:
             - name: socket-dir
               mountPath: /var/lib/csi/sockets/pluginproxy/
-        {{- if and (eq .Capabilities.KubeVersion.Major "1") ( ge  ( trimSuffix "+" .Capabilities.KubeVersion.Minor ) "15") }}
         - name: csi-resizer
           image: {{ .Values.images.csiResizer | quote }}
+          resources:
+            {{- toYaml .Values.controller.resources | nindent 12 }}
           args:
             - "--csi-address=$(ADDRESS)"
             - "--v=5"
@@ -93,9 +95,10 @@ spec:
           volumeMounts:
             - name: socket-dir
               mountPath: /var/lib/csi/sockets/pluginproxy
-        {{- end }}
         - name: hpe-csi-driver
           image: {{ .Values.images.csiControllerDriver | quote }}
+          resources:
+            {{- toYaml .Values.controller.resources | nindent 12 }}
           args :
             - "--endpoint=$(CSI_ENDPOINT)"
             - "--flavor=kubernetes"
@@ -120,6 +123,8 @@ spec:
               mountPath: /host
         - name: csi-volume-mutator
           image: {{ .Values.images.csiVolumeMutator | quote}}
+          resources:
+            {{- toYaml .Values.controller.resources | nindent 12 }}
           args:
             - "--v=5"
             - "--csi-address=$(ADDRESS)"
@@ -132,6 +137,8 @@ spec:
               mountPath: /var/lib/csi/sockets/pluginproxy/
         - name: csi-volume-group-snapshotter
           image: {{ .Values.images.csiVolumeGroupSnapshotter | quote }}
+          resources:
+            {{- toYaml .Values.controller.resources | nindent 12 }}
           args:
             - "--v=5"
             - "--csi-address=$(ADDRESS)"
@@ -144,6 +151,8 @@ spec:
               mountPath: /var/lib/csi/sockets/pluginproxy/
         - name: csi-volume-group-provisioner
           image: {{ .Values.images.csiVolumeGroupProvisioner | quote }}
+          resources:
+            {{- toYaml .Values.controller.resources | nindent 12 }}
           args:
             - "--v=5"
             - "--csi-address=$(ADDRESS)"
@@ -156,6 +165,8 @@ spec:
               mountPath: /var/lib/csi/sockets/pluginproxy/
         - name: csi-extensions
           image: {{ .Values.images.csiExtensions | quote }}
+          resources:
+            {{- toYaml .Values.controller.resources | nindent 12 }}
           args:
             - "--v=5"
             - "--endpoint=$(CSI_ENDPOINT)"
