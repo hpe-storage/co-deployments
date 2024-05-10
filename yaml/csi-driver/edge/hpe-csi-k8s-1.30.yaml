@@ -668,6 +668,7 @@ spec:
             - "--worker-threads=16"
             - "--extra-create-metadata"
             - "--feature-gates=Topology=true"
+            - "--immediate-topology=false"
           env:
             - name: ADDRESS
               value: /var/lib/csi/sockets/pluginproxy/csi.sock
