@@ -79,12 +79,12 @@ spec:
         {{- end }}
     spec:
       serviceAccountName: hpe-csp-sa
-      {{- if and (eq .Capabilities.KubeVersion.Major "1") ( ge  ( trimSuffix "+" .Capabilities.KubeVersion.Minor ) "17") }}
       priorityClassName: system-cluster-critical
-      {{- end }}
       containers:
         - name: primera3par-csp
           image: {{ .Values.images.primera3parCSP | quote }}
+          resources:
+            {{- toYaml .Values.csp.resources | nindent 12 }}
           imagePullPolicy: {{ .Values.imagePullPolicy | quote }}
           env:
             - name: CRD_CLIENT_CONFIG_QPS

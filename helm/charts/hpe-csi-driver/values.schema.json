@@ -22,19 +22,22 @@
                 "nodeSelector": {},
                 "tolerations": [],
                 "affinity": {},
-                "labels": {}
+                "labels": {},
+		"resources": {}
             },
             "controller": {
                 "nodeSelector": {},
                 "tolerations": [],
                 "affinity": {},
-                "labels": {}
+                "labels": {},
+		"resources": {}
             },
             "node": {
                 "nodeSelector": {},
                 "tolerations": [],
                 "affinity": {},
-                "labels": {}
+                "labels": {},
+		"resources": {}
             },
 	    "images": {}
         },
@@ -43,7 +46,6 @@
         "disableNodeConformance",
         "disableNodeConfiguration",
         "imagePullPolicy",
-        "iscsi",
         "logLevel",
         "kubeletRootDir",
         "disableNodeGetVolumeStats",
@@ -178,9 +180,27 @@
                 "description": "Labels to apply to the CSPs.",
                 "type": "object",
                 "default": {}
+            },
+	    "resources": {
+                "$id": "#/properties/csp/properties/resources",
+                "type": "object",
+	        "title": "resource requests and limits",
+	        "additionalProperties": false,
+                "required": ["limits", "requests"],
+                "description": "See https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/",
+                "properties": {
+                    "limits": {
+                        "type": "object",
+                        "title": "resource limits",
+                        "default": {}
+	            },
+                    "requests": {
+                        "type": "object",
+                        "title": "resource requests",
+                        "default": {} }
+                }
             }
-
-        },
+	},
         "controller": {
             "nodeSelector": {
                 "$id": "#/properties/controller/properties/nodeSelector",
@@ -209,8 +229,26 @@
                 "description": "Labels to apply to the controller driver.",
                 "type": "object",
                 "default": {}
-            }
-
+            },
+	    "resources": {
+                "$id": "#/properties/controller/properties/resources",
+                "type": "object",
+	        "title": "resource requests and limits",
+	        "additionalProperties": false,
+                "required": ["limits", "requests"],
+                "description": "See https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/",
+                "properties": {
+                    "limits": {
+                        "type": "object",
+                        "title": "resource limits",
+                        "default": {}
+	            },
+                    "requests": {
+                        "type": "object",
+                        "title": "resource requests",
+                        "default": {} }
+                }
+	    }
         },
         "node": {
             "nodeSelector": {
@@ -240,8 +278,26 @@
                 "description": "Labels to apply to the node driver.",
                 "type": "object",
                 "default": {}
+            },
+	    "resources": {
+                "$id": "#/properties/node/properties/resources",
+                "type": "object",
+	        "title": "resource requests and limits",
+	        "additionalProperties": false,
+                "required": ["limits", "requests"],
+                "description": "See https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/",
+                "properties": {
+                    "limits": {
+                        "type": "object",
+                        "title": "resource limits",
+                        "default": {}
+	            },
+                    "requests": {
+                        "type": "object",
+                        "title": "resource requests",
+                        "default": {} }
+                }
             }
-
         },
         "images": {
             "$id": "#/properties/images",

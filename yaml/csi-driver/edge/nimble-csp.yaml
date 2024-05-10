@@ -64,7 +64,14 @@ spec:
       priorityClassName: system-cluster-critical
       containers:
         - name: nimble-csp
-          image: quay.io/hpestorage/alletra-6000-and-nimble-csp:v2.4.1-beta2
+          image: quay.io/hpestorage/alletra-6000-and-nimble-csp:v2.5.0-beta
+          resources:
+            limits:
+              cpu: 2000m
+              memory: 1Gi
+            requests:
+              cpu: 100m
+              memory: 128Mi
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8080

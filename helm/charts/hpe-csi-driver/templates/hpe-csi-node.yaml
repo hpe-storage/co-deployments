@@ -23,9 +23,7 @@ spec:
         {{- end }}
     spec:
       serviceAccountName: hpe-csi-node-sa
-      {{- if and (eq .Capabilities.KubeVersion.Major "1") ( ge  ( trimSuffix "+" .Capabilities.KubeVersion.Minor ) "17") }}
       priorityClassName: system-node-critical
-      {{- end }}
       hostNetwork: true
       dnsPolicy: ClusterFirstWithHostNet
       dnsConfig:
@@ -35,6 +33,8 @@ spec:
       initContainers:
         - name: hpe-csi-node-init
           image: {{ .Values.images.csiNodeDriver | quote }}
+          resources:
+            {{- toYaml .Values.node.resources | nindent 12 }}
           args:
             - --node-init
             - --endpoint=$(CSI_ENDPOINT)
@@ -59,6 +59,9 @@ spec:
               mountPath: /var/lib/kubelet
             - name: log-dir
               mountPath: /var/log
+          env:
+            - name: CSI_ENDPOINT
+              value: unix:///csi/csi.sock
           imagePullPolicy: {{ .Values.imagePullPolicy | quote }}
           securityContext:
             privileged: true
@@ -68,6 +71,8 @@ spec:
       containers:
         - name: csi-node-driver-registrar
           image: {{ .Values.images.csiNodeDriverRegistrar | quote }}
+          resources:
+            {{- toYaml .Values.node.resources | nindent 12 }}
           args:
             - "--csi-address=$(ADDRESS)"
             - "--kubelet-registration-path=$(DRIVER_REG_SOCK_PATH)"
@@ -81,13 +86,11 @@ spec:
               {{- else }}
               value: /var/lib/kubelet/plugins/csi.hpe.com/csi.sock
               {{- end }}
-            {{- if and (eq .Capabilities.KubeVersion.Major "1") ( eq  ( trimSuffix "+" .Capabilities.KubeVersion.Minor ) "12") }}
             - name: KUBE_NODE_NAME
               valueFrom:
                 fieldRef:
                   apiVersion: v1
                   fieldPath: spec.nodeName
-            {{- end }}
           imagePullPolicy: {{ .Values.imagePullPolicy | quote }}
           volumeMounts:
             - name: plugin-dir
@@ -96,6 +99,8 @@ spec:
               mountPath: /registration
         - name: hpe-csi-driver
           image: {{ .Values.images.csiNodeDriver | quote }}
+          resources:
+            {{- toYaml .Values.node.resources | nindent 12 }}
           args :
             - "--endpoint=$(CSI_ENDPOINT)"
             - "--node-service"
