@@ -1,5 +1,6 @@
 # Set these
 VERSION ?= 0.0.0
+SOURCE_VERSION ?= $(VERSION)
 REPO_NAME ?= quay.io/myrepo
 
 # Don't set these, preferably
@@ -38,7 +39,8 @@ init:
 		--kind HPECSIDriver \
 		--project-name hpe-csi-operator \
 		--helm-chart hpe-csi-driver \
-		--helm-chart-repo https://hpe-storage.github.io/co-deployments
+		--helm-chart-repo https://hpe-storage.github.io/co-deployments \
+	        --helm-chart-version $(SOURCE_VERSION)
 	touch init
 
 prep: init
