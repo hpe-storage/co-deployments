@@ -26,10 +26,10 @@ metadata:
     repository: "https://github.com/hpe-storage/co-deployments"
     containerImage: %IMG%
     # Update >>>
-    operatorhub.io/ui-metadata-max-k8s-version: "1.29"
+    operatorhub.io/ui-metadata-max-k8s-version: "1.30"
 spec:
   minKubeVersion: 1.25.0
-  replaces: hpe-csi-operator.v2.4.1
+  replaces: hpe-csi-operator.v2.4.2
   # <<< for each new release
   apiservicedefinitions: {}
   install:
@@ -155,9 +155,6 @@ spec:
             path: disableNodeGetVolumeStats
             x-descriptors:
               - "urn:alm:descriptor:com.tectonic.ui:booleanSwitch"
-          - displayName: Registry
-            description: "Registry for HPE CSI Driver (quay.io)"
-            path: registry
             x-descriptors:
               - "urn:alm:descriptor:com.tectonic.ui:text"
           - displayName: Kubelet root dir
@@ -182,6 +179,11 @@ spec:
             path: controller.affinity
             x-descriptors:
               - "urn:alm:descriptor:com.tectonic.ui:nodeAffinity"
+          - displayName: CSI controller resource requirements
+            description: Limits describes the minimum/maximum amount of compute resources required/allowed
+            path: controller.resources
+            x-descriptors:
+              - "urn:alm:descriptor:com.tectonic.ui:resourceRequirements"
           - displayName: CSI node driver configuration
             description: "Configure CSI node driver decorations"
             path: node
@@ -199,6 +201,11 @@ spec:
             path: node.affinity
             x-descriptors:
               - "urn:alm:descriptor:com.tectonic.ui:nodeAffinity"
+          - displayName: CSI node resource requirements
+            description: Limits describes the minimum/maximum amount of compute resources required/allowed
+            path: node.resources
+            x-descriptors:
+              - "urn:alm:descriptor:com.tectonic.ui:resourceRequirements"
           - displayName: CSP configuration
             description: "Configure CSP decorations"
             path: csp
@@ -216,6 +223,84 @@ spec:
             path: csp.affinity
             x-descriptors:
               - "urn:alm:descriptor:com.tectonic.ui:nodeAffinity"
+          - displayName: CSP resource requirements
+            description: Limits describes the minimum/maximum amount of compute resources required/allowed
+            path: csp.resources
+            x-descriptors:
+              - "urn:alm:descriptor:com.tectonic.ui:resourceRequirements"
+          - displayName: HPE CSI Operator images
+            description: Set images for sidecars, controller, node and CSPs
+            path: images
+          - displayName: CSI Node Driver Image
+            description: HPE CSI Driver Node Driver container image
+            path: images.csiNodeDriver
+            x-descriptors:
+              - "urn:alm:descriptor:com.tectonic.ui:text"
+          - displayName: CSI Controller Driver Image
+            description: HPE CSI Driver Controller Driver container image
+            path: images.csiControllerDriver
+            x-descriptors:
+              - "urn:alm:descriptor:com.tectonic.ui:text"
+          - displayName: Alletra 5000/6000 and Nimble Storage Image
+            description: HPE Alletra 5000/6000 and Nimble Storage Container Storage Provider container image
+            path: images.nimbleCSP
+            x-descriptors:
+              - "urn:alm:descriptor:com.tectonic.ui:text"
+          - displayName: Alletra Storage MP, Alletra 9000 and Primera Image
+            description: The HPE Alletra Storage MP, Alletra 9000, Primera and 3PAR Container Storage Provider container image
+            path: images.primera3parCSP
+            x-descriptors:
+              - "urn:alm:descriptor:com.tectonic.ui:text"
+          - displayName: NFS Server Provisioner Image
+            description: The HPE CSI Driver NFS Server Provisioner container image
+            path: images.nfsProvisioner
+            x-descriptors:
+              - "urn:alm:descriptor:com.tectonic.ui:text"
+          - displayName: CSI Extensions Image
+            description: The HPE CSI Driver CSI Extensions container image
+            path: images.csiExtensions
+            x-descriptors:
+              - "urn:alm:descriptor:com.tectonic.ui:text"
+          - displayName: Volume Group Provisioner Image
+            description: The HPE CSI Driver Volume Group Provisioner container image
+            path: images.csiVolumeGroupProvisioner
+            x-descriptors:
+              - "urn:alm:descriptor:com.tectonic.ui:text"
+          - displayName: Volume Group Snapshotter Image
+            description: The HPE CSI Driver Volume Group Snapshotter container image
+            path: images.csiVolumeGroupSnapshotter
+            x-descriptors:
+              - "urn:alm:descriptor:com.tectonic.ui:text"
+          - displayName: Volume Mutator Image
+            description: The HPE CSI Driver Volume Mutator container image
+            path: images.csiVolumeMutator
+            x-descriptors:
+              - "urn:alm:descriptor:com.tectonic.ui:text"
+          - displayName: CSI Attacher Image
+            description: The SIG Storage CSI Attacher container image
+            path: images.csiAttacher
+            x-descriptors:
+              - "urn:alm:descriptor:com.tectonic.ui:text"
+          - displayName: CSI Node Driver Registrar Image
+            description: The SIG Storage CSI Node Driver Registrar container image
+            path: images.csiNodeDriverRegistrar
+            x-descriptors:
+              - "urn:alm:descriptor:com.tectonic.ui:text"
+          - displayName: CSI Provisioner Image
+            description: The SIG Storage CSI Provisioner container image
+            path: images.csiProvisioner
+            x-descriptors:
+              - "urn:alm:descriptor:com.tectonic.ui:text"
+          - displayName: CSI Resizer Image
+            description: The SIG Storage CSI Provisioner container image
+            path: images.csiResizer
+            x-descriptors:
+              - "urn:alm:descriptor:com.tectonic.ui:text"
+          - displayName: CSI Snapshotter Image
+            description: The SIG Storage CSI External Snapshotter container image
+            path: images.csiSnapshotter
+            x-descriptors:
+              - "urn:alm:descriptor:com.tectonic.ui:text"
         statusDescriptors:
           - displayName: Conditions
             description: HPE CSI Driver Helm release status
