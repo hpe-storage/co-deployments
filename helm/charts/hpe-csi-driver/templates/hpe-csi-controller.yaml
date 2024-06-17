@@ -110,6 +110,12 @@ spec:
               value: unix:///var/lib/csi/sockets/pluginproxy/csi.sock
             - name: LOG_LEVEL
               value: {{ .Values.logLevel }}
+            {{ if and .Values.iscsi.chapSecretName .Values.iscsi.chapSecretNamespace }}
+            - name: CHAP_SECRET_NAME
+              value: {{ .Values.iscsi.chapSecretName }}
+            - name: CHAP_SECRET_NAMESPACE
+              value: {{ .Values.iscsi.chapSecretNamespace }}
+            {{- end }}
           imagePullPolicy: {{ .Values.imagePullPolicy | quote }}
           volumeMounts:
             - name: socket-dir

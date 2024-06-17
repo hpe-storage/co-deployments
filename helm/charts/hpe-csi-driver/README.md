@@ -38,6 +38,8 @@ The following table lists the configurable parameters of the chart and their def
 | disableNodeConfiguration  | Disables node conformance and configuration.`*`                        | false            |
 | disableNodeGetVolumeStats | Disable NodeGetVolumeStats call to CSI driver.                         | false            |
 | imagePullPolicy           | Image pull policy (`Always`, `IfNotPresent`, `Never`).                 | IfNotPresent     |
+| iscsi.chapSecretName      | Secret containing the CHAP username and password                       | ""               |
+| iscsi.chapSecretNamespace | Namespace where the CHAP secret is located                             | ""               |
 | logLevel                  | Log level. Can be one of `info`, `debug`, `trace`, `warn` and `error`. | info             |
 | kubeletRootDir            | The kubelet root directory path.                                       | /var/lib/kubelet |
 | controller.labels         | Additional labels for HPE CSI Driver controller Pods.                  | {}               |
@@ -62,6 +64,16 @@ The following table lists the configurable parameters of the chart and their def
 It's recommended to create a [values.yaml](https://github.com/hpe-storage/co-deployments/blob/master/helm/values/csi-driver) file from the corresponding release of the chart and edit it to fit the environment the chart is being deployed to. Download and edit [a sample file](https://github.com/hpe-storage/co-deployments/blob/master/helm/values/csi-driver).
 
 **Note:** The chart is installed with all components and features enabled using reasonable defaults if no tweaks are needed.
+
+These are the bare minimum required parameters for a successful deployment to an iSCSI environment if CHAP authentication is required.
+(Below iSCSI configuration is to have backward compatibility. From version 1.30 onwards, CHAP secret name and namespace can be passed as storage class parameters.)
+```
+iscsi:
+  chapSecretName: "<secretName>"
+  chapSecretNamespace: "<secretNamespace>"
+```
+
+Tweak any additional parameters to suit the environment or as prescribed by HPE.
 
 ### Installing the chart
 

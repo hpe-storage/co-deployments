@@ -752,6 +752,10 @@ spec:
               value: unix:///var/lib/csi/sockets/pluginproxy/csi.sock
             - name: LOG_LEVEL
               value: trace
+            - name: CHAP_SECRET_NAME
+              value: ""
+            - name: CHAP_SECRET_NAMESPACE
+              value: hpe-storage
           imagePullPolicy: "IfNotPresent"
           volumeMounts:
             - name: socket-dir
@@ -990,6 +994,10 @@ spec:
               value: "false"
             - name: DISABLE_NODE_CONFIGURATION
               value: "false"
+            - name: CHAP_SECRET_NAME
+              value: ""
+            - name: CHAP_SECRET_NAMESPACE
+              value: hpe-storage
           imagePullPolicy: "IfNotPresent"
           securityContext:
             privileged: true
