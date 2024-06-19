@@ -158,16 +158,11 @@ spec:
             x-descriptors:
               - "urn:alm:descriptor:com.tectonic.ui:text"
           - displayName: iSCSI Configuration
-            description: "Configuration for iSCSI."
+            description: "Configuration for iSCSI CHAP authenticaton"
             path: iscsi
           - displayName: iSCSI CHAP Secret Name
-            description: "The name of the secret containing the CHAP username and password."
+            description: "Name of the secret containing chapUser and chapPassword for iSCSI"
             path: iscsi.chapSecretName
-            x-descriptors:
-              - "urn:alm:descriptor:com.tectonic.ui:text"
-          - displayName: iSCSI CHAP Secret Namespace
-            description: "The namespace where the CHAP secret is located."
-            path: iscsi.chapSecretNamespace
             x-descriptors:
               - "urn:alm:descriptor:com.tectonic.ui:text"
           - displayName: Kubelet root dir
