@@ -52,26 +52,18 @@ CHAP secret validation
   {{- $chapUserValidationPattern := "^[a-zA-Z0-9][a-zA-Z0-9\\-:.]{0,63}$" }}
   {{- $chapPasswordValidationPattern := "^$|^[a-zA-Z0-9+_)(*^%$#@!]{12,16}$" }}
 
-  {{- if not (regexMatch $chapUserValidationPattern $username) }}
+   {{- if not (regexMatch $chapUserValidationPattern $username) }}
     {{- fail (printf "Username does not match the required pattern: %s" $chapUserValidationPattern) }}
   {{- end }}
 
   {{- if not (regexMatch $chapPasswordValidationPattern $password) }}
     {{- fail (printf "Password does not match the required pattern: %s" $chapPasswordValidationPattern) }}
-  {{- end }}
+  {{- end }} 
+ 
 {{- end }}
 {{- end -}}
 
 {{- define "empty" -}}
 {{- eq . "" -}}
-{{- end -}}
-
-{{- define "regexMatch" -}}
-{{- $regex := regexCompile .0 -}}
-{{- if $regex }}
-  {{- regexMatch $regex .1 -}}
-{{- else -}}
-  {{- fail "Invalid regex pattern" -}}
-{{- end -}}
 {{- end -}}
 
