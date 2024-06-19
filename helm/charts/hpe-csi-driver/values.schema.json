@@ -138,7 +138,7 @@
             "$id": "#/properties/iscsi",
             "title": "iSCSI CHAP secret name",
             "type": "object",
-            "default": 
+            "default":
                 {
                     "chapSecretName": ""
                 },

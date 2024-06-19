@@ -58,12 +58,11 @@ CHAP secret validation
 
   {{- if not (regexMatch $chapPasswordValidationPattern $password) }}
     {{- fail (printf "Password does not match the required pattern: %s" $chapPasswordValidationPattern) }}
-  {{- end }} 
- 
+  {{- end }}
+
 {{- end }}
 {{- end -}}
 
 {{- define "empty" -}}
 {{- eq . "" -}}
 {{- end -}}
-
