@@ -22,7 +22,6 @@ imagePullPolicy: "IfNotPresent"
 # Cluster wide values for CHAP authentication
 iscsi:
   chapSecretName: ""
-  chapSecretNamespace: ""
 
 # Log level for all hpe-csi-driver components
 logLevel: "info"

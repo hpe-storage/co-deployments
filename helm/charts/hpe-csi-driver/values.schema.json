@@ -16,8 +16,7 @@
             "disableNodeConfiguration": false,
             "imagePullPolicy": "IfNotPresent",
             "iscsi": {
-                "chapSecretName": "",
-                "chapSecretNamespace": ""
+                "chapSecretName": ""
             },
             "logLevel": "info",
             "kubeletRootDir": "/var/lib/kubelet/",
@@ -137,27 +136,19 @@
         },
         "iscsi": {
             "$id": "#/properties/iscsi",
-            "title": "iSCSI CHAP secret name and namespace",
+            "title": "iSCSI CHAP secret name",
             "type": "object",
             "default": 
                 {
-                    "chapSecretName": "",
-                    "chapSecretNamespace": ""
+                    "chapSecretName": ""
                 },
             "required": [
-                "chapSecretName",
-                "chapSecretNamespace"
+                "chapSecretName"
             ],
             "properties": {
                 "chapSecretName": {
                     "$id": "#/properties/iscsi/properties/chapSecretName",
                     "title": "CHAP secret name",
-                    "type": "string",
-                    "default": ""
-                },
-                "chapSecretNamespace": {
-                    "$id": "#/properties/iscsi/properties/chapSecretNamespace",
-                    "title": "CHAP secret namespace",
                     "type": "string",
                     "default": ""
                 }
