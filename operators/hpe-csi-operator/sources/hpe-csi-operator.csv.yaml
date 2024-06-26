@@ -164,7 +164,7 @@ spec:
             description: "Name of the secret containing chapUser and chapPassword for iSCSI"
             path: iscsi.chapSecretName
             x-descriptors:
-              - "urn:alm:descriptor:com.tectonic.ui:text"
+              - "urn:alm:descriptor:io.kubernetes:Secret"
           - displayName: Kubelet root dir
             description: "The kubelet root directory path."
             path: kubeletRootDir
