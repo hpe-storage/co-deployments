@@ -19,6 +19,10 @@ disableNodeConfiguration: false
 # imagePullPolicy applied for all hpe-csi-driver images
 imagePullPolicy: "IfNotPresent"
 
+# Cluster wide values for CHAP authentication
+iscsi:
+  chapSecretName: ""
+
 # Log level for all hpe-csi-driver components
 logLevel: "info"
 

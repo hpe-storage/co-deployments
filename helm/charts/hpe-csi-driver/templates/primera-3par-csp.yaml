@@ -91,6 +91,12 @@ spec:
               value: "35"
             - name: CRD_CLIENT_CONFIG_BURST
               value: "20"
+            {{- if .Values.iscsi.chapSecretName }}
+            - name: CHAP_SECRET_NAME
+              value: {{ .Values.iscsi.chapSecretName }}
+            - name: CHAP_SECRET_NAMESPACE
+              value: {{ .Release.Namespace }}
+            {{- end }}
           ports:
             - containerPort: 8080
           volumeMounts:

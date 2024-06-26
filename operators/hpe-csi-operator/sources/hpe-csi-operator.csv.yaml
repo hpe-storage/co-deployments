@@ -157,6 +157,14 @@ spec:
               - "urn:alm:descriptor:com.tectonic.ui:booleanSwitch"
             x-descriptors:
               - "urn:alm:descriptor:com.tectonic.ui:text"
+          - displayName: iSCSI Configuration
+            description: "Configuration for iSCSI CHAP authenticaton"
+            path: iscsi
+          - displayName: iSCSI CHAP Secret Name
+            description: "Name of the secret containing chapUser and chapPassword for iSCSI"
+            path: iscsi.chapSecretName
+            x-descriptors:
+              - "urn:alm:descriptor:io.kubernetes:Secret"
           - displayName: Kubelet root dir
             description: "The kubelet root directory path."
             path: kubeletRootDir

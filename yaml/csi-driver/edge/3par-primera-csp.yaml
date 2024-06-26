@@ -60,6 +60,10 @@ spec:
             value: "35"
           - name: CRD_CLIENT_CONFIG_BURST
             value: "20"
+          - name: CHAP_SECRET_NAME
+            value: ""
+          - name: CHAP_SECRET_NAMESPACE
+            value: hpe-storage
           ports:
           - containerPort: 8080
           volumeMounts:
