@@ -65,6 +65,9 @@ spec:
                 description: DisableNodeGetVolumeStats will be called by default,
                   set true to disable the call
                 type: boolean
+              disableNodeMonitor:
+                description: Disable the Node Monitor
+                type: boolean
               imagePullPolicy:
                 description: Image Pull Policy for HPE CSI driver images
                 type: string
@@ -1304,8 +1307,10 @@ spec:
             - disableNodeConformance
             - disableNodeConfiguration
             - disableNodeGetVolumeStats
+            - disableNodeMonitor
             - imagePullPolicy
             - images
+            - iscsi
             - kubeletRootDir
             - logLevel
             - csp

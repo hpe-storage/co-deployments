@@ -21,6 +21,7 @@
             "logLevel": "info",
             "kubeletRootDir": "/var/lib/kubelet/",
             "disableNodeGetVolumeStats": false,
+            "disableNodeMonitor": false,
             "csp": {
                 "nodeSelector": {},
                 "tolerations": [],
@@ -53,6 +54,7 @@
         "logLevel",
         "kubeletRootDir",
         "disableNodeGetVolumeStats",
+        "disableNodeMonitor",
         "csp",
         "controller",
         "node",
@@ -174,6 +176,13 @@
             "$id": "#/properties/disableNodeGetVolumeStats",
             "title": "Disable the CSI nodeGetVolumeStats call",
             "description": "In very large environments, disabling this feature may alleviate pressure on the CSP.",
+            "type": "boolean",
+            "default": false
+        },
+        "disableNodeMonitor": {
+            "$id": "#/properties/disableNodeMonitor",
+            "title": "Disable the Node Monitor",
+            "description": "The Node Monitor watches for and acts on stale storage resources.",
             "type": "boolean",
             "default": false
         },
