@@ -62,6 +62,18 @@ spec:
           env:
             - name: CSI_ENDPOINT
               value: unix:///csi/csi.sock
+            {{ if .Values.disableNodeConformance -}}
+            - name: DISABLE_NODE_CONFORMANCE
+              value: "true"
+            {{- end }}
+            {{ if .Values.disableNodeConfiguration -}}
+            - name: DISABLE_NODE_CONFIGURATION
+              value: "true"
+            {{- end }}
+            {{ if .Values.disableNodeMonitor -}}
+            - name: DISABLE_NODE_MONITOR
+              value: "true"
+            {{- end }}
           imagePullPolicy: {{ .Values.imagePullPolicy | quote }}
           securityContext:
             privileged: true
@@ -128,6 +140,10 @@ spec:
             {{- end }}
             {{ if .Values.disableNodeConfiguration -}}
             - name: DISABLE_NODE_CONFIGURATION
+              value: "true"
+            {{- end }}
+            {{ if .Values.disableNodeMonitor -}}
+            - name: DISABLE_NODE_MONITOR
               value: "true"
             {{- end }}
             {{- if .Values.kubeletRootDir }}

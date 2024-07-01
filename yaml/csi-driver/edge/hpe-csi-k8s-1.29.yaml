@@ -509,6 +509,9 @@ rules:
   - apiGroups: ["storage.k8s.io"]
     resources: ["storageclasses"]
     verbs: ["get", "list", "watch"]
+  - apiGroups: ["storage.k8s.io"]
+    resources: ["volumeattachments"]
+    verbs: ["get", "list", "watch"]
 
 ---
 apiVersion: v1
@@ -752,6 +755,10 @@ spec:
               value: unix:///var/lib/csi/sockets/pluginproxy/csi.sock
             - name: LOG_LEVEL
               value: trace
+            - name: CHAP_SECRET_NAME
+              value: ""
+            - name: CHAP_SECRET_NAMESPACE
+              value: hpe-storage
           imagePullPolicy: "IfNotPresent"
           volumeMounts:
             - name: socket-dir
@@ -932,6 +939,12 @@ spec:
           env:
             - name: CSI_ENDPOINT
               value: unix:///csi/csi.sock
+            - name: DISABLE_NODE_CONFORMANCE
+              value: "false"
+            - name: DISABLE_NODE_CONFIGURATION
+              value: "false"
+            - name: DISABLE_NODE_MONITOR
+              value: "false"
           imagePullPolicy: "IfNotPresent"
           securityContext:
             privileged: true
@@ -990,6 +1003,12 @@ spec:
               value: "false"
             - name: DISABLE_NODE_CONFIGURATION
               value: "false"
+            - name: DISABLE_NODE_MONITOR
+              value: "false"
+            - name: CHAP_SECRET_NAME
+              value: ""
+            - name: CHAP_SECRET_NAMESPACE
+              value: hpe-storage
           imagePullPolicy: "IfNotPresent"
           securityContext:
             privileged: true

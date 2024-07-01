@@ -32,6 +32,9 @@ kubeletRootDir: "/var/lib/kubelet"
 # NodeGetVolumestats will be called by default, set true to disable the call
 disableNodeGetVolumeStats: false
 
+# The Node Monitor ensure the node has no stale storage resources attached
+disableNodeMonitor: false
+
 controller:
 
   # These values map directly to yaml in the deployment spec, see the kubernetes docs for info

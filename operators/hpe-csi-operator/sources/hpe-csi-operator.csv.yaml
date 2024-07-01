@@ -155,8 +155,11 @@ spec:
             path: disableNodeGetVolumeStats
             x-descriptors:
               - "urn:alm:descriptor:com.tectonic.ui:booleanSwitch"
+          - displayName: Disable Node Monitor
+            description: "Disable the Node Monitor. (default: false)"
+            path: disableNodeMonitor
             x-descriptors:
-              - "urn:alm:descriptor:com.tectonic.ui:text"
+              - "urn:alm:descriptor:com.tectonic.ui:booleanSwitch"
           - displayName: iSCSI Configuration
             description: "Configuration for iSCSI CHAP authenticaton"
             path: iscsi
