@@ -161,7 +161,7 @@ spec:
             x-descriptors:
               - "urn:alm:descriptor:com.tectonic.ui:booleanSwitch"
           - displayName: Disable Host deletion
-            description: "Disables host deletion during volume attachment (default: false)"
+            description: "Disables host deletion by the CSP when no volumes are associated with the host (default: false)"
             path: disableHostDeletion
             x-descriptors:
               - "urn:alm:descriptor:com.tectonic.ui:booleanSwitch"

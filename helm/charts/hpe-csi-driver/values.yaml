@@ -22,7 +22,7 @@ disableNodeGetVolumeStats: false
 # The Node Monitor ensure the node has no stale storage resources attached
 disableNodeMonitor: false
 
-# Enable or disable host deletion during volume unpublish
+# Disables host deletion by the CSP when no volumes are associated with the host
 disableHostDeletion: false
 
 # imagePullPolicy applied for all hpe-csi-driver images

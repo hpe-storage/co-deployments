@@ -69,7 +69,7 @@ spec:
                 description: Disable the Node Monitor
                 type: boolean
               disableHostDeletion:
-                description: Disable host deletion during volume unpublish
+                description: Disables host deletion by the CSP when no volumes are associated with the host
                 type: boolean
               imagePullPolicy:
                 description: Image Pull Policy for HPE CSI driver images

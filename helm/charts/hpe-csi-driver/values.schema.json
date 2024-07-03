@@ -134,7 +134,7 @@
         "disableHostDeletion": {
             "$id": "#/properties/disableHostDeletion",
             "title": "Disable host deletion",
-            "description": "Disables host deletion during volume unpublish",
+            "description": "Disables host deletion by the CSP when no volumes are associated with the host",
             "type": "boolean",
             "default": false
         },
