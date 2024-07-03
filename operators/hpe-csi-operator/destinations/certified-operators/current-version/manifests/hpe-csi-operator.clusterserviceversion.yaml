@@ -160,6 +160,11 @@ spec:
             path: disableNodeGetVolumeStats
             x-descriptors:
               - urn:alm:descriptor:com.tectonic.ui:booleanSwitch
+          - description: 'Disable host deletion during volume unpublish. (default: false)'
+            displayName: Disable Host Deletion
+            path: disableHostDeletion
+            x-descriptors:
+              - urn:alm:descriptor:com.tectonic.ui:booleanSwitch
           - description: iSCSI Configuration
             displayName: iSCSI Configuration
             path: iscsi

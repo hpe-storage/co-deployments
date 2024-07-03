@@ -97,6 +97,10 @@ spec:
             - name: CHAP_SECRET_NAMESPACE
               value: {{ .Release.Namespace }}
             {{- end }}
+            {{- if .Values.disableHostDeletion }}
+            - name: DISABLE_HOST_DELETION
+              value: {{ .Values.disableHostDeletion }}
+            {{- end }}
           ports:
             - containerPort: 8080
           volumeMounts:

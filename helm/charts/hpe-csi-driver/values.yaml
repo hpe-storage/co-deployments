@@ -16,6 +16,15 @@ disableNodeConformance: false
 # For controlling automatic iscsi/multipath service configuration
 disableNodeConfiguration: false
 
+# NodeGetVolumestats will be called by default, set true to disable the call
+disableNodeGetVolumeStats: false
+
+# The Node Monitor ensure the node has no stale storage resources attached
+disableNodeMonitor: false
+
+# Enable or disable host deletion during volume unpublish
+disableHostDeletion: false
+
 # imagePullPolicy applied for all hpe-csi-driver images
 imagePullPolicy: "IfNotPresent"
 
@@ -28,12 +37,6 @@ logLevel: "info"
 
 # Kubelet root directory path
 kubeletRootDir: "/var/lib/kubelet"
-
-# NodeGetVolumestats will be called by default, set true to disable the call
-disableNodeGetVolumeStats: false
-
-# The Node Monitor ensure the node has no stale storage resources attached
-disableNodeMonitor: false
 
 controller:
 

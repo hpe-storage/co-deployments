@@ -160,6 +160,11 @@ spec:
             path: disableNodeMonitor
             x-descriptors:
               - "urn:alm:descriptor:com.tectonic.ui:booleanSwitch"
+          - displayName: Disable Host deletion
+            description: "Disables host deletion during volume attachment (default: false)"
+            path: disableHostDeletion
+            x-descriptors:
+              - "urn:alm:descriptor:com.tectonic.ui:booleanSwitch"
           - displayName: iSCSI Configuration
             description: "Configuration for iSCSI CHAP authenticaton"
             path: iscsi
