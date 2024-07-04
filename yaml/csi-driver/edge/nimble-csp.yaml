@@ -73,6 +73,9 @@ spec:
               cpu: 100m
               memory: 128Mi
           imagePullPolicy: IfNotPresent
+          env:
+          - name: DISABLE_HOST_DELETION
+            value: "false"
           ports:
             - containerPort: 8080
           volumeMounts:

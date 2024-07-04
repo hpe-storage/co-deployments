@@ -38,7 +38,7 @@ The following table lists the configurable parameters of the chart and their def
 | disableNodeConfiguration  | Disables node conformance and configuration.`*`                                | false            |
 | disableNodeGetVolumeStats | Disable NodeGetVolumeStats call to CSI driver.                                 | false            |
 | disableNodeMonitor        | Disables the Node Monitor that manages stale storage resources.                | false            |
-| disableHostDeletion       | Disables host deletion by the CSP when no volumes are associated with the host | false            |
+| disableHostDeletion       | Disables host deletion by the CSP when no volumes are associated with the host.| false            |
 | imagePullPolicy           | Image pull policy (`Always`, `IfNotPresent`, `Never`).                         | IfNotPresent     |
 | iscsi.chapSecretName      | Secret containing chapUser and chapPassword for iSCSI                          | ""               |
 | logLevel                  | Log level. Can be one of `info`, `debug`, `trace`, `warn` and `error`.         | info             |

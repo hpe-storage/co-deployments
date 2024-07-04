@@ -99,7 +99,7 @@ spec:
             {{- end }}
             {{- if .Values.disableHostDeletion }}
             - name: DISABLE_HOST_DELETION
-              value: {{ .Values.disableHostDeletion }}
+              value: "true"
             {{- end }}
           ports:
             - containerPort: 8080

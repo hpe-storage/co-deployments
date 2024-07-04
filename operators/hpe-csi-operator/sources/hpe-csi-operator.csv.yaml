@@ -151,12 +151,12 @@ spec:
             x-descriptors:
               - "urn:alm:descriptor:com.tectonic.ui:booleanSwitch"
           - displayName: Disable NodeGetVolumeStats RPC
-            description: "Disable NodeGetVolumeStats call to CSI driver. (default: false)"
+            description: "Disable NodeGetVolumeStats call to CSI driver (default: false)"
             path: disableNodeGetVolumeStats
             x-descriptors:
               - "urn:alm:descriptor:com.tectonic.ui:booleanSwitch"
           - displayName: Disable Node Monitor
-            description: "Disable the Node Monitor. (default: false)"
+            description: "Disable the Node Monitor (default: false)"
             path: disableNodeMonitor
             x-descriptors:
               - "urn:alm:descriptor:com.tectonic.ui:booleanSwitch"
@@ -174,7 +174,7 @@ spec:
             x-descriptors:
               - "urn:alm:descriptor:io.kubernetes:Secret"
           - displayName: Kubelet root dir
-            description: "The kubelet root directory path."
+            description: "The kubelet root directory path"
             path: kubeletRootDir
             x-descriptors:
               - "urn:alm:descriptor:com.tectonic.ui:text"

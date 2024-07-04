@@ -64,6 +64,8 @@ spec:
             value: ""
           - name: CHAP_SECRET_NAMESPACE
             value: hpe-storage
+          - name: DISABLE_HOST_DELETION
+            value: "false"
           ports:
           - containerPort: 8080
           volumeMounts:

@@ -1352,10 +1352,6 @@ spec:
                 description: DisableNodeGetVolumeStats will be called by default,
                   set true to disable the call
                 type: boolean
-              disableHostDeletion:
-                description: DisableHostDeletion Disables host deletion by the CSP 
-                when no volumes are associated with the host
-                type: boolean
               imagePullPolicy:
                 description: Image Pull Policy for HPE CSI driver images
                 type: string
