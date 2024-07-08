@@ -13,6 +13,37 @@ entries:
         - url: https://artifacthub.io/packages/helm/hpe-storage/hpe-csi-info-metrics
         - url: https://artifacthub.io/packages/helm/hpe-storage/hpe-csi-driver
     apiVersion: v2
+    appVersion: 1.0.3
+    created: "2024-07-08T11:53:12.085133-07:00"
+    description: A Helm chart for installing the HPE Storage Array Exporter for Prometheus
+    digest: 12bfd4575616b2ab5503f59895c3e0fb4f3d329f548f88edebdb428cba534215
+    home: https://hpe.com/storage/containers
+    icon: https://raw.githubusercontent.com/hpe-storage/co-deployments/master/docs/assets/hpedev.png
+    keywords:
+    - HPE
+    - Storage
+    - Prometheus
+    maintainers:
+    - email: dev-hi-containers@hpe.com
+      name: datamattsson
+    name: hpe-array-exporter
+    sources:
+    - https://github.com/hpe-storage/co-deployments
+    urls:
+    - hpe-array-exporter-1.0.3.tgz
+    version: 1.0.3
+  - annotations:
+      artifacthub.io/category: storage
+      artifacthub.io/containsSecurityUpdates: "true"
+      artifacthub.io/license: Apache-2.0
+      artifacthub.io/links: |
+        - name: Documentation
+          url: https://hpe-storage.github.io/array-exporter
+      artifacthub.io/prerelease: "false"
+      artifacthub.io/recommendations: |
+        - url: https://artifacthub.io/packages/helm/hpe-storage/hpe-csi-info-metrics
+        - url: https://artifacthub.io/packages/helm/hpe-storage/hpe-csi-driver
+    apiVersion: v2
     appVersion: 1.0.2
     created: "2023-09-22T13:27:55.448433-07:00"
     description: A Helm chart for installing the HPE Storage Array Exporter for Prometheus
@@ -1039,6 +1070,39 @@ entries:
         - url: https://artifacthub.io/packages/helm/hpe-storage/hpe-csi-driver
         - url: https://artifacthub.io/packages/helm/hpe-storage/hpe-array-exporter
     apiVersion: v2
+    appVersion: 1.0.3
+    created: "2024-07-08T11:53:11.971245-07:00"
+    description: A Helm chart for installing the HPE CSI Info Metrics Provider for
+      Prometheus
+    digest: 6612644f6d2e3896ccf8570314e01e04bab563fa7a6666ff19a1aeb3d0b2faba
+    home: https://hpe.com/storage/containers
+    icon: https://raw.githubusercontent.com/hpe-storage/co-deployments/master/docs/assets/hpedev.png
+    keywords:
+    - HPE
+    - Storage
+    - CSI
+    - Prometheus
+    maintainers:
+    - email: dev-hi-containers@hpe.com
+      name: datamattsson
+    name: hpe-csi-info-metrics
+    sources:
+    - https://github.com/hpe-storage/co-deployments
+    urls:
+    - hpe-csi-info-metrics-1.0.3.tgz
+    version: 1.0.3
+  - annotations:
+      artifacthub.io/category: storage
+      artifacthub.io/containsSecurityUpdates: "true"
+      artifacthub.io/license: Apache-2.0
+      artifacthub.io/links: |
+        - name: Documentation
+          url: https://scod.hpedev.io/
+      artifacthub.io/prerelease: "false"
+      artifacthub.io/recommendations: |
+        - url: https://artifacthub.io/packages/helm/hpe-storage/hpe-csi-driver
+        - url: https://artifacthub.io/packages/helm/hpe-storage/hpe-array-exporter
+    apiVersion: v2
     appVersion: 1.0.2
     created: "2023-09-22T13:27:49.659855-07:00"
     description: A Helm chart for installing the HPE CSI Info Metrics Provider for
@@ -1197,4 +1261,4 @@ entries:
     urls:
     - hpe-flexvolume-driver-3.0.0.tgz
     version: 3.0.0
-generated: "2024-05-20T13:46:07.354073-07:00"
+generated: "2024-07-08T11:53:12.08478-07:00"
