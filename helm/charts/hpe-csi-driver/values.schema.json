@@ -14,6 +14,7 @@
             },
             "disableNodeConformance": false,
             "disableNodeConfiguration": false,
+            "disableHostDeletion": false,
             "imagePullPolicy": "IfNotPresent",
             "iscsi": {
                 "chapSecretName": ""
@@ -49,6 +50,7 @@
         "disable",
         "disableNodeConformance",
         "disableNodeConfiguration",
+        "disableHostDeletion",
         "imagePullPolicy",
         "iscsi",
         "logLevel",
@@ -126,6 +128,13 @@
             "$id": "#/properties/disableNodeConfiguration",
             "title": "Disable node configuration",
             "description": "Disabling node configuration forces the cluster administrator to ensure all node services are configured and started to use external block storage.",
+            "type": "boolean",
+            "default": false
+        },
+        "disableHostDeletion": {
+            "$id": "#/properties/disableHostDeletion",
+            "title": "Disable host deletion",
+            "description": "Disables host deletion by the CSP when no volumes are associated with the host.",
             "type": "boolean",
             "default": false
         },

@@ -65,6 +65,11 @@ spec:
           resources:
             {{- toYaml .Values.csp.resources | nindent 12 }}
           imagePullPolicy: {{ .Values.imagePullPolicy | quote }}
+          env:
+            {{- if .Values.disableHostDeletion }}
+            - name: DISABLE_HOST_DELETION
+              value: "true"
+            {{- end }}
           ports:
             - containerPort: 8080
           volumeMounts:

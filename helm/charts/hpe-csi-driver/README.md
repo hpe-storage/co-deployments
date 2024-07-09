@@ -27,37 +27,38 @@ Depending on which [Container Storage Provider](https://scod.hpedev.io/container
 
 The following table lists the configurable parameters of the chart and their default values.
 
-| Parameter                 | Description                                                            | Default          |
-|---------------------------|------------------------------------------------------------------------|------------------|
-| disable.nimble            | Disable HPE Nimble Storage CSP `Service`.                              | false            |
-| disable.primera           | Disable HPE Primera (and 3PAR) CSP `Service`.                          | false            |
-| disable.alletra6000       | Disable HPE Alletra 5000/6000 CSP `Service`.                           | false            |
-| disable.alletra9000       | Disable HPE Alletra 9000 CSP `Service`.                                | false            |
-| disable.alletraStorageMP  | Disable HPE Alletra Storage MP CSP `Service`.                          | false            |
-| disableNodeConformance    | Disable automatic installation of iSCSI, multipath and NFS packages.   | false            |
-| disableNodeConfiguration  | Disables node conformance and configuration.`*`                        | false            |
-| disableNodeGetVolumeStats | Disable NodeGetVolumeStats call to CSI driver.                         | false            |
-| disableNodeMonitor        | Disables the Node Monitor that manages stale storage resources.        | false            |
-| imagePullPolicy           | Image pull policy (`Always`, `IfNotPresent`, `Never`).                 | IfNotPresent     |
-| iscsi.chapSecretName      | Secret containing chapUser and chapPassword for iSCSI                  | ""               |
-| logLevel                  | Log level. Can be one of `info`, `debug`, `trace`, `warn` and `error`. | info             |
-| kubeletRootDir            | The kubelet root directory path.                                       | /var/lib/kubelet |
-| controller.labels         | Additional labels for HPE CSI Driver controller Pods.                  | {}               |
-| controller.nodeSelector   | Node labels for HPE CSI Driver controller Pods assignment.             | {}               |
-| controller.affinity       | Affinity rules for the HPE CSI Driver controller Pods.                 | {}               |
-| controller.tolerations    | Node taints to tolerate for the HPE CSI Driver controller Pods.        | []               |
-| controller.resources      | A resource block with requests and limits for controller containers.   | From values.yaml |
-| csp.labels                | Additional labels for CSP Pods.                                        | {}               |
-| csp.nodeSelector          | Node labels for CSP Pods assignment.                                   | {}               |
-| csp.affinity              | Affinity rules for the CSP Pods.                                       | {}               |
-| csp.tolerations           | Node taints to tolerate for the CSP Pods.                              | []               |
-| csp.resources             | A resource block with requests and limits for CSP containers.          | From values.yaml |
-| node.labels               | Additional labels for HPE CSI Driver node Pods.                        | {}               |
-| node.nodeSelector         | Node labels for HPE CSI Driver node Pods assignment.                   | {}               |
-| node.affinity             | Affinity rules for the HPE CSI Driver node Pods.                       | {}               |
-| node.tolerations          | Node taints to tolerate for the HPE CSI Driver node Pods.              | []               |
-| node.resources            | A resource block with requests and limits for node containers.         | From values.yaml |
-| images                    | Key/value pairs of HPE CSI Driver runtime images.                      | From values.yaml |
+| Parameter                 | Description                                                                    | Default          |
+|---------------------------|--------------------------------------------------------------------------------|------------------|
+| disable.nimble            | Disable HPE Nimble Storage CSP `Service`.                                      | false            |
+| disable.primera           | Disable HPE Primera (and 3PAR) CSP `Service`.                                  | false            |
+| disable.alletra6000       | Disable HPE Alletra 5000/6000 CSP `Service`.                                   | false            |
+| disable.alletra9000       | Disable HPE Alletra 9000 CSP `Service`.                                        | false            |
+| disable.alletraStorageMP  | Disable HPE Alletra Storage MP CSP `Service`.                                  | false            |
+| disableNodeConformance    | Disable automatic installation of iSCSI, multipath and NFS packages.           | false            |
+| disableNodeConfiguration  | Disables node conformance and configuration.`*`                                | false            |
+| disableNodeGetVolumeStats | Disable NodeGetVolumeStats call to CSI driver.                                 | false            |
+| disableNodeMonitor        | Disables the Node Monitor that manages stale storage resources.                | false            |
+| disableHostDeletion       | Disables host deletion by the CSP when no volumes are associated with the host.| false            |
+| imagePullPolicy           | Image pull policy (`Always`, `IfNotPresent`, `Never`).                         | IfNotPresent     |
+| iscsi.chapSecretName      | Secret containing chapUser and chapPassword for iSCSI                          | ""               |
+| logLevel                  | Log level. Can be one of `info`, `debug`, `trace`, `warn` and `error`.         | info             |
+| kubeletRootDir            | The kubelet root directory path.                                               | /var/lib/kubelet |
+| controller.labels         | Additional labels for HPE CSI Driver controller Pods.                          | {}               |
+| controller.nodeSelector   | Node labels for HPE CSI Driver controller Pods assignment.                     | {}               |
+| controller.affinity       | Affinity rules for the HPE CSI Driver controller Pods.                         | {}               |
+| controller.tolerations    | Node taints to tolerate for the HPE CSI Driver controller Pods.                | []               |
+| controller.resources      | A resource block with requests and limits for controller containers.           | From values.yaml |
+| csp.labels                | Additional labels for CSP Pods.                                                | {}               |
+| csp.nodeSelector          | Node labels for CSP Pods assignment.                                           | {}               |
+| csp.affinity              | Affinity rules for the CSP Pods.                                               | {}               |
+| csp.tolerations           | Node taints to tolerate for the CSP Pods.                                      | []               |
+| csp.resources             | A resource block with requests and limits for CSP containers.                  | From values.yaml |
+| node.labels               | Additional labels for HPE CSI Driver node Pods.                                | {}               |
+| node.nodeSelector         | Node labels for HPE CSI Driver node Pods assignment.                           | {}               |
+| node.affinity             | Affinity rules for the HPE CSI Driver node Pods.                               | {}               |
+| node.tolerations          | Node taints to tolerate for the HPE CSI Driver node Pods.                      | []               |
+| node.resources            | A resource block with requests and limits for node containers.                 | From values.yaml |
+| images                    | Key/value pairs of HPE CSI Driver runtime images.                              | From values.yaml |
 
 `*` = Disabling node conformance and configuration may prevent the CSI driver from functioning properly. See the [manual node configuration](https://scod.hpedev.io/csi_driver/operations.html#manual_node_configuration) section on SCOD to understand the consequences.
 
