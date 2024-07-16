@@ -166,6 +166,44 @@ entries:
         - url: https://artifacthub.io/packages/helm/hpe-storage/hpe-csi-info-metrics
         - url: https://artifacthub.io/packages/helm/hpe-storage/hpe-array-exporter
     apiVersion: v1
+    appVersion: 2.5.0-beta4
+    created: "2024-07-15T22:48:54.684718-07:00"
+    description: A Helm chart for installing the HPE CSI Driver for Kubernetes
+    digest: 4c9d62ca8ecc33ccdd9967f72df64f3fe49fd556119baaf712e140d36a5a4c5c
+    home: https://hpe.com/storage/containers
+    icon: https://raw.githubusercontent.com/hpe-storage/co-deployments/master/docs/assets/hpedev.png
+    keywords:
+    - HPE
+    - Storage
+    - CSI
+    maintainers:
+    - email: dev-hi-containers@hpe.com
+      name: datamattsson
+    name: hpe-csi-driver
+    sources:
+    - https://github.com/hpe-storage/csi-driver
+    urls:
+    - hpe-csi-driver-2.5.0-beta4.tgz
+    version: 2.5.0-beta4
+  - annotations:
+      artifacthub.io/category: storage
+      artifacthub.io/containsSecurityUpdates: "true"
+      artifacthub.io/license: Apache-2.0
+      artifacthub.io/links: |
+        - name: Release Highlights
+          url: https://scod.hpedev.io/csi_driver/index.html#latest_release
+        - name: Release Notes
+          url: https://github.com/hpe-storage/csi-driver/tree/master/release-notes
+        - name: Documentation
+          url: https://scod.hpedev.io/csi_driver
+        - name: Chart Source
+          url: https://github.com/hpe-storage/co-deployments
+      artifacthub.io/prerelease: "true"
+      artifacthub.io/recommendations: |
+        - url: https://artifacthub.io/packages/olm/community-operators/hpe-csi-operator
+        - url: https://artifacthub.io/packages/helm/hpe-storage/hpe-csi-info-metrics
+        - url: https://artifacthub.io/packages/helm/hpe-storage/hpe-array-exporter
+    apiVersion: v1
     appVersion: 2.5.0-beta3
     created: "2024-05-20T13:46:07.355793-07:00"
     description: A Helm chart for installing the HPE CSI Driver for Kubernetes
@@ -1261,4 +1299,4 @@ entries:
     urls:
     - hpe-flexvolume-driver-3.0.0.tgz
     version: 3.0.0
-generated: "2024-07-08T11:53:12.08478-07:00"
+generated: "2024-07-15T22:48:54.683827-07:00"
