@@ -118,7 +118,7 @@ spec:
             - "--node-service"
             - "--flavor=kubernetes"
             - "--node-monitor"
-            - "--node-monitor-interval=30"
+            - "--node-monitor-interval=90"
           env:
             - name: CSI_ENDPOINT
               value: unix:///csi/csi.sock

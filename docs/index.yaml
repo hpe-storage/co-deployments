@@ -167,9 +167,9 @@ entries:
         - url: https://artifacthub.io/packages/helm/hpe-storage/hpe-array-exporter
     apiVersion: v1
     appVersion: 2.5.0-beta4
-    created: "2024-07-15T20:29:29.631902-07:00"
+    created: "2024-07-15T22:48:54.684718-07:00"
     description: A Helm chart for installing the HPE CSI Driver for Kubernetes
-    digest: 6f964db43cfc344273f805d8665a1eb3d2743f712139af2c7a5072513c161728
+    digest: 4c9d62ca8ecc33ccdd9967f72df64f3fe49fd556119baaf712e140d36a5a4c5c
     home: https://hpe.com/storage/containers
     icon: https://raw.githubusercontent.com/hpe-storage/co-deployments/master/docs/assets/hpedev.png
     keywords:
@@ -1299,4 +1299,4 @@ entries:
     urls:
     - hpe-flexvolume-driver-3.0.0.tgz
     version: 3.0.0
-generated: "2024-07-15T20:29:29.616418-07:00"
+generated: "2024-07-15T22:48:54.683827-07:00"
