@@ -656,7 +656,7 @@ spec:
             value: "1"
       containers:
         - name: csi-provisioner
-          image: registry.k8s.io/sig-storage/csi-provisioner:v4.0.1
+          image: registry.k8s.io/sig-storage/csi-provisioner:v5.0.1
           resources:
             limits:
               cpu: 2000m
@@ -675,12 +675,14 @@ spec:
           env:
             - name: ADDRESS
               value: /var/lib/csi/sockets/pluginproxy/csi.sock
+            - name: RUNTIME_NFS_IMAGE
+              value: quay.io/hpestorage/nfs-provisioner:v3.0.5
           imagePullPolicy: "IfNotPresent"
           volumeMounts:
             - name: socket-dir
               mountPath: /var/lib/csi/sockets/pluginproxy/
         - name: csi-attacher
-          image: registry.k8s.io/sig-storage/csi-attacher:v4.5.1
+          image: registry.k8s.io/sig-storage/csi-attacher:v4.6.1
           resources:
             limits:
               cpu: 2000m
@@ -699,7 +701,7 @@ spec:
             - name: socket-dir
               mountPath: /var/lib/csi/sockets/pluginproxy/
         - name: csi-snapshotter
-          image: registry.k8s.io/sig-storage/csi-snapshotter:v7.0.2
+          image: registry.k8s.io/sig-storage/csi-snapshotter:v8.0.1
           resources:
             limits:
               cpu: 2000m
@@ -718,7 +720,7 @@ spec:
             - name: socket-dir
               mountPath: /var/lib/csi/sockets/pluginproxy/
         - name: csi-resizer
-          image: registry.k8s.io/sig-storage/csi-resizer:v1.10.1
+          image: registry.k8s.io/sig-storage/csi-resizer:v1.11.1
           resources:
             limits:
               cpu: 2000m
@@ -737,7 +739,7 @@ spec:
             - name: socket-dir
               mountPath: /var/lib/csi/sockets/pluginproxy/
         - name: hpe-csi-driver
-          image: quay.io/hpestorage/csi-driver:v2.5.0-beta
+          image: quay.io/hpestorage/csi-driver:v2.5.0-beta2
           resources:
             limits:
               cpu: 2000m
@@ -772,7 +774,7 @@ spec:
             - name: root-dir
               mountPath: /host
         - name: csi-volume-mutator
-          image: quay.io/hpestorage/volume-mutator:v1.3.6-beta
+          image: quay.io/hpestorage/volume-mutator:v1.3.6
           resources:
             limits:
               cpu: 2000m
@@ -791,7 +793,7 @@ spec:
             - name: socket-dir
               mountPath: /var/lib/csi/sockets/pluginproxy/
         - name: csi-volume-group-snapshotter
-          image: quay.io/hpestorage/volume-group-snapshotter:v1.0.6-beta
+          image: quay.io/hpestorage/volume-group-snapshotter:v1.0.6
           resources:
             limits:
               cpu: 2000m
@@ -810,7 +812,7 @@ spec:
             - name: socket-dir
               mountPath: /var/lib/csi/sockets/pluginproxy/
         - name: csi-volume-group-provisioner
-          image: quay.io/hpestorage/volume-group-provisioner:v1.0.6-beta
+          image: quay.io/hpestorage/volume-group-provisioner:v1.0.6
           resources:
             limits:
               cpu: 2000m
@@ -829,7 +831,7 @@ spec:
             - name: socket-dir
               mountPath: /var/lib/csi/sockets/pluginproxy/
         - name: csi-extensions
-          image: quay.io/hpestorage/csi-extensions:v1.2.7-beta
+          image: quay.io/hpestorage/csi-extensions:v1.2.7
           resources:
             limits:
               cpu: 2000m
@@ -904,7 +906,7 @@ spec:
             value: "1"
       initContainers:
         - name: hpe-csi-node-init
-          image: quay.io/hpestorage/csi-driver:v2.5.0-beta
+          image: quay.io/hpestorage/csi-driver:v2.5.0-beta2
           resources:
             limits:
               cpu: 2000m
@@ -976,7 +978,7 @@ spec:
             - name: registration-dir
               mountPath: /registration
         - name: hpe-csi-driver
-          image: quay.io/hpestorage/csi-driver:v2.5.0-beta
+          image: quay.io/hpestorage/csi-driver:v2.5.0-beta2
           resources:
             limits:
               cpu: 2000m

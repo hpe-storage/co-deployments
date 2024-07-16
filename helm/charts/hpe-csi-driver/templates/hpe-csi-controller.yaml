@@ -110,6 +110,8 @@ spec:
               value: unix:///var/lib/csi/sockets/pluginproxy/csi.sock
             - name: LOG_LEVEL
               value: {{ .Values.logLevel }}
+            - name: RUNTIME_NFS_IMAGE
+              value: {{ .Values.images.nfsProvisioner }}
             {{- if .Values.iscsi.chapSecretName }}
             - name: CHAP_SECRET_NAME
               value: {{ .Values.iscsi.chapSecretName }}
