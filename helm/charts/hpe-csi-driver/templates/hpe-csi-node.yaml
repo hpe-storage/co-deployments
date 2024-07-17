@@ -74,6 +74,8 @@ spec:
             - name: DISABLE_NODE_MONITOR
               value: "true"
             {{- end }}
+            - name: LOG_LEVEL
+              value: {{ .Values.logLevel }}
           imagePullPolicy: {{ .Values.imagePullPolicy | quote }}
           securityContext:
             privileged: true

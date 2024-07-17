@@ -751,12 +751,12 @@ spec:
             - "--endpoint=$(CSI_ENDPOINT)"
             - "--flavor=kubernetes"
             - "--pod-monitor"
-            - "--pod-monitor-interval=90"
+            - "--pod-monitor-interval=30"
           env:
             - name: CSI_ENDPOINT
               value: unix:///var/lib/csi/sockets/pluginproxy/csi.sock
             - name: LOG_LEVEL
-              value: trace
+              value: info
             - name: CHAP_SECRET_NAME
               value: ""
             - name: CHAP_SECRET_NAMESPACE
@@ -846,7 +846,7 @@ spec:
             - name: CSI_ENDPOINT
               value: unix:///var/lib/csi/sockets/pluginproxy/csi-extensions.sock
             - name: LOG_LEVEL
-              value: trace
+              value: info
           imagePullPolicy: "IfNotPresent"
           volumeMounts:
             - name: socket-dir
@@ -947,6 +947,8 @@ spec:
               value: "false"
             - name: DISABLE_NODE_MONITOR
               value: "false"
+            - name: LOG_LEVEL
+              value: info
           imagePullPolicy: "IfNotPresent"
           securityContext:
             privileged: true
@@ -991,12 +993,12 @@ spec:
             - "--node-service"
             - "--flavor=kubernetes"
             - "--node-monitor"
-            - "--node-monitor-interval=30"
+            - "--node-monitor-interval=90"
           env:
             - name: CSI_ENDPOINT
               value: unix:///csi/csi.sock
             - name: LOG_LEVEL
-              value: trace
+              value: info
             - name: NODE_NAME
               valueFrom:
                 fieldRef:
