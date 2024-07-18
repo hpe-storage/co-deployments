@@ -116,7 +116,7 @@ Vanilla Kubernetes:
 
 ```
 export VERSION=2.4.1
-operator-sdk install olm
+operator-sdk olm install
 kubectl create ns hpe-storage
 operator-sdk run bundle -n hpe-storage quay.io/hpestorage/csi-driver-operator-bundle:v${VERSION}
 kubectl apply -n hpe-storage -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/operators/hpe-csi-operator/destinations/hpecsidriver-v${VERSION}-sample.yaml
