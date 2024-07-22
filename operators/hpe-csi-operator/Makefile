@@ -25,7 +25,7 @@ undeploy:
 
 clean: undeploy
 	# Delete build
-	rm -rf "init" "prep" "$(IMAGE_NAME)"
+	rm -rf "init" "prep" "$(IMAGE_NAME)" bundle-*
 
 init:
 	# Creat temp space
