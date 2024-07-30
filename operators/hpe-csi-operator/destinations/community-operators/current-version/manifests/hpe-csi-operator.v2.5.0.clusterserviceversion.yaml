@@ -15,12 +15,32 @@ metadata:
               "affinity": {},
               "labels": {},
               "nodeSelector": {},
+              "resources": {
+                "limits": {
+                  "cpu": "2000m",
+                  "memory": "1Gi"
+                },
+                "requests": {
+                  "cpu": "100m",
+                  "memory": "128Mi"
+                }
+              },
               "tolerations": []
             },
             "csp": {
               "affinity": {},
               "labels": {},
               "nodeSelector": {},
+              "resources": {
+                "limits": {
+                  "cpu": "2000m",
+                  "memory": "1Gi"
+                },
+                "requests": {
+                  "cpu": "100m",
+                  "memory": "128Mi"
+                }
+              },
               "tolerations": []
             },
             "disable": {
@@ -30,31 +50,57 @@ metadata:
               "nimble": false,
               "primera": false
             },
+            "disableHostDeletion": false,
             "disableNodeConfiguration": false,
             "disableNodeConformance": false,
             "disableNodeGetVolumeStats": false,
+            "disableNodeMonitor": false,
             "imagePullPolicy": "IfNotPresent",
-            "iscsi": {
-              "chapPassword": "",
-              "chapUser": ""
+            "images": {
+              "csiAttacher": "registry.k8s.io/sig-storage/csi-attacher@sha256:b4d611100ece2f9bc980d1cb19c2285b8868da261e3b1ee8f45448ab5512ab94",
+              "csiControllerDriver": "quay.io/hpestorage/csi-driver@sha256:d96e2a63029267abcb3eaf032eb70401861866d636bdb6f192ceb6cee954bb67",
+              "csiExtensions": "quay.io/hpestorage/csi-extensions@sha256:c578d8b4075278fd03bab77b0969585d55a2dac9558bc45a01ba0828834882f2",
+              "csiNodeDriver": "quay.io/hpestorage/csi-driver@sha256:d96e2a63029267abcb3eaf032eb70401861866d636bdb6f192ceb6cee954bb67",
+              "csiNodeDriverRegistrar": "registry.k8s.io/sig-storage/csi-node-driver-registrar@sha256:f25af73ee708ff9c82595ae99493cdef9295bd96953366cddf36305f82555dac",
+              "csiProvisioner": "registry.k8s.io/sig-storage/csi-provisioner@sha256:405a14e1aa702f7ea133cea459e8395fe40a6125c088c55569e696d48e1bd385",
+              "csiResizer": "registry.k8s.io/sig-storage/csi-resizer@sha256:a541e6cc2d8b011bb21b1d4ffec6b090e85270cce6276ee302d86153eec0af43",
+              "csiSnapshotter": "registry.k8s.io/sig-storage/csi-snapshotter@sha256:2e04046334baf9be425bb0fa1d04c2d1720d770825eedbdbcdb10d430da4ad8c",
+              "csiVolumeGroupProvisioner": "quay.io/hpestorage/volume-group-provisioner@sha256:51a49a6848e7c22c4c4307496724c6260497aa93d70858b44c16972e12fd18f1",
+              "csiVolumeGroupSnapshotter": "quay.io/hpestorage/volume-group-snapshotter@sha256:39914c29b33dcb11b5df8d15b5c90913bcf1c994b44d7f202b8d1cb52e9919a9",
+              "csiVolumeMutator": "quay.io/hpestorage/volume-mutator@sha256:57a4449afc2c3e31586e6fbb760f6e2503abcaa1baca70c839e039ea66534135",
+              "nfsProvisioner": "quay.io/hpestorage/nfs-provisioner@sha256:c15b5e76c58cb3f75f81d5e60f61baddf891fa8c49e2f6f580226f129413cd07",
+              "nimbleCSP": "quay.io/hpestorage/alletra-6000-and-nimble-csp@sha256:ab4003f93032129e7f5768dd9b2b047fbfd435b8e0f03e4a60d6d30693320758",
+              "primera3parCSP": "quay.io/hpestorage/alletra-9000-primera-and-3par-csp@sha256:320c335062338378889c1dde2ecba955d3c4d6f4fab120ea075bc4a6c5ffe7af"
             },
-            "kubeletRootDir": "/var/lib/kubelet/",
+            "iscsi": {
+              "chapSecretName": ""
+            },
+            "kubeletRootDir": "/var/lib/kubelet",
             "logLevel": "info",
             "node": {
               "affinity": {},
               "labels": {},
               "nodeSelector": {},
+              "resources": {
+                "limits": {
+                  "cpu": "2000m",
+                  "memory": "1Gi"
+                },
+                "requests": {
+                  "cpu": "100m",
+                  "memory": "128Mi"
+                }
+              },
               "tolerations": []
-            },
-            "registry": "quay.io"
+            }
           }
         }
       ]
     capabilities: Basic Install
     categories: Storage
     certified: "true"
-    containerImage: quay.io/hpestorage/csi-driver-operator@sha256:0bf28949ea78579f8deccaa968a97e62d5d0901185640c911be3c24fa04f17c9
-    createdAt: "2024-04-09T19:42:44Z"
+    containerImage: quay.io/hpestorage/csi-driver-operator@sha256:5d9375e5af2fa6c6ceb187b44d3a000e4c5940fb7960bc7c47228a171810676b
+    createdAt: "2024-07-30T18:09:11Z"
     description: A Container Storage Interface (CSI) driver for HPE storage platforms. The CSI driver allows you to use HPE storage with your preferred container orchestrator.
     features.operators.openshift.io/cnf: "false"
     features.operators.openshift.io/cni: "false"
@@ -66,13 +112,13 @@ metadata:
     features.operators.openshift.io/token-auth-aws: "false"
     features.operators.openshift.io/token-auth-azure: "false"
     features.operators.openshift.io/token-auth-gcp: "false"
-    olm.skipRange: '>=1.0.0 <2.4.2'
-    operatorhub.io/ui-metadata-max-k8s-version: "1.29"
-    operators.operatorframework.io/builder: operator-sdk-v1.34.1
+    olm.skipRange: '>=1.0.0 <2.5.0'
+    operatorhub.io/ui-metadata-max-k8s-version: "1.30"
+    operators.operatorframework.io/builder: operator-sdk-v1.35.0
     operators.operatorframework.io/project_layout: helm.sdk.operatorframework.io/v1
     repository: https://github.com/hpe-storage/co-deployments
     support: HPE
-  name: hpe-csi-operator.v2.4.2
+  name: hpe-csi-operator.v2.5.0
   namespace: placeholder
 spec:
   apiservicedefinitions: {}
@@ -155,30 +201,30 @@ spec:
             path: disableNodeConfiguration
             x-descriptors:
               - urn:alm:descriptor:com.tectonic.ui:booleanSwitch
-          - description: 'Disable NodeGetVolumeStats call to CSI driver. (default: false)'
+          - description: 'Disable NodeGetVolumeStats call to CSI driver (default: false)'
             displayName: Disable NodeGetVolumeStats RPC
             path: disableNodeGetVolumeStats
             x-descriptors:
               - urn:alm:descriptor:com.tectonic.ui:booleanSwitch
-          - description: iSCSI Configuration
+          - description: 'Disable the Node Monitor (default: false)'
+            displayName: Disable Node Monitor
+            path: disableNodeMonitor
+            x-descriptors:
+              - urn:alm:descriptor:com.tectonic.ui:booleanSwitch
+          - description: 'Disables host deletion by the CSP when no volumes are associated with the host (default: false)'
+            displayName: Disable Host deletion
+            path: disableHostDeletion
+            x-descriptors:
+              - urn:alm:descriptor:com.tectonic.ui:booleanSwitch
+          - description: Configuration for iSCSI CHAP authenticaton
             displayName: iSCSI Configuration
             path: iscsi
-          - description: Username for iSCSI CHAP authentication
-            displayName: iSCSI CHAP username
-            path: iscsi.chapUsername
+          - description: Name of the secret containing chapUser and chapPassword for iSCSI
+            displayName: iSCSI CHAP Secret Name
+            path: iscsi.chapSecretName
             x-descriptors:
-              - urn:alm:descriptor:com.tectonic.ui:text
-          - description: Password for iSCSI CHAP authentication
-            displayName: iSCSI CHAP password
-            path: iscsi.chapPassword
-            x-descriptors:
-              - urn:alm:descriptor:com.tectonic.ui:password
-          - description: Registry for HPE CSI Driver (quay.io)
-            displayName: Registry
-            path: registry
-            x-descriptors:
-              - urn:alm:descriptor:com.tectonic.ui:text
-          - description: The kubelet root directory path.
+              - urn:alm:descriptor:io.kubernetes:Secret
+          - description: The kubelet root directory path
             displayName: Kubelet root dir
             path: kubeletRootDir
             x-descriptors:
@@ -200,6 +246,11 @@ spec:
             path: controller.affinity
             x-descriptors:
               - urn:alm:descriptor:com.tectonic.ui:nodeAffinity
+          - description: Limits describes the minimum/maximum amount of compute resources required/allowed
+            displayName: CSI controller resource requirements
+            path: controller.resources
+            x-descriptors:
+              - urn:alm:descriptor:com.tectonic.ui:resourceRequirements
           - description: Configure CSI node driver decorations
             displayName: CSI node driver configuration
             path: node
@@ -217,6 +268,11 @@ spec:
             path: node.affinity
             x-descriptors:
               - urn:alm:descriptor:com.tectonic.ui:nodeAffinity
+          - description: Limits describes the minimum/maximum amount of compute resources required/allowed
+            displayName: CSI node resource requirements
+            path: node.resources
+            x-descriptors:
+              - urn:alm:descriptor:com.tectonic.ui:resourceRequirements
           - description: Configure CSP decorations
             displayName: CSP configuration
             path: csp
@@ -234,6 +290,84 @@ spec:
             path: csp.affinity
             x-descriptors:
               - urn:alm:descriptor:com.tectonic.ui:nodeAffinity
+          - description: Limits describes the minimum/maximum amount of compute resources required/allowed
+            displayName: CSP resource requirements
+            path: csp.resources
+            x-descriptors:
+              - urn:alm:descriptor:com.tectonic.ui:resourceRequirements
+          - description: Set images for sidecars, controller, node and CSPs
+            displayName: HPE CSI Operator images
+            path: images
+          - description: HPE CSI Driver Node Driver container image
+            displayName: CSI Node Driver Image
+            path: images.csiNodeDriver
+            x-descriptors:
+              - urn:alm:descriptor:com.tectonic.ui:text
+          - description: HPE CSI Driver Controller Driver container image
+            displayName: CSI Controller Driver Image
+            path: images.csiControllerDriver
+            x-descriptors:
+              - urn:alm:descriptor:com.tectonic.ui:text
+          - description: HPE Alletra 5000/6000 and Nimble Storage Container Storage Provider container image
+            displayName: Alletra 5000/6000 and Nimble Storage Image
+            path: images.nimbleCSP
+            x-descriptors:
+              - urn:alm:descriptor:com.tectonic.ui:text
+          - description: The HPE Alletra Storage MP, Alletra 9000, Primera and 3PAR Container Storage Provider container image
+            displayName: Alletra Storage MP, Alletra 9000 and Primera Image
+            path: images.primera3parCSP
+            x-descriptors:
+              - urn:alm:descriptor:com.tectonic.ui:text
+          - description: The HPE CSI Driver NFS Server Provisioner container image
+            displayName: NFS Server Provisioner Image
+            path: images.nfsProvisioner
+            x-descriptors:
+              - urn:alm:descriptor:com.tectonic.ui:text
+          - description: The HPE CSI Driver CSI Extensions container image
+            displayName: CSI Extensions Image
+            path: images.csiExtensions
+            x-descriptors:
+              - urn:alm:descriptor:com.tectonic.ui:text
+          - description: The HPE CSI Driver Volume Group Provisioner container image
+            displayName: Volume Group Provisioner Image
+            path: images.csiVolumeGroupProvisioner
+            x-descriptors:
+              - urn:alm:descriptor:com.tectonic.ui:text
+          - description: The HPE CSI Driver Volume Group Snapshotter container image
+            displayName: Volume Group Snapshotter Image
+            path: images.csiVolumeGroupSnapshotter
+            x-descriptors:
+              - urn:alm:descriptor:com.tectonic.ui:text
+          - description: The HPE CSI Driver Volume Mutator container image
+            displayName: Volume Mutator Image
+            path: images.csiVolumeMutator
+            x-descriptors:
+              - urn:alm:descriptor:com.tectonic.ui:text
+          - description: The SIG Storage CSI Attacher container image
+            displayName: CSI Attacher Image
+            path: images.csiAttacher
+            x-descriptors:
+              - urn:alm:descriptor:com.tectonic.ui:text
+          - description: The SIG Storage CSI Node Driver Registrar container image
+            displayName: CSI Node Driver Registrar Image
+            path: images.csiNodeDriverRegistrar
+            x-descriptors:
+              - urn:alm:descriptor:com.tectonic.ui:text
+          - description: The SIG Storage CSI Provisioner container image
+            displayName: CSI Provisioner Image
+            path: images.csiProvisioner
+            x-descriptors:
+              - urn:alm:descriptor:com.tectonic.ui:text
+          - description: The SIG Storage CSI Provisioner container image
+            displayName: CSI Resizer Image
+            path: images.csiResizer
+            x-descriptors:
+              - urn:alm:descriptor:com.tectonic.ui:text
+          - description: The SIG Storage CSI External Snapshotter container image
+            displayName: CSI Snapshotter Image
+            path: images.csiSnapshotter
+            x-descriptors:
+              - urn:alm:descriptor:com.tectonic.ui:text
         statusDescriptors:
           - description: HPE CSI Driver Helm release status
             displayName: Conditions
@@ -433,14 +567,6 @@ spec:
                 - ""
               resources:
                 - nodes
-              verbs:
-                - get
-                - list
-                - watch
-            - apiGroups:
-                - csi.storage.k8s.io
-              resources:
-                - csinodeinfos
               verbs:
                 - get
                 - list
@@ -696,7 +822,7 @@ spec:
                       - --metrics-bind-address=127.0.0.1:8080
                       - --leader-elect
                       - --leader-election-id=hpe-csi-operator
-                    image: quay.io/hpestorage/csi-driver-operator@sha256:0bf28949ea78579f8deccaa968a97e62d5d0901185640c911be3c24fa04f17c9
+                    image: quay.io/hpestorage/csi-driver-operator@sha256:5d9375e5af2fa6c6ceb187b44d3a000e4c5940fb7960bc7c47228a171810676b
                     livenessProbe:
                       httpGet:
                         path: /healthz
@@ -713,7 +839,7 @@ spec:
                     resources:
                       limits:
                         cpu: 500m
-                        memory: 512Mi
+                        memory: 1Gi
                       requests:
                         cpu: 10m
                         memory: 64Mi
@@ -786,12 +912,38 @@ spec:
   provider:
     name: HPE
   relatedImages:
+    - image: quay.io/hpestorage/alletra-6000-and-nimble-csp@sha256:ab4003f93032129e7f5768dd9b2b047fbfd435b8e0f03e4a60d6d30693320758
+      name: alletra-6000-and-nimble-csp-ab4003f93032129e7f5768dd9b2b047fbfd435b8e0f03e4a60d6d30693320758-annotation
+    - image: quay.io/hpestorage/csi-driver-operator@sha256:5d9375e5af2fa6c6ceb187b44d3a000e4c5940fb7960bc7c47228a171810676b
+      name: manager
+    - image: quay.io/hpestorage/csi-driver-operator@sha256:5d9375e5af2fa6c6ceb187b44d3a000e4c5940fb7960bc7c47228a171810676b
+      name: csi-driver-operator-5d9375e5af2fa6c6ceb187b44d3a000e4c5940fb7960bc7c47228a171810676b-annotation
+    - image: quay.io/hpestorage/csi-extensions@sha256:c578d8b4075278fd03bab77b0969585d55a2dac9558bc45a01ba0828834882f2
+      name: csi-extensions-c578d8b4075278fd03bab77b0969585d55a2dac9558bc45a01ba0828834882f2-annotation
+    - image: quay.io/hpestorage/alletra-9000-primera-and-3par-csp@sha256:320c335062338378889c1dde2ecba955d3c4d6f4fab120ea075bc4a6c5ffe7af
+      name: alletra-9000-primera-and-3par-csp-320c335062338378889c1dde2ecba955d3c4d6f4fab120ea075bc4a6c5ffe7af-annotation
+    - image: quay.io/hpestorage/volume-group-provisioner@sha256:51a49a6848e7c22c4c4307496724c6260497aa93d70858b44c16972e12fd18f1
+      name: volume-group-provisioner-51a49a6848e7c22c4c4307496724c6260497aa93d70858b44c16972e12fd18f1-annotation
+    - image: quay.io/hpestorage/volume-mutator@sha256:57a4449afc2c3e31586e6fbb760f6e2503abcaa1baca70c839e039ea66534135
+      name: volume-mutator-57a4449afc2c3e31586e6fbb760f6e2503abcaa1baca70c839e039ea66534135-annotation
+    - image: quay.io/hpestorage/volume-group-snapshotter@sha256:39914c29b33dcb11b5df8d15b5c90913bcf1c994b44d7f202b8d1cb52e9919a9
+      name: volume-group-snapshotter-39914c29b33dcb11b5df8d15b5c90913bcf1c994b44d7f202b8d1cb52e9919a9-annotation
+    - image: registry.k8s.io/sig-storage/csi-resizer@sha256:a541e6cc2d8b011bb21b1d4ffec6b090e85270cce6276ee302d86153eec0af43
+      name: csi-resizer-a541e6cc2d8b011bb21b1d4ffec6b090e85270cce6276ee302d86153eec0af43-annotation
+    - image: registry.k8s.io/sig-storage/csi-provisioner@sha256:405a14e1aa702f7ea133cea459e8395fe40a6125c088c55569e696d48e1bd385
+      name: csi-provisioner-405a14e1aa702f7ea133cea459e8395fe40a6125c088c55569e696d48e1bd385-annotation
+    - image: registry.k8s.io/sig-storage/csi-node-driver-registrar@sha256:f25af73ee708ff9c82595ae99493cdef9295bd96953366cddf36305f82555dac
+      name: csi-node-driver-registrar-f25af73ee708ff9c82595ae99493cdef9295bd96953366cddf36305f82555dac-annotation
+    - image: quay.io/hpestorage/csi-driver@sha256:d96e2a63029267abcb3eaf032eb70401861866d636bdb6f192ceb6cee954bb67
+      name: csi-driver-d96e2a63029267abcb3eaf032eb70401861866d636bdb6f192ceb6cee954bb67-annotation
     - image: gcr.io/kubebuilder/kube-rbac-proxy@sha256:d8cc6ffb98190e8dd403bfe67ddcb454e6127d32b87acc237b3e5240f70a20fb
       name: kube-rbac-proxy
-    - image: quay.io/hpestorage/csi-driver-operator@sha256:0bf28949ea78579f8deccaa968a97e62d5d0901185640c911be3c24fa04f17c9
-      name: manager
-    - image: quay.io/hpestorage/csi-driver-operator@sha256:0bf28949ea78579f8deccaa968a97e62d5d0901185640c911be3c24fa04f17c9
-      name: csi-driver-operator-0bf28949ea78579f8deccaa968a97e62d5d0901185640c911be3c24fa04f17c9-annotation
-  replaces: hpe-csi-operator.v2.4.1
+    - image: quay.io/hpestorage/nfs-provisioner@sha256:c15b5e76c58cb3f75f81d5e60f61baddf891fa8c49e2f6f580226f129413cd07
+      name: nfs-provisioner-c15b5e76c58cb3f75f81d5e60f61baddf891fa8c49e2f6f580226f129413cd07-annotation
+    - image: registry.k8s.io/sig-storage/csi-attacher@sha256:b4d611100ece2f9bc980d1cb19c2285b8868da261e3b1ee8f45448ab5512ab94
+      name: csi-attacher-b4d611100ece2f9bc980d1cb19c2285b8868da261e3b1ee8f45448ab5512ab94-annotation
+    - image: registry.k8s.io/sig-storage/csi-snapshotter@sha256:2e04046334baf9be425bb0fa1d04c2d1720d770825eedbdbcdb10d430da4ad8c
+      name: csi-snapshotter-2e04046334baf9be425bb0fa1d04c2d1720d770825eedbdbcdb10d430da4ad8c-annotation
+  replaces: hpe-csi-operator.v2.4.2
   selector: {}
-  version: 2.4.2
+  version: 2.5.0
