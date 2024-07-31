@@ -141,7 +141,7 @@ certified: prep
 	# Create certified-operators content
 	rm -rf $(CERTIFIED_OUTPUT)/*
 	cp -f -a $(IMAGE_NAME)/bundle/* $(CERTIFIED_OUTPUT)
-	sed -i.remove -e "s|$(REPO_NAME)|$(RH_REPO_NAME)|g" -e "/replaces: /d" \
+	sed -i.remove -e "s|$(REPO_NAME)/$(IMAGE_NAME)|$(RH_REPO_NAME)/$(IMAGE_NAME)|g" -e "/replaces: /d" \
 		$(CERTIFIED_OUTPUT)/manifests/hpe-csi-operator.clusterserviceversion.yaml && \
 		rm -f $(CERTIFIED_OUTPUT)/manifests/hpe-csi-operator.clusterserviceversion.yaml.remove
 

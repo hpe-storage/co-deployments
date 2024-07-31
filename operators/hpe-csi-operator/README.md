@@ -47,7 +47,7 @@ On you cluster, install OLM (ensure your KUBECONFIG points to a cluster).
 operator-sdk olm install
 ```
 
-Next, figure out what destination repositories you want to use. For example, I use `quay.io/datamattsson/csi-driver-operator` and `quay.io/datamattsson/csi-driver-operator-bundle`
+Next, figure out what destination repositories you want to use. For example, I use `quay.io/datamattsson` as the base.
 
 ```
 export REPO_NAME=quay.io/datamattsson
@@ -83,7 +83,7 @@ kubectl get pods -n hpe-storage -w
 Iterate this until it looks OK to submit. For good measure, generate the scorecard and make sure all tests pass.
 
 ```
-make comminity-scorecard
+make community-scorecard
 ```
 
 ## Testing and Building for OpenShift
@@ -115,7 +115,7 @@ In a typical test scenario, these are the steps for each of the supported platfo
 Vanilla Kubernetes:
 
 ```
-export VERSION=2.4.1
+export VERSION=2.5.0
 operator-sdk olm install
 kubectl create ns hpe-storage
 operator-sdk run bundle -n hpe-storage quay.io/hpestorage/csi-driver-operator-bundle:v${VERSION}
@@ -125,7 +125,7 @@ kubectl apply -n hpe-storage -f https://raw.githubusercontent.com/hpe-storage/co
 OpenShift:
 
 ```
-export VERSION=2.4.1
+export VERSION=2.5.0
 oc create ns hpe-storage
 oc apply -f https://scod.hpedev.io/partners/redhat_openshift/examples/scc/hpe-csi-scc.yaml
 operator-sdk run bundle -n hpe-storage quay.io/hpestorage/csi-driver-operator-bundle-ocp:v${VERSION}
