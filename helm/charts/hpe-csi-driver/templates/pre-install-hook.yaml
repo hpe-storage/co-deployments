@@ -17,7 +17,8 @@ spec:
       restartPolicy: Never
       containers:
       - name: pre-install
-        image: busybox
+        image: {{ .Values.images.csiControllerDriver | quote }}
+        imagePullPolicy: {{ .Values.imagePullPolicy | quote }}
         command: ["/bin/sh", "-c"]
         args:
           - |
