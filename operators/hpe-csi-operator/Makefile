@@ -21,7 +21,7 @@ PLATFORMS ?= linux/arm64,linux/amd64
 
 undeploy:
 	# Remove Operator from cluster
-	operator-sdk cleanup $(VANITY_NAME) -n $(NAMESPACE)
+	- operator-sdk cleanup $(VANITY_NAME) -n $(NAMESPACE)
 
 clean: undeploy
 	# Delete build

@@ -115,7 +115,7 @@ In a typical test scenario, these are the steps for each of the supported platfo
 Vanilla Kubernetes:
 
 ```
-export VERSION=2.5.0
+export VERSION=2.5.1
 operator-sdk olm install
 kubectl create ns hpe-storage
 operator-sdk run bundle -n hpe-storage quay.io/hpestorage/csi-driver-operator-bundle:v${VERSION}
@@ -125,7 +125,7 @@ kubectl apply -n hpe-storage -f https://raw.githubusercontent.com/hpe-storage/co
 OpenShift:
 
 ```
-export VERSION=2.5.0
+export VERSION=2.5.1
 oc create ns hpe-storage
 oc apply -f https://scod.hpedev.io/partners/redhat_openshift/examples/scc/hpe-csi-scc.yaml
 operator-sdk run bundle -n hpe-storage quay.io/hpestorage/csi-driver-operator-bundle-ocp:v${VERSION}
