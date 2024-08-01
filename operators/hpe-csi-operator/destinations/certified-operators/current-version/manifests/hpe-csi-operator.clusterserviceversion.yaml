@@ -99,7 +99,7 @@ metadata:
     capabilities: Basic Install
     categories: Storage
     certified: "true"
-    containerImage: registry.connect.redhat.com/hpestorage/csi-driver-operator@sha256:891a287c7a0fd84e12f4998c33bd072283d0d7d975a2cb25d8b45025cfdd1fb7
+    containerImage: registry.connect.redhat.com/hpestorage/csi-driver-operator@sha256:188c4ec476c1ba80403653bf7663a1c79aba2714df56d63909963a073f14b392
     createdAt: "2024-07-31T05:14:25Z"
     description: A Container Storage Interface (CSI) driver for HPE storage platforms. The CSI driver allows you to use HPE storage with your preferred container orchestrator.
     features.operators.openshift.io/cnf: "false"
@@ -822,7 +822,7 @@ spec:
                       - --metrics-bind-address=127.0.0.1:8080
                       - --leader-elect
                       - --leader-election-id=hpe-csi-operator
-                    image: registry.connect.redhat.com/hpestorage/csi-driver-operator@sha256:891a287c7a0fd84e12f4998c33bd072283d0d7d975a2cb25d8b45025cfdd1fb7
+                    image: registry.connect.redhat.com/hpestorage/csi-driver-operator@sha256:188c4ec476c1ba80403653bf7663a1c79aba2714df56d63909963a073f14b392
                     livenessProbe:
                       httpGet:
                         path: /healthz
@@ -916,7 +916,7 @@ spec:
       name: csi-driver-d96e2a63029267abcb3eaf032eb70401861866d636bdb6f192ceb6cee954bb67-annotation
     - image: registry.redhat.io/openshift4/ose-kube-rbac-proxy@sha256:77df668a9591bbaae675d0553f8dca5423c0f257317bc08fe821d965f44ed019
       name: kube-rbac-proxy
-    - image: registry.connect.redhat.com/hpestorage/csi-driver-operator@sha256:891a287c7a0fd84e12f4998c33bd072283d0d7d975a2cb25d8b45025cfdd1fb7
+    - image: registry.connect.redhat.com/hpestorage/csi-driver-operator@sha256:188c4ec476c1ba80403653bf7663a1c79aba2714df56d63909963a073f14b392
       name: manager
     - image: quay.io/hpestorage/alletra-9000-primera-and-3par-csp@sha256:320c335062338378889c1dde2ecba955d3c4d6f4fab120ea075bc4a6c5ffe7af
       name: alletra-9000-primera-and-3par-csp-320c335062338378889c1dde2ecba955d3c4d6f4fab120ea075bc4a6c5ffe7af-annotation
@@ -926,8 +926,8 @@ spec:
       name: volume-group-provisioner-51a49a6848e7c22c4c4307496724c6260497aa93d70858b44c16972e12fd18f1-annotation
     - image: registry.k8s.io/sig-storage/csi-snapshotter@sha256:2e04046334baf9be425bb0fa1d04c2d1720d770825eedbdbcdb10d430da4ad8c
       name: csi-snapshotter-2e04046334baf9be425bb0fa1d04c2d1720d770825eedbdbcdb10d430da4ad8c-annotation
-    - image: registry.connect.redhat.com/hpestorage/csi-driver-operator@sha256:891a287c7a0fd84e12f4998c33bd072283d0d7d975a2cb25d8b45025cfdd1fb7
-      name: csi-driver-operator-891a287c7a0fd84e12f4998c33bd072283d0d7d975a2cb25d8b45025cfdd1fb7-annotation
+    - image: registry.connect.redhat.com/hpestorage/csi-driver-operator@sha256:188c4ec476c1ba80403653bf7663a1c79aba2714df56d63909963a073f14b392
+      name: csi-driver-operator-188c4ec476c1ba80403653bf7663a1c79aba2714df56d63909963a073f14b392-annotation
     - image: quay.io/hpestorage/volume-group-snapshotter@sha256:39914c29b33dcb11b5df8d15b5c90913bcf1c994b44d7f202b8d1cb52e9919a9
       name: volume-group-snapshotter-39914c29b33dcb11b5df8d15b5c90913bcf1c994b44d7f202b8d1cb52e9919a9-annotation
     - image: registry.k8s.io/sig-storage/csi-resizer@sha256:a541e6cc2d8b011bb21b1d4ffec6b090e85270cce6276ee302d86153eec0af43
