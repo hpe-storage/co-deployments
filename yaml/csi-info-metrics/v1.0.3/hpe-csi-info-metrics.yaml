@@ -1,0 +1,112 @@
+# Deploy the HPE CSI Info Metrics Provider for Prometheus.
+#
+# Modify this sample file to:
+# - Uncomment the --accept-eula option in the Deployment to indicate
+#   your acceptance of the HPE End User License Agreement at
+#   https://www.hpe.com/us/en/software/licensing.html.
+# - Optionally set the Service type to NodePort, if necessary for
+#   access by a Prometheus instance running outside the cluster
+# - Optionally add labels to the Service, for example to facilitate
+#   the use of targetLabels in a ServiceMonitor spec
+
+---
+kind: ServiceAccount
+apiVersion: v1
+metadata:
+  name: hpe-csi-info-metrics-serviceaccount
+  namespace: hpe-storage
+
+---
+kind: ClusterRole
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: hpe-csi-info-metrics-role
+rules:
+  - apiGroups: [""]
+    resources: ["secrets"]
+    verbs: ["get", "list", "watch"]
+  - apiGroups: [""]
+    resources: ["persistentvolumes"]
+    verbs: ["get", "list", "watch"]
+  - apiGroups: ["storage.k8s.io"]
+    resources: ["storageclasses"]
+    verbs: ["get", "list", "watch"]
+
+---
+kind: ClusterRoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: hpe-csi-info-metrics-rolebinding
+subjects:
+  - kind: ServiceAccount
+    name: hpe-csi-info-metrics-serviceaccount
+    namespace: hpe-storage
+roleRef:
+  kind: ClusterRole
+  name: hpe-csi-info-metrics-role
+  apiGroup: rbac.authorization.k8s.io
+
+---
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: hpe-csi-info-metrics
+  namespace: hpe-storage
+spec:
+  selector:
+    matchLabels:
+      app: hpe-csi-info-metrics
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: hpe-csi-info-metrics
+    spec:
+      serviceAccount: hpe-csi-info-metrics-serviceaccount
+      containers:
+        - name: csi-info-metrics
+          image: quay.io/hpestorage/csi-info-metrics:v1.0.3
+          ports:
+          - containerPort: 9099
+          args:
+            - "--telemetry.addr=:9099"
+            - "--telemetry.path=/metrics"
+            # IMPORTANT: Uncomment this argument to confirm your
+            # acceptance of the HPE End User License Agreement at
+            # https://www.hpe.com/us/en/software/licensing.html
+            #- "--accept-eula"
+          env:
+            - name: LOG_LEVEL
+              value: info
+          imagePullPolicy: Always
+
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: hpe-csi-info-metrics-service
+  namespace: hpe-storage
+  labels:
+    app: hpe-csi-info-metrics
+    # Optionally add labels, for example to be included in Prometheus
+    # metrics via a targetLabels setting in a ServiceMonitor spec
+    #cluster: my-cluster
+  # Optionally add annotations, for example to configure it as a
+  # scrape target when using the Prometheus Helm chart's default
+  # configuration.
+  #annotations:
+  #  "prometheus.io/scrape": "true"
+spec:
+  # Optionally expose the metrics service outside the cluster
+  #type: NodePort
+  ports:
+    - name: http-metrics
+      port: 9090
+      # Optionally choose a TCP port at which to expose the metrics
+      # service externally at each cluster node, when the Service
+      # type is NodePort
+      #nodePort: 30901
+      protocol: TCP
+      targetPort: 9099
+  selector:
+    app: hpe-csi-info-metrics
