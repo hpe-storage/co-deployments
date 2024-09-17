@@ -15,6 +15,7 @@
             "disableNodeConformance": false,
             "disableNodeConfiguration": false,
             "disableHostDeletion": false,
+            "disablePreInstallHooks": false,
             "imagePullPolicy": "IfNotPresent",
             "iscsi": {
                 "chapSecretName": ""
@@ -135,6 +136,13 @@
             "$id": "#/properties/disableHostDeletion",
             "title": "Disable host deletion",
             "description": "Disables host deletion by the CSP when no volumes are associated with the host.",
+            "type": "boolean",
+            "default": false
+        },
+        "disablePreInstallHooks": {
+            "$id": "#/properties/disablePreInstallHooks",
+            "title": "Disable pre-install hooks",
+            "description": "Disable pre-install hooks when the chart is rendered outside of Kubernetes, such as CI/CD systems.",
             "type": "boolean",
             "default": false
         },
