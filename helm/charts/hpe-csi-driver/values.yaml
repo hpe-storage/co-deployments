@@ -25,6 +25,9 @@ disableNodeMonitor: false
 # Disables host deletion by the CSP when no volumes are associated with the host
 disableHostDeletion: false
 
+# Disable pre-install hooks when the chart is rendered outside of Kubernetes, such as CI/CD systems
+disablePreInstallHooks: false
+
 # imagePullPolicy applied for all hpe-csi-driver images
 imagePullPolicy: "IfNotPresent"
 

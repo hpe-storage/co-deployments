@@ -1,3 +1,4 @@
+{{- if not .Values.disablePreInstallHooks }}
 apiVersion: batch/v1
 kind: Job
 metadata:
@@ -25,3 +26,4 @@ spec:
             echo "Validating Secret..."
             {{ include "hpe-csi-storage.chapSecretValidation" . }}
             echo "Validation successful."
+{{- end }}
