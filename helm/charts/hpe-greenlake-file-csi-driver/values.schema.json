@@ -1,0 +1,221 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema",
+    "$id": "http://example.com/example.json",
+    "title": "HPE CSI Driver for Kubernetes Helm Chart JSON Schema",
+    "type": "object",
+    "default": 
+        {
+            "disableNodeConformance": false,
+            "imagePullPolicy": "IfNotPresent",
+            "iscsi": {
+                "chapSecretName": ""
+            },
+            "logLevel": "info",
+            "kubeletRootDir": "/var/lib/kubelet",
+            "controller": {
+                "nodeSelector": {},
+                "tolerations": [],
+                "affinity": {},
+                "labels": {},
+		"resources": {}
+            },
+            "node": {
+                "nodeSelector": {},
+                "tolerations": [],
+                "affinity": {},
+                "labels": {},
+		"resources": {}
+            },
+	    "images": {}
+        },
+    "required": [
+        "disableNodeConformance",
+        "imagePullPolicy",
+        "kubeletRootDir",
+        "controller",
+        "node",
+	"images"
+    ],
+    "properties": {
+        "disableNodeConformance": {
+            "$id": "#/properties/disableNodeConformance",
+            "title": "Disable node conformance",
+            "description": "Disabling node conformance forces the cluster administrator to install required packages and ensure the correct node services are started to use external block storage.",
+            "type": "boolean",
+            "default": false
+        },
+        "imagePullPolicy": {
+            "$id": "#/properties/imagePullPolicy",
+            "title": "CSI driver image pull policy",
+            "type": "string",
+            "default": "IfNotPresent",
+            "enum": [ "Always", "IfNotPresent", "Never" ]
+        },
+        "kubeletRootDir": {
+            "$id": "#/properties/kubeletRootDir",
+            "title": "Kubelet root directory",
+            "description": "Only change this if the kubelet root dir has been altered by the Kubernetes platform installer.",
+            "type": "string",
+            "default": "/var/lib/kubelet",
+            "pattern": "^/"
+        },
+        "controller": {
+            "nodeSelector": {
+                "$id": "#/properties/controller/properties/nodeSelector",
+                "title": "Node selector to control the selection of nodes (optional).",
+                "description": "Selector which must match a node's labels for the pod to be scheduled on that node.",
+                "type": "object",
+                "default": {}
+            },
+            "tolerations": {
+                "$id": "#/properties/controller/properties/tolerations",
+                "title": "Set tolerations for the driver pods(optional)",
+                "description": "Tolerations is the list of tolerations for the driver pods.",
+                "type": "array",
+                "default": []
+            },
+            "affinity": {
+                "$id": "#/properties/controller/properties/affinity",
+                "title": "Node affinity for controller plugin (optional).",
+                "description": "Describes node affinity scheduling rules for the pod.",
+                "type": "object",
+                "default": {}
+            },
+            "labels": {
+                "$id": "#/properties/controller/properties/labels",
+                "title": "labels",
+                "description": "Labels to apply to the controller driver.",
+                "type": "object",
+                "default": {}
+            },
+	    "resources": {
+                "$id": "#/properties/controller/properties/resources",
+                "type": "object",
+	        "title": "resource requests and limits",
+	        "additionalProperties": false,
+                "required": ["limits", "requests"],
+                "description": "See https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/",
+                "properties": {
+                    "limits": {
+                        "type": "object",
+                        "title": "resource limits",
+                        "default": {}
+	            },
+                    "requests": {
+                        "type": "object",
+                        "title": "resource requests",
+                        "default": {} }
+                }
+	    }
+        },
+        "node": {
+            "nodeSelector": {
+                "$id": "#/properties/node/properties/nodeSelector",
+                "title": "Node selector to control the selection of nodes (optional).",
+                "description": "Selector which must match a node's labels for the pod to be scheduled on that node.",
+                "type": "object",
+                "default": {}
+            },
+            "tolerations": {
+                "$id": "#/properties/node/properties/tolerations",
+                "title": "Set tolerations for the node pods(optional).",
+                "description": "Tolerations is the list of tolerations for the node pods.",
+                "type": "array",
+                "default": []
+            },
+            "affinity": {
+                "$id": "#/properties/node/properties/affinity",
+                "title": "Node affinity for node plugin (optional).",
+                "description": "Describes node affinity scheduling rules for the pod.",
+                "type": "object",
+                "default": {}
+            },
+            "labels": {
+                "$id": "#/properties/node/properties/labels",
+                "title": "labels",
+                "description": "Labels to apply to the node driver.",
+                "type": "object",
+                "default": {}
+            },
+	    "resources": {
+                "$id": "#/properties/node/properties/resources",
+                "type": "object",
+	        "title": "resource requests and limits",
+	        "additionalProperties": false,
+                "required": ["limits", "requests"],
+                "description": "See https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/",
+                "properties": {
+                    "limits": {
+                        "type": "object",
+                        "title": "resource limits",
+                        "default": {}
+	            },
+                    "requests": {
+                        "type": "object",
+                        "title": "resource requests",
+                        "default": {} }
+                }
+            }
+        },
+        "images": {
+            "$id": "#/properties/images",
+            "title": "images",
+            "description": "Runtime images.",
+            "type": "object",
+            "required": [
+		"csiNodeInit",
+                "csiNodeDriver",
+                "csiControllerDriver",
+                "csiAttacher",
+                "csiNodeDriverRegistrar",
+                "csiProvisioner",
+                "csiResizer",
+                "csiSnapshotter"
+            ],
+            "properties": {
+                "csiNodeDriver": {
+                    "$id": "#/properties/images/properties/csiNodeDriver",
+                    "title": "CSI Node Driver",
+                    "type": "string"
+                },
+                "csiNodeInitDriver": {
+                    "$id": "#/properties/images/properties/csiNodeDriver",
+                    "title": "CSI Node Init Driver",
+                    "type": "string"
+                },
+                "csiControllerDriver": {
+                    "$id": "#/properties/images/properties/csiControllerDriver",
+                    "title": "CSI Controller Driver",
+                    "type": "string"
+                },
+                "csiAttacher": {
+                    "$id": "#/properties/images/properties/csiAttacher",
+                    "title": "SIG Storage CSI Attacher",
+                    "type": "string"
+                },
+                "csiNodeDriverRegistrar": {
+                    "$id": "#/properties/images/properties/csiNodeDriverRegistrar",
+                    "title": "SIG Storage CSI Driver Registrar",
+                    "type": "string"
+                },
+                "csiProvisioner": {
+                    "$id": "#/properties/images/properties/csiProvisioner",
+                    "title": "SIG Storage CSI Provisioner",
+                    "type": "string"
+                },
+                "csiResizer": {
+                    "$id": "#/properties/images/properties/csiResizer",
+                    "title": "SIG Storage CSI Resizer",
+                    "type": "string"
+                },
+                "csiSnapshotter": {
+                    "$id": "#/properties/images/properties/csiSnapshotter",
+                    "title": "SIG Storage CSI Snapshotter",
+                    "type": "string"
+                }
+	    }
+        },
+        "global": {}
+    },
+    "additionalProperties": false
+}

@@ -1375,4 +1375,40 @@ entries:
     urls:
     - hpe-flexvolume-driver-3.0.0.tgz
     version: 3.0.0
-generated: "2024-08-01T03:20:00.451286-07:00"
+  hpe-greenlake-file-csi-driver:
+  - annotations:
+      artifacthub.io/category: storage
+      artifacthub.io/containsSecurityUpdates: "false"
+      artifacthub.io/license: Apache-2.0
+      artifacthub.io/links: |
+        - name: Release Highlights
+          url: https://scod.hpedev.io/filex_csi_driver/index.html#latest_release
+        - name: Documentation
+          url: https://scod.hpedev.io/filex_csi_driver
+        - name: Chart Source
+          url: https://github.com/hpe-storage/co-deployments
+      artifacthub.io/prerelease: "true"
+      artifacthub.io/recommendations: |
+        - url: https://artifacthub.io/packages/helm/hpe-storage/hpe-csi-driver
+    apiVersion: v1
+    appVersion: 2.4.1
+    created: "2024-09-20T12:14:10.799353-07:00"
+    description: A Helm chart for installing the HPE GreenLake for File Storage CSI
+      Driver
+    digest: cccf4a390e28fca2651d9190c22be8691f353e17400566796d722a4518c7c465
+    home: https://hpe.com/storage/containers
+    icon: https://raw.githubusercontent.com/hpe-storage/co-deployments/master/docs/assets/hpedev.png
+    keywords:
+    - HPE
+    - Storage
+    - CSI
+    maintainers:
+    - email: dev-hi-containers@hpe.com
+      name: datamattsson
+    name: hpe-greenlake-file-csi-driver
+    sources:
+    - https://github.com/hpe-storage/co-deployments
+    urls:
+    - hpe-greenlake-file-csi-driver-1.0.0-beta.tgz
+    version: 1.0.0-beta
+generated: "2024-09-20T12:14:10.798873-07:00"

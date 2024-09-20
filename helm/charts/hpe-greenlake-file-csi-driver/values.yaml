@@ -1,0 +1,67 @@
+# Default values for hpe-csi-driver Helm chart
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+# For controlling automatic iscsi/multipath package installation
+disableNodeConformance: false
+
+# Kubelet root directory path
+kubeletRootDir: "/var/lib/kubelet"
+
+# Controller driver decorations
+controller:
+
+  # These values map directly to yaml in the deployment spec, see the kubernetes docs for info
+  labels: {}
+
+  # These values map directly to yaml in the deployment spec, see the kubernetes docs for info
+  nodeSelector: {}
+
+  # These values map directly to yaml in the deployment spec, see the kubernetes docs for info
+  tolerations: []
+
+  affinity: {}
+
+  resources:
+    limits:
+      cpu: 2000m
+      memory: 1Gi
+    requests:
+      cpu: 100m
+      memory: 128Mi
+
+# Node driver decorations
+node:
+
+  # These values map directly to yaml in the deployment spec, see the kubernetes docs for info
+  labels: {}
+
+  # These values map directly to yaml in the deployment spec, see the kubernetes docs for info
+  nodeSelector: {}
+
+  # These values map directly to yaml in the deployment spec, see the kubernetes docs for info
+  tolerations: []
+
+  affinity: {}
+
+  resources:
+    limits:
+      cpu: 2000m
+      memory: 1Gi
+    requests:
+      cpu: 100m
+      memory: 128Mi
+
+# imagePullPolicy applied for all hpe-csi-driver images
+imagePullPolicy: "IfNotPresent"
+
+# Release images
+images:
+  csiNodeInit: quay.io/hpestorage/filex-csi-init:v1.0.0-beta
+  csiNodeDriver: quay.io/hpestorage/filex-csi-driver:v1.0.0-beta
+  csiControllerDriver: quay.io/hpestorage/filex-csi-driver:v1.0.0-beta
+  csiAttacher: registry.k8s.io/sig-storage/csi-attacher:v4.6.1
+  csiNodeDriverRegistrar: registry.k8s.io/sig-storage/csi-node-driver-registrar:v2.10.1
+  csiProvisioner: registry.k8s.io/sig-storage/csi-provisioner:v5.0.1
+  csiResizer: registry.k8s.io/sig-storage/csi-resizer:v1.11.1
+  csiSnapshotter: registry.k8s.io/sig-storage/csi-snapshotter:v8.0.1
