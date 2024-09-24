@@ -1,0 +1,160 @@
+---
+
+#############################################
+############  Controller driver  ############
+#############################################
+
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: hpe-filex-csi-controller
+  namespace: {{ .Release.Namespace }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hpe-filex-csi-controller
+  template:
+    metadata:
+      labels:
+        app: hpe-filex-csi-controller
+        role: hpe-filex-csi
+        {{- if .Values.controller.labels }}
+{{ toYaml .Values.controller.labels | indent 8 }}
+        {{- end }}
+    spec:
+      serviceAccountName: hpe-filex-csi-controller-sa
+      priorityClassName: system-cluster-critical
+      hostNetwork: true
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 30
+      dnsPolicy: ClusterFirstWithHostNet
+      dnsConfig:
+        options:
+          - name: ndots
+            value: "1"
+      containers:
+        - name: csi-provisioner
+          image: {{ .Values.images.csiProvisioner | quote }}
+          resources:
+            {{- toYaml .Values.controller.resources | nindent 12 }}
+          args:
+          - --csi-address=$(ADDRESS)
+          - --v=5
+          - --extra-create-metadata
+          - --timeout=15s
+          - --worker-threads=10
+          - --retry-interval-start=10s
+          - --retry-interval-max=60s
+          env:
+            - name: ADDRESS
+              value: /var/lib/csi/sockets/pluginproxy/csi.sock
+          imagePullPolicy: {{ .Values.imagePullPolicy | quote }}
+          volumeMounts:
+            - name: socket-dir
+              mountPath: /var/lib/csi/sockets/pluginproxy
+        - name: csi-attacher
+          image: {{ .Values.images.csiAttacher | quote }}
+          resources:
+            {{- toYaml .Values.controller.resources | nindent 12 }}
+          args:
+          - --csi-address=$(ADDRESS)
+          - --v=5
+          - --timeout=15s
+          - --worker-threads=10
+          - --retry-interval-start=10s
+          - --retry-interval-max=60s
+          env:
+            - name: ADDRESS
+              value: /var/lib/csi/sockets/pluginproxy/csi.sock
+          imagePullPolicy: {{ .Values.imagePullPolicy | quote }}
+          volumeMounts:
+            - name: socket-dir
+              mountPath: /var/lib/csi/sockets/pluginproxy
+        - name: csi-snapshotter
+          image: {{ .Values.images.csiSnapshotter | quote }}
+          resources:
+            {{- toYaml .Values.controller.resources | nindent 12 }}
+          args:
+          - --csi-address=$(ADDRESS)
+          - --v=5
+          - --extra-create-metadata
+          - --leader-election=false
+          - --timeout=15s
+          - --worker-threads=10
+          - --retry-interval-start=10s
+          - --retry-interval-max=60s
+          env:
+            - name: ADDRESS
+              value: /var/lib/csi/sockets/pluginproxy/csi.sock
+          imagePullPolicy: {{ .Values.imagePullPolicy | quote }}
+          volumeMounts:
+            - name: socket-dir
+              mountPath: /var/lib/csi/sockets/pluginproxy
+        - name: csi-resizer
+          image: {{ .Values.images.csiResizer | quote }}
+          resources:
+            {{- toYaml .Values.controller.resources | nindent 12 }}
+          args:
+          - --csi-address=$(ADDRESS)
+          - --v=5
+          - --timeout=15s
+          - --workers=10
+          - --retry-interval-start=10s
+          - --retry-interval-max=60s
+          - --handle-volume-inuse-error=false
+          env:
+            - name: ADDRESS
+              value: /var/lib/csi/sockets/pluginproxy/csi.sock
+          imagePullPolicy: {{ .Values.imagePullPolicy | quote }}
+          volumeMounts:
+            - name: socket-dir
+              mountPath: /var/lib/csi/sockets/pluginproxy
+        - name: hpe-filex-csi-driver
+          image: {{ .Values.images.csiControllerDriver | quote }}
+          resources:
+            {{- toYaml .Values.controller.resources | nindent 12 }}
+          args :
+          - serve
+          env:
+          - name: X_CSI_PLUGIN_NAME
+            value: filex.csi.hpe.com
+          - name: X_CSI_VMS_HOST
+          - name: X_CSI_ENABLE_VMS_SSL_VERIFICATION
+            value: "false"
+          - name: X_CSI_DELETION_VIP_POOL_NAME
+          - name: X_CSI_DELETION_VIEW_POLICY
+          - name: X_CSI_WORKER_THREADS
+            value: "10"
+          - name: X_CSI_DONT_USE_TRASH_API
+            value: "false"
+          - name: X_CSI_USE_LOCALIP_FOR_MOUNT
+          - name: X_CSI_ATTACH_REQUIRED
+            value: "true"
+          - name: X_CSI_VMS_TIMEOUT
+            value: "15"
+          - name: X_CSI_TRUNCATE_VOLUME_NAME
+            value: "64"
+          - name: CSI_ENDPOINT
+            value: unix:///var/lib/csi/sockets/pluginproxy/csi.sock
+          - name: X_CSI_MODE
+            value: controller
+          imagePullPolicy: {{ .Values.imagePullPolicy | quote }}
+          volumeMounts:
+          - mountPath: /var/lib/csi/sockets/pluginproxy/
+            name: socket-dir
+      volumes:
+        - name: socket-dir
+          emptyDir: {}
+      {{- if .Values.controller.nodeSelector }}
+      nodeSelector:
+{{ toYaml .Values.controller.nodeSelector | indent 8 }}
+      {{- end }}
+      {{- if .Values.controller.tolerations }}
+      tolerations:
+{{ toYaml .Values.controller.tolerations | indent 8 }}
+      {{- end }}
+      {{- if .Values.controller.affinity }}
+      affinity:
+{{ toYaml .Values.controller.affinity | indent 8 }}
+      {{- end }}
