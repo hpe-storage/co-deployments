@@ -57,9 +57,9 @@ imagePullPolicy: "IfNotPresent"
 
 # Release images
 images:
-  csiNodeInit: quay.io/hpestorage/filex-csi-init:v1.0.0-beta
-  csiNodeDriver: quay.io/hpestorage/filex-csi-driver:v1.0.0-beta
-  csiControllerDriver: quay.io/hpestorage/filex-csi-driver:v1.0.0-beta
+  csiNodeInit: quay.io/hpestorage/filex-csi-init:v1.0.0-beta2
+  csiNodeDriver: quay.io/hpestorage/filex-csi-driver:v1.0.0-beta2
+  csiControllerDriver: quay.io/hpestorage/filex-csi-driver:v1.0.0-beta2
   csiAttacher: registry.k8s.io/sig-storage/csi-attacher:v4.6.1
   csiNodeDriverRegistrar: registry.k8s.io/sig-storage/csi-node-driver-registrar:v2.10.1
   csiProvisioner: registry.k8s.io/sig-storage/csi-provisioner:v5.0.1
