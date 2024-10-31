@@ -148,6 +148,10 @@ spec:
             - name: DISABLE_NODE_MONITOR
               value: "true"
             {{- end }}
+            {{ if .Values.maxVolumesPerNode -}}
+            - name: MAX_VOLUMES_PER_NODE
+              value: "{{ .Values.maxVolumesPerNode }}"
+            {{- end }}
             {{- if .Values.kubeletRootDir }}
             - name: KUBELET_ROOT_DIR
               value: {{ .Values.kubeletRootDir }}

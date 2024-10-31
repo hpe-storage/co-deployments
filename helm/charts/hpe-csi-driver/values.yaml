@@ -22,6 +22,9 @@ disableNodeGetVolumeStats: false
 # The Node Monitor ensure the node has no stale storage resources attached
 disableNodeMonitor: false
 
+# The number of volumes the CSI controller will publish to an individual node
+maxVolumesPerNode: 100
+
 # Disables host deletion by the CSP when no volumes are associated with the host
 disableHostDeletion: false
 

@@ -9,6 +9,7 @@ COMMUNITY_OUTPUT=destinations/community-operators/current-version
 CERTIFIED_OUTPUT=destinations/certified-operators/current-version
 CERTIFIED_KUBE_PROXY=registry.redhat.io/openshift4/ose-kube-rbac-proxy:latest
 NAMESPACE ?= hpe-storage
+CHART ?= hpe-csi-driver
 VANITY_NAME ?= hpe-csi-operator
 IMAGE_NAME ?= csi-driver-operator
 BUNDLE_NAME ?= csi-driver-operator-bundle
@@ -37,10 +38,9 @@ init:
 		--group storage \
 		--version v1 \
 		--kind HPECSIDriver \
-		--project-name hpe-csi-operator \
-		--helm-chart hpe-csi-driver \
-		--helm-chart-repo https://hpe-storage.github.io/co-deployments \
-	        --helm-chart-version $(SOURCE_VERSION)
+		--project-name $(VANITY_NAME) \
+                --helm-chart ../../../docs/$(CHART)-$(VERSION).tgz \
+                --helm-chart-version $(SOURCE_VERSION)
 	touch init
 
 prep: init
