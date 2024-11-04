@@ -68,6 +68,12 @@ spec:
               disableNodeMonitor:
                 description: Disable the Node Monitor
                 type: boolean
+              maxVolumesPerNode:
+                description: Max volumes per node
+                type: integer
+              disablePreInstallHooks:
+                description: Disable pre-install hooks when the chart is rendered outside of Kubernetes, such as CI/CD systems
+                type: boolean
               disableHostDeletion:
                 description: Disables host deletion by the CSP when no volumes are associated with the host
                 type: boolean
@@ -1312,6 +1318,8 @@ spec:
             - disableNodeGetVolumeStats
             - disableNodeMonitor
             - disableHostDeletion
+            - maxVolumesPerNode
+            - disablePreInstallHooks
             - imagePullPolicy
             - images
             - iscsi

@@ -24,6 +24,7 @@
             "kubeletRootDir": "/var/lib/kubelet/",
             "disableNodeGetVolumeStats": false,
             "disableNodeMonitor": false,
+	    "maxVolumesPerNode": 100,
             "csp": {
                 "nodeSelector": {},
                 "tolerations": [],
@@ -58,6 +59,7 @@
         "kubeletRootDir",
         "disableNodeGetVolumeStats",
         "disableNodeMonitor",
+	"maxVolumesPerNode",
         "csp",
         "controller",
         "node",
@@ -203,6 +205,13 @@
             "type": "boolean",
             "default": false
         },
+	"maxVolumesPerNode": {
+            "$id": "#/properties/maxVolumesPerNode",
+            "title": "Max volumes per node",
+            "description": "The maximum amount of volumes the CSI controller will publish to a node.",
+            "type": "integer",
+            "default": 100
+	},
         "csp": {
             "nodeSelector": {
                 "$id": "#/properties/csp/properties/nodeSelector",

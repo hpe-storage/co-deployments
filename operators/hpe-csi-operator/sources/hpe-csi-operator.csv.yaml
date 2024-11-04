@@ -160,6 +160,16 @@ spec:
             path: disableNodeMonitor
             x-descriptors:
               - "urn:alm:descriptor:com.tectonic.ui:booleanSwitch"
+          - displayName: Max volumes per node
+            description: "The maximum amount of volumes the CSI controller will publish to a node (default: 100)"
+            path: maxVolumesPerNode
+            x-descriptors:
+              - "urn:alm:descriptor:com.tectonic.ui:number"
+          - displayName: Disable pre-install hooks
+            description: "Disable pre-install hooks when the chart is rendered outside of Kubernetes, such as CI/CD systems (default: false)"
+            path: disablePreInstallHooks
+            x-descriptors:
+              - "urn:alm:descriptor:com.tectonic.ui:booleanSwitch"
           - displayName: Disable Host deletion
             description: "Disables host deletion by the CSP when no volumes are associated with the host (default: false)"
             path: disableHostDeletion
