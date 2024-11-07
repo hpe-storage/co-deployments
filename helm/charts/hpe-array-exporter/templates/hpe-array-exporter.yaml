@@ -86,6 +86,8 @@ spec:
     app: {{ template "hpe-array-exporter.name" . }}
     release: {{ .Release.Name }}
 {{- if .Values.serviceMonitor.enable }}
+{{- $relabelings := .Values.serviceMonitor.relabelings | default list }}
+{{- $metricRelabelings := .Values.serviceMonitor.metricRelabelings | default list }}
 {{- $targetlabels := .Values.serviceMonitor.targetLabels | default list }}
 ---
 kind: ServiceMonitor
@@ -109,6 +111,14 @@ spec:
     - port: http-metrics
       scheme: http
       interval: 1m
+      {{- with $relabelings }}
+      relabelings:
+{{ toYaml . | indent 8 }}
+      {{- end }}
+      {{- with $metricRelabelings }}
+      metricRelabelings:
+{{ toYaml . | indent 8 }}
+      {{- end }}
   targetLabels:
     {{- with $targetlabels }}
 {{ toYaml . | indent 4 }}
