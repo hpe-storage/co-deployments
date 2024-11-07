@@ -18,6 +18,9 @@ The chart has these configurable parameters and default values.
 | image.registry | The registry from which to pull container images. | `quay.io` |
 | image.pullPolicy | Container image pull policy (`Always`, `IfNotPresent`, `Never`). | `IfNotPresent` |
 | logLevel | Minimum severity of messages to output (`info`, `debug`, `trace`, `warn`, `error`). | `info` |
+| affinity | Pod [affinity](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.31/#affinity-v1-core) to be set on the deployment. | `{}` |
+| nodeSelector | Pod [nodeSelector](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.31/#nodeselector-v1-core) to be set on the deployment. | `{}` |
+| tolerations | Pod [tolerations](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.31/#toleration-v1-core) to be set on the deployment. | `{}` |
 | metrics.disableIntrospection | Exclude metrics about the metrics provider itself, with prefixes such as `promhttp`, `process`, and `go`. | `false` |
 | service.type | The type of Service to create, ClusterIP for access solely from within the cluster or NodePort to provide access from outside the cluster (`ClusterIP`, `NodePort`). | `ClusterIP` |
 | service.port | The TCP port at which to expose access to info metrics within the cluster. | `9090` |
