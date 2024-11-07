@@ -25,6 +25,8 @@ The chart has these configurable parameters and default values.
 | service.labels | Labels to add to the Service, for example to include target labels in a ServiceMonitor scrape configuration. | `{}` |
 | service.annotations | Annotations to add to the Service, for example to configure it as a scrape target when using the Prometheus Helm chart's default configuration. | `{}` |
 | serviceMonitor.enable | Create a ServiceMonitor custom resource (used with the Prometheus Operator). | `false` |
+| serviceMonitor.relabelings | [Relabeling configuration](https://github.com/prometheus-operator/prometheus-operator/blob/c22d1da263ace4921586cbafc658418b5c8194ba/Documentation/api.md#relabelconfig) for exported metrics. | `[]` |
+| serviceMonitor.metricRelabelings | Metric [relabeling configuration](https://github.com/prometheus-operator/prometheus-operator/blob/c22d1da263ace4921586cbafc658418b5c8194ba/Documentation/api.md#relabelconfig) for exported metrics. | `[]` |
 | serviceMonitor.targetLabels | List of labels on the service to add to the scraped metric. | `[]` |
 
 The `acceptEula` value must be set to `true`, confirming your acceptance of the [HPE End User License Agreement](https://www.hpe.com/us/en/software/licensing.html).

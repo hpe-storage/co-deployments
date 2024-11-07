@@ -3,7 +3,7 @@
     "$id": "http://example.com/example.json",
     "title": "HPE CSI Info Metrics Provider for Prometheus Helm Chart JSON Schema",
     "type": "object",
-    "default": 
+    "default":
         {
             "acceptEula": false,
             "image": {
@@ -153,15 +153,31 @@
             "description": "Settings for the ServiceMonitor scraped by the Prometheus Operator.",
             "type": "object",
             "default": {
-		"enable": false,
-		"targetLabels": []
-	    },
+                "enable": false,
+                "relabelings": [],
+                "metricRelabelings": [],
+                "targetLabels": []
+            },
             "properties": {
                 "enable": {
                     "$id": "#/properties/serviceMonitor/properties/enable",
                     "title": "Enable ServiceMonitor for CSI Info Metrics Provider",
                     "description": "description",
                     "type": "boolean",
+                    "additionalProperties": true
+                },
+                "relabelings": {
+                    "$id": "#/properties/serviceMonitor/properties/relabelings",
+                    "title": "Relabelings",
+                    "desciption": "Relabeling configuration to be applied to metrics from this serviceMonitor (optional).",
+                    "type": "array",
+                    "additionalProperties": true
+                },
+                "metricRelabelings": {
+                    "$id": "#/properties/serviceMonitor/properties/metricRelabelings",
+                    "title": "Metric relabelings",
+                    "desciption": "Metric relabeling configuration to be applied to metrics from this serviceMonitor (optional).",
+                    "type": "array",
                     "additionalProperties": true
                 },
                 "targetLabels": {
