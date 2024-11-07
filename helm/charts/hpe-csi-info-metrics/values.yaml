@@ -16,6 +16,16 @@ image:
 # Minimum severity of messages to output
 logLevel: "info"
 
+# Pod affinity - YAML map passed into the deployment, see API definition below
+# https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.31/#affinity-v1-core
+affinity: {}
+# Pod NodeSelector - YAML map passed into the deployment, see API definition below
+# https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.31/#nodeselector-v1-core
+nodeSelector: {}
+# Pod tolerations - YAML map passed into the deployment, see API definition below
+# https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.31/#toleration-v1-core
+tolerations: {}
+
 # Customization of the metrics provided.
 metrics:
   # Exclude metrics about the metrics provider itself, with prefixes

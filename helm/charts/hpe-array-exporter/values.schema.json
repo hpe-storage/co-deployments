@@ -14,7 +14,10 @@
             "service": {
                 "type": "ClusterIP",
                 "port": "9090"
-            }
+            },
+            "affinity": {},
+            "nodeSelector": {},
+            "tolerations": []
         },
     "required": [
         "acceptEula",
@@ -156,6 +159,27 @@
                 }
             },
             "additionalProperties": false
+        },
+        "affinity": {
+            "$id": "#/properties/affinity",
+            "title": "Node affinity (optional).",
+            "description": "Describes node affinity scheduling rules for the pod.",
+            "type": "object",
+            "default": {}
+        },
+        "nodeSelector": {
+            "$id": "#/properties/nodeSelector",
+            "title": "Node selector to control the selection of nodes (optional).",
+            "description": "Selector which must match a node's labels for the pod to be scheduled on that node.",
+            "type": "object",
+            "default": {}
+        },
+        "tolerations": {
+            "$id": "#/properties/tolerations",
+            "title": "Set tolerations for the pods (optional).",
+            "description": "Tolerations is the list of tolerations for the pods.",
+            "type": "array",
+            "default": []
         },
         "serviceMonitor": {
             "$id": "#/properties/serviceMonitor",
