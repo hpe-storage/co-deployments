@@ -205,7 +205,6 @@ roleRef:
   apiGroup: rbac.authorization.k8s.io
 
 ---
-
 # Resizer must be able to work with end point in current namespace
 # if (and only if) leadership election is enabled
 kind: Role
@@ -366,7 +365,6 @@ rules:
     verbs: ["get", "list"]
 
 ---
-
 kind: ClusterRoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
@@ -416,7 +414,6 @@ subjects:
     name: hpe-csi-controller-sa
     # replace with non-default namespace name
     namespace: {{ .Release.Namespace }}
-
 roleRef:
   kind: ClusterRole
   name: hpe-csi-mutator-role
@@ -445,7 +442,6 @@ subjects:
   - kind: ServiceAccount
     name: hpe-csi-controller-sa
     namespace: {{ .Release.Namespace }}
-
 roleRef:
   kind: Role
   name: hpe-csi-mutator-cfg

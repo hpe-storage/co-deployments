@@ -62,15 +62,15 @@ spec:
           env:
             - name: CSI_ENDPOINT
               value: unix:///csi/csi.sock
-            {{ if .Values.disableNodeConformance -}}
+            {{- if .Values.disableNodeConformance }}
             - name: DISABLE_NODE_CONFORMANCE
               value: "true"
             {{- end }}
-            {{ if .Values.disableNodeConfiguration -}}
+            {{- if .Values.disableNodeConfiguration }}
             - name: DISABLE_NODE_CONFIGURATION
               value: "true"
             {{- end }}
-            {{ if .Values.disableNodeMonitor -}}
+            {{- if .Values.disableNodeMonitor }}
             - name: DISABLE_NODE_MONITOR
               value: "true"
             {{- end }}
@@ -136,19 +136,19 @@ spec:
             - name: CHAP_SECRET_NAMESPACE
               value: {{ .Release.Namespace }}
             {{- end }}
-            {{ if .Values.disableNodeConformance -}}
+            {{- if .Values.disableNodeConformance }}
             - name: DISABLE_NODE_CONFORMANCE
               value: "true"
             {{- end }}
-            {{ if .Values.disableNodeConfiguration -}}
+            {{- if .Values.disableNodeConfiguration }}
             - name: DISABLE_NODE_CONFIGURATION
               value: "true"
             {{- end }}
-            {{ if .Values.disableNodeMonitor -}}
+            {{- if .Values.disableNodeMonitor }}
             - name: DISABLE_NODE_MONITOR
               value: "true"
             {{- end }}
-            {{ if .Values.maxVolumesPerNode -}}
+            {{- if .Values.maxVolumesPerNode }}
             - name: MAX_VOLUMES_PER_NODE
               value: "{{ .Values.maxVolumesPerNode }}"
             {{- end }}
@@ -156,7 +156,7 @@ spec:
             - name: KUBELET_ROOT_DIR
               value: {{ .Values.kubeletRootDir }}
             {{- end }}
-            {{ if .Values.disableNodeGetVolumeStats -}}
+            {{- if .Values.disableNodeGetVolumeStats }}
             - name: DISABLE_NODE_GET_VOLUMESTATS
               value: "true"
             {{- end }}
