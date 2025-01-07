@@ -1,5 +1,5 @@
 # Configuration to deploy the HPE CSI driver compatible with
-# Kubernetes = v1.28
+# Kubernetes = v1.31
 #
 # example usage: kubectl create -f <this_file>
 
@@ -656,7 +656,7 @@ spec:
             value: "1"
       containers:
         - name: csi-provisioner
-          image: registry.k8s.io/sig-storage/csi-provisioner:v5.0.1
+          image: registry.k8s.io/sig-storage/csi-provisioner:v5.0.2
           resources:
             limits:
               cpu: 2000m
@@ -676,13 +676,13 @@ spec:
             - name: ADDRESS
               value: /var/lib/csi/sockets/pluginproxy/csi.sock
             - name: RUNTIME_NFS_IMAGE
-              value: quay.io/hpestorage/nfs-provisioner:v3.0.5
+              value: quay.io/hpestorage/nfs-provisioner:v3.0.6-beta
           imagePullPolicy: "IfNotPresent"
           volumeMounts:
             - name: socket-dir
               mountPath: /var/lib/csi/sockets/pluginproxy/
         - name: csi-attacher
-          image: registry.k8s.io/sig-storage/csi-attacher:v4.6.1
+          image: registry.k8s.io/sig-storage/csi-attacher:v4.7.0
           resources:
             limits:
               cpu: 2000m
@@ -701,7 +701,7 @@ spec:
             - name: socket-dir
               mountPath: /var/lib/csi/sockets/pluginproxy/
         - name: csi-snapshotter
-          image: registry.k8s.io/sig-storage/csi-snapshotter:v8.0.1
+          image: registry.k8s.io/sig-storage/csi-snapshotter:v8.1.1
           resources:
             limits:
               cpu: 2000m
@@ -720,7 +720,7 @@ spec:
             - name: socket-dir
               mountPath: /var/lib/csi/sockets/pluginproxy/
         - name: csi-resizer
-          image: registry.k8s.io/sig-storage/csi-resizer:v1.11.1
+          image: registry.k8s.io/sig-storage/csi-resizer:v1.12.0
           resources:
             limits:
               cpu: 2000m
@@ -739,7 +739,7 @@ spec:
             - name: socket-dir
               mountPath: /var/lib/csi/sockets/pluginproxy/
         - name: hpe-csi-driver
-          image: quay.io/hpestorage/csi-driver:v2.5.0
+          image: quay.io/hpestorage/csi-driver:v2.5.2-beta
           resources:
             limits:
               cpu: 2000m
@@ -774,7 +774,7 @@ spec:
             - name: root-dir
               mountPath: /host
         - name: csi-volume-mutator
-          image: quay.io/hpestorage/volume-mutator:v1.3.6
+          image: quay.io/hpestorage/volume-mutator:v1.3.7-beta
           resources:
             limits:
               cpu: 2000m
@@ -793,7 +793,7 @@ spec:
             - name: socket-dir
               mountPath: /var/lib/csi/sockets/pluginproxy/
         - name: csi-volume-group-snapshotter
-          image: quay.io/hpestorage/volume-group-snapshotter:v1.0.6
+          image: quay.io/hpestorage/volume-group-snapshotter:v1.0.7-beta
           resources:
             limits:
               cpu: 2000m
@@ -812,7 +812,7 @@ spec:
             - name: socket-dir
               mountPath: /var/lib/csi/sockets/pluginproxy/
         - name: csi-volume-group-provisioner
-          image: quay.io/hpestorage/volume-group-provisioner:v1.0.6
+          image: quay.io/hpestorage/volume-group-provisioner:v1.0.8-beta
           resources:
             limits:
               cpu: 2000m
@@ -831,7 +831,7 @@ spec:
             - name: socket-dir
               mountPath: /var/lib/csi/sockets/pluginproxy/
         - name: csi-extensions
-          image: quay.io/hpestorage/csi-extensions:v1.2.7
+          image: quay.io/hpestorage/csi-extensions:v1.2.8-beta
           resources:
             limits:
               cpu: 2000m
@@ -906,7 +906,7 @@ spec:
             value: "1"
       initContainers:
         - name: hpe-csi-node-init
-          image: quay.io/hpestorage/csi-driver:v2.5.0
+          image: quay.io/hpestorage/csi-driver:v2.5.2-beta
           resources:
             limits:
               cpu: 2000m
@@ -957,7 +957,7 @@ spec:
             allowPrivilegeEscalation: true
       containers:
         - name: csi-node-driver-registrar
-          image: registry.k8s.io/sig-storage/csi-node-driver-registrar:v2.10.1
+          image: registry.k8s.io/sig-storage/csi-node-driver-registrar:v2.12.0
           resources:
             limits:
               cpu: 2000m
@@ -980,7 +980,7 @@ spec:
             - name: registration-dir
               mountPath: /registration
         - name: hpe-csi-driver
-          image: quay.io/hpestorage/csi-driver:v2.5.0
+          image: quay.io/hpestorage/csi-driver:v2.5.2-beta
           resources:
             limits:
               cpu: 2000m

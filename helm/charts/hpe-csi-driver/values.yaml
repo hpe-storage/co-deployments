@@ -109,17 +109,17 @@ node:
 
 # Release images
 images:
-  csiNodeDriver: quay.io/hpestorage/csi-driver:v2.5.0
-  csiControllerDriver: quay.io/hpestorage/csi-driver:v2.5.0
-  nimbleCSP: quay.io/hpestorage/alletra-6000-and-nimble-csp:v2.5.0
-  primera3parCSP: quay.io/hpestorage/alletra-9000-primera-and-3par-csp:v2.5.0
-  nfsProvisioner: quay.io/hpestorage/nfs-provisioner:v3.0.5
-  csiExtensions: quay.io/hpestorage/csi-extensions:v1.2.7
-  csiVolumeGroupProvisioner: quay.io/hpestorage/volume-group-provisioner:v1.0.6
-  csiVolumeGroupSnapshotter: quay.io/hpestorage/volume-group-snapshotter:v1.0.6
-  csiVolumeMutator: quay.io/hpestorage/volume-mutator:v1.3.6
-  csiAttacher: registry.k8s.io/sig-storage/csi-attacher:v4.6.1
-  csiNodeDriverRegistrar: registry.k8s.io/sig-storage/csi-node-driver-registrar:v2.10.1
-  csiProvisioner: registry.k8s.io/sig-storage/csi-provisioner:v5.0.1
-  csiResizer: registry.k8s.io/sig-storage/csi-resizer:v1.11.1
-  csiSnapshotter: registry.k8s.io/sig-storage/csi-snapshotter:v8.0.1
+  csiNodeDriver: quay.io/hpestorage/csi-driver:v2.5.2-beta
+  csiControllerDriver: quay.io/hpestorage/csi-driver:v2.5.2-beta
+  nimbleCSP: quay.io/hpestorage/alletra-6000-and-nimble-csp:v2.5.2-beta
+  primera3parCSP: quay.io/hpestorage/alletra-9000-primera-and-3par-csp:v2.5.2-beta
+  nfsProvisioner: quay.io/hpestorage/nfs-provisioner:v3.0.6-beta
+  csiExtensions: quay.io/hpestorage/csi-extensions:v1.2.8-beta
+  csiVolumeGroupProvisioner: quay.io/hpestorage/volume-group-provisioner:v1.0.8-beta
+  csiVolumeGroupSnapshotter: quay.io/hpestorage/volume-group-snapshotter:v1.0.7-beta
+  csiVolumeMutator: quay.io/hpestorage/volume-mutator:v1.3.7-beta
+  csiAttacher: registry.k8s.io/sig-storage/csi-attacher:v4.7.0
+  csiNodeDriverRegistrar: registry.k8s.io/sig-storage/csi-node-driver-registrar:v2.12.0
+  csiProvisioner: registry.k8s.io/sig-storage/csi-provisioner:v5.0.2
+  csiResizer: registry.k8s.io/sig-storage/csi-resizer:v1.12.0
+  csiSnapshotter: registry.k8s.io/sig-storage/csi-snapshotter:v8.1.1
