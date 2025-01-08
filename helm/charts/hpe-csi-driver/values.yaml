@@ -115,7 +115,7 @@ images:
   primera3parCSP: quay.io/hpestorage/alletra-9000-primera-and-3par-csp:v2.5.2-beta
   nfsProvisioner: quay.io/hpestorage/nfs-provisioner:v3.0.6-beta
   csiExtensions: quay.io/hpestorage/csi-extensions:v1.2.8-beta
-  csiVolumeGroupProvisioner: quay.io/hpestorage/volume-group-provisioner:v1.0.8-beta
+  csiVolumeGroupProvisioner: quay.io/hpestorage/volume-group-provisioner:v1.0.7-beta
   csiVolumeGroupSnapshotter: quay.io/hpestorage/volume-group-snapshotter:v1.0.7-beta
   csiVolumeMutator: quay.io/hpestorage/volume-mutator:v1.3.7-beta
   csiAttacher: registry.k8s.io/sig-storage/csi-attacher:v4.7.0
