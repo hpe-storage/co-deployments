@@ -1,0 +1,44 @@
+apiVersion: storage.hpe.com/v1
+kind: HPEGreenLakeFileCSIDriver
+metadata:
+  name: hpegreenlakefilecsidriver-sample
+spec:
+  # Default values copied from <project_dir>/helm-charts/hpe-greenlake-file-csi-driver/values.yaml
+  controller:
+    affinity: {}
+    labels: {}
+    nodeSelector: {}
+    resources:
+      limits:
+        cpu: 2000m
+        memory: 1Gi
+      requests:
+        cpu: 100m
+        memory: 128Mi
+    tolerations: []
+  disableNodeConformance: false
+  imagePullPolicy: IfNotPresent
+  images:
+    csiAttacher: registry.k8s.io/sig-storage/csi-attacher:v4.7.0
+    csiControllerDriver: quay.io/hpestorage/filex-csi-driver:v1.0.0-beta3
+    csiNodeDriver: quay.io/hpestorage/filex-csi-driver:v1.0.0-beta3
+    csiNodeDriverRegistrar: registry.k8s.io/sig-storage/csi-node-driver-registrar:v2.12.0
+    csiNodeInit: quay.io/hpestorage/filex-csi-init:v1.0.0-beta3
+    csiProvisioner: registry.k8s.io/sig-storage/csi-provisioner:v5.1.0
+    csiResizer: registry.k8s.io/sig-storage/csi-resizer:v1.12.0
+    csiSnapshotter: registry.k8s.io/sig-storage/csi-snapshotter:v8.2.0
+  kubeletRootDir: /var/lib/kubelet
+  node:
+    affinity: {}
+    labels: {}
+    nodeSelector: {}
+    resources:
+      limits:
+        cpu: 2000m
+        memory: 1Gi
+      requests:
+        cpu: 100m
+        memory: 128Mi
+    tolerations: []
+  
+  
