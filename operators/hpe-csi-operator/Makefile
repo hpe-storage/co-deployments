@@ -68,7 +68,7 @@ prep: init
 	cp -f sources/LICENSE $(IMAGE_NAME)/LICENSE
 
 	# Community and OpenShift Operators
-	cd $(IMAGE_NAME); docker-buildx build --progress=plain --no-cache \
+	cd $(IMAGE_NAME); docker buildx build --progress=plain --no-cache \
 	--provenance=false --push --platform=$(PLATFORMS) --tag ${IMG} -f Dockerfile .
 
 	# Sample CSI driver instance
