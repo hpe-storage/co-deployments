@@ -4,9 +4,9 @@ SOURCE_VERSION ?= $(VERSION)
 REPO_NAME ?= quay.io/myrepo
 
 # Don't set these, preferably
+OPERATOR_SDK ?= operator-sdk-ocp
 RH_REPO_NAME=registry.connect.redhat.com/hpestorage
 CERTIFIED_OUTPUT=destinations/certified-operators/current-version
-CERTIFIED_KUBE_PROXY=registry.redhat.io/openshift4/ose-kube-rbac-proxy:latest
 NAMESPACE ?= hpe-storage
 KIND ?= HPEGreenLakeFileCSIDriver
 KIND_LC ?= hpegreenlakefilecsidriver
@@ -22,7 +22,7 @@ PLATFORMS ?= linux/amd64
 
 undeploy:
 	# Remove Operator from cluster
-	- operator-sdk cleanup $(VANITY_NAME) -n $(NAMESPACE)
+	- $(OPERATOR_SDK) cleanup $(VANITY_NAME) -n $(NAMESPACE)
 
 clean: undeploy
 	# Delete build
@@ -33,7 +33,7 @@ init:
 	mkdir $(IMAGE_NAME)
 
 	# Initialize workspace
-	cd $(IMAGE_NAME); operator-sdk init --plugins helm.sdk.operatorframework.io/v1 \
+	cd $(IMAGE_NAME); $(OPERATOR_SDK) init --plugins helm.sdk.operatorframework.io/v1 \
        		--domain hpe.com \
 		--group storage \
 		--version v1 \
@@ -75,11 +75,6 @@ prep: init
 	touch prep
 
 certified: prep
-        # Replace kube-proxy for certified bundle
-	sed -i.remove -e "s#gcr.io/kubebuilder/kube-rbac-proxy.*#$(CERTIFIED_KUBE_PROXY)#" \
-		$(IMAGE_NAME)/config/default/manager_auth_proxy_patch.yaml && \
-		rm -f $(IMAGE_NAME)/config/default/manager_auth_proxy_patch.yaml.remove
-
 	# Create certified bundle manifests
 	cd $(IMAGE_NAME); make bundle CHANNELS="$(BUNDLE_CHANNELS)" IMG="$(IMG)" BUNDLE_IMG="$(OCP_BUNDLE_IMG)" VERSION="$(VERSION)" USE_IMAGE_DIGESTS="true"
 
@@ -97,7 +92,7 @@ certified: prep
 	cd $(IMAGE_NAME); make bundle-build bundle-push IMG="$(IMG)" BUNDLE_IMG="$(OCP_BUNDLE_IMG)" VERSION="$(VERSION)" USE_IMAGE_DIGESTS="true"
 
         # Validate certified bundle
-	operator-sdk bundle validate $(OCP_BUNDLE_IMG) --select-optional suite=operatorframework
+	$(OPERATOR_SDK) bundle validate $(OCP_BUNDLE_IMG) --select-optional suite=operatorframework
 
 	# Create certified-operators content
 	rm -rf $(CERTIFIED_OUTPUT)/*
@@ -109,11 +104,11 @@ certified: prep
 certified-deploy:
 	# Run certified bundle
 	- oc create ns $(NAMESPACE)
-	operator-sdk run bundle --timeout 5m $(OCP_BUNDLE_IMG) -n $(NAMESPACE)
+	$(OPERATOR_SDK) run bundle --timeout 5m $(OCP_BUNDLE_IMG) -n $(NAMESPACE)
 
 	# Instantiate HPECSIDriver
 	oc apply -n $(NAMESPACE) -f destinations/$(KIND_LC)-v${VERSION}-sample.yaml
 
 certified-scorecard:
 	# Create certified scorecard
-	operator-sdk scorecard --wait-time 5m $(OCP_BUNDLE_IMG) -n $(NAMESPACE)
+	$(OPERATOR_SDK) scorecard --wait-time 5m $(OCP_BUNDLE_IMG) -n $(NAMESPACE)
