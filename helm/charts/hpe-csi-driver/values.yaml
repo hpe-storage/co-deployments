@@ -118,7 +118,7 @@ images:
   csiVolumeGroupProvisioner: quay.io/hpestorage/volume-group-provisioner:v1.0.7-beta
   csiVolumeGroupSnapshotter: quay.io/hpestorage/volume-group-snapshotter:v1.0.7-beta
   csiVolumeMutator: quay.io/hpestorage/volume-mutator:v1.3.7-beta
-  csiAttacher: registry.k8s.io/sig-storage/csi-attacher:v4.7.0
+  csiAttacher: registry.k8s.io/sig-storage/csi-attacher:v4.8.0
   csiNodeDriverRegistrar: registry.k8s.io/sig-storage/csi-node-driver-registrar:v2.13.0
   csiProvisioner: registry.k8s.io/sig-storage/csi-provisioner:v5.1.0
   csiResizer: registry.k8s.io/sig-storage/csi-resizer:v1.12.0
