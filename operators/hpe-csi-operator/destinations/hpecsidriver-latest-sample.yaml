@@ -42,7 +42,7 @@ spec:
   disablePreInstallHooks: false
   imagePullPolicy: IfNotPresent
   images:
-    csiAttacher: registry.k8s.io/sig-storage/csi-attacher:v4.7.0
+    csiAttacher: registry.k8s.io/sig-storage/csi-attacher:v4.8.0
     csiControllerDriver: quay.io/hpestorage/csi-driver:v2.5.2-beta
     csiExtensions: quay.io/hpestorage/csi-extensions:v1.2.8-beta
     csiNodeDriver: quay.io/hpestorage/csi-driver:v2.5.2-beta
