@@ -121,5 +121,5 @@ images:
   csiAttacher: registry.k8s.io/sig-storage/csi-attacher:v4.7.0
   csiNodeDriverRegistrar: registry.k8s.io/sig-storage/csi-node-driver-registrar:v2.13.0
   csiProvisioner: registry.k8s.io/sig-storage/csi-provisioner:v5.1.0
-  csiResizer: registry.k8s.io/sig-storage/csi-resizer:v1.13.0
+  csiResizer: registry.k8s.io/sig-storage/csi-resizer:v1.12.0
   csiSnapshotter: registry.k8s.io/sig-storage/csi-snapshotter:v8.2.0
