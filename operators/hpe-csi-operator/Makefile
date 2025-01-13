@@ -2,12 +2,13 @@
 VERSION ?= 0.0.0
 SOURCE_VERSION ?= $(VERSION)
 REPO_NAME ?= quay.io/myrepo
+# Do not use < 1.38.0
+OPERATOR_SDK = 'operator-sdk version: "v1.38.0"'
 
 # Don't set these, preferably
 RH_REPO_NAME=registry.connect.redhat.com/hpestorage
 COMMUNITY_OUTPUT=destinations/community-operators/current-version
 CERTIFIED_OUTPUT=destinations/certified-operators/current-version
-CERTIFIED_KUBE_PROXY=registry.redhat.io/openshift4/ose-kube-rbac-proxy:latest
 NAMESPACE ?= hpe-storage
 CHART ?= hpe-csi-driver
 VANITY_NAME ?= hpe-csi-operator
@@ -29,6 +30,9 @@ clean: undeploy
 	rm -rf "init" "prep" "$(IMAGE_NAME)" bundle-*
 
 init:
+	# Ensure specific version of Operator SDK
+	operator-sdk version | grep $(OPERATOR_SDK)
+
 	# Creat temp space
 	mkdir $(IMAGE_NAME)
 
@@ -114,11 +118,6 @@ community-scorecard:
 	operator-sdk scorecard --wait-time 5m $(BUNDLE_IMG) -n $(NAMESPACE)
 
 certified: prep
-        # Replace kube-proxy for certified bundle
-	sed -i.remove -e "s#gcr.io/kubebuilder/kube-rbac-proxy.*#$(CERTIFIED_KUBE_PROXY)#" \
-		$(IMAGE_NAME)/config/default/manager_auth_proxy_patch.yaml && \
-		rm -f $(IMAGE_NAME)/config/default/manager_auth_proxy_patch.yaml.remove
-
 	# Create certified bundle manifests
 	cd $(IMAGE_NAME); make bundle CHANNELS="$(BUNDLE_CHANNELS)" IMG="$(IMG)" BUNDLE_IMG="$(OCP_BUNDLE_IMG)" VERSION="$(VERSION)" USE_IMAGE_DIGESTS="true"
 

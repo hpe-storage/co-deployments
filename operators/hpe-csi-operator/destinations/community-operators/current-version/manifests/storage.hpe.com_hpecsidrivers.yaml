@@ -1409,6 +1409,10 @@ spec:
               disableNodeMonitor:
                 description: Disable the Node Monitor
                 type: boolean
+              disablePreInstallHooks:
+                description: Disable pre-install hooks when the chart is rendered
+                  outside of Kubernetes, such as CI/CD systems
+                type: boolean
               imagePullPolicy:
                 description: Image Pull Policy for HPE CSI driver images
                 type: string
@@ -1473,6 +1477,9 @@ spec:
               logLevel:
                 description: Default logLevel for HPE CSI driver deployments
                 type: string
+              maxVolumesPerNode:
+                description: Max volumes per node
+                type: integer
               node:
                 description: Node parameters to be configured
                 properties:
@@ -2149,6 +2156,8 @@ spec:
             - disableNodeGetVolumeStats
             - disableNodeMonitor
             - disableHostDeletion
+            - maxVolumesPerNode
+            - disablePreInstallHooks
             - imagePullPolicy
             - images
             - iscsi
