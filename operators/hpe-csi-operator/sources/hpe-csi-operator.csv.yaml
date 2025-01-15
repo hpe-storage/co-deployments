@@ -135,8 +135,8 @@ spec:
             path: disable.alletra9000
             x-descriptors:
               - "urn:alm:descriptor:com.tectonic.ui:checkbox"
-          - displayName: Alletra Storage MP
-            description: "Disable Alletra Storage MP"
+          - displayName: Alletra Storage MP B10000
+            description: "Disable Alletra Storage MP B10000"
             path: disable.alletraStorageMP
             x-descriptors:
               - "urn:alm:descriptor:com.tectonic.ui:checkbox"
@@ -272,8 +272,8 @@ spec:
             path: images.nimbleCSP
             x-descriptors:
               - "urn:alm:descriptor:com.tectonic.ui:text"
-          - displayName: Alletra Storage MP, Alletra 9000 and Primera Image
-            description: The HPE Alletra Storage MP, Alletra 9000, Primera and 3PAR Container Storage Provider container image
+          - displayName: Alletra Storage MP B10000, Alletra 9000 and Primera Image
+            description: The HPE Alletra Storage MP B10000, Alletra 9000, Primera and 3PAR Container Storage Provider container image
             path: images.primera3parCSP
             x-descriptors:
               - "urn:alm:descriptor:com.tectonic.ui:text"

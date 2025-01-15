@@ -1,6 +1,6 @@
 # HPE CSI Driver for Kubernetes Helm chart
 
-The [HPE CSI Driver for Kubernetes](https://scod.hpedev.io/csi_driver/index.html) leverages Hewlett Packard Enterprise primary storage platforms to provide scalable and persistent storage for stateful and ephemeral applications. Currently supported storage platforms include HPE GreenLake for Block Storage powered by HPE Alletra Storage MP, HPE Alletra 5000/6000/9000, HPE Nimble Storage, HPE Primera and HPE 3PAR.
+The [HPE CSI Driver for Kubernetes](https://scod.hpedev.io/csi_driver/index.html) leverages Hewlett Packard Enterprise primary storage platforms to provide scalable and persistent storage for stateful and ephemeral applications. Currently supported storage platforms include HPE GreenLake for Block Storage powered by HPE Alletra Storage MP B10000, HPE Alletra 5000/6000/9000, HPE Nimble Storage, HPE Primera and HPE 3PAR.
 
 ## Release highlights
 
@@ -21,7 +21,7 @@ Refer to [Compatibility & Support](https://scod.hpedev.io/csi_driver/index.html#
 Depending on which [Container Storage Provider](https://scod.hpedev.io/container_storage_provider/index.html) (CSP) is being used, other prerequisites and requirements may apply, such as storage platform OS and features.
 
 - [HPE Alletra 5000/6000 and Nimble Storage](https://scod.hpedev.io/container_storage_provider/hpe_alletra_6000/index.html)
-- [HPE Alletra Storage MP, Alletra 9000, Primera and 3PAR](https://scod.hpedev.io/container_storage_provider/hpe_alletra_storage_mp/index.html)
+- [HPE Alletra Storage MP B10000, Alletra 9000, Primera and 3PAR](https://scod.hpedev.io/container_storage_provider/hpe_alletra_storage_mp/index.html)
 
 ## Configuration and installation
 
@@ -33,7 +33,7 @@ The following table lists the configurable parameters of the chart and their def
 | disable.primera           | Disable HPE Primera (and 3PAR) CSP `Service`.                                                      | false            |
 | disable.alletra6000       | Disable HPE Alletra 5000/6000 CSP `Service`.                                                       | false            |
 | disable.alletra9000       | Disable HPE Alletra 9000 CSP `Service`.                                                            | false            |
-| disable.alletraStorageMP  | Disable HPE Alletra Storage MP CSP `Service`.                                                      | false            |
+| disable.alletraStorageMP  | Disable HPE Alletra Storage MP B10000 CSP `Service`.                                                      | false            |
 | disableNodeConformance    | Disable automatic installation of iSCSI, multipath and NFS packages.                               | false            |
 | disableNodeConfiguration  | Disables node conformance and configuration.`*`                                                    | false            |
 | disableNodeGetVolumeStats | Disable NodeGetVolumeStats call to CSI driver.                                                     | false            |
@@ -97,11 +97,11 @@ Our recommendation is to uninstall the existing chart and install the chart with
 
 Before version 2.0.0 is uninstalled, the following CRDs needs to be updated. 
 
-**Important:** If there are HPE Alletra Storage MP, Alletra 9000, Primera or 3PAR Remote Copy Groups configured on the cluster, follow the [next steps](#update-rcg-info) before uninstallation.
+**Important:** If there are HPE Alletra Storage MP B10000, Alletra 9000, Primera or 3PAR Remote Copy Groups configured on the cluster, follow the [next steps](#update-rcg-info) before uninstallation.
 
 ##### Update RCG Info
 
-This step is only necessary if there are HPE Alletra Storage MP, Alletra 9000, Primera or 3PAR Remote Copy Groups configured on the cluster. If there are none, proceed to the [next step](#update-crds).
+This step is only necessary if there are HPE Alletra Storage MP B10000, Alletra 9000, Primera or 3PAR Remote Copy Groups configured on the cluster. If there are none, proceed to the [next step](#update-crds).
 
 Change kubectl context into the Namespace where the HPE CSI Driver is installed. The most common is "hpe-storage".
 
