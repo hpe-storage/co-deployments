@@ -1,6 +1,6 @@
 {{- if not .Values.disable.alletraStorageMP }}
 ---
-### Alletra Storage MP CSP Service ###
+### Alletra Storage MP B10000 CSP Service ###
 kind: Service
 apiVersion: v1
 metadata:

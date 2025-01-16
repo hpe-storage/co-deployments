@@ -2,10 +2,10 @@
 
 This is the official Helm chart repository for HPE storage.
 
-- [CSI Driver](https://github.com/hpe-storage/co-deployments/blob/master/helm/charts/hpe-csi-driver/README.md)
-- [FlexVolume Driver](https://github.com/hpe-storage/co-deployments/blob/master/helm/charts/hpe-flexvolume-driver/README.md)
-- [Array Exporter](https://github.com/hpe-storage/co-deployments/blob/master/helm/charts/hpe-array-exporter/README.md)
-- [CSI Info Metrics](https://github.com/hpe-storage/co-deployments/blob/master/helm/charts/hpe-csi-info-metrics/README.md)
+- [HPE CSI Driver for Kubernetes](https://github.com/hpe-storage/co-deployments/blob/master/helm/charts/hpe-csi-driver/README.md)
+- [HPE GreenLake for File Storage CSI Driver](https://github.com/hpe-storage/co-deployments/blob/master/helm/charts/hpe-greenlake-file-csi-driver/README.md)
+- [HPE Storage Array Exporter for Prometheus](https://github.com/hpe-storage/co-deployments/blob/master/helm/charts/hpe-array-exporter/README.md)
+- [HPE CSI Info Metrics Provider for Prometheus](https://github.com/hpe-storage/co-deployments/blob/master/helm/charts/hpe-csi-info-metrics/README.md)
 
 # Contributing and support
 

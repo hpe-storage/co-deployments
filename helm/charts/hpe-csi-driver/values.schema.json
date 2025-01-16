@@ -113,7 +113,7 @@
                 },
                 "alletraStorageMP": {
                     "$id": "#/properties/disable/properties/alletraStorageMP",
-                    "title": "HPE Alletra Storage MP",
+                    "title": "HPE Alletra Storage MP B10000",
                     "type": "boolean",
                     "default": false
                 }
@@ -398,7 +398,7 @@
                 },
                 "primera3parCSP": {
                     "$id": "#/properties/images/properties/primera3parCSP",
-                    "title": "3PAR, Primera, Alletra 9000 and Alletra Storage MP CSP",
+                    "title": "3PAR, Primera, Alletra 9000 and Alletra Storage MP B10000 CSP",
                     "type": "string"
                 },
                 "nfsProvisioner": {

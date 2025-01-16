@@ -7,7 +7,7 @@ This repository contains the source declarations to deploy CO drivers (CSI and F
 [Helm](https://helm.sh) is the recommended way to deploy these container orchestrator facilities.
 
 - Deploy the [HPE CSI Driver for Kubernetes](helm/charts/hpe-csi-driver)
-- Deploy the [HPE FlexVolume Driver for Kubernetes](helm/charts/hpe-flexvolume-driver)
+- Deploy the [HPE GreenLake for File Storage CSI Driver](helm/charts/hpe-greenlake-file-csi-driver)
 - Deploy the [HPE Storage Array Exporter for Prometheus](helm/charts/hpe-array-exporter)
 - Deploy the [HPE CSI Info Metrics Provider for Prometheus](helm/charts/hpe-csi-info-metrics)
 
@@ -17,8 +17,7 @@ The HPE CSI Driver for Kubernetes Helm chart is also rendered on [ArtifactHub.io
 
 Deploy both the CSI driver and FlexVolume for HPE storage products using Helm Operators
 
-- Deploy the [HPE CSI Driver for Kubernetes](operators/hpe-csi-operator)
-- Deploy the [HPE FlexVolume Driver for Kubernetes](operators/hpe-flexvolume-operator)
+- Deploy the [HPE CSI Operator for Kubernetes](operators/hpe-csi-operator)
 
 The HPE CSI Operator for Kubernetes is also available on [OperatorHub.io](https://operatorhub.io/operator/hpe-csi-operator).
 
@@ -27,7 +26,6 @@ The HPE CSI Operator for Kubernetes is also available on [OperatorHub.io](https:
 We provide the [raw YAML files](yaml) to deploy the [HPE CSI Driver](https://github.com/hpe-storage/csi-driver) with the respective [Container Storage Provider](https://github.com/hpe-storage/container-storage-provider) (CSP). These files are usually referenced elsewhere on how to get a particular setup up and running. We recommend using the [Helm charts](helm/charts) first and foremost.
 
 - YAML files for the [HPE CSI Driver for Kubernetes](yaml/csi-driver)
-- YAML files for the [HPE FlexVolume Driver for Kubernetes](yaml/flexvolume-driver)
 - YAML files for the [HPE Storage Array Exporter for Prometheus](yaml/array-exporter)
 - YAML files for the [HPE CSI Info Metrics Provider for Prometheus](yaml/csi-info-metrics)
 
@@ -47,7 +45,7 @@ Formal support statements for each HPE supported product are [available on SCOD]
 
 ## Community
 
-Please file any issues, questions or feature requests you may have [here](https://github.com/hpe-storage/co-deployments/issues). However, see [SCOD](https://scod.hpedev.io/legal/support) for support inquiries related to your HPE storage product. You may also join our Slack community to chat with HPE folks close to this project. We hang out in `#NimbleStorage`, `#3par-primera`, and `#Kubernetes`. Sign up at [slack.hpedev.io](https://slack.hpedev.io/) and login at [hpedev.slack.com](https://hpedev.slack.com/)
+Please file any issues, questions or feature requests you may have [here](https://github.com/hpe-storage/co-deployments/issues). However, see [SCOD](https://scod.hpedev.io/legal/support) for support inquiries related to your HPE storage product. You may also join our Slack community to chat with HPE folks close to this project. We hang out in `#alletra`, and `#Kubernetes`. Sign up at [developer.hpe.com](https://developer.hpe.com/slack-signup/) and login at [hpedev.slack.com](https://hpedev.slack.com/)
 
 ## Contributing
 

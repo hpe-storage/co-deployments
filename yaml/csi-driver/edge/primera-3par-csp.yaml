@@ -1,6 +1,6 @@
 ---
 # Source: hpe-csi-driver/templates/primera-3par-csp.yaml
-### Alletra Storage MP CSP Service ###
+### Alletra Storage MP B10000 CSP Service ###
 kind: Service
 apiVersion: v1
 metadata:
