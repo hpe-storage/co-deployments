@@ -27,6 +27,16 @@ metrics:
   # such as "promhttp", "process", and "go".
   disableIntrospection: false
 
+# Pod affinity - YAML map passed into the deployment, see API definition below
+# https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.31/#affinity-v1-core
+affinity: {}
+# Pod NodeSelector - YAML map passed into the deployment, see API definition below
+# https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.31/#nodeselector-v1-core
+nodeSelector: {}
+# Pod tolerations - YAML map passed into the deployment, see API definition below
+# https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.31/#toleration-v1-core
+tolerations: {}
+
 # Settings for the Service providing access to storage array metrics.
 service:
   # The type of Service to create, ClusterIP (the default) for access
