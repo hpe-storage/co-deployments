@@ -1,0 +1,103 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "hpe-cosi-driver schema",
+  "description": "This document validates the schema for a hpe-cosi-driver Helm chart",
+  "type": "object",
+  "additionalProperties": true,
+  "properties": {
+    "fullnameOverride":{
+      "type": "string",
+      "maxLength": 128
+    },
+    "componentName": {
+      "type": "string",
+      "maxLength": 128
+    },
+    "namespace": {
+      "type": "string",
+      "pattern": "^(default)$"
+    },
+    "deployment": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "name": {
+          "type": "string",
+          "maxLength": 128
+        }
+      },
+      "required": [ "name" ]
+    },
+    "regSecretName": {
+      "type": "string"
+    },
+    "podEvictionToleration": {
+      "type": "integer"
+    },
+    "containers": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "cosiDriver": {
+          "type": "object",
+          "additionalProperties": true,
+          "properties": {
+            "image": {
+              "type": "string",
+              "maxLength": 128
+            },
+            "name": {
+              "type": "string",
+              "maxLength": 128
+            },
+            "imagePullPolicy": {
+              "type": "string",
+              "pattern": "^(Always|Never|IfNotPresent)$"
+            }
+          }
+        },
+        "sideCar": {
+          "type": "object",
+          "additionalProperties": true,
+          "properties": {
+            "image": {
+              "type": "string",
+              "maxLength": 128
+            },
+            "name": {
+              "type": "string",
+              "maxLength": 128
+            },
+            "imagePullPolicy": {
+              "type": "string",
+              "pattern": "^(Always|Never|IfNotPresent)$"
+            }
+          }
+        }
+      }
+    },
+    "resources": {
+      "$id": "#/properties/resources",
+      "type": "object",
+      "title": "resource requests and limits",
+      "additionalProperties": false,
+      "description": "See https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/",
+      "properties": {
+        "limits": {
+          "type": "object",
+          "title": "resource limits",
+          "default": {}
+        },
+        "requests": {
+          "type": "object",
+          "title": "resource requests",
+          "default": {}
+        }
+      }
+    }
+  },
+  "required": [
+    "deployment",
+    "containers"
+  ]
+}

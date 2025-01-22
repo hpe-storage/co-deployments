@@ -1,0 +1,59 @@
+# © Copyright 2024 Hewlett Packard Enterprise Development LP
+
+# Default values for hpe-cosi-driver.
+
+# fullnameOverride -- Name of deployment
+fullnameOverride: "hpe-cosi-driver"
+componentName: "container-object-storage-interface"
+# namespace -- Namespace must remain default
+namespace: default
+
+# deployment name of the provisioner
+deployment:
+  # deployment.name -- The name of the driver's Kubernetes deployment
+  name: "hpe-cosi-provisioner"
+
+# regSecretName -- Secret that contains the private image registry credentials to pull the cosiDriver image
+regSecretName: ""
+
+containers:
+  cosiDriver:
+    # containers.cosiDriver.name -- Name of the driver's container within the deployment
+    name: "hpe-cosi-driver"
+    # containers.cosiDriver.image --  Fully qualified registry path of cosiDriver
+    image: "quay.io/hpestorage/cosi-driver:v1.0.0"
+    # containers.cosiDriver.imagePullPolicy -- cosiDriver image pull policy
+    imagePullPolicy: IfNotPresent
+  sideCar:
+    # containers.sideCar.name -- Name of the driver's side car container within the deployment
+    name: "hpe-cosi-provisioner-sidecar"
+    # containers.sideCar.image -- Fully qualified registry path of sideCar
+    image: "gcr.io/k8s-staging-sig-storage/objectstorage-sidecar:v20241017-v0.1.0-58-g80979e8"
+    # containers.sideCar.imagePullPolicy -- sideCar image pull policy
+    imagePullPolicy: IfNotPresent
+    # Verbosity level: Small postive integer values are generally recommended.
+    # Ref.: https://pkg.go.dev/k8s.io/klog/v2#V
+    # containers.sideCar.verbosityLevel -- Specifies the verbosity of the logs that will be printed by the sidecar container
+    verbosityLevel: 5
+
+# configurations used for API access to IAM
+accessManagement:
+  # accessManagement.proxy -- Proxy url if any to be used
+  proxy: ""
+  # accessManagement.glcpCommonCloud -- HPE GLCP common cloud URL
+  glcpCommonCloud: sso.common.cloud.hpe.com
+
+# resources -- Resources such as CPU limits, Memory limits, CPU request and Memory request applied to the COSI driver and the COSI sidecar individually.
+resources: {}
+  # We usually recommend not to specify default resources and to leave this as a conscious
+  # choice for the user. This also increases chances charts run on environments with little
+  # resources, such as Minikube. If you do want to specify resources, uncomment the following
+  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+  # limits:
+  #   cpu: 100m
+  #   memory: 128Mi
+  # requests:
+  #   cpu: 100m
+  #   memory: 128Mi
+# podEvictionToleration -- Pod Toleration time in seconds
+podEvictionToleration: 300
