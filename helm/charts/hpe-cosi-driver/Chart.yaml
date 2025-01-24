@@ -16,11 +16,17 @@ annotations:
     - name: Chart Source
       url: https://github.com/hpe-storage/co-deployments
   artifacthub.io/recommendations: |
-    - url:
+    - url: https://artifacthub.io/packages/helm/hpe-storage/hpe-cosi-driver
 icon: https://raw.githubusercontent.com/hpe-storage/co-deployments/master/docs/assets/hpedev.png
 maintainers:
-- name: datamattsson
-  email: dev-hi-containers@hpe.com
+- name: maheshke
+  email: keshetti.mahesh@hpe.com
+- name: narayviv, gauriKrishnan
+  email: vivek-vishnu.narayanan@hpe.com
+- name: gauriKrishnan
+  email: gauri.krishnan@hpe.com
+- name: mrigaya
+  email: mrigaya-gupta@hpe.com
 sources:
 - https://github.com/hpe-storage/cosi-driver
 home: https://hpe.com/storage/containers

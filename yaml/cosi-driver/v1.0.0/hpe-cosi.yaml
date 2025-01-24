@@ -1,19 +1,84 @@
-# Configuration to deploy the HPE COSI drivers
-#
-# example usage: kubectl create -f <this_file>
-
+---
+# Source: hpe-cosi-driver/templates/serviceaccount.yaml
+# © Copyright 2024 Hewlett Packard Enterprise Development LP
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: hpe-cosi-provisioner-sa
+  namespace: 
+  labels:
+    helm.sh/chart: hpe-cosi-driver-1.0.0
+    app.kubernetes.io/name: hpe-cosi-driver
+    app.kubernetes.io/version: "1.0.0"
+    app.kubernetes.io/instance: hpe-cosi-driver
+    app.kubernetes.io/part-of: "container-object-storage-interface"
+    app.kubernetes.io/managed-by: Helm
+---
+# Source: hpe-cosi-driver/templates/rbac.yaml
+# © Copyright 2024 Hewlett Packard Enterprise Development LP
+kind: ClusterRole
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: hpe-cosi-provisioner-role
+  labels:
+    helm.sh/chart: hpe-cosi-driver-1.0.0
+    app.kubernetes.io/name: hpe-cosi-driver
+    app.kubernetes.io/version: "1.0.0"
+    app.kubernetes.io/instance: hpe-cosi-driver
+    app.kubernetes.io/part-of: "container-object-storage-interface"
+    app.kubernetes.io/managed-by: Helm
+rules:
+- apiGroups: ["objectstorage.k8s.io"]
+  resources: ["buckets", "bucketaccesses","buckets/status", "bucketaccesses/status", "bucketclaims", "bucketclaims/status", "bucketaccessclasses"]
+  verbs: ["get", "list", "watch", "update", "create", "delete"]
+- apiGroups: ["coordination.k8s.io"]
+  resources: ["leases"]
+  verbs: ["get", "watch", "list", "delete", "update", "create"]
+- apiGroups: [""]
+  resources: ["events"]
+  verbs: ["get", "delete", "update", "create", "patch"]
+- apiGroups: [""]
+  resources: ["secrets"]
+  verbs: ["get", "create", "update", "delete"]
+- apiGroups: [""]
+  resources: ["namespaces"]
+  verbs: ["get", "list"]
+---
+# Source: hpe-cosi-driver/templates/rbac.yaml
+kind: ClusterRoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: hpe-cosi-provisioner-role-binding
+  labels:
+    helm.sh/chart: hpe-cosi-driver-1.0.0
+    app.kubernetes.io/name: hpe-cosi-driver
+    app.kubernetes.io/version: "1.0.0"
+    app.kubernetes.io/instance: hpe-cosi-driver
+    app.kubernetes.io/part-of: "container-object-storage-interface"
+    app.kubernetes.io/managed-by: Helm
+subjects:
+  - kind: ServiceAccount
+    name: hpe-cosi-provisioner-sa
+    namespace: default
+roleRef:
+  kind: ClusterRole
+  name: hpe-cosi-provisioner-role
+  apiGroup: rbac.authorization.k8s.io
+---
+# Source: hpe-cosi-driver/templates/deployment.yaml
+# © Copyright 2024 Hewlett Packard Enterprise Development LP
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: hpe-cosi-provisioner
-  namespace: default
+  namespace: 
   labels:
-    app.kubernetes.io/instance: hpe-cosi-driver
-    app.kubernetes.io/managed-by: Helm
-    app.kubernetes.io/name: hpe-cosi-driver
-    app.kubernetes.io/part-of: container-object-storage-interface
-    app.kubernetes.io/version: 1.0.0
     helm.sh/chart: hpe-cosi-driver-1.0.0
+    app.kubernetes.io/name: hpe-cosi-driver
+    app.kubernetes.io/version: "1.0.0"
+    app.kubernetes.io/instance: hpe-cosi-driver
+    app.kubernetes.io/part-of: "container-object-storage-interface"
+    app.kubernetes.io/managed-by: Helm
 spec:
   replicas: 1
   minReadySeconds: 30
@@ -26,20 +91,19 @@ spec:
       maxUnavailable: 0
   selector:
     matchLabels:
-      app.kubernetes.io/instance: hpe-cosi-driver
       app.kubernetes.io/name: hpe-cosi-driver
-      app.kubernetes.io/part-of: container-object-storage-interface
-      app.kubernetes.io/version: 1.0.0
+      app.kubernetes.io/version: "1.0.0"
+      app.kubernetes.io/instance: hpe-cosi-driver
+      app.kubernetes.io/part-of: "container-object-storage-interface"
   template:
     metadata:
       annotations:
         kubectl.kubernetes.io/default-container: hpe-cosi-driver
       labels:
-        app.kubernetes.io/instance: hpe-cosi-driver
         app.kubernetes.io/name: hpe-cosi-driver
-        app.kubernetes.io/part-of: container-object-storage-interface
-        app.kubernetes.io/version: 1.0.0
-
+        app.kubernetes.io/version: "1.0.0"
+        app.kubernetes.io/instance: hpe-cosi-driver
+        app.kubernetes.io/part-of: "container-object-storage-interface"
     spec:
       serviceAccountName: hpe-cosi-provisioner-sa
       volumes:
@@ -78,71 +142,3 @@ spec:
         operator: "Exists"
         effect: "NoExecute"
         tolerationSeconds: 300
-
----
-
-kind: ClusterRole
-apiVersion: rbac.authorization.k8s.io/v1
-metadata:
-  name: hpe-cosi-provisioner-role
-  labels:
-    app.kubernetes.io/instance: hpe-cosi-driver
-    app.kubernetes.io/managed-by: Helm
-    app.kubernetes.io/name: hpe-cosi-driver
-    app.kubernetes.io/part-of: container-object-storage-interface
-    app.kubernetes.io/version: 1.0.0
-    helm.sh/chart: hpe-cosi-driver-1.0.0
-
-rules:
-- apiGroups: ["objectstorage.k8s.io"]
-  resources: ["buckets", "bucketaccesses","buckets/status", "bucketaccesses/status", "bucketclaims", "bucketclaims/status", "bucketaccessclasses"]
-  verbs: ["get", "list", "watch", "update", "create", "delete"]
-- apiGroups: ["coordination.k8s.io"]
-  resources: ["leases"]
-  verbs: ["get", "watch", "list", "delete", "update", "create"]
-- apiGroups: [""]
-  resources: ["events"]
-  verbs: ["get", "delete", "update", "create", "patch"]
-- apiGroups: [""]
-  resources: ["secrets"]
-  verbs: ["get", "create", "update", "delete"]
-- apiGroups: [""]
-  resources: ["namespaces"]
-  verbs: ["get", "list"]
-
----
-
-kind: ClusterRoleBinding
-apiVersion: rbac.authorization.k8s.io/v1
-metadata:
-  name: hpe-cosi-provisioner-role-binding
-  labels:
-    app.kubernetes.io/instance: hpe-cosi-driver
-    app.kubernetes.io/managed-by: Helm
-    app.kubernetes.io/name: hpe-cosi-driver
-    app.kubernetes.io/part-of: container-object-storage-interface
-    app.kubernetes.io/version: 1.0.0
-    helm.sh/chart: hpe-cosi-driver-1.0.0
-subjects:
-  - kind: ServiceAccount
-    name: hpe-cosi-provisioner-sa
-    namespace: default
-roleRef:
-  kind: ClusterRole
-  name: hpe-cosi-provisioner-role
-  apiGroup: rbac.authorization.k8s.io
-
----
-
-apiVersion: v1
-kind: ServiceAccount
-metadata:
-  name: hpe-cosi-provisioner-sa
-  namespace: default
-  labels:
-    app.kubernetes.io/instance: hpe-cosi-driver
-    app.kubernetes.io/managed-by: Helm
-    app.kubernetes.io/name: hpe-cosi-driver
-    app.kubernetes.io/part-of: container-object-storage-interface
-    app.kubernetes.io/version: 1.0.0
-    helm.sh/chart: hpe-cosi-driver-1.0.0
