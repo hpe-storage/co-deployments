@@ -8,7 +8,9 @@ OPERATOR_SDK = 'operator-sdk version: "v1.38.0"'
 # Don't set these, preferably
 RH_REPO_NAME=registry.connect.redhat.com/hpestorage
 COMMUNITY_OUTPUT=destinations/community-operators/current-version
+COMMUNITY_DISPLAY_NAME=HPE CSI Operator for Kubernetes
 CERTIFIED_OUTPUT=destinations/certified-operators/current-version
+CERTIFIED_DISPLAY_NAME=HPE CSI Operator for OpenShift
 NAMESPACE ?= hpe-storage
 CHART ?= hpe-csi-driver
 VANITY_NAME ?= hpe-csi-operator
@@ -141,6 +143,11 @@ certified: prep
 	rm -rf $(CERTIFIED_OUTPUT)/*
 	cp -f -a $(IMAGE_NAME)/bundle/* $(CERTIFIED_OUTPUT)
 	sed -i.remove -e "s|$(REPO_NAME)/$(IMAGE_NAME)|$(RH_REPO_NAME)/$(IMAGE_NAME)|g" -e "/replaces: /d" \
+		$(CERTIFIED_OUTPUT)/manifests/hpe-csi-operator.clusterserviceversion.yaml && \
+		rm -f $(CERTIFIED_OUTPUT)/manifests/hpe-csi-operator.clusterserviceversion.yaml.remove
+
+	# Rename certified display name
+	sed -i.remove -e "s/$(COMMUNITY_DISPLAY_NAME)/$(CERTIFIED_DISPLAY_NAME)/g" \
 		$(CERTIFIED_OUTPUT)/manifests/hpe-csi-operator.clusterserviceversion.yaml && \
 		rm -f $(CERTIFIED_OUTPUT)/manifests/hpe-csi-operator.clusterserviceversion.yaml.remove
 
