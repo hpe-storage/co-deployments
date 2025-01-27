@@ -16,7 +16,7 @@ annotations:
     - name: Chart Source
       url: https://github.com/hpe-storage/co-deployments
   artifacthub.io/recommendations: |
-    - url: https://artifacthub.io/packages/helm/hpe-storage/hpe-cosi-driver
+    - url: https://artifacthub.io/packages/helm/hpe-storage/hpe-csi-driver
 icon: https://raw.githubusercontent.com/hpe-storage/co-deployments/master/docs/assets/hpedev.png
 maintainers:
 - name: maheshke
