@@ -158,12 +158,12 @@ entries:
           url: https://github.com/hpe-storage/co-deployments
       artifacthub.io/prerelease: "true"
       artifacthub.io/recommendations: |
-        - url: https://artifacthub.io/packages/helm/hpe-storage/hpe-cosi-driver
+        - url: https://artifacthub.io/packages/helm/hpe-storage/hpe-csi-driver
     apiVersion: v2
     appVersion: 1.0.0
-    created: "2025-01-24T06:34:58.677594457Z"
+    created: "2025-01-28T06:10:40.775221468Z"
     description: A Helm chart for installing the HPE COSI Driver for Kubernetes
-    digest: a1200414b5fdefa1413169c0bb37c1b97848a6eb595b63f84591e6da183c53b0
+    digest: 5b7995825512d57cdf6541ae9cf08450f254f66548538d8ac0a2c996d1f07e22
     home: https://hpe.com/storage/containers
     icon: https://raw.githubusercontent.com/hpe-storage/co-deployments/master/docs/assets/hpedev.png
     keywords:
@@ -1560,4 +1560,4 @@ entries:
     urls:
     - hpe-greenlake-file-csi-driver-1.0.0-beta.tgz
     version: 1.0.0-beta
-generated: "2025-01-24T06:34:58.676958716Z"
+generated: "2025-01-28T06:10:40.774452645Z"
