@@ -1,0 +1,144 @@
+---
+# Source: hpe-cosi-driver/templates/serviceaccount.yaml
+# © Copyright 2024 Hewlett Packard Enterprise Development LP
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: hpe-cosi-provisioner-sa
+  namespace: 
+  labels:
+    helm.sh/chart: hpe-cosi-driver-1.0.0
+    app.kubernetes.io/name: hpe-cosi-driver
+    app.kubernetes.io/version: "1.0.0"
+    app.kubernetes.io/instance: hpe-cosi-driver
+    app.kubernetes.io/part-of: "container-object-storage-interface"
+    app.kubernetes.io/managed-by: Helm
+---
+# Source: hpe-cosi-driver/templates/rbac.yaml
+# © Copyright 2024 Hewlett Packard Enterprise Development LP
+kind: ClusterRole
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: hpe-cosi-provisioner-role
+  labels:
+    helm.sh/chart: hpe-cosi-driver-1.0.0
+    app.kubernetes.io/name: hpe-cosi-driver
+    app.kubernetes.io/version: "1.0.0"
+    app.kubernetes.io/instance: hpe-cosi-driver
+    app.kubernetes.io/part-of: "container-object-storage-interface"
+    app.kubernetes.io/managed-by: Helm
+rules:
+- apiGroups: ["objectstorage.k8s.io"]
+  resources: ["buckets", "bucketaccesses","buckets/status", "bucketaccesses/status", "bucketclaims", "bucketclaims/status", "bucketaccessclasses"]
+  verbs: ["get", "list", "watch", "update", "create", "delete"]
+- apiGroups: ["coordination.k8s.io"]
+  resources: ["leases"]
+  verbs: ["get", "watch", "list", "delete", "update", "create"]
+- apiGroups: [""]
+  resources: ["events"]
+  verbs: ["get", "delete", "update", "create", "patch"]
+- apiGroups: [""]
+  resources: ["secrets"]
+  verbs: ["get", "create", "update", "delete"]
+- apiGroups: [""]
+  resources: ["namespaces"]
+  verbs: ["get", "list"]
+---
+# Source: hpe-cosi-driver/templates/rbac.yaml
+kind: ClusterRoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: hpe-cosi-provisioner-role-binding
+  labels:
+    helm.sh/chart: hpe-cosi-driver-1.0.0
+    app.kubernetes.io/name: hpe-cosi-driver
+    app.kubernetes.io/version: "1.0.0"
+    app.kubernetes.io/instance: hpe-cosi-driver
+    app.kubernetes.io/part-of: "container-object-storage-interface"
+    app.kubernetes.io/managed-by: Helm
+subjects:
+  - kind: ServiceAccount
+    name: hpe-cosi-provisioner-sa
+    namespace: default
+roleRef:
+  kind: ClusterRole
+  name: hpe-cosi-provisioner-role
+  apiGroup: rbac.authorization.k8s.io
+---
+# Source: hpe-cosi-driver/templates/deployment.yaml
+# © Copyright 2024 Hewlett Packard Enterprise Development LP
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hpe-cosi-provisioner
+  namespace: 
+  labels:
+    helm.sh/chart: hpe-cosi-driver-1.0.0
+    app.kubernetes.io/name: hpe-cosi-driver
+    app.kubernetes.io/version: "1.0.0"
+    app.kubernetes.io/instance: hpe-cosi-driver
+    app.kubernetes.io/part-of: "container-object-storage-interface"
+    app.kubernetes.io/managed-by: Helm
+spec:
+  replicas: 1
+  minReadySeconds: 30
+  progressDeadlineSeconds: 600
+  revisionHistoryLimit: 3
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: hpe-cosi-driver
+      app.kubernetes.io/version: "1.0.0"
+      app.kubernetes.io/instance: hpe-cosi-driver
+      app.kubernetes.io/part-of: "container-object-storage-interface"
+  template:
+    metadata:
+      annotations:
+        kubectl.kubernetes.io/default-container: hpe-cosi-driver
+      labels:
+        app.kubernetes.io/name: hpe-cosi-driver
+        app.kubernetes.io/version: "1.0.0"
+        app.kubernetes.io/instance: hpe-cosi-driver
+        app.kubernetes.io/part-of: "container-object-storage-interface"
+    spec:
+      serviceAccountName: hpe-cosi-provisioner-sa
+      volumes:
+      - name: socket
+        emptyDir: {}
+      containers:
+        - name: hpe-cosi-driver
+          image: quay.io/hpestorage/cosi-driver:v1.0.0
+          imagePullPolicy: IfNotPresent
+          volumeMounts:
+          - mountPath: /var/lib/cosi
+            name: socket
+          env:
+          - name: POD_NAMESPACE
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.namespace
+          - name: PROXY
+            value: ""
+          - name: GLCP_COMMON_CLOUD
+            value: "sso.common.cloud.hpe.com"
+        - name: hpe-cosi-provisioner-sidecar
+          image: gcr.io/k8s-staging-sig-storage/objectstorage-sidecar:v20241017-v0.1.0-58-g80979e8
+          imagePullPolicy: IfNotPresent
+          args:
+          - "--v=5"
+          volumeMounts:
+          - mountPath: /var/lib/cosi
+            name: socket
+      tolerations:
+      - key: "node.kubernetes.io/not-ready"
+        operator: "Exists"
+        effect: "NoExecute"
+        tolerationSeconds: 300
+      - key: "node.kubernetes.io/unreachable"
+        operator: "Exists"
+        effect: "NoExecute"
+        tolerationSeconds: 300

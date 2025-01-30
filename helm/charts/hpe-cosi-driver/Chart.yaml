@@ -1,0 +1,37 @@
+# © Copyright 2024 Hewlett Packard Enterprise Development LP
+apiVersion: v2
+name: hpe-cosi-driver
+description: A Helm chart for installing the HPE COSI Driver for Kubernetes
+type: application
+version: 1.0.0
+appVersion: "1.0.0"
+annotations:
+  artifacthub.io/prerelease: "true"
+  artifacthub.io/containsSecurityUpdates: "false"
+  artifacthub.io/license: Apache-2.0
+  artifacthub.io/category: storage
+  artifacthub.io/links: |
+    - name: Documentation
+      url: https://scod.hpedev.io/cosi_driver
+    - name: Chart Source
+      url: https://github.com/hpe-storage/co-deployments
+  artifacthub.io/recommendations: |
+    - url: https://artifacthub.io/packages/helm/hpe-storage/hpe-csi-driver
+icon: https://raw.githubusercontent.com/hpe-storage/co-deployments/master/docs/assets/hpedev.png
+maintainers:
+- name: maheshke
+  email: keshetti.mahesh@hpe.com
+- name: narayviv
+  email: vivek-vishnu.narayanan@hpe.com
+- name: gauriKrishnan
+  email: gauri.krishnan@hpe.com
+- name: mrigaya
+  email: mrigaya-gupta@hpe.com
+sources:
+- https://github.com/hpe-storage/cosi-driver
+home: https://hpe.com/storage/containers
+keywords:
+  - HPE
+  - Object
+  - Storage
+  - COSI

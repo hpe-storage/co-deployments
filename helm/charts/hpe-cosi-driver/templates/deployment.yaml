@@ -1,0 +1,78 @@
+---
+# © Copyright 2024 Hewlett Packard Enterprise Development LP
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.deployment.name }}
+  namespace: {{ .Values.Namespace }}
+  labels:
+    {{- include "hpe-cosi-driver.labels" . | nindent 4 }}
+spec:
+  replicas: 1
+  minReadySeconds: 30
+  progressDeadlineSeconds: 600
+  revisionHistoryLimit: 3
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  selector:
+    matchLabels:
+      {{- include "hpe-cosi-driver.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      annotations:
+        kubectl.kubernetes.io/default-container: {{ .Values.containers.cosiDriver.name }}
+      labels:
+        {{- include "hpe-cosi-driver.selectorLabels" . | nindent 8 }}
+    spec:
+      serviceAccountName: {{ .Values.deployment.name }}-sa
+      volumes:
+      - name: socket
+        emptyDir: {}
+      {{- if .Values.regSecretName }}
+      imagePullSecrets:
+      - name: {{ .Values.regSecretName }}
+      {{- end }}
+      containers:
+        - name: {{ .Values.containers.cosiDriver.name }}
+          image: {{ .Values.containers.cosiDriver.image }}
+          imagePullPolicy: {{ .Values.containers.cosiDriver.imagePullPolicy }}
+          volumeMounts:
+          - mountPath: /var/lib/cosi
+            name: socket
+          env:
+          - name: POD_NAMESPACE
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.namespace
+          {{- if .Values.resources }}
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+          {{- end }}
+          - name: PROXY
+            value: "{{ .Values.accessManagement.proxy }}"
+          - name: GLCP_COMMON_CLOUD
+            value: "{{ .Values.accessManagement.glcpCommonCloud }}"
+        - name: {{ .Values.containers.sideCar.name }}
+          image: {{ .Values.containers.sideCar.image }}
+          imagePullPolicy: {{ .Values.containers.sideCar.imagePullPolicy }}
+          args:
+          - "--v={{ .Values.containers.sideCar.verbosityLevel }}"
+          volumeMounts:
+          - mountPath: /var/lib/cosi
+            name: socket
+          {{- if .Values.resources }}
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+          {{- end }}
+      tolerations:
+      - key: "node.kubernetes.io/not-ready"
+        operator: "Exists"
+        effect: "NoExecute"
+        tolerationSeconds: {{ .Values.podEvictionToleration }}
+      - key: "node.kubernetes.io/unreachable"
+        operator: "Exists"
+        effect: "NoExecute"
+        tolerationSeconds: {{ .Values.podEvictionToleration }}
