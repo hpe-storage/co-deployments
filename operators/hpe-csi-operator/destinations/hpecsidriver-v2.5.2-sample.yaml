@@ -1,0 +1,77 @@
+apiVersion: storage.hpe.com/v1
+kind: HPECSIDriver
+metadata:
+  name: hpecsidriver-sample
+spec:
+  # Default values copied from <project_dir>/helm-charts/hpe-csi-driver/values.yaml
+  controller:
+    affinity: {}
+    labels: {}
+    nodeSelector: {}
+    resources:
+      limits:
+        cpu: 2000m
+        memory: 1Gi
+      requests:
+        cpu: 100m
+        memory: 128Mi
+    tolerations: []
+  csp:
+    affinity: {}
+    labels: {}
+    nodeSelector: {}
+    resources:
+      limits:
+        cpu: 2000m
+        memory: 1Gi
+      requests:
+        cpu: 100m
+        memory: 128Mi
+    tolerations: []
+  disable:
+    alletra6000: false
+    alletra9000: false
+    alletraStorageMP: false
+    nimble: false
+    primera: false
+  disableHostDeletion: false
+  disableNodeConfiguration: false
+  disableNodeConformance: false
+  disableNodeGetVolumeStats: false
+  disableNodeMonitor: false
+  disablePreInstallHooks: false
+  imagePullPolicy: IfNotPresent
+  images:
+    csiAttacher: registry.k8s.io/sig-storage/csi-attacher:v4.8.0
+    csiControllerDriver: quay.io/hpestorage/csi-driver:v2.5.2
+    csiExtensions: quay.io/hpestorage/csi-extensions:v1.2.8
+    csiNodeDriver: quay.io/hpestorage/csi-driver:v2.5.2
+    csiNodeDriverRegistrar: registry.k8s.io/sig-storage/csi-node-driver-registrar:v2.13.0
+    csiProvisioner: registry.k8s.io/sig-storage/csi-provisioner:v5.1.0
+    csiResizer: registry.k8s.io/sig-storage/csi-resizer:v1.12.0
+    csiSnapshotter: registry.k8s.io/sig-storage/csi-snapshotter:v8.2.0
+    csiVolumeGroupProvisioner: quay.io/hpestorage/volume-group-provisioner:v1.0.7
+    csiVolumeGroupSnapshotter: quay.io/hpestorage/volume-group-snapshotter:v1.0.7
+    csiVolumeMutator: quay.io/hpestorage/volume-mutator:v1.3.7
+    nfsProvisioner: quay.io/hpestorage/nfs-provisioner:v3.0.6
+    nimbleCSP: quay.io/hpestorage/alletra-6000-and-nimble-csp:v2.5.2
+    primera3parCSP: quay.io/hpestorage/alletra-9000-primera-and-3par-csp:v2.5.2
+  iscsi:
+    chapSecretName: ""
+  kubeletRootDir: /var/lib/kubelet
+  logLevel: info
+  maxVolumesPerNode: 100
+  node:
+    affinity: {}
+    labels: {}
+    nodeSelector: {}
+    resources:
+      limits:
+        cpu: 2000m
+        memory: 1Gi
+      requests:
+        cpu: 100m
+        memory: 128Mi
+    tolerations: []
+  
+  
