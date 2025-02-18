@@ -201,6 +201,44 @@ entries:
           url: https://scod.hpedev.io/csi_driver
         - name: Chart Source
           url: https://github.com/hpe-storage/co-deployments
+      artifacthub.io/prerelease: "false"
+      artifacthub.io/recommendations: |
+        - url: https://artifacthub.io/packages/olm/community-operators/hpe-csi-operator
+        - url: https://artifacthub.io/packages/helm/hpe-storage/hpe-csi-info-metrics
+        - url: https://artifacthub.io/packages/helm/hpe-storage/hpe-array-exporter
+    apiVersion: v1
+    appVersion: 2.5.2
+    created: "2025-02-18T18:19:23.484503+05:30"
+    description: A Helm chart for installing the HPE CSI Driver for Kubernetes
+    digest: ea67e6af47637ec033244c1d3666cf78ba0cd663fe082eb3426137ff70b70c7f
+    home: https://hpe.com/storage/containers
+    icon: https://raw.githubusercontent.com/hpe-storage/co-deployments/master/docs/assets/hpedev.png
+    keywords:
+    - HPE
+    - Storage
+    - CSI
+    maintainers:
+    - email: dev-hi-containers@hpe.com
+      name: datamattsson
+    name: hpe-csi-driver
+    sources:
+    - https://github.com/hpe-storage/csi-driver
+    urls:
+    - hpe-csi-driver-2.5.2.tgz
+    version: 2.5.2
+  - annotations:
+      artifacthub.io/category: storage
+      artifacthub.io/containsSecurityUpdates: "false"
+      artifacthub.io/license: Apache-2.0
+      artifacthub.io/links: |
+        - name: Release Highlights
+          url: https://scod.hpedev.io/csi_driver/index.html#latest_release
+        - name: Release Notes
+          url: https://github.com/hpe-storage/csi-driver/tree/master/release-notes
+        - name: Documentation
+          url: https://scod.hpedev.io/csi_driver
+        - name: Chart Source
+          url: https://github.com/hpe-storage/co-deployments
       artifacthub.io/prerelease: "true"
       artifacthub.io/recommendations: |
         - url: https://artifacthub.io/packages/olm/community-operators/hpe-csi-operator
@@ -1560,4 +1598,4 @@ entries:
     urls:
     - hpe-greenlake-file-csi-driver-1.0.0-beta.tgz
     version: 1.0.0-beta
-generated: "2025-01-28T09:33:44.447060249Z"
+generated: "2025-02-18T18:19:23.48391+05:30"

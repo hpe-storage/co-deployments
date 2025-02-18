@@ -111,7 +111,7 @@ spec:
             - name: socket-dir
               mountPath: /var/lib/csi/sockets/pluginproxy
         - name: hpe-csi-driver
-          image: "quay.io/hpestorage/csi-driver:v2.5.2-beta"
+          image: "quay.io/hpestorage/csi-driver:v2.5.2"
           resources:
             limits:
               cpu: 2000m
@@ -130,7 +130,7 @@ spec:
             - name: LOG_LEVEL
               value: info
             - name: RUNTIME_NFS_IMAGE
-              value: quay.io/hpestorage/nfs-provisioner:v3.0.6-beta
+              value: quay.io/hpestorage/nfs-provisioner:v3.0.6
           imagePullPolicy: "IfNotPresent"
           volumeMounts:
             - name: socket-dir
@@ -144,7 +144,7 @@ spec:
             - name: root-dir
               mountPath: /host
         - name: csi-volume-mutator
-          image: "quay.io/hpestorage/volume-mutator:v1.3.7-beta"
+          image: "quay.io/hpestorage/volume-mutator:v1.3.7"
           resources:
             limits:
               cpu: 2000m
@@ -163,7 +163,7 @@ spec:
             - name: socket-dir
               mountPath: /var/lib/csi/sockets/pluginproxy/
         - name: csi-volume-group-snapshotter
-          image: "quay.io/hpestorage/volume-group-snapshotter:v1.0.7-beta"
+          image: "quay.io/hpestorage/volume-group-snapshotter:v1.0.7"
           resources:
             limits:
               cpu: 2000m
@@ -182,7 +182,7 @@ spec:
             - name: socket-dir
               mountPath: /var/lib/csi/sockets/pluginproxy/
         - name: csi-volume-group-provisioner
-          image: "quay.io/hpestorage/volume-group-provisioner:v1.0.7-beta"
+          image: "quay.io/hpestorage/volume-group-provisioner:v1.0.7"
           resources:
             limits:
               cpu: 2000m
@@ -201,7 +201,7 @@ spec:
             - name: socket-dir
               mountPath: /var/lib/csi/sockets/pluginproxy/
         - name: csi-extensions
-          image: "quay.io/hpestorage/csi-extensions:v1.2.8-beta"
+          image: "quay.io/hpestorage/csi-extensions:v1.2.8"
           resources:
             limits:
               cpu: 2000m
