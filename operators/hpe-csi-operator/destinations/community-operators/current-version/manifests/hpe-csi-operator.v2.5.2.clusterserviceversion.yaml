@@ -101,8 +101,8 @@ metadata:
     capabilities: Basic Install
     categories: Storage
     certified: "true"
-    containerImage: quay.io/hpestorage/csi-driver-operator@sha256:b1cb03e66828b69794dfd53dda31c46840804361052a77fd534481f8b9d32ac0
-    createdAt: "2025-02-19T07:53:31Z"
+    containerImage: quay.io/hpestorage/csi-driver-operator@sha256:bfe231f56281df8a7322f6d6b2ebada39405320d5bddda68e6a7df5ce763f7f4
+    createdAt: "2025-02-19T10:37:42Z"
     description: A Container Storage Interface (CSI) driver for HPE storage platforms. The CSI driver allows you to use HPE storage with your preferred container orchestrator.
     features.operators.openshift.io/cnf: "false"
     features.operators.openshift.io/cni: "false"
@@ -809,7 +809,7 @@ spec:
                       - --leader-elect
                       - --leader-election-id=hpe-csi-operator
                       - --health-probe-bind-address=:8081
-                    image: quay.io/hpestorage/csi-driver-operator@sha256:b1cb03e66828b69794dfd53dda31c46840804361052a77fd534481f8b9d32ac0
+                    image: quay.io/hpestorage/csi-driver-operator@sha256:bfe231f56281df8a7322f6d6b2ebada39405320d5bddda68e6a7df5ce763f7f4
                     livenessProbe:
                       httpGet:
                         path: /healthz
@@ -899,36 +899,36 @@ spec:
   provider:
     name: HPE
   relatedImages:
-    - image: quay.io/hpestorage/csi-driver-operator@sha256:b1cb03e66828b69794dfd53dda31c46840804361052a77fd534481f8b9d32ac0
-      name: csi-driver-operator-b1cb03e66828b69794dfd53dda31c46840804361052a77fd534481f8b9d32ac0-annotation
     - image: quay.io/hpestorage/alletra-6000-and-nimble-csp@sha256:caf8a4af7f9e29a9029eb5e05d5864e65e2acc09984a66857ea30eb98fbdac90
       name: alletra-6000-and-nimble-csp-caf8a4af7f9e29a9029eb5e05d5864e65e2acc09984a66857ea30eb98fbdac90-annotation
-    - image: quay.io/hpestorage/csi-driver-operator@sha256:b1cb03e66828b69794dfd53dda31c46840804361052a77fd534481f8b9d32ac0
-      name: manager
-    - image: quay.io/hpestorage/volume-group-snapshotter@sha256:d07c0bbcd6f8c64408ecca4aaf2bf41a94f1b63c8fcdbb8999e74677d805e49b
-      name: volume-group-snapshotter-d07c0bbcd6f8c64408ecca4aaf2bf41a94f1b63c8fcdbb8999e74677d805e49b-annotation
-    - image: quay.io/hpestorage/volume-group-provisioner@sha256:e09e233dfc2cda94a85ef3206e659731a74b6d44f26f03f61a273231b839e193
-      name: volume-group-provisioner-e09e233dfc2cda94a85ef3206e659731a74b6d44f26f03f61a273231b839e193-annotation
-    - image: registry.k8s.io/sig-storage/csi-resizer@sha256:ab774734705a906561e15b67f6a96538f3ad520335d636f793aaafe87a3b5200
-      name: csi-resizer-ab774734705a906561e15b67f6a96538f3ad520335d636f793aaafe87a3b5200-annotation
-    - image: quay.io/hpestorage/alletra-9000-primera-and-3par-csp@sha256:4f0493b713ee3869194598fbae9fb37664c6a68527885348d1465551e74d52d6
-      name: alletra-9000-primera-and-3par-csp-4f0493b713ee3869194598fbae9fb37664c6a68527885348d1465551e74d52d6-annotation
     - image: registry.k8s.io/sig-storage/csi-snapshotter@sha256:dd788d79cf4c1b8edee6d9b80b8a1ebfc51a38a365c5be656986b129be9ac784
       name: csi-snapshotter-dd788d79cf4c1b8edee6d9b80b8a1ebfc51a38a365c5be656986b129be9ac784-annotation
-    - image: registry.k8s.io/sig-storage/csi-node-driver-registrar@sha256:d7138bcc3aa5f267403d45ad4292c95397e421ea17a0035888850f424c7de25d
-      name: csi-node-driver-registrar-d7138bcc3aa5f267403d45ad4292c95397e421ea17a0035888850f424c7de25d-annotation
-    - image: quay.io/hpestorage/csi-extensions@sha256:df31da0f78b9c54fabd250e589d1e341f743e703bc83be5bf1a62b94453e5b65
-      name: csi-extensions-df31da0f78b9c54fabd250e589d1e341f743e703bc83be5bf1a62b94453e5b65-annotation
+    - image: registry.k8s.io/sig-storage/csi-provisioner@sha256:672e45d6a55678abc1d102de665b5cbd63848e75dc7896f238c8eaaf3c7d322f
+      name: csi-provisioner-672e45d6a55678abc1d102de665b5cbd63848e75dc7896f238c8eaaf3c7d322f-annotation
     - image: registry.k8s.io/sig-storage/csi-attacher@sha256:a399393ff5bd156277c56bae0c08389b1a1b95b7fd6ea44a316ce55e0dd559d7
       name: csi-attacher-a399393ff5bd156277c56bae0c08389b1a1b95b7fd6ea44a316ce55e0dd559d7-annotation
+    - image: quay.io/hpestorage/alletra-9000-primera-and-3par-csp@sha256:4f0493b713ee3869194598fbae9fb37664c6a68527885348d1465551e74d52d6
+      name: alletra-9000-primera-and-3par-csp-4f0493b713ee3869194598fbae9fb37664c6a68527885348d1465551e74d52d6-annotation
     - image: quay.io/hpestorage/nfs-provisioner@sha256:f8d0e28689cff7a505a3561081da8e3e86570a02f9422139eed72b5d02d56950
       name: nfs-provisioner-f8d0e28689cff7a505a3561081da8e3e86570a02f9422139eed72b5d02d56950-annotation
     - image: quay.io/hpestorage/volume-mutator@sha256:096538ae4f7371b5d25d6c6a6be947726ba3184b5a9ead47f58ada5a6bdb9c9c
       name: volume-mutator-096538ae4f7371b5d25d6c6a6be947726ba3184b5a9ead47f58ada5a6bdb9c9c-annotation
-    - image: registry.k8s.io/sig-storage/csi-provisioner@sha256:672e45d6a55678abc1d102de665b5cbd63848e75dc7896f238c8eaaf3c7d322f
-      name: csi-provisioner-672e45d6a55678abc1d102de665b5cbd63848e75dc7896f238c8eaaf3c7d322f-annotation
+    - image: registry.k8s.io/sig-storage/csi-resizer@sha256:ab774734705a906561e15b67f6a96538f3ad520335d636f793aaafe87a3b5200
+      name: csi-resizer-ab774734705a906561e15b67f6a96538f3ad520335d636f793aaafe87a3b5200-annotation
     - image: quay.io/hpestorage/csi-driver@sha256:72c2e0477e750ea7301fa3543f951dd9f03e29aa8b7eba5e3084b2f1cc06c997
       name: csi-driver-72c2e0477e750ea7301fa3543f951dd9f03e29aa8b7eba5e3084b2f1cc06c997-annotation
+    - image: quay.io/hpestorage/csi-extensions@sha256:df31da0f78b9c54fabd250e589d1e341f743e703bc83be5bf1a62b94453e5b65
+      name: csi-extensions-df31da0f78b9c54fabd250e589d1e341f743e703bc83be5bf1a62b94453e5b65-annotation
+    - image: quay.io/hpestorage/csi-driver-operator@sha256:bfe231f56281df8a7322f6d6b2ebada39405320d5bddda68e6a7df5ce763f7f4
+      name: manager
+    - image: quay.io/hpestorage/csi-driver-operator@sha256:bfe231f56281df8a7322f6d6b2ebada39405320d5bddda68e6a7df5ce763f7f4
+      name: csi-driver-operator-bfe231f56281df8a7322f6d6b2ebada39405320d5bddda68e6a7df5ce763f7f4-annotation
+    - image: quay.io/hpestorage/volume-group-snapshotter@sha256:d07c0bbcd6f8c64408ecca4aaf2bf41a94f1b63c8fcdbb8999e74677d805e49b
+      name: volume-group-snapshotter-d07c0bbcd6f8c64408ecca4aaf2bf41a94f1b63c8fcdbb8999e74677d805e49b-annotation
+    - image: quay.io/hpestorage/volume-group-provisioner@sha256:e09e233dfc2cda94a85ef3206e659731a74b6d44f26f03f61a273231b839e193
+      name: volume-group-provisioner-e09e233dfc2cda94a85ef3206e659731a74b6d44f26f03f61a273231b839e193-annotation
+    - image: registry.k8s.io/sig-storage/csi-node-driver-registrar@sha256:d7138bcc3aa5f267403d45ad4292c95397e421ea17a0035888850f424c7de25d
+      name: csi-node-driver-registrar-d7138bcc3aa5f267403d45ad4292c95397e421ea17a0035888850f424c7de25d-annotation
   replaces: hpe-csi-operator.v2.5.1
   selector: {}
   version: 2.5.2
