@@ -59,19 +59,19 @@ metadata:
             "imagePullPolicy": "IfNotPresent",
             "images": {
               "csiAttacher": "registry.k8s.io/sig-storage/csi-attacher@sha256:a399393ff5bd156277c56bae0c08389b1a1b95b7fd6ea44a316ce55e0dd559d7",
-              "csiControllerDriver": "quay.io/hpestorage/csi-driver@sha256:98b4539c11e64b052f2d47aeb39cf7e9b26bda3297b64505427317c4c5b2b282",
-              "csiExtensions": "quay.io/hpestorage/csi-extensions@sha256:ebd1fd3c61c5861384a60f0e4c6ce8c366404f4fe881053ee70108278aab419e",
-              "csiNodeDriver": "quay.io/hpestorage/csi-driver@sha256:98b4539c11e64b052f2d47aeb39cf7e9b26bda3297b64505427317c4c5b2b282",
+              "csiControllerDriver": "quay.io/hpestorage/csi-driver@sha256:72c2e0477e750ea7301fa3543f951dd9f03e29aa8b7eba5e3084b2f1cc06c997",
+              "csiExtensions": "quay.io/hpestorage/csi-extensions@sha256:df31da0f78b9c54fabd250e589d1e341f743e703bc83be5bf1a62b94453e5b65",
+              "csiNodeDriver": "quay.io/hpestorage/csi-driver@sha256:72c2e0477e750ea7301fa3543f951dd9f03e29aa8b7eba5e3084b2f1cc06c997",
               "csiNodeDriverRegistrar": "registry.k8s.io/sig-storage/csi-node-driver-registrar@sha256:d7138bcc3aa5f267403d45ad4292c95397e421ea17a0035888850f424c7de25d",
               "csiProvisioner": "registry.k8s.io/sig-storage/csi-provisioner@sha256:672e45d6a55678abc1d102de665b5cbd63848e75dc7896f238c8eaaf3c7d322f",
               "csiResizer": "registry.k8s.io/sig-storage/csi-resizer@sha256:ab774734705a906561e15b67f6a96538f3ad520335d636f793aaafe87a3b5200",
               "csiSnapshotter": "registry.k8s.io/sig-storage/csi-snapshotter@sha256:dd788d79cf4c1b8edee6d9b80b8a1ebfc51a38a365c5be656986b129be9ac784",
               "csiVolumeGroupProvisioner": "quay.io/hpestorage/volume-group-provisioner@sha256:e09e233dfc2cda94a85ef3206e659731a74b6d44f26f03f61a273231b839e193",
               "csiVolumeGroupSnapshotter": "quay.io/hpestorage/volume-group-snapshotter@sha256:d07c0bbcd6f8c64408ecca4aaf2bf41a94f1b63c8fcdbb8999e74677d805e49b",
-              "csiVolumeMutator": "quay.io/hpestorage/volume-mutator@sha256:26c0f07acb9730b2cc45830574861bdb1d08676aeade0c9a1cbb5ae222404313",
-              "nfsProvisioner": "quay.io/hpestorage/nfs-provisioner@sha256:35bc5c0f7ef2f1d088a188af800865da612cc72336418c8b91fd1ab3ebf51a9a",
-              "nimbleCSP": "quay.io/hpestorage/alletra-6000-and-nimble-csp@sha256:5a1458d316f3299df2ce3571c746ebde72ed344568cfadf09e5bd7237d32b77b",
-              "primera3parCSP": "quay.io/hpestorage/alletra-9000-primera-and-3par-csp@sha256:f90a1d50659a32569fcb04b2ac371c58ca0ee912978d18083f06357e883c7506"
+              "csiVolumeMutator": "quay.io/hpestorage/volume-mutator@sha256:096538ae4f7371b5d25d6c6a6be947726ba3184b5a9ead47f58ada5a6bdb9c9c",
+              "nfsProvisioner": "quay.io/hpestorage/nfs-provisioner@sha256:f8d0e28689cff7a505a3561081da8e3e86570a02f9422139eed72b5d02d56950",
+              "nimbleCSP": "quay.io/hpestorage/alletra-6000-and-nimble-csp@sha256:caf8a4af7f9e29a9029eb5e05d5864e65e2acc09984a66857ea30eb98fbdac90",
+              "primera3parCSP": "quay.io/hpestorage/alletra-9000-primera-and-3par-csp@sha256:4f0493b713ee3869194598fbae9fb37664c6a68527885348d1465551e74d52d6"
             },
             "iscsi": {
               "chapSecretName": ""
@@ -101,8 +101,8 @@ metadata:
     capabilities: Basic Install
     categories: Storage
     certified: "true"
-    containerImage: registry.connect.redhat.com/hpestorage/csi-driver-operator@sha256:47c8ade45b836d40cf7ef72900cfb980870bc3ac54672ccbd727817dfb0b92bb
-    createdAt: "2025-01-10T07:21:35Z"
+    containerImage: registry.connect.redhat.com/hpestorage/csi-driver-operator@sha256:2ff4341b50b8e5a34f90486701ad069c81a0d540a153b95acc54cba65e5abd01
+    createdAt: "2025-02-20T07:08:57Z"
     description: A Container Storage Interface (CSI) driver for HPE storage platforms. The CSI driver allows you to use HPE storage with your preferred container orchestrator.
     features.operators.openshift.io/cnf: "false"
     features.operators.openshift.io/cni: "false"
@@ -114,13 +114,13 @@ metadata:
     features.operators.openshift.io/token-auth-aws: "false"
     features.operators.openshift.io/token-auth-azure: "false"
     features.operators.openshift.io/token-auth-gcp: "false"
-    olm.skipRange: '>=1.0.0 <2.5.2-beta'
+    olm.skipRange: '>=1.0.0 <2.5.2'
     operatorhub.io/ui-metadata-max-k8s-version: "1.32"
     operators.operatorframework.io/builder: operator-sdk-v1.38.0
     operators.operatorframework.io/project_layout: helm.sdk.operatorframework.io/v1
     repository: https://github.com/hpe-storage/co-deployments
     support: HPE
-  name: hpe-csi-operator.v2.5.2-beta
+  name: hpe-csi-operator.v2.5.2
   namespace: placeholder
 spec:
   apiservicedefinitions: {}
@@ -188,8 +188,8 @@ spec:
             path: disable.alletra9000
             x-descriptors:
               - urn:alm:descriptor:com.tectonic.ui:checkbox
-          - description: Disable Alletra Storage MP
-            displayName: Alletra Storage MP
+          - description: Disable Alletra Storage MP B10000
+            displayName: Alletra Storage MP B10000
             path: disable.alletraStorageMP
             x-descriptors:
               - urn:alm:descriptor:com.tectonic.ui:checkbox
@@ -325,8 +325,8 @@ spec:
             path: images.nimbleCSP
             x-descriptors:
               - urn:alm:descriptor:com.tectonic.ui:text
-          - description: The HPE Alletra Storage MP, Alletra 9000, Primera and 3PAR Container Storage Provider container image
-            displayName: Alletra Storage MP, Alletra 9000 and Primera Image
+          - description: The HPE Alletra Storage MP B10000, Alletra 9000, Primera and 3PAR Container Storage Provider container image
+            displayName: Alletra Storage MP B10000, Alletra 9000 and Primera Image
             path: images.primera3parCSP
             x-descriptors:
               - urn:alm:descriptor:com.tectonic.ui:text
@@ -393,12 +393,12 @@ spec:
               - urn:alm:descriptor:text
         version: v1
   description: |
-    The HPE CSI Operator for Kubernetes deploys the HPE CSI Driver on Kubernetes and OpenShift for dynamic provisioning of persistent volumes on HPE storage systems.
+    The HPE CSI Operator for OpenShift deploys the HPE CSI Driver on Kubernetes and OpenShift for dynamic provisioning of persistent volumes on HPE storage systems.
     The HPE CSI Driver for Kubernetes leverages HPE storage platforms to provide scalable and persistent storage for stateful applications.
     Please refer to our CSI driver [documentation](https://scod.hpedev.io/csi_driver/index.html) for supported HPE platforms and full list of supported CSI features.
     ## Installation
-    Refer to the HPE CSI Operator for Kubernetes [documentation](https://scod.hpedev.io/csi_driver/deployment.html#operator).
-  displayName: HPE CSI Operator for Kubernetes
+    Refer to the HPE CSI Operator for OpenShift [documentation](https://scod.hpedev.io/csi_driver/deployment.html#operator).
+  displayName: HPE CSI Operator for OpenShift
   icon:
     - base64data: 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ICAgIHhtbG5zOmRjPSJodHRwOi8vcHVybC5vcmcvZGMvZWxlbWVudHMvMS4xLyIKICAgIHhtbG5zOkdJTVA9Imh0dHA6Ly93d3cuZ2ltcC5vcmcveG1wLyIKICAgIHhtbG5zOnRpZmY9Imh0dHA6Ly9ucy5hZG9iZS5jb20vdGlmZi8xLjAvIgogICAgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIgogICB4bXBNTTpEb2N1bWVudElEPSJnaW1wOmRvY2lkOmdpbXA6MTNjMDg5ZTItODcyMC00Nzc2LWE5YTktODFhOWVkNmQ0YjE4IgogICB4bXBNTTpJbnN0YW5jZUlEPSJ4bXAuaWlkOmNiOTg0ZTE4LTVmNjItNGQ1Yy1iNmVkLTUzY2VhOWI1ODI0ZSIKICAgeG1wTU06T3JpZ2luYWxEb2N1bWVudElEPSJ4bXAuZGlkOjJmNmNkMmU4LTlmOTItNGI2MS1hMGRjLWRkYmYyMmQwNTEyMiIKICAgZGM6Rm9ybWF0PSJpbWFnZS9wbmciCiAgIEdJTVA6QVBJPSIyLjAiCiAgIEdJTVA6UGxhdGZvcm09Ik1hYyBPUyIKICAgR0lNUDpUaW1lU3RhbXA9IjE2NTYwMDgxNjU1NjEyOTUiCiAgIEdJTVA6VmVyc2lvbj0iMi4xMC4zMCIKICAgdGlmZjpPcmllbnRhdGlvbj0iMSIKICAgeG1wOkNyZWF0b3JUb29sPSJHSU1QIDIuMTAiPgogICA8eG1wTU06SGlzdG9yeT4KICAgIDxyZGY6U2VxPgogICAgIDxyZGY6bGkKICAgICAgc3RFdnQ6YWN0aW9uPSJzYXZlZCIKICAgICAgc3RFdnQ6Y2hhbmdlZD0iLyIKICAgICAgc3RFdnQ6aW5zdGFuY2VJRD0ieG1wLmlpZDoyNTZjMzUwNy1mMTBkLTRiZmQtYjk1Ni01YmQ1MDkyYTYxOGYiCiAgICAgIHN0RXZ0OnNvZnR3YXJlQWdlbnQ9IkdpbXAgMi4xMCAoTWFjIE9TKSIKICAgICAgc3RFdnQ6d2hlbj0iMjAyMi0wNi0yM1QxMToxNjowNS0wNzowMCIvPgogICAgPC9yZGY6U2VxPgogICA8L3htcE1NOkhpc3Rvcnk+CiAgPC9yZGY6RGVzY3JpcHRpb24+CiA8L3JkZjpSREY+CjwveDp4bXBtZXRhPgogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg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
       mediatype: image/png
@@ -809,7 +809,7 @@ spec:
                       - --leader-elect
                       - --leader-election-id=hpe-csi-operator
                       - --health-probe-bind-address=:8081
-                    image: registry.connect.redhat.com/hpestorage/csi-driver-operator@sha256:47c8ade45b836d40cf7ef72900cfb980870bc3ac54672ccbd727817dfb0b92bb
+                    image: registry.connect.redhat.com/hpestorage/csi-driver-operator@sha256:2ff4341b50b8e5a34f90486701ad069c81a0d540a153b95acc54cba65e5abd01
                     livenessProbe:
                       httpGet:
                         path: /healthz
@@ -899,35 +899,35 @@ spec:
   provider:
     name: HPE
   relatedImages:
-    - image: registry.connect.redhat.com/hpestorage/csi-driver-operator@sha256:47c8ade45b836d40cf7ef72900cfb980870bc3ac54672ccbd727817dfb0b92bb
-      name: csi-driver-operator-47c8ade45b836d40cf7ef72900cfb980870bc3ac54672ccbd727817dfb0b92bb-annotation
-    - image: registry.k8s.io/sig-storage/csi-provisioner@sha256:672e45d6a55678abc1d102de665b5cbd63848e75dc7896f238c8eaaf3c7d322f
-      name: csi-provisioner-672e45d6a55678abc1d102de665b5cbd63848e75dc7896f238c8eaaf3c7d322f-annotation
-    - image: registry.k8s.io/sig-storage/csi-node-driver-registrar@sha256:d7138bcc3aa5f267403d45ad4292c95397e421ea17a0035888850f424c7de25d
-      name: csi-node-driver-registrar-d7138bcc3aa5f267403d45ad4292c95397e421ea17a0035888850f424c7de25d-annotation
-    - image: quay.io/hpestorage/csi-driver@sha256:98b4539c11e64b052f2d47aeb39cf7e9b26bda3297b64505427317c4c5b2b282
-      name: csi-driver-98b4539c11e64b052f2d47aeb39cf7e9b26bda3297b64505427317c4c5b2b282-annotation
-    - image: quay.io/hpestorage/csi-extensions@sha256:ebd1fd3c61c5861384a60f0e4c6ce8c366404f4fe881053ee70108278aab419e
-      name: csi-extensions-ebd1fd3c61c5861384a60f0e4c6ce8c366404f4fe881053ee70108278aab419e-annotation
-    - image: registry.k8s.io/sig-storage/csi-attacher@sha256:a399393ff5bd156277c56bae0c08389b1a1b95b7fd6ea44a316ce55e0dd559d7
-      name: csi-attacher-a399393ff5bd156277c56bae0c08389b1a1b95b7fd6ea44a316ce55e0dd559d7-annotation
-    - image: quay.io/hpestorage/alletra-9000-primera-and-3par-csp@sha256:f90a1d50659a32569fcb04b2ac371c58ca0ee912978d18083f06357e883c7506
-      name: alletra-9000-primera-and-3par-csp-f90a1d50659a32569fcb04b2ac371c58ca0ee912978d18083f06357e883c7506-annotation
-    - image: quay.io/hpestorage/alletra-6000-and-nimble-csp@sha256:5a1458d316f3299df2ce3571c746ebde72ed344568cfadf09e5bd7237d32b77b
-      name: alletra-6000-and-nimble-csp-5a1458d316f3299df2ce3571c746ebde72ed344568cfadf09e5bd7237d32b77b-annotation
-    - image: quay.io/hpestorage/volume-group-provisioner@sha256:e09e233dfc2cda94a85ef3206e659731a74b6d44f26f03f61a273231b839e193
-      name: volume-group-provisioner-e09e233dfc2cda94a85ef3206e659731a74b6d44f26f03f61a273231b839e193-annotation
+    - image: quay.io/hpestorage/csi-extensions@sha256:df31da0f78b9c54fabd250e589d1e341f743e703bc83be5bf1a62b94453e5b65
+      name: csi-extensions-df31da0f78b9c54fabd250e589d1e341f743e703bc83be5bf1a62b94453e5b65-annotation
+    - image: quay.io/hpestorage/alletra-6000-and-nimble-csp@sha256:caf8a4af7f9e29a9029eb5e05d5864e65e2acc09984a66857ea30eb98fbdac90
+      name: alletra-6000-and-nimble-csp-caf8a4af7f9e29a9029eb5e05d5864e65e2acc09984a66857ea30eb98fbdac90-annotation
+    - image: quay.io/hpestorage/volume-mutator@sha256:096538ae4f7371b5d25d6c6a6be947726ba3184b5a9ead47f58ada5a6bdb9c9c
+      name: volume-mutator-096538ae4f7371b5d25d6c6a6be947726ba3184b5a9ead47f58ada5a6bdb9c9c-annotation
     - image: registry.k8s.io/sig-storage/csi-snapshotter@sha256:dd788d79cf4c1b8edee6d9b80b8a1ebfc51a38a365c5be656986b129be9ac784
       name: csi-snapshotter-dd788d79cf4c1b8edee6d9b80b8a1ebfc51a38a365c5be656986b129be9ac784-annotation
-    - image: registry.connect.redhat.com/hpestorage/csi-driver-operator@sha256:47c8ade45b836d40cf7ef72900cfb980870bc3ac54672ccbd727817dfb0b92bb
-      name: manager
-    - image: quay.io/hpestorage/nfs-provisioner@sha256:35bc5c0f7ef2f1d088a188af800865da612cc72336418c8b91fd1ab3ebf51a9a
-      name: nfs-provisioner-35bc5c0f7ef2f1d088a188af800865da612cc72336418c8b91fd1ab3ebf51a9a-annotation
-    - image: registry.k8s.io/sig-storage/csi-resizer@sha256:ab774734705a906561e15b67f6a96538f3ad520335d636f793aaafe87a3b5200
-      name: csi-resizer-ab774734705a906561e15b67f6a96538f3ad520335d636f793aaafe87a3b5200-annotation
-    - image: quay.io/hpestorage/volume-mutator@sha256:26c0f07acb9730b2cc45830574861bdb1d08676aeade0c9a1cbb5ae222404313
-      name: volume-mutator-26c0f07acb9730b2cc45830574861bdb1d08676aeade0c9a1cbb5ae222404313-annotation
+    - image: quay.io/hpestorage/csi-driver@sha256:72c2e0477e750ea7301fa3543f951dd9f03e29aa8b7eba5e3084b2f1cc06c997
+      name: csi-driver-72c2e0477e750ea7301fa3543f951dd9f03e29aa8b7eba5e3084b2f1cc06c997-annotation
     - image: quay.io/hpestorage/volume-group-snapshotter@sha256:d07c0bbcd6f8c64408ecca4aaf2bf41a94f1b63c8fcdbb8999e74677d805e49b
       name: volume-group-snapshotter-d07c0bbcd6f8c64408ecca4aaf2bf41a94f1b63c8fcdbb8999e74677d805e49b-annotation
+    - image: registry.k8s.io/sig-storage/csi-resizer@sha256:ab774734705a906561e15b67f6a96538f3ad520335d636f793aaafe87a3b5200
+      name: csi-resizer-ab774734705a906561e15b67f6a96538f3ad520335d636f793aaafe87a3b5200-annotation
+    - image: registry.k8s.io/sig-storage/csi-attacher@sha256:a399393ff5bd156277c56bae0c08389b1a1b95b7fd6ea44a316ce55e0dd559d7
+      name: csi-attacher-a399393ff5bd156277c56bae0c08389b1a1b95b7fd6ea44a316ce55e0dd559d7-annotation
+    - image: registry.k8s.io/sig-storage/csi-provisioner@sha256:672e45d6a55678abc1d102de665b5cbd63848e75dc7896f238c8eaaf3c7d322f
+      name: csi-provisioner-672e45d6a55678abc1d102de665b5cbd63848e75dc7896f238c8eaaf3c7d322f-annotation
+    - image: registry.connect.redhat.com/hpestorage/csi-driver-operator@sha256:2ff4341b50b8e5a34f90486701ad069c81a0d540a153b95acc54cba65e5abd01
+      name: manager
+    - image: quay.io/hpestorage/alletra-9000-primera-and-3par-csp@sha256:4f0493b713ee3869194598fbae9fb37664c6a68527885348d1465551e74d52d6
+      name: alletra-9000-primera-and-3par-csp-4f0493b713ee3869194598fbae9fb37664c6a68527885348d1465551e74d52d6-annotation
+    - image: quay.io/hpestorage/nfs-provisioner@sha256:f8d0e28689cff7a505a3561081da8e3e86570a02f9422139eed72b5d02d56950
+      name: nfs-provisioner-f8d0e28689cff7a505a3561081da8e3e86570a02f9422139eed72b5d02d56950-annotation
+    - image: quay.io/hpestorage/volume-group-provisioner@sha256:e09e233dfc2cda94a85ef3206e659731a74b6d44f26f03f61a273231b839e193
+      name: volume-group-provisioner-e09e233dfc2cda94a85ef3206e659731a74b6d44f26f03f61a273231b839e193-annotation
+    - image: registry.connect.redhat.com/hpestorage/csi-driver-operator@sha256:2ff4341b50b8e5a34f90486701ad069c81a0d540a153b95acc54cba65e5abd01
+      name: csi-driver-operator-2ff4341b50b8e5a34f90486701ad069c81a0d540a153b95acc54cba65e5abd01-annotation
+    - image: registry.k8s.io/sig-storage/csi-node-driver-registrar@sha256:d7138bcc3aa5f267403d45ad4292c95397e421ea17a0035888850f424c7de25d
+      name: csi-node-driver-registrar-d7138bcc3aa5f267403d45ad4292c95397e421ea17a0035888850f424c7de25d-annotation
   selector: {}
-  version: 2.5.2-beta
+  version: 2.5.2
