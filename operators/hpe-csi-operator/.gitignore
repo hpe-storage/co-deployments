@@ -1,4 +1,5 @@
 csi-driver-operator
+helm-operator
 cache
 prep
 init

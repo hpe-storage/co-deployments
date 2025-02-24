@@ -3,7 +3,8 @@ VERSION ?= 0.0.0
 SOURCE_VERSION ?= $(VERSION)
 REPO_NAME ?= quay.io/myrepo
 # Do not use < 1.38.0
-OPERATOR_SDK = 'operator-sdk version: "v1.38.0"'
+OPERATOR_SDK_TAG = v1.39.1
+OPERATOR_SDK = 'operator-sdk version: "$(OPERATOR_SDK_TAG)"'
 
 # Don't set these, preferably
 RH_REPO_NAME=registry.connect.redhat.com/hpestorage
@@ -22,6 +23,8 @@ BUNDLE_IMG ?= $(REPO_NAME)/$(BUNDLE_NAME):v$(VERSION)
 OCP_BUNDLE_IMG ?= $(REPO_NAME)/$(OCP_BUNDLE_NAME):v$(VERSION)
 BUNDLE_CHANNELS ?= stable
 PLATFORMS ?= linux/arm64,linux/amd64
+OPERATOR_SDK_IMG_NAME ?= helm-operator
+OPERATOR_SDK_URL ?= $(REPO_NAME)/$(OPERATOR_SDK_IMG_NAME):$(OPERATOR_SDK_TAG)
 
 undeploy:
 	# Remove Operator from cluster
@@ -29,7 +32,7 @@ undeploy:
 
 clean: undeploy
 	# Delete build
-	rm -rf "init" "prep" "$(IMAGE_NAME)" bundle-*
+	rm -rf "operator-sdk" "init" "prep" "$(IMAGE_NAME)" bundle-*
 
 init:
 	# Ensure specific version of Operator SDK
@@ -47,6 +50,13 @@ init:
 		--project-name $(VANITY_NAME) \
                 --helm-chart ../../../docs/$(CHART)-$(VERSION).tgz \
                 --helm-chart-version $(SOURCE_VERSION)
+
+        # Build & push our base Helm Operator with latest UBI images
+	git clone https://github.com/operator-framework/operator-sdk
+	cd operator-sdk; git checkout $(OPERATOR_SDK_TAG); docker-buildx build --progress=plain --no-cache \
+	--provenance=false --push --platform=$(PLATFORMS) --tag $(OPERATOR_SDK_URL) -f images/helm-operator/Dockerfile .
+
+	# Mark complete
 	touch init
 
 prep: init
@@ -64,7 +74,7 @@ prep: init
 		rm -f $(IMAGE_NAME)/config/manager/manager.yaml.remove
 	
 	# Dockerfile for operator
-	sed -e "s|%FROM%|$(shell grep ^FROM $(IMAGE_NAME)/Dockerfile)|" sources/operator.Dockerfile > $(IMAGE_NAME)/Dockerfile
+	sed -e "s|%FROM%|FROM $(OPERATOR_SDK_URL)|" sources/operator.Dockerfile > $(IMAGE_NAME)/Dockerfile
 	sed -i.remove -e "s/%SEMVER%/$(VERSION)/g" $(IMAGE_NAME)/Dockerfile && \
 		rm -f $(IMAGE_NAME)/Dockerfile.remove
 	cp -f sources/LICENSE $(IMAGE_NAME)/LICENSE
