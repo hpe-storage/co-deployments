@@ -1,5 +1,5 @@
 csi-driver-operator
-helm-operator
+operator-sdk
 cache
 prep
 init
