@@ -101,7 +101,7 @@ metadata:
     capabilities: Basic Install
     categories: Storage
     certified: "true"
-    containerImage: registry.connect.redhat.com/hpestorage/csi-driver-operator@sha256:9630cbd1c48b6c9594871ff455bab3dd463d1a0a65271432439ed2ecb2391449
+    containerImage: registry.connect.redhat.com/hpestorage/csi-driver-operator@sha256:44e24d21eb1a23222bc9d937d1950f76f08c7e864a7150bb623fbfb82598dad5
     createdAt: "2025-02-25T09:40:23Z"
     description: A Container Storage Interface (CSI) driver for HPE storage platforms. The CSI driver allows you to use HPE storage with your preferred container orchestrator.
     features.operators.openshift.io/cnf: "false"
@@ -809,7 +809,7 @@ spec:
                       - --leader-elect
                       - --leader-election-id=hpe-csi-operator
                       - --health-probe-bind-address=:8081
-                    image: registry.connect.redhat.com/hpestorage/csi-driver-operator@sha256:9630cbd1c48b6c9594871ff455bab3dd463d1a0a65271432439ed2ecb2391449
+                    image: registry.connect.redhat.com/hpestorage/csi-driver-operator@sha256:44e24d21eb1a23222bc9d937d1950f76f08c7e864a7150bb623fbfb82598dad5
                     livenessProbe:
                       httpGet:
                         path: /healthz
@@ -909,8 +909,8 @@ spec:
       name: csi-extensions-df31da0f78b9c54fabd250e589d1e341f743e703bc83be5bf1a62b94453e5b65-annotation
     - image: registry.k8s.io/sig-storage/csi-attacher@sha256:a399393ff5bd156277c56bae0c08389b1a1b95b7fd6ea44a316ce55e0dd559d7
       name: csi-attacher-a399393ff5bd156277c56bae0c08389b1a1b95b7fd6ea44a316ce55e0dd559d7-annotation
-    - image: registry.connect.redhat.com/hpestorage/csi-driver-operator@sha256:9630cbd1c48b6c9594871ff455bab3dd463d1a0a65271432439ed2ecb2391449
-      name: csi-driver-operator-9630cbd1c48b6c9594871ff455bab3dd463d1a0a65271432439ed2ecb2391449-annotation
+    - image: registry.connect.redhat.com/hpestorage/csi-driver-operator@sha256:44e24d21eb1a23222bc9d937d1950f76f08c7e864a7150bb623fbfb82598dad5
+      name: csi-driver-operator-44e24d21eb1a23222bc9d937d1950f76f08c7e864a7150bb623fbfb82598dad5-annotation
     - image: quay.io/hpestorage/volume-mutator@sha256:096538ae4f7371b5d25d6c6a6be947726ba3184b5a9ead47f58ada5a6bdb9c9c
       name: volume-mutator-096538ae4f7371b5d25d6c6a6be947726ba3184b5a9ead47f58ada5a6bdb9c9c-annotation
     - image: quay.io/hpestorage/volume-group-provisioner@sha256:e09e233dfc2cda94a85ef3206e659731a74b6d44f26f03f61a273231b839e193
@@ -923,7 +923,7 @@ spec:
       name: csi-resizer-ab774734705a906561e15b67f6a96538f3ad520335d636f793aaafe87a3b5200-annotation
     - image: registry.k8s.io/sig-storage/csi-provisioner@sha256:672e45d6a55678abc1d102de665b5cbd63848e75dc7896f238c8eaaf3c7d322f
       name: csi-provisioner-672e45d6a55678abc1d102de665b5cbd63848e75dc7896f238c8eaaf3c7d322f-annotation
-    - image: registry.connect.redhat.com/hpestorage/csi-driver-operator@sha256:9630cbd1c48b6c9594871ff455bab3dd463d1a0a65271432439ed2ecb2391449
+    - image: registry.connect.redhat.com/hpestorage/csi-driver-operator@sha256:44e24d21eb1a23222bc9d937d1950f76f08c7e864a7150bb623fbfb82598dad5
       name: manager
     - image: quay.io/hpestorage/volume-group-snapshotter@sha256:d07c0bbcd6f8c64408ecca4aaf2bf41a94f1b63c8fcdbb8999e74677d805e49b
       name: volume-group-snapshotter-d07c0bbcd6f8c64408ecca4aaf2bf41a94f1b63c8fcdbb8999e74677d805e49b-annotation
