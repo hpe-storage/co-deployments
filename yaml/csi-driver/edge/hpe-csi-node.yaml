@@ -8,7 +8,7 @@ kind: DaemonSet
 apiVersion: apps/v1
 metadata:
   name: hpe-csi-node
-  namespace: hpe-storage
+  namespace: default
 spec:
   selector:
     matchLabels:
@@ -29,7 +29,7 @@ spec:
             value: "1"
       initContainers:
         - name: hpe-csi-node-init
-          image: "quay.io/hpestorage/csi-driver:v2.5.2"
+          image: "quay.io/hpestorage/csi-driver:v3.0.0-beta"
           resources:
             limits:
               cpu: 2000m
@@ -103,7 +103,7 @@ spec:
             - name: registration-dir
               mountPath: /registration
         - name: hpe-csi-driver
-          image: "quay.io/hpestorage/csi-driver:v2.5.2"
+          image: "quay.io/hpestorage/csi-driver:v3.0.0-beta"
           resources:
             limits:
               cpu: 2000m

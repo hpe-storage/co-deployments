@@ -4,21 +4,21 @@ kind: ServiceAccount
 apiVersion: v1
 metadata:
   name: hpe-csi-controller-sa
-  namespace: hpe-storage
+  namespace: default
 ---
 # Source: hpe-csi-driver/templates/hpe-csi-rbac.yaml
 apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: hpe-csi-node-sa
-  namespace: hpe-storage
+  namespace: default
 ---
 # Source: hpe-csi-driver/templates/hpe-csi-rbac.yaml
 kind: ServiceAccount
 apiVersion: v1
 metadata:
   name: hpe-csp-sa
-  namespace: hpe-storage
+  namespace: default
 ---
 # Source: hpe-csi-driver/templates/hpe-csi-rbac.yaml
 kind: ClusterRole
@@ -364,7 +364,7 @@ metadata:
 subjects:
   - kind: ServiceAccount
     name: hpe-csi-controller-sa
-    namespace: hpe-storage
+    namespace: default
 roleRef:
   kind: ClusterRole
   name: hpe-csi-provisioner-role
@@ -378,7 +378,7 @@ metadata:
 subjects:
   - kind: ServiceAccount
     name: hpe-csi-controller-sa
-    namespace: hpe-storage
+    namespace: default
 roleRef:
   kind: ClusterRole
   name: hpe-csi-attacher-role
@@ -392,7 +392,7 @@ metadata:
 subjects:
   - kind: ServiceAccount
     name: hpe-csi-controller-sa
-    namespace: hpe-storage
+    namespace: default
 roleRef:
   kind: ClusterRole
   name: hpe-csi-snapshotter-role
@@ -406,7 +406,7 @@ metadata:
 subjects:
   - kind: ServiceAccount
     name: hpe-csi-controller-sa
-    namespace: hpe-storage
+    namespace: default
 roleRef:
   kind: ClusterRole
   name: hpe-external-resizer-role
@@ -420,7 +420,7 @@ metadata:
 subjects:
   - kind: ServiceAccount
     name: hpe-csi-controller-sa
-    namespace: hpe-storage
+    namespace: default
 roleRef:
   kind: ClusterRole
   name: hpe-csi-volumegroup-role
@@ -434,7 +434,7 @@ metadata:
 subjects:
   - kind: ServiceAccount
     name: hpe-csi-controller-sa
-    namespace: hpe-storage
+    namespace: default
 roleRef:
   kind: ClusterRole
   name: hpe-csi-snapshotgroup-role
@@ -449,7 +449,7 @@ subjects:
   - kind: ServiceAccount
     name: hpe-csi-controller-sa
     # replace with non-default namespace name
-    namespace: hpe-storage
+    namespace: default
 roleRef:
   kind: ClusterRole
   name: hpe-csi-mutator-role
@@ -463,13 +463,13 @@ metadata:
 subjects:
   - kind: ServiceAccount
     name: hpe-csi-controller-sa
-    namespace: hpe-storage
+    namespace: default
   - kind: ServiceAccount
     name: hpe-csi-node-sa
-    namespace: hpe-storage
+    namespace: default
   - kind: ServiceAccount
     name: hpe-csp-sa
-    namespace: hpe-storage
+    namespace: default
 roleRef:
   kind: ClusterRole
   name: hpe-csi-driver-role
@@ -481,7 +481,7 @@ roleRef:
 kind: Role
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
-  namespace: hpe-storage
+  namespace: default
   name: hpe-external-resizer-cfg
 rules:
   - apiGroups: ["coordination.k8s.io"]
@@ -494,7 +494,7 @@ rules:
 kind: Role
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
-  namespace: hpe-storage
+  namespace: default
   name: hpe-csi-mutator-cfg
 rules:
   - apiGroups: ["coordination.k8s.io"]
@@ -506,11 +506,11 @@ kind: RoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
   name: hpe-csi-resizer-role-cfg
-  namespace: hpe-storage
+  namespace: default
 subjects:
   - kind: ServiceAccount
     name: hpe-csi-controller-sa
-    namespace: hpe-storage
+    namespace: default
 roleRef:
   kind: Role
   name: hpe-external-resizer-cfg
@@ -521,11 +521,11 @@ kind: RoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
   name: hpe-csi-mutator-role-cfg
-  namespace: hpe-storage
+  namespace: default
 subjects:
   - kind: ServiceAccount
     name: hpe-csi-controller-sa
-    namespace: hpe-storage
+    namespace: default
 roleRef:
   kind: Role
   name: hpe-csi-mutator-cfg

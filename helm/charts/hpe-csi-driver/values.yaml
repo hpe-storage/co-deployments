@@ -9,6 +9,7 @@ disable:
   alletra6000: false
   alletra9000: false
   alletraStorageMP: false
+  b10000nfs: false
 
 # For controlling automatic iscsi/multipath package installation
 disableNodeConformance: false
@@ -109,17 +110,18 @@ node:
 
 # Release images
 images:
-  csiNodeDriver: quay.io/hpestorage/csi-driver:v2.5.2
-  csiControllerDriver: quay.io/hpestorage/csi-driver:v2.5.2
-  nimbleCSP: quay.io/hpestorage/alletra-6000-and-nimble-csp:v2.5.2
-  primera3parCSP: quay.io/hpestorage/alletra-9000-primera-and-3par-csp:v2.5.2
-  nfsProvisioner: quay.io/hpestorage/nfs-provisioner:v3.0.6
-  csiExtensions: quay.io/hpestorage/csi-extensions:v1.2.8
-  csiVolumeGroupProvisioner: quay.io/hpestorage/volume-group-provisioner:v1.0.7
-  csiVolumeGroupSnapshotter: quay.io/hpestorage/volume-group-snapshotter:v1.0.7
-  csiVolumeMutator: quay.io/hpestorage/volume-mutator:v1.3.7
+  csiNodeDriver: quay.io/hpestorage/csi-driver:v3.0.0-beta
+  csiControllerDriver: quay.io/hpestorage/csi-driver:v3.0.0-beta
+  nimbleCSP: quay.io/hpestorage/alletra-6000-and-nimble-csp:v3.0.0-beta
+  primera3parCSP: quay.io/hpestorage/alletra-9000-primera-and-3par-csp:v3.0.0-beta
+  b10000fileCSP: quay.io/hpestorage/alletrastoragemp-b10000-nfs-csp:v1.0.0-beta
+  nfsProvisioner: quay.io/hpestorage/nfs-provisioner:v3.0.7-beta
+  csiExtensions: quay.io/hpestorage/csi-extensions:v1.2.9-beta
+  csiVolumeGroupProvisioner: quay.io/hpestorage/volume-group-provisioner:v1.0.8-beta
+  csiVolumeGroupSnapshotter: quay.io/hpestorage/volume-group-snapshotter:v1.0.8-beta
+  csiVolumeMutator: quay.io/hpestorage/volume-mutator:v1.3.8-beta
   csiAttacher: registry.k8s.io/sig-storage/csi-attacher:v4.8.0
   csiNodeDriverRegistrar: registry.k8s.io/sig-storage/csi-node-driver-registrar:v2.13.0
-  csiProvisioner: registry.k8s.io/sig-storage/csi-provisioner:v5.1.0
-  csiResizer: registry.k8s.io/sig-storage/csi-resizer:v1.12.0
-  csiSnapshotter: registry.k8s.io/sig-storage/csi-snapshotter:v8.2.0
+  csiProvisioner: registry.k8s.io/sig-storage/csi-provisioner:v5.2.0
+  csiResizer: registry.k8s.io/sig-storage/csi-resizer:v1.13.2
+  csiSnapshotter: registry.k8s.io/sig-storage/csi-snapshotter:v8.2.1

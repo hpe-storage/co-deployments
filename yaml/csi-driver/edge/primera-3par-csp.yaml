@@ -5,7 +5,7 @@ kind: Service
 apiVersion: v1
 metadata:
   name: alletrastoragemp-csp-svc
-  namespace: hpe-storage
+  namespace: default
   labels:
     app: alletrastoragemp-csp-svc
 spec:
@@ -21,7 +21,7 @@ kind: Service
 apiVersion: v1
 metadata:
   name: alletra9000-csp-svc
-  namespace: hpe-storage
+  namespace: default
   labels:
     app: alletra9000-csp-svc
 spec:
@@ -37,7 +37,7 @@ kind: Service
 apiVersion: v1
 metadata:
   name: primera3par-csp-svc
-  namespace: hpe-storage
+  namespace: default
   labels:
     app: primera3par-csp-svc
 spec:
@@ -55,7 +55,7 @@ metadata:
   name: primera3par-csp
   labels:
     app: primera3par-csp
-  namespace: hpe-storage
+  namespace: default
 spec:
   selector:
     matchLabels:
@@ -70,7 +70,7 @@ spec:
       priorityClassName: system-cluster-critical
       containers:
         - name: primera3par-csp
-          image: "quay.io/hpestorage/alletra-9000-primera-and-3par-csp:v2.5.2"
+          image: "quay.io/hpestorage/alletra-9000-primera-and-3par-csp:v3.0.0-beta"
           resources:
             limits:
               cpu: 2000m
