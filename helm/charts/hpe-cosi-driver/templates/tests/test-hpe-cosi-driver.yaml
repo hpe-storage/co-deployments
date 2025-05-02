@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: "{{ .Release.Name }}-test-deployment"
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app: hpe-cosi-driver
+  annotations:
+    "helm.sh/hook": test
+spec:
+  containers:
+    - name: {{ .Values.containers.cosiDriver.name }}
+      image: busybox
+      imagePullPolicy: "IfNotPresent"
+      command: ['sh', '-c', 'echo test hook Pod has been run, nothing to test for now. && exit 0']
+  restartPolicy: Never
