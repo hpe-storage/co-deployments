@@ -30,7 +30,7 @@ The following parameters are supported by the Helm chart. During normal circumst
 | containers.cosiDriver.image | string | `"quay.io/hpestorage/cosi-driver:v1.0.0"` | Fully qualified registry path of cosiDriver |
 | containers.cosiDriver.imagePullPolicy | string | `"IfNotPresent"` | cosiDriver image pull policy |
 | containers.cosiDriver.name | string | `"hpe-cosi-driver"` | Name of the driver's container within the deployment |
-| containers.sideCar.image | string | `"gcr.io/k8s-staging-sig-storage/objectstorage-sidecar:v20241017-v0.1.0-58-g80979e8"` | Fully qualified registry path of sideCar |
+| containers.sideCar.image | string | `"registry.k8s.io/sig-storage/objectstorage-sidecar:v0.2.1"` | Fully qualified registry path of sideCar |
 | containers.sideCar.imagePullPolicy | string | `"IfNotPresent"` | sideCar image pull policy |
 | containers.sideCar.name | string | `"hpe-cosi-provisioner-sidecar"` | Name of the driver's side car container within the deployment |
 | containers.sideCar.verbosityLevel | int | `5` | Specifies the verbosity of the logs that will be printed by the sidecar container |
