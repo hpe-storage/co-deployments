@@ -10,7 +10,7 @@ metadata:
 spec:
   containers:
     - name: {{ .Values.containers.cosiDriver.name }}
-      image: busybox
+      image: {{ .Values.containers.cosiDriver.image }}
       imagePullPolicy: "IfNotPresent"
       command: ['sh', '-c', 'echo test hook Pod has been run, nothing to test for now. && exit 0']
   restartPolicy: Never
