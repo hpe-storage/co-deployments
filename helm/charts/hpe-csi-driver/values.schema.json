@@ -11,7 +11,7 @@
                 "alletra6000": false,
                 "alletra9000": false,
                 "alletraStorageMP": false,
-				"b10000nfs": false
+				"b10000file": false
             },
             "disableNodeConformance": false,
             "disableNodeConfiguration": false,
@@ -72,14 +72,14 @@
             "title": "CSP Deployment and Service backend exclusion",
             "description": "All backend Deployments and Services are installed by default.",
             "type": "object",
-            "default": 
+            "default":
                 {
                     "nimble": false,
                     "primera": false,
                     "alletra6000": false,
                     "alletra9000": false,
                     "alletraStorageMP": false,
-					"b10000nfs": false
+					"b10000file": false
                 },
             "required": [
                 "nimble",
@@ -87,7 +87,7 @@
                 "alletra6000",
                 "alletra9000",
                 "alletraStorageMP",
-				"b10000nfs"
+				"b10000file"
             ],
             "properties": {
                 "nimble": {
@@ -120,8 +120,8 @@
                     "type": "boolean",
                     "default": false
                 },
-                "b10000nfs": {
-                    "$id": "#/properties/disable/properties/b10000nfs",
+                "b10000file": {
+                    "$id": "#/properties/disable/properties/b10000file",
                     "title": "HPE Alletra Storage MP B10000 File",
                     "type": "boolean",
                     "default": false
@@ -378,6 +378,7 @@
                 "csiControllerDriver",
                 "nimbleCSP",
                 "primera3parCSP",
+                "b10000fileCSP",
                 "nfsProvisioner",
                 "csiExtensions",
                 "csiVolumeGroupProvisioner",
@@ -408,6 +409,11 @@
                 "primera3parCSP": {
                     "$id": "#/properties/images/properties/primera3parCSP",
                     "title": "3PAR, Primera, Alletra 9000 and Alletra Storage MP B10000 CSP",
+                    "type": "string"
+                },
+                "b10000fileCSP": {
+                    "$id": "#/properties/images/properties/b10000fileCSP",
+                    "title": "Alletra Storage MP B10000 File CSP",
                     "type": "string"
                 },
                 "nfsProvisioner": {

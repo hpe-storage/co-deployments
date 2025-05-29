@@ -9,7 +9,7 @@ disable:
   alletra6000: false
   alletra9000: false
   alletraStorageMP: false
-  b10000nfs: false
+  b10000file: false
 
 # For controlling automatic iscsi/multipath package installation
 disableNodeConformance: false

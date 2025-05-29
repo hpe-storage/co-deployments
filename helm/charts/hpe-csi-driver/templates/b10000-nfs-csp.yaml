@@ -1,4 +1,4 @@
-{{- if not .Values.disable.b10000nfs }}
+{{- if not .Values.disable.b10000file }}
 
 ---
 ### AlletraMP B10000 NFS CSP Service ###
@@ -18,7 +18,7 @@ spec:
 {{- end }}
 
 
-{{- if not .Values.disable.b10000nfs }}
+{{- if not .Values.disable.b10000file }}
 ---
 ### CSP deployment ###
 kind: Deployment

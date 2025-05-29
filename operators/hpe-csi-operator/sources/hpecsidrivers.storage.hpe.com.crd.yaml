@@ -46,12 +46,15 @@ spec:
                     type: boolean
                   alletraStorageMP:
                     type: boolean
+                  b10000file:
+                    type: boolean
                 required:
                 - alletra6000
                 - alletra9000
                 - nimble
                 - primera
                 - alletraStorageMP
+                - b10000file
                 type: object
               disableNodeConformance:
                 description: DisableNodeConformance disables automatic installation
@@ -99,6 +102,8 @@ spec:
                     type: string
                   primera3parCSP:
                     type: string
+                  b10000fileCSP:
+                    type: string
                   nfsProvisioner:
                     type: string
                   csiExtensions:
@@ -124,6 +129,7 @@ spec:
                 - csiControllerDriver
                 - nimbleCSP
                 - primera3parCSP
+                - b10000fileCSP
                 - nfsProvisioner
                 - csiExtensions
                 - csiVolumeGroupProvisioner
