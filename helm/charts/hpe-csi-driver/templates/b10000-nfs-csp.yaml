@@ -1,4 +1,4 @@
-{{- if not .Values.disable.b10000file }}
+{{- if not .Values.disable.b10000FileService }}
 
 ---
 ### AlletraMP B10000 NFS CSP Service ###
@@ -15,10 +15,8 @@ spec:
     protocol: TCP
   selector:
     app: alletrastoragemp-b10000-nfs-csp
-{{- end }}
 
 
-{{- if not .Values.disable.b10000file }}
 ---
 ### CSP deployment ###
 kind: Deployment
@@ -43,7 +41,7 @@ spec:
       priorityClassName: system-cluster-critical
       containers:
         - name: alletrastoragemp-b10000-nfs-csp
-          image: {{ .Values.images.b10000fileCSP | quote }}
+          image: {{ .Values.images.b10000FileServiceCSP | quote }}
           resources:
             {{- toYaml .Values.csp.resources | nindent 12 }}
           imagePullPolicy: {{ .Values.imagePullPolicy | quote }}

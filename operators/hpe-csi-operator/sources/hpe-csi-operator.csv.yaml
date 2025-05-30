@@ -135,14 +135,14 @@ spec:
             path: disable.alletra9000
             x-descriptors:
               - "urn:alm:descriptor:com.tectonic.ui:checkbox"
-          - displayName: Alletra Storage MP B10000
-            description: "Disable Alletra Storage MP B10000"
+          - displayName: Alletra Storage MP B10000 Block Storage
+            description: "Disable Alletra Storage MP B10000 Block Storage"
             path: disable.alletraStorageMP
             x-descriptors:
               - "urn:alm:descriptor:com.tectonic.ui:checkbox"
-          - displayName: Alletra Storage MP B10000 NFS
-            description: "Disable Alletra Storage MP B10000 NFS"
-            path: disable.b10000file
+          - displayName: Alletra Storage MP B10000 File Service
+            description: "Disable Alletra Storage MP B10000 File Service"
+            path: disable.b10000FileService
             x-descriptors:
               - "urn:alm:descriptor:com.tectonic.ui:checkbox"
           - displayName: Disable Node Conformance
@@ -277,14 +277,14 @@ spec:
             path: images.nimbleCSP
             x-descriptors:
               - "urn:alm:descriptor:com.tectonic.ui:text"
-          - displayName: Alletra Storage MP B10000, Alletra 9000 and Primera Image
-            description: The HPE Alletra Storage MP B10000, Alletra 9000, Primera and 3PAR Container Storage Provider container image
+          - displayName: Alletra Storage MP B10000 Block Storage, Alletra 9000 and Primera Image
+            description: The HPE Alletra Storage MP B10000 Block Storage, Alletra 9000, Primera and 3PAR Container Storage Provider container image
             path: images.primera3parCSP
             x-descriptors:
               - "urn:alm:descriptor:com.tectonic.ui:text"
-          - displayName: Alletra Storage MP B10000 NFS Image
-            description: The HPE Alletra Storage MP B10000 NFS Container Storage Provider container image
-            path: images.b10000fileCSP
+          - displayName: Alletra Storage MP B10000 File Service Image
+            description: The HPE Alletra Storage MP B10000 File Service Container Storage Provider container image
+            path: images.b10000FileServiceCSP
             x-descriptors:
               - "urn:alm:descriptor:com.tectonic.ui:text"
           - displayName: NFS Server Provisioner Image

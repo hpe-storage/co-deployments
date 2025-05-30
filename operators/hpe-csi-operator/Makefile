@@ -164,7 +164,7 @@ certified: prep
 certified-deploy:
 	# Run certified bundle
 	- oc create ns $(NAMESPACE)
-	operator-sdk run bundle --timeout 5m $(OCP_BUNDLE_IMG) -n $(NAMESPACE)
+	operator-sdk run bundle --security-context-config=restricted --timeout 5m $(OCP_BUNDLE_IMG) -n $(NAMESPACE)
 
 	# Instantiate HPECSIDriver
 	oc apply -n $(NAMESPACE) -f destinations/hpecsidriver-v${VERSION}-sample.yaml
