@@ -1379,6 +1379,8 @@ spec:
                     type: boolean
                   alletraStorageMP:
                     type: boolean
+                  b10000FileService:
+                    type: boolean
                   nimble:
                     type: boolean
                   primera:
@@ -1389,6 +1391,7 @@ spec:
                 - nimble
                 - primera
                 - alletraStorageMP
+                - b10000FileService
                 type: object
               disableHostDeletion:
                 description: Disables host deletion by the CSP when no volumes are
@@ -1419,6 +1422,8 @@ spec:
               images:
                 description: HPE CSI Operator Images
                 properties:
+                  b10000FileServiceCSP:
+                    type: string
                   csiAttacher:
                     type: string
                   csiControllerDriver:
@@ -1452,6 +1457,7 @@ spec:
                 - csiControllerDriver
                 - nimbleCSP
                 - primera3parCSP
+                - b10000FileServiceCSP
                 - nfsProvisioner
                 - csiExtensions
                 - csiVolumeGroupProvisioner
