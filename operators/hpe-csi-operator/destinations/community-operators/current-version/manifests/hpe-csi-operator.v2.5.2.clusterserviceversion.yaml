@@ -47,7 +47,7 @@ metadata:
               "alletra6000": false,
               "alletra9000": false,
               "alletraStorageMP": false,
-              "b10000file": false,
+              "b10000FileService": false,
               "nimble": false,
               "primera": false
             },
@@ -59,7 +59,7 @@ metadata:
             "disablePreInstallHooks": false,
             "imagePullPolicy": "IfNotPresent",
             "images": {
-              "b10000fileCSP": "quay.io/hpestorage/alletrastoragemp-b10000-nfs-csp@sha256:2b0d9245008d15f620adda0492f8e8856788fa329423e04dbe25f570d6edd481",
+              "b10000FileServiceCSP": "quay.io/hpestorage/alletrastoragemp-b10000-nfs-csp@sha256:2b0d9245008d15f620adda0492f8e8856788fa329423e04dbe25f570d6edd481",
               "csiAttacher": "registry.k8s.io/sig-storage/csi-attacher@sha256:a399393ff5bd156277c56bae0c08389b1a1b95b7fd6ea44a316ce55e0dd559d7",
               "csiControllerDriver": "quay.io/hpestorage/csi-driver@sha256:18e86e4a4dfa91cc7a7979591aac363fe91568b2e7eef134e5a83622b9fc691e",
               "csiExtensions": "quay.io/hpestorage/csi-extensions@sha256:90bc144b20b90deec77c75e3c83f11fed7839e9a2dacfafb92eaf015a011722c",
@@ -103,8 +103,8 @@ metadata:
     capabilities: Basic Install
     categories: Storage
     certified: "true"
-    containerImage: quay.io/balakroh/csi-driver-operator@sha256:1c7d23a6561f19e156867d4770822a0278b5fc86ea0d2495df609005e8a69960
-    createdAt: "2025-05-29T12:03:24Z"
+    containerImage: quay.io/balakroh/csi-driver-operator@sha256:0ef28170adec2fffcdb95a80edb6bae905b5039362503e95f862474bd96d1ac2
+    createdAt: "2025-06-03T19:07:38Z"
     description: A Container Storage Interface (CSI) driver for HPE storage platforms. The CSI driver allows you to use HPE storage with your preferred container orchestrator.
     features.operators.openshift.io/cnf: "false"
     features.operators.openshift.io/cni: "false"
@@ -190,14 +190,14 @@ spec:
             path: disable.alletra9000
             x-descriptors:
               - urn:alm:descriptor:com.tectonic.ui:checkbox
-          - description: Disable Alletra Storage MP B10000
-            displayName: Alletra Storage MP B10000
+          - description: Disable Alletra Storage MP B10000 Block Storage
+            displayName: Alletra Storage MP B10000 Block Storage
             path: disable.alletraStorageMP
             x-descriptors:
               - urn:alm:descriptor:com.tectonic.ui:checkbox
-          - description: Disable Alletra Storage MP B10000 NFS
-            displayName: Alletra Storage MP B10000 NFS
-            path: disable.b10000file
+          - description: Disable Alletra Storage MP B10000 File Service
+            displayName: Alletra Storage MP B10000 File Service
+            path: disable.b10000FileService
             x-descriptors:
               - urn:alm:descriptor:com.tectonic.ui:checkbox
           - description: 'Disables automatic installation of iSCSI, multipath packages (default: false)'
@@ -332,14 +332,14 @@ spec:
             path: images.nimbleCSP
             x-descriptors:
               - urn:alm:descriptor:com.tectonic.ui:text
-          - description: The HPE Alletra Storage MP B10000, Alletra 9000, Primera and 3PAR Container Storage Provider container image
-            displayName: Alletra Storage MP B10000, Alletra 9000 and Primera Image
+          - description: The HPE Alletra Storage MP B10000 Block Storage, Alletra 9000, Primera and 3PAR Container Storage Provider container image
+            displayName: Alletra Storage MP B10000 Block Storage, Alletra 9000 and Primera Image
             path: images.primera3parCSP
             x-descriptors:
               - urn:alm:descriptor:com.tectonic.ui:text
-          - description: The HPE Alletra Storage MP B10000 NFS Container Storage Provider container image
-            displayName: Alletra Storage MP B10000 NFS Image
-            path: images.b10000fileCSP
+          - description: The HPE Alletra Storage MP B10000 File Service Container Storage Provider container image
+            displayName: Alletra Storage MP B10000 File Service Image
+            path: images.b10000FileServiceCSP
             x-descriptors:
               - urn:alm:descriptor:com.tectonic.ui:text
           - description: The HPE CSI Driver NFS Server Provisioner container image
@@ -821,7 +821,7 @@ spec:
                       - --leader-elect
                       - --leader-election-id=hpe-csi-operator
                       - --health-probe-bind-address=:8081
-                    image: quay.io/balakroh/csi-driver-operator@sha256:1c7d23a6561f19e156867d4770822a0278b5fc86ea0d2495df609005e8a69960
+                    image: quay.io/balakroh/csi-driver-operator@sha256:0ef28170adec2fffcdb95a80edb6bae905b5039362503e95f862474bd96d1ac2
                     livenessProbe:
                       httpGet:
                         path: /healthz
@@ -911,36 +911,36 @@ spec:
   provider:
     name: HPE
   relatedImages:
+    - image: quay.io/balakroh/csi-driver-operator@sha256:0ef28170adec2fffcdb95a80edb6bae905b5039362503e95f862474bd96d1ac2
+      name: manager
     - image: quay.io/hpestorage/volume-group-provisioner@sha256:cbe11ac910252b134a20768a1d3c9a0f87b2a6611db6a3aba7301c037dc55a01
       name: volume-group-provisioner-cbe11ac910252b134a20768a1d3c9a0f87b2a6611db6a3aba7301c037dc55a01-annotation
-    - image: registry.k8s.io/sig-storage/csi-resizer@sha256:8ddd178ba5d08973f1607f9b84619b58320948de494b31c9d7cd5375b316d6d4
-      name: csi-resizer-8ddd178ba5d08973f1607f9b84619b58320948de494b31c9d7cd5375b316d6d4-annotation
-    - image: quay.io/hpestorage/alletra-9000-primera-and-3par-csp@sha256:6c755365a5703b6cefd79ba597f1a9dce606ea1f660019d8a48a999806c6b75a
-      name: alletra-9000-primera-and-3par-csp-6c755365a5703b6cefd79ba597f1a9dce606ea1f660019d8a48a999806c6b75a-annotation
-    - image: quay.io/hpestorage/alletra-6000-and-nimble-csp@sha256:a42f0674835aba31575d503cd777112db12971cab7b2d59cc6f6bc3d3cc3ede0
-      name: alletra-6000-and-nimble-csp-a42f0674835aba31575d503cd777112db12971cab7b2d59cc6f6bc3d3cc3ede0-annotation
-    - image: registry.k8s.io/sig-storage/csi-provisioner@sha256:d5e46da8aff7d73d6f00c761dae94472bcda6e78f4f17b3802dc89d44de0111b
-      name: csi-provisioner-d5e46da8aff7d73d6f00c761dae94472bcda6e78f4f17b3802dc89d44de0111b-annotation
-    - image: registry.k8s.io/sig-storage/csi-attacher@sha256:a399393ff5bd156277c56bae0c08389b1a1b95b7fd6ea44a316ce55e0dd559d7
-      name: csi-attacher-a399393ff5bd156277c56bae0c08389b1a1b95b7fd6ea44a316ce55e0dd559d7-annotation
-    - image: quay.io/hpestorage/alletrastoragemp-b10000-nfs-csp@sha256:2b0d9245008d15f620adda0492f8e8856788fa329423e04dbe25f570d6edd481
-      name: alletrastoragemp-b10000-nfs-csp-2b0d9245008d15f620adda0492f8e8856788fa329423e04dbe25f570d6edd481-annotation
     - image: quay.io/hpestorage/nfs-provisioner@sha256:4b4d510729d1f44a47fb9436e15a73cadaff868bf82eeab459cb8ee26bc6ba28
       name: nfs-provisioner-4b4d510729d1f44a47fb9436e15a73cadaff868bf82eeab459cb8ee26bc6ba28-annotation
-    - image: registry.k8s.io/sig-storage/csi-snapshotter@sha256:5f4bb469fec51147ce157329dab598c758da1b018bad6dad26f0ff469326d769
-      name: csi-snapshotter-5f4bb469fec51147ce157329dab598c758da1b018bad6dad26f0ff469326d769-annotation
-    - image: quay.io/hpestorage/volume-mutator@sha256:00ed695f0a6a5d487ca220ba225927984f48b67f7f732fc2655d3949742e0a31
-      name: volume-mutator-00ed695f0a6a5d487ca220ba225927984f48b67f7f732fc2655d3949742e0a31-annotation
-    - image: registry.k8s.io/sig-storage/csi-node-driver-registrar@sha256:d7138bcc3aa5f267403d45ad4292c95397e421ea17a0035888850f424c7de25d
-      name: csi-node-driver-registrar-d7138bcc3aa5f267403d45ad4292c95397e421ea17a0035888850f424c7de25d-annotation
-    - image: quay.io/hpestorage/csi-extensions@sha256:90bc144b20b90deec77c75e3c83f11fed7839e9a2dacfafb92eaf015a011722c
-      name: csi-extensions-90bc144b20b90deec77c75e3c83f11fed7839e9a2dacfafb92eaf015a011722c-annotation
-    - image: quay.io/balakroh/csi-driver-operator@sha256:1c7d23a6561f19e156867d4770822a0278b5fc86ea0d2495df609005e8a69960
-      name: manager
-    - image: quay.io/balakroh/csi-driver-operator@sha256:1c7d23a6561f19e156867d4770822a0278b5fc86ea0d2495df609005e8a69960
-      name: csi-driver-operator-1c7d23a6561f19e156867d4770822a0278b5fc86ea0d2495df609005e8a69960-annotation
     - image: quay.io/hpestorage/volume-group-snapshotter@sha256:06bef261bee6239b6ab6d574b332b3cd30ae93f55121a752fa3c95fa268b846f
       name: volume-group-snapshotter-06bef261bee6239b6ab6d574b332b3cd30ae93f55121a752fa3c95fa268b846f-annotation
+    - image: registry.k8s.io/sig-storage/csi-snapshotter@sha256:5f4bb469fec51147ce157329dab598c758da1b018bad6dad26f0ff469326d769
+      name: csi-snapshotter-5f4bb469fec51147ce157329dab598c758da1b018bad6dad26f0ff469326d769-annotation
+    - image: registry.k8s.io/sig-storage/csi-node-driver-registrar@sha256:d7138bcc3aa5f267403d45ad4292c95397e421ea17a0035888850f424c7de25d
+      name: csi-node-driver-registrar-d7138bcc3aa5f267403d45ad4292c95397e421ea17a0035888850f424c7de25d-annotation
+    - image: quay.io/hpestorage/alletrastoragemp-b10000-nfs-csp@sha256:2b0d9245008d15f620adda0492f8e8856788fa329423e04dbe25f570d6edd481
+      name: alletrastoragemp-b10000-nfs-csp-2b0d9245008d15f620adda0492f8e8856788fa329423e04dbe25f570d6edd481-annotation
+    - image: quay.io/hpestorage/alletra-9000-primera-and-3par-csp@sha256:6c755365a5703b6cefd79ba597f1a9dce606ea1f660019d8a48a999806c6b75a
+      name: alletra-9000-primera-and-3par-csp-6c755365a5703b6cefd79ba597f1a9dce606ea1f660019d8a48a999806c6b75a-annotation
+    - image: registry.k8s.io/sig-storage/csi-resizer@sha256:8ddd178ba5d08973f1607f9b84619b58320948de494b31c9d7cd5375b316d6d4
+      name: csi-resizer-8ddd178ba5d08973f1607f9b84619b58320948de494b31c9d7cd5375b316d6d4-annotation
+    - image: registry.k8s.io/sig-storage/csi-provisioner@sha256:d5e46da8aff7d73d6f00c761dae94472bcda6e78f4f17b3802dc89d44de0111b
+      name: csi-provisioner-d5e46da8aff7d73d6f00c761dae94472bcda6e78f4f17b3802dc89d44de0111b-annotation
+    - image: quay.io/hpestorage/csi-extensions@sha256:90bc144b20b90deec77c75e3c83f11fed7839e9a2dacfafb92eaf015a011722c
+      name: csi-extensions-90bc144b20b90deec77c75e3c83f11fed7839e9a2dacfafb92eaf015a011722c-annotation
+    - image: registry.k8s.io/sig-storage/csi-attacher@sha256:a399393ff5bd156277c56bae0c08389b1a1b95b7fd6ea44a316ce55e0dd559d7
+      name: csi-attacher-a399393ff5bd156277c56bae0c08389b1a1b95b7fd6ea44a316ce55e0dd559d7-annotation
+    - image: quay.io/balakroh/csi-driver-operator@sha256:0ef28170adec2fffcdb95a80edb6bae905b5039362503e95f862474bd96d1ac2
+      name: csi-driver-operator-0ef28170adec2fffcdb95a80edb6bae905b5039362503e95f862474bd96d1ac2-annotation
+    - image: quay.io/hpestorage/alletra-6000-and-nimble-csp@sha256:a42f0674835aba31575d503cd777112db12971cab7b2d59cc6f6bc3d3cc3ede0
+      name: alletra-6000-and-nimble-csp-a42f0674835aba31575d503cd777112db12971cab7b2d59cc6f6bc3d3cc3ede0-annotation
+    - image: quay.io/hpestorage/volume-mutator@sha256:00ed695f0a6a5d487ca220ba225927984f48b67f7f732fc2655d3949742e0a31
+      name: volume-mutator-00ed695f0a6a5d487ca220ba225927984f48b67f7f732fc2655d3949742e0a31-annotation
     - image: quay.io/hpestorage/csi-driver@sha256:18e86e4a4dfa91cc7a7979591aac363fe91568b2e7eef134e5a83622b9fc691e
       name: csi-driver-18e86e4a4dfa91cc7a7979591aac363fe91568b2e7eef134e5a83622b9fc691e-annotation
   replaces: hpe-csi-operator.v2.5.2
