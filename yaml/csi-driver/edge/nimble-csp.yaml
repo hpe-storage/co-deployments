@@ -5,7 +5,7 @@ kind: Service
 apiVersion: v1
 metadata:
   name: alletra6000-csp-svc
-  namespace: default
+  namespace: hpe-storage
   labels:
     app: alletra6000-csp-svc
 spec:
@@ -21,7 +21,7 @@ kind: Service
 apiVersion: v1
 metadata:
   name: nimble-csp-svc
-  namespace: default
+  namespace: hpe-storage
   labels:
     app: nimble-csp-svc
 spec:
@@ -37,7 +37,7 @@ kind: Deployment
 apiVersion: apps/v1
 metadata:
   name: nimble-csp
-  namespace: default
+  namespace: hpe-storage
 spec:
   selector:
     matchLabels:

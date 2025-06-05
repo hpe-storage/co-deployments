@@ -4,7 +4,7 @@ kind: ConfigMap
 apiVersion: v1
 metadata:
   name: hpe-linux-config
-  namespace: default
+  namespace: hpe-storage
 data:
   config.json: |-
     {

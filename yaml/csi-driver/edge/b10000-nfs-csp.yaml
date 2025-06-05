@@ -5,7 +5,7 @@ kind: Service
 apiVersion: v1
 metadata:
   name: alletrastoragemp-b10000-nfs-csp-svc
-  namespace: default
+  namespace: hpe-storage
   labels:
     app: alletrastoragemp-b10000-nfs-csp-svc
 spec:
@@ -21,7 +21,7 @@ kind: Deployment
 apiVersion: apps/v1
 metadata:
   name: alletrastoragemp-b10000-nfs-csp
-  namespace: default
+  namespace: hpe-storage
 spec:
   selector:
     matchLabels:

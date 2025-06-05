@@ -5,7 +5,7 @@ kind: Service
 apiVersion: v1
 metadata:
   name: alletrastoragemp-csp-svc
-  namespace: default
+  namespace: hpe-storage
   labels:
     app: alletrastoragemp-csp-svc
 spec:
@@ -21,7 +21,7 @@ kind: Service
 apiVersion: v1
 metadata:
   name: alletra9000-csp-svc
-  namespace: default
+  namespace: hpe-storage
   labels:
     app: alletra9000-csp-svc
 spec:
@@ -37,7 +37,7 @@ kind: Service
 apiVersion: v1
 metadata:
   name: primera3par-csp-svc
-  namespace: default
+  namespace: hpe-storage
   labels:
     app: primera3par-csp-svc
 spec:
@@ -55,7 +55,7 @@ metadata:
   name: primera3par-csp
   labels:
     app: primera3par-csp
-  namespace: default
+  namespace: hpe-storage
 spec:
   selector:
     matchLabels:
