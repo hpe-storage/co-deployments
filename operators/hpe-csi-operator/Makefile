@@ -54,7 +54,9 @@ init:
         # Build & push our base Helm Operator with latest UBI images
 	git clone https://github.com/operator-framework/operator-sdk
 	cd operator-sdk; git checkout $(OPERATOR_SDK_TAG); docker-buildx build --progress=plain --no-cache \
-	--provenance=false --push --platform=$(PLATFORMS) --tag $(OPERATOR_SDK_URL) -f images/helm-operator/Dockerfile .
+	--provenance=false --push --platform=$(PLATFORMS) --tag $(OPERATOR_SDK_URL) -f images/helm-operator/Dockerfile \
+	--build-arg https_proxy=$(https_proxy) --build-arg http_proxy=$(http_proxy) --build-arg no_proxy=$(no_proxy) \
+	.
 
 	# Mark complete
 	touch init
@@ -164,7 +166,7 @@ certified: prep
 certified-deploy:
 	# Run certified bundle
 	- oc create ns $(NAMESPACE)
-	operator-sdk run bundle --timeout 5m $(OCP_BUNDLE_IMG) -n $(NAMESPACE)
+	operator-sdk run bundle --security-context-config=restricted --timeout 5m $(OCP_BUNDLE_IMG) -n $(NAMESPACE)
 
 	# Instantiate HPECSIDriver
 	oc apply -n $(NAMESPACE) -f destinations/hpecsidriver-v${VERSION}-sample.yaml

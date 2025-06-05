@@ -1,6 +1,6 @@
 # HPE CSI Driver for Kubernetes Helm chart
 
-The [HPE CSI Driver for Kubernetes](https://scod.hpedev.io/csi_driver/index.html) leverages Hewlett Packard Enterprise primary storage platforms to provide scalable and persistent storage for stateful and ephemeral applications. Currently supported storage platforms include HPE GreenLake for Block Storage powered by HPE Alletra Storage MP B10000, HPE Alletra 5000/6000/9000, HPE Nimble Storage, HPE Primera and HPE 3PAR.
+The [HPE CSI Driver for Kubernetes](https://scod.hpedev.io/csi_driver/index.html) leverages Hewlett Packard Enterprise primary storage platforms to provide scalable and persistent storage for stateful and ephemeral applications. Currently supported storage platforms include HPE Alletra Storage MP B10000, HPE Alletra 5000/6000/9000, HPE Nimble Storage, HPE Primera and HPE 3PAR.
 
 ## Release highlights
 
@@ -33,7 +33,8 @@ The following table lists the configurable parameters of the chart and their def
 | disable.primera           | Disable HPE Primera (and 3PAR) CSP `Service`.                                                      | false            |
 | disable.alletra6000       | Disable HPE Alletra 5000/6000 CSP `Service`.                                                       | false            |
 | disable.alletra9000       | Disable HPE Alletra 9000 CSP `Service`.                                                            | false            |
-| disable.alletraStorageMP  | Disable HPE Alletra Storage MP B10000 CSP `Service`.                                                      | false            |
+| disable.alletraStorageMP  | Disable HPE Alletra Storage MP B10000 Block Storage CSP `Service`.                                                      | false            |
+| disable.b10000FileService  | Disable HPE Alletra Storage MP B10000 File Service CSP `Service`.                                  | false            |
 | disableNodeConformance    | Disable automatic installation of iSCSI, multipath and NFS packages.                               | false            |
 | disableNodeConfiguration  | Disables node conformance and configuration.`*`                                                    | false            |
 | disableNodeGetVolumeStats | Disable NodeGetVolumeStats call to CSI driver.                                                     | false            |
@@ -48,18 +49,18 @@ The following table lists the configurable parameters of the chart and their def
 | controller.nodeSelector   | Node labels for HPE CSI Driver controller Pods assignment.                                         | {}               |
 | controller.affinity       | Affinity rules for the HPE CSI Driver controller Pods.                                             | {}               |
 | controller.tolerations    | Node taints to tolerate for the HPE CSI Driver controller Pods.                                    | []               |
-| controller.resources      | A resource block with requests and limits for controller containers.                               | From values.yaml |
+| controller.resources      | A resource block with requests and limits for controller containers.                               | From [values.yaml](https://github.com/hpe-storage/co-deployments/blob/master/helm/values/csi-driver) |
 | csp.labels                | Additional labels for CSP Pods.                                                                    | {}               |
 | csp.nodeSelector          | Node labels for CSP Pods assignment.                                                               | {}               |
 | csp.affinity              | Affinity rules for the CSP Pods.                                                                   | {}               |
 | csp.tolerations           | Node taints to tolerate for the CSP Pods.                                                          | []               |
-| csp.resources             | A resource block with requests and limits for CSP containers.                                      | From values.yaml |
+| csp.resources             | A resource block with requests and limits for CSP containers.                                      | From [values.yaml](https://github.com/hpe-storage/co-deployments/blob/master/helm/values/csi-driver) |
 | node.labels               | Additional labels for HPE CSI Driver node Pods.                                                    | {}               |
 | node.nodeSelector         | Node labels for HPE CSI Driver node Pods assignment.                                               | {}               |
 | node.affinity             | Affinity rules for the HPE CSI Driver node Pods.                                                   | {}               |
 | node.tolerations          | Node taints to tolerate for the HPE CSI Driver node Pods.                                          | []               |
-| node.resources            | A resource block with requests and limits for node containers.                                     | From values.yaml |
-| images                    | Key/value pairs of HPE CSI Driver runtime images.                                                  | From values.yaml |
+| node.resources            | A resource block with requests and limits for node containers.                                     | From [values.yaml](https://github.com/hpe-storage/co-deployments/blob/master/helm/values/csi-driver) |
+| images                    | Key/value pairs of HPE CSI Driver runtime images.                                                  | From [values.yaml](https://github.com/hpe-storage/co-deployments/blob/master/helm/values/csi-driver) |
 | maxVolumesPerNode         | Maximum number of volumes the CSI controller will publish to a node.`**`                           | 100 |
 
 `*` = Disabling node conformance and configuration may prevent the CSI driver from functioning properly. See the [manual node configuration](https://scod.hpedev.io/csi_driver/operations.html#manual_node_configuration) section on SCOD to understand the consequences.

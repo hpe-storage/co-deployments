@@ -1,58 +1,42 @@
 ---
-# Source: hpe-csi-driver/templates/nimble-csp.yaml
-### Alletra 5000/6000 CSP Service ###
+# Source: hpe-csi-driver/templates/b10000-nfs-csp.yaml
+### AlletraMP B10000 NFS CSP Service ###
 kind: Service
 apiVersion: v1
 metadata:
-  name: alletra6000-csp-svc
+  name: alletrastoragemp-b10000-nfs-csp-svc
   namespace: hpe-storage
   labels:
-    app: alletra6000-csp-svc
+    app: alletrastoragemp-b10000-nfs-csp-svc
 spec:
   ports:
   - port: 8080
     protocol: TCP
   selector:
-    app:  nimble-csp
+    app: alletrastoragemp-b10000-nfs-csp
 ---
-# Source: hpe-csi-driver/templates/nimble-csp.yaml
-### Nimble CSP Service ###
-kind: Service
-apiVersion: v1
-metadata:
-  name: nimble-csp-svc
-  namespace: hpe-storage
-  labels:
-    app: nimble-csp-svc
-spec:
-  ports:
-  - port: 8080
-    protocol: TCP
-  selector:
-    app: nimble-csp
----
-# Source: hpe-csi-driver/templates/nimble-csp.yaml
+# Source: hpe-csi-driver/templates/b10000-nfs-csp.yaml
 ### CSP deployment ###
 kind: Deployment
 apiVersion: apps/v1
 metadata:
-  name: nimble-csp
+  name: alletrastoragemp-b10000-nfs-csp
   namespace: hpe-storage
 spec:
   selector:
     matchLabels:
-      app: nimble-csp
+      app: alletrastoragemp-b10000-nfs-csp
   replicas: 1
   template:
     metadata:
       labels:
-        app: nimble-csp
+        app: alletrastoragemp-b10000-nfs-csp
     spec:
       serviceAccountName: hpe-csp-sa
       priorityClassName: system-cluster-critical
       containers:
-        - name: nimble-csp
-          image: "quay.io/hpestorage/alletra-6000-and-nimble-csp:v3.0.0-beta"
+        - name: alletrastoragemp-b10000-nfs-csp
+          image: "quay.io/hpestorage/alletrastoragemp-b10000-nfs-csp:v1.0.0-beta"
           resources:
             limits:
               cpu: 2000m
@@ -61,7 +45,6 @@ spec:
               cpu: 100m
               memory: 128Mi
           imagePullPolicy: "IfNotPresent"
-          env:
           ports:
             - containerPort: 8080
           volumeMounts:
