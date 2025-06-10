@@ -48,14 +48,15 @@ Learn how to specify resource limits and requests in the official documentation 
 1. Create the custom resource definitions (CRDs) for the COSI driver API resources.
 
 ```
-kubectl apply -k github.com/kubernetes-sigs/container-object-storage-interface-api
+kubectl apply -k github.com/kubernetes-sigs/container-object-storage-interface//?ref=main
 ```
 
 2. Deploy the object storage controller.
 
 ```
-kubectl apply -k github.com/kubernetes-sigs/container-object-storage-interface-controller
+kubectl kustomize github.com/kubernetes-sigs/container-object-storage-interface/controller | sed 's/namespace: container-object-storage-system/namespace: default/' | kubectl apply -f -
 ```
+
 
 **Note:** The SIG Storage resourcs are deployed in the "default" `Namespace` and the HPE COSI Driver needs to be deployed there as well. See [known limitations](https://scod.hpedev.io/cosi_driver/index.html#known_limitations) for more information.
 
