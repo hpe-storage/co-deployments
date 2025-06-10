@@ -48,7 +48,7 @@ Learn how to specify resource limits and requests in the official documentation 
 1. Create the custom resource definitions (CRDs) for the COSI driver API resources.
 
 ```
-kubectl apply -k github.com/kubernetes-sigs/container-object-storage-interface//?ref=main
+kubectl apply -k github.com/kubernetes-sigs/container-object-storage-interface?ref=main
 ```
 
 2. Deploy the object storage controller.
