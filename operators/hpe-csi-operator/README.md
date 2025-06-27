@@ -128,7 +128,7 @@ OpenShift:
 export VERSION=2.5.1
 oc create ns hpe-storage
 oc apply -f https://scod.hpedev.io/partners/redhat_openshift/examples/scc/hpe-csi-scc.yaml
-operator-sdk run bundle -n hpe-storage quay.io/hpestorage/csi-driver-operator-bundle-ocp:v${VERSION}
+operator-sdk run bundle --security-context-config=restricted -n hpe-storage quay.io/hpestorage/csi-driver-operator-bundle-ocp:v${VERSION}
 oc apply -n hpe-storage -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/operators/hpe-csi-operator/destinations/hpecsidriver-v${VERSION}-sample.yaml
 ```
 
