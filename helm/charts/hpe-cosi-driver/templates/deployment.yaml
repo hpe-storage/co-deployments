@@ -28,6 +28,10 @@ spec:
         {{- include "hpe-cosi-driver.selectorLabels" . | nindent 8 }}
     spec:
       serviceAccountName: {{ .Values.deployment.name }}-sa
+      securityContext:
+        fsGroup: 2000
+        runAsUser: 1000
+        runAsGroup: 1000
       volumes:
       - name: socket
         emptyDir: {}
