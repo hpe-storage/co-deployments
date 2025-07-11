@@ -1,6 +1,6 @@
 # HPE CSI Driver for Kubernetes Helm chart
 
-The [HPE CSI Driver for Kubernetes](https://scod.hpedev.io/csi_driver/index.html) leverages Hewlett Packard Enterprise primary storage platforms to provide scalable and persistent storage for stateful and ephemeral applications. Currently supported storage platforms include HPE Alletra Storage MP B10000, HPE Alletra 5000/6000/9000, HPE Nimble Storage, HPE Primera and HPE 3PAR.
+The [HPE CSI Driver for Kubernetes](https://scod.hpedev.io/csi_driver/index.html) leverages Hewlett Packard Enterprise primary storage platforms to provide scalable, persistent block and file storage for stateful and ephemeral applications. Currently supported storage platforms include HPE Alletra Storage MP B10000, HPE Alletra 5000/6000/9000, HPE Nimble Storage, HPE Primera and HPE 3PAR.
 
 ## Release highlights
 
@@ -20,8 +20,9 @@ Refer to [Compatibility & Support](https://scod.hpedev.io/csi_driver/index.html#
 
 Depending on which [Container Storage Provider](https://scod.hpedev.io/container_storage_provider/index.html) (CSP) is being used, other prerequisites and requirements may apply, such as storage platform OS and features.
 
+- [HPE Alletra Storage MP B10000, Alletra 9000, Primera and 3PAR](https://scod.hpedev.io/container_storage_provider/hpe_alletra_storage_mp_b10000/index.html)
+- [HPE Alletra Storage MP B10000 File Service](https://scod.hpedev.io/container_storage_provider/hpe_alletra_storage_mp_b10000_file_service/index.html)
 - [HPE Alletra 5000/6000 and Nimble Storage](https://scod.hpedev.io/container_storage_provider/hpe_alletra_6000/index.html)
-- [HPE Alletra Storage MP B10000, Alletra 9000, Primera and 3PAR](https://scod.hpedev.io/container_storage_provider/hpe_alletra_storage_mp/index.html)
 
 ## Configuration and installation
 
@@ -94,47 +95,6 @@ helm install --create-namespace -n hpe-storage my-hpe-csi-driver hpe-storage/hpe
 Due to the [helm limitation](https://helm.sh/docs/chart_best_practices/custom_resource_definitions/#some-caveats-and-explanations) to not support upgrade of CRDs between different chart versions, helm chart upgrade is not supported.
 Our recommendation is to uninstall the existing chart and install the chart with the desired version. CRDs will be preserved between uninstall and install.
 
-#### Upgrading 2.0.0 to 2.1.0
-
-Before version 2.0.0 is uninstalled, the following CRDs needs to be updated. 
-
-**Important:** If there are HPE Alletra Storage MP B10000, Alletra 9000, Primera or 3PAR Remote Copy Groups configured on the cluster, follow the [next steps](#update-rcg-info) before uninstallation.
-
-##### Update RCG Info
-
-This step is only necessary if there are HPE Alletra Storage MP B10000, Alletra 9000, Primera or 3PAR Remote Copy Groups configured on the cluster. If there are none, proceed to the [next step](#update-crds).
-
-Change kubectl context into the Namespace where the HPE CSI Driver is installed. The most common is "hpe-storage".
-
-```
-kubectl config set-context --current --namespace=hpe-storage
-```
-
-Create the Job using the below commands, which will modify the "rcg-info" record to the new key "RCGCreatedByCSP".
-
-```
-kubectl apply -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/yaml/rcg-info/v1.0.0/convert-rcg-info.yaml
-```
-
-Completion of job status can be verified using the below command.
-
-```
-kubectl wait --for=condition=complete --timeout=600s job/primera3par-rcg-info
-```
-
-Continue to [update the CRDs](#update-crds) followed by [uninstalling the chart](#uninstalling-the-chart).
-
-##### Update CRDs
-
-Before reinstallation of the driver, apply the new CRDs.
-
-```
-kubectl apply -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/helm/charts/hpe-csi-driver/crds/hpevolumeinfos_v2_crd.yaml
-kubectl apply -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/helm/charts/hpe-csi-driver/crds/hpevolumegroupinfos_v2_crd.yaml
-kubectl apply -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/helm/charts/hpe-csi-driver/crds/snapshotgroupinfos_v2_crd.yaml
-kubectl apply -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/helm/charts/hpe-csi-driver/crds/hpereplicated_deviceinfo_v2_crd.yaml
-```
-
 #### Uninstalling the chart
 
 To uninstall the `my-hpe-csi-driver` chart:
@@ -157,7 +117,7 @@ Formal support statements for each HPE supported CSP is [available on SCOD](http
 
 ## Community
 
-Please file any issues, questions or feature requests you may have [here](https://github.com/hpe-storage/co-deployments/issues) (do not use this facility for support inquiries of your HPE storage product, see [SCOD](https://scod.hpedev.io/legal/support) for support). You may also join our Slack community to chat with HPE folks close to this project. We hang out in `#Alletra`, `#NimbleStorage`, `#3par-primera`, and `#Kubernetes`. Sign up at [slack.hpedev.io](https://slack.hpedev.io/) and login at [hpedev.slack.com](https://hpedev.slack.com/)
+Please file any issues, questions or feature requests you may have [here](https://github.com/hpe-storage/co-deployments/issues) (do not use this facility for support inquiries of your HPE storage product, see [SCOD](https://scod.hpedev.io/legal/support) for support). You may also join our Slack community to chat with HPE folks close to this project. We hang out in `#Alletra`, `#NimbleStorage`, `#3par-primera`, and `#Kubernetes`. Sign up at [developer.hpe.com/slack-signup/](https://developer.hpe.com/slack-signup/) and login at [hpedev.slack.com](https://hpedev.slack.com/)
 
 ## Contributing
 
