@@ -36,7 +36,7 @@ spec:
       priorityClassName: system-cluster-critical
       containers:
         - name: alletrastoragemp-b10000-nfs-csp
-          image: "quay.io/hpestorage/alletrastoragemp-b10000-nfs-csp:v1.0.0-beta"
+          image: "quay.io/hpestorage/alletrastoragemp-b10000-nfs-csp:v1.0.0"
           resources:
             limits:
               cpu: 2000m
