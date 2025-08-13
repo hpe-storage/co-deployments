@@ -49,6 +49,18 @@ spec:
         - name: storage-system-config
           secret:
             secretName: {{ .Values.arraySecret | quote }}
+      {{- with .Values.affinity }}
+      affinity:
+{{ toYaml . | indent 8 }}
+      {{- end }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+{{ toYaml . | indent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+{{ toYaml . | indent 8 }}
+      {{- end }}
 
 ---
 {{- $service := .Values.service | default dict }}
