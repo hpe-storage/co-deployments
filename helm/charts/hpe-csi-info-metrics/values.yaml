@@ -65,6 +65,17 @@ service:
 serviceMonitor:
   enable: false
 
+  # Prometheus relabel configurations. These are applied before scraping.
+  # References:
+  # https://prometheus.io/docs/prometheus/latest/configuration/configuration/#relabel_config
+  # prometheus-operator/prometheus-operator/blob/c22d1da263ace4921586cbafc658418b5c8194ba/Documentation/api.md#relabelconfig
+  relabelings: []
+  # Prometheus metric relabel configurations. These are applied before ingestion.
+  # References:
+  # https://prometheus.io/docs/prometheus/latest/configuration/configuration/#metric_relabel_configs
+  # prometheus-operator/prometheus-operator/blob/c22d1da263ace4921586cbafc658418b5c8194ba/Documentation/api.md#relabelconfig
+  metricRelabelings: []
+
   # Corresponding labels on the CSI Info Metrics Provider service are added to
   # the scraped metrics
   targetLabels: []
