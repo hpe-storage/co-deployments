@@ -1,6 +1,6 @@
 # HPE Storage Array Exporter for Prometheus Helm chart
 
-The [HPE Storage Array Exporter for Prometheus](https://hpe-storage.github.io/array-exporter) provides storage system information in the form of [Prometheus](https://prometheus.io/) metrics.  It can be used in combination with [HPE CSI Info Metrics Provider for Prometheus](https://scod.hpedev.io/csi_driver/metrics.html) metrics to focus on storage resources used within a Kubernetes cluster.
+The [HPE Storage Array Exporter for Prometheus](https://hpe-storage.github.io/array-exporter) provides storage system information in the form of [Prometheus](https://prometheus.io/) metrics. It can be used in combination with [HPE CSI Info Metrics Provider for Prometheus](https://scod.hpedev.io/csi_driver/metrics.html) metrics to focus on storage resources used within a Kubernetes cluster.
 
 ## Prerequisites
 
@@ -17,6 +17,7 @@ The chart has these configurable parameters and default values.
 | arraySecret | The name of a Secret in the same namespace as the Helm chart installation providing storage array access information: `address` (or `backend`), `username`, and `password`. | hpe-backend |
 | image.registry | The registry from which to pull container images. | `quay.io` |
 | image.pullPolicy | Container image pull policy (`Always`, `IfNotPresent`, `Never`). | `IfNotPresent` |
+| images | A list of images used by this chart | from [values.yaml](https://github.com/hpe-storage/co-deployments/blob/master/helm/charts/hpe-array-exporter/values.yaml) |
 | logLevel | Minimum severity of messages to output (`info`, `debug`, `trace`, `warn`, `error`). | `info` |
 | affinity | Pod [affinity](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.31/#affinity-v1-core) to be set on the deployment. | `{}` |
 | nodeSelector | Pod [nodeSelector](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.31/#nodeselector-v1-core) to be set on the deployment. | `{}` |
@@ -32,7 +33,9 @@ The chart has these configurable parameters and default values.
 | serviceMonitor.metricRelabelings | Metric [relabeling configuration](https://github.com/prometheus-operator/prometheus-operator/blob/c22d1da263ace4921586cbafc658418b5c8194ba/Documentation/api.md#relabelconfig) for exported metrics. | `[]` |
 | serviceMonitor.targetLabels | List of labels on the service to add to the scraped metric. | `[]` |
 
-The `arraySecret` parameter is required and has no default value.  A Secret used by the [HPE CSI Driver for Kubernetes](https://scod.hpedev.io/csi_driver/index.html) can be reused without modification.  Otherwise, use [this example](https://github.com/hpe-storage/co-deployments/blob/master/yaml/array-exporter/edge/hpe-array-exporter-secret.yaml) to create a new one.
+A Secret used by the [HPE CSI Driver for Kubernetes](https://scod.hpedev.io/csi_driver/index.html) can be reused without modification. Otherwise, use [this example](https://github.com/hpe-storage/co-deployments/blob/master/yaml/array-exporter/edge/hpe-array-exporter-secret.yaml) to create a new one.
+
+**NOTE:** The `Secret` may only contain an IP address or hostname for the "backend" key, not port number as recommended for HPE Primera and newer.
 
 The `acceptEula` value must be set to `true`, confirming your acceptance of the [HPE End User License Agreement](https://www.hpe.com/us/en/software/licensing.html).
 
@@ -49,7 +52,7 @@ helm repo update
 
 ### Customize Settings
 
-Use of a values.yaml file is recommended.  Retrieve the values.yaml file for the [latest version](https://github.com/hpe-storage/co-deployments/blob/master/helm/charts/hpe-array-exporter/values.yaml) or for the specific version you will install:
+Use of a values.yaml file is recommended. Retrieve the values.yaml file for the [latest version](https://github.com/hpe-storage/co-deployments/blob/master/helm/charts/hpe-array-exporter/values.yaml) or for the specific version you will install:
 
 ```
 helm show values hpe-storage/hpe-array-exporter --version X.Y.Z > myvalues.yaml
@@ -59,7 +62,7 @@ Edit the values according to the deployment environment, including identifying (
 
 ### Install
 
-The latest release is installed by default.  Add a `--version` or `--devel` option to install a specific version or the latest pre-release chart.
+The latest release is installed by default. Add a `--version` or `--devel` option to install a specific version or the latest pre-release chart.
 
 Use a customized values.yaml file:
 

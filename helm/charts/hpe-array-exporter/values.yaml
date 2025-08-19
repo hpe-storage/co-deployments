@@ -18,6 +18,9 @@ image:
   # Container image pull policy
   pullPolicy: "IfNotPresent"
 
+images:
+  arrayExporter: hpestorage/array-exporter:v1.0.4
+
 # Minimum severity of messages to output
 logLevel: "info"
 
@@ -35,7 +38,7 @@ affinity: {}
 nodeSelector: {}
 # Pod tolerations - YAML map passed into the deployment, see API definition below
 # https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.31/#toleration-v1-core
-tolerations: {}
+tolerations: []
 
 # Settings for the Service providing access to storage array metrics.
 service:
