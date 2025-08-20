@@ -10,6 +10,7 @@
                 "registry": "quay.io",
                 "pullPolicy": "IfNotPresent"
             },
+	    "images": {},
             "logLevel": "info",
             "service": {
                 "type": "ClusterIP",
@@ -23,6 +24,7 @@
         "acceptEula",
         "arraySecret",
         "image",
+	"images",
         "logLevel",
         "metrics",
         "service"
@@ -70,6 +72,27 @@
                     "type": "string",
                     "default": "IfNotPresent",
                     "enum": [ "Always", "IfNotPresent", "Never" ]
+                }
+            },
+            "additionalProperties": false
+        },
+        "images": {
+            "$id": "#/properties/images",
+            "title": "Container images comprising this chart",
+            "type": "object",
+            "default": {
+                "arrayExporter": ""
+            },
+            "required": [
+                "arrayExporter"
+            ],
+            "properties": {
+                "arrayExporter": {
+                    "$id": "#/properties/images/properties/arrayExporter",
+                    "title": "HPE Storage Array Exporter image",
+                    "description": "repository:tag, excluding registry",
+                    "type": "string",
+                    "default": ""
                 }
             },
             "additionalProperties": false

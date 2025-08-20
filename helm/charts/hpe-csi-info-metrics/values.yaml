@@ -13,6 +13,9 @@ image:
   # Container image pull policy
   pullPolicy: "IfNotPresent"
 
+images:
+  metricsProvider: hpestorage/csi-info-metrics:v1.0.4
+
 # Minimum severity of messages to output
 logLevel: "info"
 
@@ -24,7 +27,7 @@ affinity: {}
 nodeSelector: {}
 # Pod tolerations - YAML map passed into the deployment, see API definition below
 # https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.31/#toleration-v1-core
-tolerations: {}
+tolerations: []
 
 # Customization of the metrics provided.
 metrics:

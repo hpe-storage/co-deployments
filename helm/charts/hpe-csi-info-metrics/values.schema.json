@@ -10,6 +10,7 @@
                 "registry": "quay.io",
                 "pullPolicy": "IfNotPresent"
             },
+	    "images": {},
             "logLevel": "info",
             "service": {
                 "type": "ClusterIP",
@@ -22,6 +23,7 @@
     "required": [
         "acceptEula",
         "image",
+	"images",
         "logLevel",
         "metrics",
         "service"
@@ -60,6 +62,27 @@
                     "type": "string",
                     "default": "IfNotPresent",
                     "enum": [ "Always", "IfNotPresent", "Never" ]
+                }
+            },
+            "additionalProperties": false
+        },
+        "images": {
+            "$id": "#/properties/images",
+            "title": "Container images comprising this chart",
+            "type": "object",
+            "default": {
+                "metricsProvider": ""
+            },
+            "required": [
+                "metricsProvider"
+            ],
+            "properties": {
+                "metricsProvider": {
+                    "$id": "#/properties/images/properties/metricsProvider",
+                    "title": "HPE CSI Info Metrics Provider image",
+                    "description": "repository:tag, excluding registry",
+                    "type": "string",
+                    "default": ""
                 }
             },
             "additionalProperties": false

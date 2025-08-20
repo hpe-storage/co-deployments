@@ -17,6 +17,7 @@ The chart has these configurable parameters and default values.
 | acceptEula | Confirm your acceptance of the HPE End User License Agreement at https://www.hpe.com/us/en/software/licensing.html by setting this value to `true`. | `false` |
 | image.registry | The registry from which to pull container images. | `quay.io` |
 | image.pullPolicy | Container image pull policy (`Always`, `IfNotPresent`, `Never`). | `IfNotPresent` |
+| images | A list of images used by this chart | from [values.yaml](https://github.com/hpe-storage/co-deployments/blob/master/helm/charts/hpe-csi-info-metrics/values.yaml) |
 | logLevel | Minimum severity of messages to output (`info`, `debug`, `trace`, `warn`, `error`). | `info` |
 | affinity | Pod [affinity](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.31/#affinity-v1-core) to be set on the deployment. | `{}` |
 | nodeSelector | Pod [nodeSelector](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.31/#nodeselector-v1-core) to be set on the deployment. | `{}` |
@@ -47,7 +48,7 @@ helm repo update
 
 ### Customize Settings
 
-Use of a values.yaml file is recommended.  Retrieve the values.yaml file for the [latest version](https://github.com/hpe-storage/co-deployments/blob/master/helm/charts/hpe-csi-info-metrics/values.yaml) or for the specific version you will install:
+Use of a values.yaml file is recommended. Retrieve the values.yaml file for the [latest version](https://github.com/hpe-storage/co-deployments/blob/master/helm/charts/hpe-csi-info-metrics/values.yaml) or for the specific version you will install:
 
 ```
 helm show values hpe-storage/hpe-csi-info-metrics --version X.Y.Z > myvalues.yaml
@@ -57,7 +58,7 @@ Edit the values according to the deployment environment, including setting `acce
 
 ### Install
 
-The latest release is installed by default.  Add a `--version` or `--devel` option to install a specific version or the latest pre-release chart.
+The latest release is installed by default. Add a `--version` or `--devel` option to install a specific version or the latest pre-release chart.
 
 Use a customized values.yaml file:
 
