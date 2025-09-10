@@ -111,7 +111,7 @@ spec:
             - name: socket-dir
               mountPath: /var/lib/csi/sockets/pluginproxy
         - name: hpe-csi-driver
-          image: "quay.io/hpestorage/csi-driver:v3.0.0"
+          image: "quay.io/hpestorage/csi-driver:v3.0.1"
           resources:
             limits:
               cpu: 2000m
