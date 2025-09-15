@@ -43,11 +43,11 @@ spec:
   disablePreInstallHooks: false
   imagePullPolicy: IfNotPresent
   images:
-    b10000FileServiceCSP: quay.io/hpestorage/alletrastoragemp-b10000-nfs-csp:v1.0.1
+    b10000FileServiceCSP: quay.io/hpestorage/alletrastoragemp-b10000-nfs-csp:v1.0.0
     csiAttacher: registry.k8s.io/sig-storage/csi-attacher:v4.9.0
-    csiControllerDriver: quay.io/hpestorage/csi-driver:v3.0.1
+    csiControllerDriver: quay.io/hpestorage/csi-driver:v3.0.0
     csiExtensions: quay.io/hpestorage/csi-extensions:v1.2.9
-    csiNodeDriver: quay.io/hpestorage/csi-driver:v3.0.1
+    csiNodeDriver: quay.io/hpestorage/csi-driver:v3.0.0
     csiNodeDriverRegistrar: registry.k8s.io/sig-storage/csi-node-driver-registrar:v2.14.0
     csiProvisioner: registry.k8s.io/sig-storage/csi-provisioner:v5.3.0
     csiResizer: registry.k8s.io/sig-storage/csi-resizer:v1.13.2
@@ -56,7 +56,7 @@ spec:
     csiVolumeGroupSnapshotter: quay.io/hpestorage/volume-group-snapshotter:v1.0.8
     csiVolumeMutator: quay.io/hpestorage/volume-mutator:v1.3.8
     nfsProvisioner: quay.io/hpestorage/nfs-provisioner:v3.0.8
-    nimbleCSP: quay.io/hpestorage/alletra-6000-and-nimble-csp:v3.0.1
+    nimbleCSP: quay.io/hpestorage/alletra-6000-and-nimble-csp:v3.0.0
     primera3parCSP: quay.io/hpestorage/alletra-9000-primera-and-3par-csp:v3.0.1
   iscsi:
     chapSecretName: ""
