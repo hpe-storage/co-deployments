@@ -1,6 +1,6 @@
 # HPE CSI Driver for Kubernetes Helm chart
 
-The [HPE CSI Driver for Kubernetes](https://scod.hpedev.io/csi_driver/index.html) leverages Hewlett Packard Enterprise primary storage platforms to provide scalable, persistent block and file storage for stateful and ephemeral applications. Currently supported storage platforms include HPE Alletra Storage MP B10000, HPE Alletra 5000/6000/9000, HPE Nimble Storage, HPE Primera and HPE 3PAR.
+The [HPE CSI Driver for Kubernetes](https://scod.hpedev.io/csi_driver/index.html) leverages Hewlett Packard Enterprise primary storage platforms to provide scalable, persistent block and file storage for stateful and ephemeral applications. Currently supported storage platforms include HPE Alletra Storage MP B10000, HPE Alletra Storage MP X10000, HPE Alletra 5000/6000/9000, HPE Nimble Storage, HPE Primera and HPE 3PAR.
 
 ## Release highlights
 
@@ -34,8 +34,9 @@ The following table lists the configurable parameters of the chart and their def
 | disable.primera           | Disable HPE Primera (and 3PAR) CSP `Service`.                                                      | false            |
 | disable.alletra6000       | Disable HPE Alletra 5000/6000 CSP `Service`.                                                       | false            |
 | disable.alletra9000       | Disable HPE Alletra 9000 CSP `Service`.                                                            | false            |
-| disable.alletraStorageMP  | Disable HPE Alletra Storage MP B10000 Block Storage CSP `Service`.                                                      | false            |
+| disable.alletraStorageMP  | Disable HPE Alletra Storage MP B10000 Block Storage CSP `Service`.                                 | false            |
 | disable.b10000FileService  | Disable HPE Alletra Storage MP B10000 File Service CSP `Service`.                                  | false            |
+| disable.x10000FileService  | Disable HPE Alletra Storage MP X10000 File Service CSP `Service`.                                  | false            |
 | disableNodeConformance    | Disable automatic installation of iSCSI, multipath and NFS packages.                               | false            |
 | disableNodeConfiguration  | Disables node conformance and configuration.`*`                                                    | false            |
 | disableNodeGetVolumeStats | Disable NodeGetVolumeStats call to CSI driver.                                                     | false            |
