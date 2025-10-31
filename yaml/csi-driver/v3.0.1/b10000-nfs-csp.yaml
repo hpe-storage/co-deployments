@@ -1,0 +1,56 @@
+---
+# Source: hpe-csi-driver/templates/b10000-nfs-csp.yaml
+### AlletraMP B10000 NFS CSP Service ###
+kind: Service
+apiVersion: v1
+metadata:
+  name: alletrastoragemp-b10000-nfs-csp-svc
+  namespace: hpe-storage
+  labels:
+    app: alletrastoragemp-b10000-nfs-csp-svc
+spec:
+  ports:
+  - port: 8080
+    protocol: TCP
+  selector:
+    app: alletrastoragemp-b10000-nfs-csp
+---
+# Source: hpe-csi-driver/templates/b10000-nfs-csp.yaml
+### CSP deployment ###
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: alletrastoragemp-b10000-nfs-csp
+  namespace: hpe-storage
+spec:
+  selector:
+    matchLabels:
+      app: alletrastoragemp-b10000-nfs-csp
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: alletrastoragemp-b10000-nfs-csp
+    spec:
+      serviceAccountName: hpe-csp-sa
+      priorityClassName: system-cluster-critical
+      containers:
+        - name: alletrastoragemp-b10000-nfs-csp
+          image: "quay.io/hpestorage/alletrastoragemp-b10000-nfs-csp:v1.0.0"
+          resources:
+            limits:
+              cpu: 2000m
+              memory: 1Gi
+            requests:
+              cpu: 100m
+              memory: 128Mi
+          imagePullPolicy: "IfNotPresent"
+          ports:
+            - containerPort: 8080
+          volumeMounts:
+            - name: log-dir
+              mountPath: /var/log
+      volumes:
+        - name: log-dir
+          hostPath:
+            path: /var/log

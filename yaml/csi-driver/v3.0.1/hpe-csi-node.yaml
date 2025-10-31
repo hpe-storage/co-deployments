@@ -1,5 +1,5 @@
 ---
-
+# Source: hpe-csi-driver/templates/hpe-csi-node.yaml
 #######################################
 ############  Node driver  ############
 #######################################
@@ -8,7 +8,7 @@ kind: DaemonSet
 apiVersion: apps/v1
 metadata:
   name: hpe-csi-node
-  namespace: {{ .Release.Namespace }}
+  namespace: hpe-storage
 spec:
   selector:
     matchLabels:
@@ -18,11 +18,6 @@ spec:
       labels:
         app: hpe-csi-node
         role: hpe-csi
-        {{- if .Values.node.labels }}
-{{ toYaml .Values.node.labels | indent 8 }}
-        {{- end }}
-      annotations:
-        kubectl.kubernetes.io/default-container: hpe-csi-driver
     spec:
       serviceAccountName: hpe-csi-node-sa
       priorityClassName: system-node-critical
@@ -34,9 +29,14 @@ spec:
             value: "1"
       initContainers:
         - name: hpe-csi-node-init
-          image: {{ .Values.images.csiNodeDriver | quote }}
+          image: "quay.io/hpestorage/csi-driver:v3.0.0"
           resources:
-            {{- toYaml .Values.node.resources | nindent 12 }}
+            limits:
+              cpu: 2000m
+              memory: 1Gi
+            requests:
+              cpu: 100m
+              memory: 128Mi
           args:
             - --node-init
             - --endpoint=$(CSI_ENDPOINT)
@@ -64,21 +64,9 @@ spec:
           env:
             - name: CSI_ENDPOINT
               value: unix:///csi/csi.sock
-            {{- if .Values.disableNodeConformance }}
-            - name: DISABLE_NODE_CONFORMANCE
-              value: "true"
-            {{- end }}
-            {{- if .Values.disableNodeConfiguration }}
-            - name: DISABLE_NODE_CONFIGURATION
-              value: "true"
-            {{- end }}
-            {{- if .Values.disableNodeMonitor }}
-            - name: DISABLE_NODE_MONITOR
-              value: "true"
-            {{- end }}
             - name: LOG_LEVEL
-              value: {{ .Values.logLevel }}
-          imagePullPolicy: {{ .Values.imagePullPolicy | quote }}
+              value: info
+          imagePullPolicy: "IfNotPresent"
           securityContext:
             privileged: true
             capabilities:
@@ -86,9 +74,14 @@ spec:
             allowPrivilegeEscalation: true
       containers:
         - name: csi-node-driver-registrar
-          image: {{ .Values.images.csiNodeDriverRegistrar | quote }}
+          image: "registry.k8s.io/sig-storage/csi-node-driver-registrar:v2.14.0"
           resources:
-            {{- toYaml .Values.node.resources | nindent 12 }}
+            limits:
+              cpu: 2000m
+              memory: 1Gi
+            requests:
+              cpu: 100m
+              memory: 128Mi
           args:
             - "--csi-address=$(ADDRESS)"
             - "--kubelet-registration-path=$(DRIVER_REG_SOCK_PATH)"
@@ -97,26 +90,27 @@ spec:
             - name: ADDRESS
               value: /csi/csi.sock
             - name: DRIVER_REG_SOCK_PATH
-              {{- if .Values.kubeletRootDir }}
-              value: {{ .Values.kubeletRootDir }}/plugins/csi.hpe.com/csi.sock
-              {{- else }}
               value: /var/lib/kubelet/plugins/csi.hpe.com/csi.sock
-              {{- end }}
             - name: KUBE_NODE_NAME
               valueFrom:
                 fieldRef:
                   apiVersion: v1
                   fieldPath: spec.nodeName
-          imagePullPolicy: {{ .Values.imagePullPolicy | quote }}
+          imagePullPolicy: "IfNotPresent"
           volumeMounts:
             - name: plugin-dir
               mountPath: /csi
             - name: registration-dir
               mountPath: /registration
         - name: hpe-csi-driver
-          image: {{ .Values.images.csiNodeDriver | quote }}
+          image: "quay.io/hpestorage/csi-driver:v3.0.0"
           resources:
-            {{- toYaml .Values.node.resources | nindent 12 }}
+            limits:
+              cpu: 2000m
+              memory: 1Gi
+            requests:
+              cpu: 100m
+              memory: 128Mi
           args :
             - "--endpoint=$(CSI_ENDPOINT)"
             - "--node-service"
@@ -127,42 +121,16 @@ spec:
             - name: CSI_ENDPOINT
               value: unix:///csi/csi.sock
             - name: LOG_LEVEL
-              value: {{ .Values.logLevel }}
+              value: info
             - name: NODE_NAME
               valueFrom:
                 fieldRef:
                   fieldPath: spec.nodeName
-            {{- if .Values.iscsi.chapSecretName }}
-            - name: CHAP_SECRET_NAME
-              value: {{ .Values.iscsi.chapSecretName }}
-            - name: CHAP_SECRET_NAMESPACE
-              value: {{ .Release.Namespace }}
-            {{- end }}
-            {{- if .Values.disableNodeConformance }}
-            - name: DISABLE_NODE_CONFORMANCE
-              value: "true"
-            {{- end }}
-            {{- if .Values.disableNodeConfiguration }}
-            - name: DISABLE_NODE_CONFIGURATION
-              value: "true"
-            {{- end }}
-            {{- if .Values.disableNodeMonitor }}
-            - name: DISABLE_NODE_MONITOR
-              value: "true"
-            {{- end }}
-            {{- if .Values.maxVolumesPerNode }}
             - name: MAX_VOLUMES_PER_NODE
-              value: "{{ .Values.maxVolumesPerNode }}"
-            {{- end }}
-            {{- if .Values.kubeletRootDir }}
+              value: "100"
             - name: KUBELET_ROOT_DIR
-              value: {{ .Values.kubeletRootDir }}
-            {{- end }}
-            {{- if .Values.disableNodeGetVolumeStats }}
-            - name: DISABLE_NODE_GET_VOLUMESTATS
-              value: "true"
-            {{- end }}
-          imagePullPolicy: {{ .Values.imagePullPolicy | quote }}
+              value: /var/lib/kubelet
+          imagePullPolicy: "IfNotPresent"
           securityContext:
             privileged: true
             capabilities:
@@ -172,11 +140,7 @@ spec:
             - name: plugin-dir
               mountPath: /csi
             - name: pods-mount-dir
-            {{- if .Values.kubeletRootDir }}
-              mountPath:  {{ .Values.kubeletRootDir }}
-            {{- else }}
-              mountPath: /var/lib/kubelet
-            {{- end }}
+              mountPath:  /var/lib/kubelet
               # needed so that any mounts setup inside this container are
               # propagated back to the host machine.
               mountPropagation: "Bidirectional"
@@ -203,27 +167,18 @@ spec:
       volumes:
         - name: registration-dir
           hostPath:
-          {{ if .Values.kubeletRootDir }}
-            path: {{ .Values.kubeletRootDir }}/plugins_registry
-          {{- else }}
+          
             path: /var/lib/kubelet/plugins_registry
-          {{- end }}
             type: Directory
         - name: plugin-dir
           hostPath:
-          {{ if .Values.kubeletRootDir }}
-            path: {{ .Values.kubeletRootDir }}/plugins/csi.hpe.com
-          {{- else }}
+          
             path: /var/lib/kubelet/plugins/csi.hpe.com
-          {{- end }}
             type: DirectoryOrCreate
         - name: pods-mount-dir
           hostPath:
-          {{ if .Values.kubeletRootDir }}
-            path: {{ .Values.kubeletRootDir }}
-          {{- else }}
+          
             path: /var/lib/kubelet
-          {{- end }}
         - name: root-dir
           hostPath:
             path: /
@@ -251,18 +206,7 @@ spec:
         - name: linux-config-file
           configMap:
             name: hpe-linux-config
-      {{- if .Values.node.nodeSelector }}
-      nodeSelector:
-{{ toYaml .Values.node.nodeSelector | indent 8 }}
-      {{- end }}
       tolerations:
         - effect: NoSchedule
           key: csi.hpe.com/hpe-nfs
           operator: Exists
-      {{- if .Values.node.tolerations }}
-{{ toYaml .Values.node.tolerations | indent 8 }}
-      {{- end }}
-      {{- if .Values.node.affinity }}
-      affinity:
-{{ toYaml .Values.node.affinity | indent 8 }}
-      {{- end }}

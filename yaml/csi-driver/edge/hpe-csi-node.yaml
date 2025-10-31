@@ -18,6 +18,8 @@ spec:
       labels:
         app: hpe-csi-node
         role: hpe-csi
+      annotations:
+        kubectl.kubernetes.io/default-container: hpe-csi-driver
     spec:
       serviceAccountName: hpe-csi-node-sa
       priorityClassName: system-node-critical
