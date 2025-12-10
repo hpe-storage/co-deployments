@@ -14,6 +14,7 @@ metadata:
     features.operators.openshift.io/token-auth-gcp: "false"
     features.operators.openshift.io/cnf: "false"
     features.operators.openshift.io/cni: "false"
+    operatorframework.io/suggested-namespace: hpe-storage
     olm.skipRange: ">=1.0.0 <%SEMVER%"
     alm-examples: '[]'
     capabilities: Basic Install
