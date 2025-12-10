@@ -1,0 +1,12 @@
+---
+# Source: hpe-csi-driver/templates/csi-driver-crd.yaml
+################# CSI Driver ###########
+apiVersion: storage.k8s.io/v1
+kind: CSIDriver
+metadata:
+  name: csi.hpe.com
+spec:
+  podInfoOnMount: true
+  volumeLifecycleModes:
+  - Persistent
+  - Ephemeral
