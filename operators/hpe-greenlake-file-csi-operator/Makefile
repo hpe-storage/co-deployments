@@ -1,10 +1,10 @@
 # Set these
-VERSION ?= 2.6.4
+VERSION ?= 0.0.0
 SOURCE_VERSION ?= $(VERSION)
-REPO_NAME ?= quay.io/hpestorage
+REPO_NAME ?= quay.io/myrepo
 
 # Don't set these, preferably
-OPERATOR_SDK ?= operator-sdk-ocp
+OPERATOR_SDK ?= operator-sdk
 RH_REPO_NAME=registry.connect.redhat.com/hpestorage
 CERTIFIED_OUTPUT=destinations/certified-operators/current-version
 NAMESPACE ?= hpe-storage
@@ -64,7 +64,7 @@ prep: init
 	cp -f sources/LICENSE $(IMAGE_NAME)/LICENSE
 
 	# Community and OpenShift Operators
-	cd $(IMAGE_NAME); docker buildx build --progress=plain --no-cache \
+	cd $(IMAGE_NAME); docker-buildx build --progress=plain --no-cache \
 	--provenance=false --push --platform=$(PLATFORMS) --tag ${IMG} -f Dockerfile .
 
 	# Sample CSI driver instance
