@@ -4,7 +4,7 @@ SOURCE_VERSION ?= $(VERSION)
 REPO_NAME ?= quay.io/myrepo
 
 # Don't set these, preferably
-OPERATOR_SDK ?= operator-sdk
+OPERATOR_SDK ?= operator-sdk-ocp
 RH_REPO_NAME=registry.connect.redhat.com/hpestorage
 CERTIFIED_OUTPUT=destinations/certified-operators/current-version
 NAMESPACE ?= hpe-storage
