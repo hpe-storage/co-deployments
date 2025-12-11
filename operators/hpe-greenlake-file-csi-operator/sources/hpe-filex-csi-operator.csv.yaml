@@ -26,10 +26,10 @@ metadata:
     repository: "https://github.com/hpe-storage/co-deployments"
     containerImage: %IMG%
     # Update >>>
-    operatorhub.io/ui-metadata-max-k8s-version: "1.32"
+    operatorhub.io/ui-metadata-max-k8s-version: "1.34"
 spec:
   minKubeVersion: 1.25.0
-  replaces: hpe-filex-csi-operator.v0.0.0
+  replaces: hpe-filex-csi-operator.v1.0.0-beta3
   # <<< for each new release
   apiservicedefinitions: {}
   install:
