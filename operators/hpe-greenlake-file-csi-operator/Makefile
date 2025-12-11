@@ -1,7 +1,7 @@
 # Set these
-VERSION ?= 0.0.0
+VERSION ?= 2.6.4
 SOURCE_VERSION ?= $(VERSION)
-REPO_NAME ?= quay.io/myrepo
+REPO_NAME ?= quay.io/hpestorage
 
 # Don't set these, preferably
 OPERATOR_SDK ?= operator-sdk-ocp
@@ -56,7 +56,7 @@ prep: init
 	# Fix memory on the manager.
 	sed -i.remove -e "s/memory: 128Mi/memory: 1Gi/g" $(IMAGE_NAME)/config/manager/manager.yaml && \
 		rm -f $(IMAGE_NAME)/config/manager/manager.yaml.remove
-	
+
 	# Dockerfile for operator
 	sed -e "s|%FROM%|$(shell grep ^FROM $(IMAGE_NAME)/Dockerfile)|" sources/operator.Dockerfile > $(IMAGE_NAME)/Dockerfile
 	sed -i.remove -e "s/%SEMVER%/$(VERSION)/g" $(IMAGE_NAME)/Dockerfile && \
@@ -64,7 +64,7 @@ prep: init
 	cp -f sources/LICENSE $(IMAGE_NAME)/LICENSE
 
 	# Community and OpenShift Operators
-	cd $(IMAGE_NAME); docker-buildx build --progress=plain --no-cache \
+	cd $(IMAGE_NAME); docker buildx build --progress=plain --no-cache \
 	--provenance=false --push --platform=$(PLATFORMS) --tag ${IMG} -f Dockerfile .
 
 	# Sample CSI driver instance
