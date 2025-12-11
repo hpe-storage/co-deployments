@@ -1760,7 +1760,7 @@ entries:
           url: https://scod.hpedev.io/filex_csi_driver
         - name: Chart Source
           url: https://github.com/hpe-storage/co-deployments
-      artifacthub.io/prerelease: "true"
+      artifacthub.io/prerelease: "false"
       artifacthub.io/recommendations: |
         - url: https://artifacthub.io/packages/helm/hpe-storage/hpe-csi-driver
     apiVersion: v1
