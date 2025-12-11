@@ -112,24 +112,32 @@ For testing and experimentation only, the `operator-sdk` binary is required besi
 
 In a typical test scenario, these are the steps for each of the supported platforms on a blank cluster.
 
-Vanilla Kubernetes:
+Common for Kubernetes and OpenShift:
 
 ```
 export VERSION=2.5.1
+export REPO=quay.io/hpestorage
+export BRANCH=master
+```
+
+**Note:** For testing unreleased bundles sitting in a developers private registry, replace REPO with the private registry, i.e. `quay.io/datamattsson`. To pull the `HPECSIDriver` sample file from an unmerged PR, replace BRANCH with `refs/heads/<branch name>`
+
+Vanilla Kubernetes:
+
+```
 operator-sdk olm install
 kubectl create ns hpe-storage
-operator-sdk run bundle -n hpe-storage quay.io/hpestorage/csi-driver-operator-bundle:v${VERSION}
-kubectl apply -n hpe-storage -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/operators/hpe-csi-operator/destinations/hpecsidriver-v${VERSION}-sample.yaml
+operator-sdk run bundle -n hpe-storage ${REPO}/csi-driver-operator-bundle:v${VERSION}
+kubectl apply -n hpe-storage -f https://raw.githubusercontent.com/hpe-storage/co-deployments/${BRANCH}/operators/hpe-csi-operator/destinations/hpecsidriver-v${VERSION}-sample.yaml
 ```
 
 OpenShift:
 
 ```
-export VERSION=2.5.1
 oc create ns hpe-storage
-oc apply -f https://scod.hpedev.io/partners/redhat_openshift/examples/scc/hpe-csi-scc.yaml
-operator-sdk run bundle --security-context-config=restricted -n hpe-storage quay.io/hpestorage/csi-driver-operator-bundle-ocp:v${VERSION}
-oc apply -n hpe-storage -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/operators/hpe-csi-operator/destinations/hpecsidriver-v${VERSION}-sample.yaml
+oc apply -f https://scod.hpedev.io/csi_driver/partners/redhat_openshift/examples/scc/hpe-csi-scc.yaml
+operator-sdk run bundle --security-context-config=restricted -n hpe-storage ${REPO}/csi-driver-operator-bundle-ocp:v${VERSION}
+oc apply -n hpe-storage -f https://raw.githubusercontent.com/hpe-storage/co-deployments/${BRANCH}/operators/hpe-csi-operator/destinations/hpecsidriver-v${VERSION}-sample.yaml
 ```
 
 To cleanup or re-deploy (both Kubernetes and OpenShift):
