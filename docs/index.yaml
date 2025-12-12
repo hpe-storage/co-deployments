@@ -1760,6 +1760,41 @@ entries:
           url: https://scod.hpedev.io/filex_csi_driver
         - name: Chart Source
           url: https://github.com/hpe-storage/co-deployments
+      artifacthub.io/prerelease: "false"
+      artifacthub.io/recommendations: |
+        - url: https://artifacthub.io/packages/helm/hpe-storage/hpe-csi-driver
+    apiVersion: v1
+    appVersion: 2.6.4
+    created: "2025-12-12T22:35:07.029876222+05:30"
+    description: A Helm chart for installing the HPE GreenLake for File Storage CSI
+      Driver
+    digest: 6e39c3f234449b768aa38f21fb93cec71049873fd2f86f7a66c5b12205a2f71e
+    home: https://hpe.com/storage/containers
+    icon: https://raw.githubusercontent.com/hpe-storage/co-deployments/master/docs/assets/hpedev.png
+    keywords:
+    - HPE
+    - Storage
+    - CSI
+    maintainers:
+    - email: dev-hi-containers@hpe.com
+      name: datamattsson
+    name: hpe-greenlake-file-csi-driver
+    sources:
+    - https://github.com/hpe-storage/co-deployments
+    urls:
+    - hpe-greenlake-file-csi-driver-2.6.4.tgz
+    version: 2.6.4
+  - annotations:
+      artifacthub.io/category: storage
+      artifacthub.io/containsSecurityUpdates: "false"
+      artifacthub.io/license: Apache-2.0
+      artifacthub.io/links: |
+        - name: Release Highlights
+          url: https://scod.hpedev.io/filex_csi_driver/index.html#latest_release
+        - name: Documentation
+          url: https://scod.hpedev.io/filex_csi_driver
+        - name: Chart Source
+          url: https://github.com/hpe-storage/co-deployments
       artifacthub.io/prerelease: "true"
       artifacthub.io/recommendations: |
         - url: https://artifacthub.io/packages/helm/hpe-storage/hpe-csi-driver
@@ -1854,4 +1889,4 @@ entries:
     urls:
     - hpe-greenlake-file-csi-driver-1.0.0-beta.tgz
     version: 1.0.0-beta
-generated: "2025-11-28T06:57:07.647312211Z"
+generated: "2025-12-12T22:35:07.028848244+05:30"

@@ -1,0 +1,181 @@
+---
+# Source: hpe-greenlake-file-csi-driver/templates/hpe-filex-csi-node.yaml
+#######################################
+############  Node driver  ############
+#######################################
+
+kind: DaemonSet
+apiVersion: apps/v1
+metadata:
+  name: hpe-filex-csi-node
+  namespace: hpe-storage
+spec:
+  selector:
+    matchLabels:
+      app: hpe-filex-csi-node
+  template:
+    metadata:
+      labels:
+        app: hpe-filex-csi-node
+        role: hpe-filex-csi
+    spec:
+      serviceAccountName: hpe-filex-csi-node-sa
+      priorityClassName: system-node-critical
+      hostNetwork: true
+      dnsPolicy: ClusterFirstWithHostNet
+      dnsConfig:
+        options:
+          - name: ndots
+            value: "1"
+      initContainers:
+        - name: hpe-filex-csi-node-init
+          image: "quay.io/hpestorage/filex-csi-init:2.6.4"
+          resources:
+            limits:
+              cpu: 2000m
+              memory: 1Gi
+            requests:
+              cpu: 100m
+              memory: 128Mi
+          volumeMounts:
+            - name: root-dir
+              mountPath: /host
+              mountPropagation: "Bidirectional"
+            - name: etc-hpe-storage-dir
+              mountPath: /etc/hpe-storage
+            - name: runsystemd
+              mountPath: /run/systemd
+            - name: etcsystemd
+              mountPath: /etc/systemd/system
+          env:
+            
+          imagePullPolicy: "IfNotPresent"
+          securityContext:
+            privileged: true
+            capabilities:
+              add: ["SYS_ADMIN"]
+            allowPrivilegeEscalation: true
+      containers:
+        - name: csi-node-driver-registrar
+          image: "registry.k8s.io/sig-storage/csi-node-driver-registrar:v2.15.0"
+          resources:
+            limits:
+              cpu: 2000m
+              memory: 1Gi
+            requests:
+              cpu: 100m
+              memory: 128Mi
+          args:
+            - "--csi-address=$(ADDRESS)"
+            - "--kubelet-registration-path=$(DRIVER_REG_SOCK_PATH)"
+            - "--v=5"
+          env:
+            - name: ADDRESS
+              value: /csi/csi.sock
+            - name: DRIVER_REG_SOCK_PATH
+              value: /var/lib/kubelet/plugins/filex.csi.hpe.com/csi.sock
+            - name: KUBE_NODE_NAME
+              valueFrom:
+                fieldRef:
+                  apiVersion: v1
+                  fieldPath: spec.nodeName
+          imagePullPolicy: "IfNotPresent"
+          volumeMounts:
+            - name: plugin-dir
+              mountPath: /csi
+            - name: registration-dir
+              mountPath: /registration
+        - name: hpe-filex-csi-node-driver
+          image: "quay.io/hpestorage/filex-csi-driver:2.6.4"
+          resources:
+            limits:
+              cpu: 2000m
+              memory: 1Gi
+            requests:
+              cpu: 100m
+              memory: 128Mi
+          args :
+          - serve
+          env:
+          - name: X_CSI_PLUGIN_NAME
+            value: filex.csi.hpe.com
+          - name: X_CSI_VMS_HOST
+          - name: X_CSI_ENABLE_VMS_SSL_VERIFICATION
+            value: "false"
+          - name: X_CSI_DELETION_VIP_POOL_NAME
+          - name: X_CSI_DELETION_VIEW_POLICY
+          - name: X_CSI_WORKER_THREADS
+            value: "10"
+          - name: X_CSI_DONT_USE_TRASH_API
+            value: "false"
+          - name: X_CSI_USE_LOCALIP_FOR_MOUNT
+          - name: X_CSI_ATTACH_REQUIRED
+            value: "true"
+          - name: X_CSI_VMS_TIMEOUT
+            value: "15"
+          - name: X_CSI_TRUNCATE_VOLUME_NAME
+            value: "64"
+          - name: CSI_ENDPOINT
+            value: unix:///csi/csi.sock
+          - name: X_CSI_MODE
+            value: node
+          - name: X_CSI_NODE_ID
+            valueFrom:
+              fieldRef:
+                apiVersion: v1
+                fieldPath: spec.nodeName
+          imagePullPolicy: "IfNotPresent"
+          securityContext:
+            privileged: true
+            capabilities:
+              add: ["SYS_ADMIN"]
+            allowPrivilegeEscalation: true
+          volumeMounts:
+          - name: pods-mount-dir
+            mountPath:  /var/lib/kubelet
+            mountPropagation: Bidirectional
+          - name: plugin-dir
+            mountPath: /csi
+          - name: device-dir
+            mountPath: /dev
+          - name: host-nfsmount-conf-d
+            mountPath: /etc/nfsmount.conf.d
+      volumes:
+      # gl4f
+      - hostPath:
+        
+          path: /var/lib/kubelet/plugins_registry/
+          type: DirectoryOrCreate
+        name: registration-dir
+      - hostPath:
+        
+          path: /var/lib/kubelet/plugins/filex.csi.hpe.com
+          type: DirectoryOrCreate
+        name: plugin-dir
+      - hostPath:
+        
+          path: /var/lib/kubelet
+          type: Directory
+        name: pods-mount-dir
+      - hostPath:
+          path: /dev
+          type: ""
+        name: device-dir
+      - hostPath:
+          path: /etc/nfsmount.conf.d
+          type: DirectoryOrCreate
+        name: host-nfsmount-conf-d
+
+      # init
+      - name: root-dir
+        hostPath:
+          path: /
+      - name: runsystemd
+        hostPath:
+          path: /run/systemd
+      - name: etcsystemd
+        hostPath:
+          path: /etc/systemd/system
+      - name: etc-hpe-storage-dir
+        hostPath:
+          path: /etc/hpe-storage

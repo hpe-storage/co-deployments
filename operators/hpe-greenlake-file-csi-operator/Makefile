@@ -56,7 +56,7 @@ prep: init
 	# Fix memory on the manager.
 	sed -i.remove -e "s/memory: 128Mi/memory: 1Gi/g" $(IMAGE_NAME)/config/manager/manager.yaml && \
 		rm -f $(IMAGE_NAME)/config/manager/manager.yaml.remove
-	
+
 	# Dockerfile for operator
 	sed -e "s|%FROM%|$(shell grep ^FROM $(IMAGE_NAME)/Dockerfile)|" sources/operator.Dockerfile > $(IMAGE_NAME)/Dockerfile
 	sed -i.remove -e "s/%SEMVER%/$(VERSION)/g" $(IMAGE_NAME)/Dockerfile && \

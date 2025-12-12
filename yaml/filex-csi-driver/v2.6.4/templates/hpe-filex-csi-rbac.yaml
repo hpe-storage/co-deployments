@@ -1,0 +1,292 @@
+---
+# Source: hpe-greenlake-file-csi-driver/templates/hpe-filex-csi-rbac.yaml
+kind: ServiceAccount
+apiVersion: v1
+metadata:
+  name: hpe-filex-csi-controller-sa
+  namespace: hpe-storage
+---
+# Source: hpe-greenlake-file-csi-driver/templates/hpe-filex-csi-rbac.yaml
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: hpe-filex-csi-node-sa
+  namespace: hpe-storage
+---
+# Source: hpe-greenlake-file-csi-driver/templates/hpe-filex-csi-rbac.yaml
+kind: ClusterRole
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: hpe-filex-csi-provisioner-role
+rules:
+  - apiGroups: [""]
+    resources: ["secrets"]
+    verbs: ["get", "list"]
+  - apiGroups: [""]
+    resources: ["namespaces"]
+    verbs: ["get", "list", "create"]
+  - apiGroups: [""]
+    resources: ["nodes"]
+    verbs: ["get", "list"]
+  - apiGroups: [""]
+    resources: ["serviceaccounts"]
+    verbs: ["get", "list", "create"]
+  - apiGroups: [""]
+    resources: ["configmaps"]
+    verbs: ["get", "create"]
+  - apiGroups: [""]
+    resources: ["persistentvolumes"]
+    verbs: ["get", "list", "watch", "create", "delete", "update"]
+  - apiGroups: [""]
+    resources: ["persistentvolumeclaims"]
+    verbs: ["create", "get", "list", "watch", "update", "delete"]
+  - apiGroups: [""]
+    resources: ["services"]
+    verbs: ["create", "get", "list", "watch", "update", "delete"]
+  - apiGroups: ["apps"]
+    resources: ["deployments"]
+    verbs: ["create", "get", "list", "watch", "update", "delete"]
+  - apiGroups: ["storage.k8s.io"]
+    resources: ["storageclasses"]
+    verbs: ["get", "list", "watch"]
+  - apiGroups: [""]
+    resources: ["events"]
+    verbs: ["list", "watch", "create", "update", "patch"]
+  - apiGroups: ["snapshot.storage.k8s.io"]
+    resources: ["volumesnapshots"]
+    verbs: ["get", "list"]
+  - apiGroups: ["snapshot.storage.k8s.io"]
+    resources: ["volumesnapshotcontents"]
+    verbs: ["get", "list"]
+  - apiGroups: [""]
+    resources: ["pods"]
+    verbs: ["get", "list", "delete"]
+  - apiGroups: ["storage.k8s.io"]
+    resources: ["volumeattachments"]
+    verbs: ["get", "list", "watch", "update", "patch", "delete"]
+---
+# Source: hpe-greenlake-file-csi-driver/templates/hpe-filex-csi-rbac.yaml
+kind: ClusterRole
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: hpe-filex-csi-attacher-role
+rules:
+  - apiGroups: [""]
+    resources: ["persistentvolumes"]
+    verbs: ["get", "list", "watch", "update", "patch"]
+  - apiGroups: [""]
+    resources: ["nodes"]
+    verbs: ["get", "list", "watch"]
+  - apiGroups: ["storage.k8s.io"]
+    resources: ["volumeattachments"]
+    verbs: ["get", "list", "watch", "update", "patch"]
+  - apiGroups: ["storage.k8s.io"]
+    resources: ["volumeattachments/status"]
+    verbs: ["get", "list", "watch", "update", "create", "delete", "patch"]
+  - apiGroups: [""]
+    resources: ["secrets"]
+    verbs: ["get", "watch", "list"]
+  - apiGroups: ["storage.k8s.io"]
+    resources: ["csinodes"]
+    verbs: ["get", "list", "watch"]
+---
+# Source: hpe-greenlake-file-csi-driver/templates/hpe-filex-csi-rbac.yaml
+kind: ClusterRole
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: hpe-filex-csi-snapshotter-role
+rules:
+  - apiGroups: [""]
+    resources: ["secrets"]
+    verbs: ["get", "list"]
+  - apiGroups: [""]
+    resources: ["persistentvolumes"]
+    verbs: ["get", "list", "watch", "create", "delete"]
+  - apiGroups: [""]
+    resources: ["persistentvolumeclaims"]
+    verbs: ["get", "list", "watch", "update"]
+  - apiGroups: ["storage.k8s.io"]
+    resources: ["storageclasses"]
+    verbs: ["get", "list", "watch"]
+  - apiGroups: [""]
+    resources: ["events"]
+    verbs: ["list", "watch", "create", "update", "patch"]
+  - apiGroups: ["snapshot.storage.k8s.io"]
+    resources: ["volumesnapshots"]
+    verbs: ["create", "update", "delete", "get", "list", "watch"]
+  - apiGroups: ["snapshot.storage.k8s.io"]
+    resources: ["volumesnapshots/status"]
+    verbs: ["update"]
+  - apiGroups: ["snapshot.storage.k8s.io"]
+    resources: ["volumesnapshotcontents"]
+    verbs: ["create", "update", "delete", "get", "list", "watch", "patch"]
+  - apiGroups: ["snapshot.storage.k8s.io"]
+    resources: ["volumesnapshotcontents/status"]
+    verbs: ["create", "get", "list", "watch", "update", "delete", "patch"]
+  - apiGroups: ["snapshot.storage.k8s.io"]
+    resources: ["volumesnapshotclasses"]
+    verbs: ["get", "list", "watch"]
+  - apiGroups: ["apiextensions.k8s.io"]
+    resources: ["customresourcedefinitions"]
+    verbs: ["get", "list", "watch", "create", "delete", "update"]
+---
+# Source: hpe-greenlake-file-csi-driver/templates/hpe-filex-csi-rbac.yaml
+# Resizer must be able to work with PVCs, PVs, SCs.
+kind: ClusterRole
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: hpe-filex-csi-resizer-role
+rules:
+  - apiGroups: [""]
+    resources: ["secrets"]
+    verbs: ["get", "list", "watch"]
+  - apiGroups: [""]
+    resources: ["persistentvolumes"]
+    verbs: ["get", "list", "watch", "update", "patch"]
+  - apiGroups: [""]
+    resources: ["persistentvolumeclaims"]
+    verbs: ["get", "list", "watch"]
+  - apiGroups: [""]
+    resources: ["persistentvolumeclaims/status"]
+    verbs: ["update", "patch"]
+  - apiGroups: ["storage.k8s.io"]
+    resources: ["storageclasses"]
+    verbs: ["get", "list", "watch"]
+  - apiGroups: [""]
+    resources: ["events"]
+    verbs: ["list", "watch", "create", "update", "patch"]
+---
+# Source: hpe-greenlake-file-csi-driver/templates/hpe-filex-csi-rbac.yaml
+kind: ClusterRole
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: hpe-filex-csi-driver-role
+rules:
+  - apiGroups: [""]
+    resources: ["pods"]
+    verbs: ["get", "list"]
+  - apiGroups: [""]
+    resources: ["secrets"]
+    verbs: ["get", "list"]
+  - apiGroups: [""]
+    resources: ["services"]
+    verbs: ["get"]
+  - apiGroups: [""]
+    resources: ["persistentvolumes"]
+    verbs: ["get", "list"]
+  - apiGroups: [""]
+    resources: ["nodes"]
+    verbs: ["get", "list"]
+  - apiGroups: [""]
+    resources: ["persistentvolumeclaims"]
+    verbs: ["get", "list"]
+  - apiGroups: [""]
+    resources: ["namespaces"]
+    verbs: ["get", "list"]
+  - apiGroups: ["storage.k8s.io"]
+    resources: ["storageclasses"]
+    verbs: ["get", "list", "watch"]
+  - apiGroups: ["storage.k8s.io"]
+    resources: ["volumeattachments"]
+    verbs: ["get", "list", "watch"]
+---
+# Source: hpe-greenlake-file-csi-driver/templates/hpe-filex-csi-rbac.yaml
+kind: ClusterRoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: hpe-filex-csi-provisioner-binding
+subjects:
+  - kind: ServiceAccount
+    name: hpe-filex-csi-controller-sa
+    namespace: hpe-storage
+roleRef:
+  kind: ClusterRole
+  name: hpe-filex-csi-provisioner-role
+  apiGroup: rbac.authorization.k8s.io
+---
+# Source: hpe-greenlake-file-csi-driver/templates/hpe-filex-csi-rbac.yaml
+kind: ClusterRoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: hpe-filex-csi-attacher-binding
+subjects:
+  - kind: ServiceAccount
+    name: hpe-filex-csi-controller-sa
+    namespace: hpe-storage
+roleRef:
+  kind: ClusterRole
+  name: hpe-filex-csi-attacher-role
+  apiGroup: rbac.authorization.k8s.io
+---
+# Source: hpe-greenlake-file-csi-driver/templates/hpe-filex-csi-rbac.yaml
+kind: ClusterRoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: hpe-filex-csi-snapshotter-binding
+subjects:
+  - kind: ServiceAccount
+    name: hpe-filex-csi-controller-sa
+    namespace: hpe-storage
+roleRef:
+  kind: ClusterRole
+  name: hpe-filex-csi-snapshotter-role
+  apiGroup: rbac.authorization.k8s.io
+---
+# Source: hpe-greenlake-file-csi-driver/templates/hpe-filex-csi-rbac.yaml
+kind: ClusterRoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: hpe-filex-csi-resizer-role
+subjects:
+  - kind: ServiceAccount
+    name: hpe-filex-csi-controller-sa
+    namespace: hpe-storage
+roleRef:
+  kind: ClusterRole
+  name: hpe-filex-csi-resizer-role
+  apiGroup: rbac.authorization.k8s.io
+---
+# Source: hpe-greenlake-file-csi-driver/templates/hpe-filex-csi-rbac.yaml
+kind: ClusterRoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: hpe-filex-csi-driver-binding
+subjects:
+  - kind: ServiceAccount
+    name: hpe-filex-csi-controller-sa
+    namespace: hpe-storage
+  - kind: ServiceAccount
+    name: hpe-filex-csi-node-sa
+    namespace: hpe-storage
+roleRef:
+  kind: ClusterRole
+  name: hpe-filex-csi-driver-role
+  apiGroup: rbac.authorization.k8s.io
+---
+# Source: hpe-greenlake-file-csi-driver/templates/hpe-filex-csi-rbac.yaml
+# Resizer must be able to work with end point in current namespace
+# if (and only if) leadership election is enabled
+kind: Role
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  namespace: hpe-storage
+  name: hpe-filex-csi-resizer-role
+rules:
+  - apiGroups: ["coordination.k8s.io"]
+    resources: ["leases"]
+    verbs: ["get", "watch", "list", "delete", "update", "create"]
+---
+# Source: hpe-greenlake-file-csi-driver/templates/hpe-filex-csi-rbac.yaml
+kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: hpe-filex-csi-resizer-role-cfg
+  namespace: hpe-storage
+subjects:
+  - kind: ServiceAccount
+    name: hpe-filex-csi-controller-sa
+    namespace: hpe-storage
+roleRef:
+  kind: Role
+  name: hpe-filex-csi-resizer-role
+  apiGroup: rbac.authorization.k8s.io
