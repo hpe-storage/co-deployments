@@ -31,10 +31,10 @@ metadata:
             "imagePullPolicy": "IfNotPresent",
             "images": {
               "csiAttacher": "registry.k8s.io/sig-storage/csi-attacher@sha256:a399393ff5bd156277c56bae0c08389b1a1b95b7fd6ea44a316ce55e0dd559d7",
-              "csiControllerDriver": "quay.io/hpestorage/filex-csi-driver@sha256:0a80e46df05b9f2f658bcbcdce88fd1d1c570f7272e14aac507cfe72c0b089d1",
-              "csiNodeDriver": "quay.io/hpestorage/filex-csi-driver@sha256:0a80e46df05b9f2f658bcbcdce88fd1d1c570f7272e14aac507cfe72c0b089d1",
+              "csiControllerDriver": "quay.io/hpestorage/filex-csi-driver@sha256:b7f960bbf47277f6469889aba79d4c9866712130e28f32fc48f2ef3a5ca99ef7",
+              "csiNodeDriver": "quay.io/hpestorage/filex-csi-driver@sha256:b7f960bbf47277f6469889aba79d4c9866712130e28f32fc48f2ef3a5ca99ef7",
               "csiNodeDriverRegistrar": "registry.k8s.io/sig-storage/csi-node-driver-registrar@sha256:11f199f6bec47403b03cb49c79a41f445884b213b382582a60710b8c6fdc316a",
-              "csiNodeInit": "quay.io/hpestorage/filex-csi-init@sha256:30833a46e5e8d977727226d8e865bad577821a4a22ec58f76e15a42424b4c252",
+              "csiNodeInit": "quay.io/hpestorage/filex-csi-init@sha256:2d867eefb2331490c30b8ff4d9ebe50090ec94f72d9431b0738e7dfba838fbbe",
               "csiProvisioner": "registry.k8s.io/sig-storage/csi-provisioner@sha256:e5900dc98b0d02f317ea9572f3824983c47a2fb5d5fe2b160aedf1b99c14c9e4",
               "csiResizer": "registry.k8s.io/sig-storage/csi-resizer@sha256:ab774734705a906561e15b67f6a96538f3ad520335d636f793aaafe87a3b5200",
               "csiSnapshotter": "registry.k8s.io/sig-storage/csi-snapshotter@sha256:c7e0a3718832b6197ce8b29fefb3fed3d84f4fbcdf08f4606140dbec2566501d"
@@ -62,8 +62,8 @@ metadata:
     capabilities: Basic Install
     categories: Storage
     certified: "true"
-    containerImage: registry.connect.redhat.com/hpestorage/filex-csi-driver-operator@sha256:c1752787d588e6b807d0f0d53c35f06d241143cd192d97cda338b1053170b45f
-    createdAt: "2025-12-11T20:40:47Z"
+    containerImage: registry.connect.redhat.com/hpestorage/filex-csi-driver-operator@sha256:2ba9420fd92745be4cb88bab9b55cb75c00775e822a30a2a023efa38f492ae57
+    createdAt: "2025-12-12T17:08:44Z"
     description: A Container Storage Interface (CSI) driver for HPE GreenLake File Storage.
     features.operators.openshift.io/cnf: "false"
     features.operators.openshift.io/cni: "false"
@@ -77,7 +77,7 @@ metadata:
     features.operators.openshift.io/token-auth-gcp: "false"
     olm.skipRange: '>=1.0.0 <2.6.4'
     operatorframework.io/suggested-namespace: hpe-storage
-    operatorhub.io/ui-metadata-max-k8s-version: "1.32"
+    operatorhub.io/ui-metadata-max-k8s-version: "1.34"
     operators.operatorframework.io/builder: operator-sdk-v1.38.0-ocp
     operators.operatorframework.io/project_layout: helm.sdk.operatorframework.io/v1
     repository: https://github.com/hpe-storage/co-deployments
@@ -603,7 +603,7 @@ spec:
                       - --leader-elect
                       - --leader-election-id=hpe-filex-csi-operator
                       - --health-probe-bind-address=:8081
-                    image: registry.connect.redhat.com/hpestorage/filex-csi-driver-operator@sha256:c1752787d588e6b807d0f0d53c35f06d241143cd192d97cda338b1053170b45f
+                    image: registry.connect.redhat.com/hpestorage/filex-csi-driver-operator@sha256:2ba9420fd92745be4cb88bab9b55cb75c00775e822a30a2a023efa38f492ae57
                     livenessProbe:
                       httpGet:
                         path: /healthz
@@ -693,23 +693,23 @@ spec:
   provider:
     name: HPE
   relatedImages:
-    - image: registry.connect.redhat.com/hpestorage/filex-csi-driver-operator@sha256:c1752787d588e6b807d0f0d53c35f06d241143cd192d97cda338b1053170b45f
-      name: filex-csi-driver-operator-c1752787d588e6b807d0f0d53c35f06d241143cd192d97cda338b1053170b45f-annotation
+    - image: registry.k8s.io/sig-storage/csi-snapshotter@sha256:c7e0a3718832b6197ce8b29fefb3fed3d84f4fbcdf08f4606140dbec2566501d
+      name: csi-snapshotter-c7e0a3718832b6197ce8b29fefb3fed3d84f4fbcdf08f4606140dbec2566501d-annotation
+    - image: quay.io/hpestorage/filex-csi-init@sha256:2d867eefb2331490c30b8ff4d9ebe50090ec94f72d9431b0738e7dfba838fbbe
+      name: filex-csi-init-2d867eefb2331490c30b8ff4d9ebe50090ec94f72d9431b0738e7dfba838fbbe-annotation
+    - image: quay.io/hpestorage/filex-csi-driver@sha256:b7f960bbf47277f6469889aba79d4c9866712130e28f32fc48f2ef3a5ca99ef7
+      name: filex-csi-driver-b7f960bbf47277f6469889aba79d4c9866712130e28f32fc48f2ef3a5ca99ef7-annotation
+    - image: registry.k8s.io/sig-storage/csi-attacher@sha256:a399393ff5bd156277c56bae0c08389b1a1b95b7fd6ea44a316ce55e0dd559d7
+      name: csi-attacher-a399393ff5bd156277c56bae0c08389b1a1b95b7fd6ea44a316ce55e0dd559d7-annotation
+    - image: registry.connect.redhat.com/hpestorage/filex-csi-driver-operator@sha256:2ba9420fd92745be4cb88bab9b55cb75c00775e822a30a2a023efa38f492ae57
+      name: manager
     - image: registry.k8s.io/sig-storage/csi-resizer@sha256:ab774734705a906561e15b67f6a96538f3ad520335d636f793aaafe87a3b5200
       name: csi-resizer-ab774734705a906561e15b67f6a96538f3ad520335d636f793aaafe87a3b5200-annotation
     - image: registry.k8s.io/sig-storage/csi-provisioner@sha256:e5900dc98b0d02f317ea9572f3824983c47a2fb5d5fe2b160aedf1b99c14c9e4
       name: csi-provisioner-e5900dc98b0d02f317ea9572f3824983c47a2fb5d5fe2b160aedf1b99c14c9e4-annotation
-    - image: quay.io/hpestorage/filex-csi-init@sha256:30833a46e5e8d977727226d8e865bad577821a4a22ec58f76e15a42424b4c252
-      name: filex-csi-init-30833a46e5e8d977727226d8e865bad577821a4a22ec58f76e15a42424b4c252-annotation
     - image: registry.k8s.io/sig-storage/csi-node-driver-registrar@sha256:11f199f6bec47403b03cb49c79a41f445884b213b382582a60710b8c6fdc316a
       name: csi-node-driver-registrar-11f199f6bec47403b03cb49c79a41f445884b213b382582a60710b8c6fdc316a-annotation
-    - image: quay.io/hpestorage/filex-csi-driver@sha256:0a80e46df05b9f2f658bcbcdce88fd1d1c570f7272e14aac507cfe72c0b089d1
-      name: filex-csi-driver-0a80e46df05b9f2f658bcbcdce88fd1d1c570f7272e14aac507cfe72c0b089d1-annotation
-    - image: registry.k8s.io/sig-storage/csi-attacher@sha256:a399393ff5bd156277c56bae0c08389b1a1b95b7fd6ea44a316ce55e0dd559d7
-      name: csi-attacher-a399393ff5bd156277c56bae0c08389b1a1b95b7fd6ea44a316ce55e0dd559d7-annotation
-    - image: registry.connect.redhat.com/hpestorage/filex-csi-driver-operator@sha256:c1752787d588e6b807d0f0d53c35f06d241143cd192d97cda338b1053170b45f
-      name: manager
-    - image: registry.k8s.io/sig-storage/csi-snapshotter@sha256:c7e0a3718832b6197ce8b29fefb3fed3d84f4fbcdf08f4606140dbec2566501d
-      name: csi-snapshotter-c7e0a3718832b6197ce8b29fefb3fed3d84f4fbcdf08f4606140dbec2566501d-annotation
+    - image: registry.connect.redhat.com/hpestorage/filex-csi-driver-operator@sha256:2ba9420fd92745be4cb88bab9b55cb75c00775e822a30a2a023efa38f492ae57
+      name: filex-csi-driver-operator-2ba9420fd92745be4cb88bab9b55cb75c00775e822a30a2a023efa38f492ae57-annotation
   selector: {}
   version: 2.6.4
