@@ -1765,10 +1765,10 @@ entries:
         - url: https://artifacthub.io/packages/helm/hpe-storage/hpe-csi-driver
     apiVersion: v1
     appVersion: 2.6.4
-    created: "2025-12-12T11:14:34.624685822+05:30"
+    created: "2025-12-12T16:19:26.558210659+05:30"
     description: A Helm chart for installing the HPE GreenLake for File Storage CSI
       Driver
-    digest: 38292c19d71ca60c5bee887f8cdc7b7b8858d86dc7e967dcc6c1bbcd2caf4b5f
+    digest: 873a32bc287a0c7706e5943eab37f971d0abd97b0794f242f6130ca6f86c5aed
     home: https://hpe.com/storage/containers
     icon: https://raw.githubusercontent.com/hpe-storage/co-deployments/master/docs/assets/hpedev.png
     keywords:
@@ -1889,4 +1889,4 @@ entries:
     urls:
     - hpe-greenlake-file-csi-driver-1.0.0-beta.tgz
     version: 1.0.0-beta
-generated: "2025-12-12T11:14:34.623347998+05:30"
+generated: "2025-12-12T16:19:26.557272762+05:30"
