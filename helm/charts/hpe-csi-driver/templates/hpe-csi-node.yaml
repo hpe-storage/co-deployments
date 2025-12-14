@@ -58,7 +58,11 @@ spec:
             - name: plugin-dir
               mountPath: /csi
             - name: pods-mount-dir
+              {{ if .Values.kubeletRootDir }}
+              mountPath: {{ .Values.kubeletRootDir }}
+              {{- else }}
               mountPath: /var/lib/kubelet
+              {{- end }}
             - name: log-dir
               mountPath: /var/log
           env:
