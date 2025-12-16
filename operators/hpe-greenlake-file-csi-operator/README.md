@@ -101,5 +101,5 @@ oc apply -n hpe-storage -f https://raw.githubusercontent.com/hpe-storage/co-depl
 To cleanup or allow re-deploy:
 
 ```
-operator-sdk cleanup hpe-greenlake-file-csi-operator -n hpe-storage
+operator-sdk cleanup hpe-filex-csi-operator -n hpe-storage
 ```
