@@ -3,7 +3,7 @@ VERSION ?= 0.0.0
 SOURCE_VERSION ?= $(VERSION)
 REPO_NAME ?= quay.io/myrepo
 # Do not use < 1.38.0
-OPERATOR_SDK_TAG = v1.39.1
+OPERATOR_SDK_TAG = v1.38.0-ocp
 OPERATOR_SDK = 'operator-sdk version: "$(OPERATOR_SDK_TAG)"'
 
 # Don't set these, preferably
