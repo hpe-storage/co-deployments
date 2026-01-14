@@ -278,6 +278,120 @@ entries:
         - url: https://artifacthub.io/packages/helm/hpe-storage/hpe-csi-info-metrics
         - url: https://artifacthub.io/packages/helm/hpe-storage/hpe-array-exporter
     apiVersion: v1
+    appVersion: 3.1.0-beta
+    created: "2026-02-01T13:18:50.458832+05:30"
+    description: A Helm chart for installing the HPE CSI Driver for Kubernetes
+    digest: 7a063cb354e7ef778a38434e7aa40e18665d59219d7439410680e5a41ed7eab0
+    home: https://hpe.com/storage/containers
+    icon: https://raw.githubusercontent.com/hpe-storage/co-deployments/master/docs/assets/hpedev.png
+    keywords:
+    - HPE
+    - Storage
+    - CSI
+    maintainers:
+    - email: dev-hi-containers@hpe.com
+      name: datamattsson
+    name: hpe-csi-driver
+    sources:
+    - https://github.com/hpe-storage/csi-driver
+    urls:
+    - hpe-csi-driver-3.1.0-beta.tgz
+    version: 3.1.0-beta
+  - annotations:
+      artifacthub.io/category: storage
+      artifacthub.io/containsSecurityUpdates: "false"
+      artifacthub.io/license: Apache-2.0
+      artifacthub.io/links: |
+        - name: Release Highlights
+          url: https://scod.hpedev.io/csi_driver/index.html#latest_release
+        - name: Release Notes
+          url: https://github.com/hpe-storage/csi-driver/tree/master/release-notes
+        - name: Documentation
+          url: https://scod.hpedev.io/csi_driver
+        - name: Chart Source
+          url: https://github.com/hpe-storage/co-deployments
+      artifacthub.io/prerelease: "false"
+      artifacthub.io/recommendations: |
+        - url: https://artifacthub.io/packages/olm/community-operators/hpe-csi-operator
+        - url: https://artifacthub.io/packages/helm/hpe-storage/hpe-csi-info-metrics
+        - url: https://artifacthub.io/packages/helm/hpe-storage/hpe-array-exporter
+    apiVersion: v1
+    appVersion: 3.1.0-19012026
+    created: "2026-01-19T11:44:28.161929+05:30"
+    description: A Helm chart for installing the HPE CSI Driver for Kubernetes
+    digest: aa97e6a882271bf7ea588f9a1d190c9a7fc5d8835b69660b6ab8d1fbd9806cfc
+    home: https://hpe.com/storage/containers
+    icon: https://raw.githubusercontent.com/hpe-storage/co-deployments/master/docs/assets/hpedev.png
+    keywords:
+    - HPE
+    - Storage
+    - CSI
+    maintainers:
+    - email: dev-hi-containers@hpe.com
+      name: datamattsson
+    name: hpe-csi-driver
+    sources:
+    - https://github.com/hpe-storage/csi-driver
+    urls:
+    - hpe-csi-driver-3.1.0-19012026.tgz
+    version: 3.1.0-19012026
+  - annotations:
+      artifacthub.io/category: storage
+      artifacthub.io/containsSecurityUpdates: "false"
+      artifacthub.io/license: Apache-2.0
+      artifacthub.io/links: |
+        - name: Release Highlights
+          url: https://scod.hpedev.io/csi_driver/index.html#latest_release
+        - name: Release Notes
+          url: https://github.com/hpe-storage/csi-driver/tree/master/release-notes
+        - name: Documentation
+          url: https://scod.hpedev.io/csi_driver
+        - name: Chart Source
+          url: https://github.com/hpe-storage/co-deployments
+      artifacthub.io/prerelease: "false"
+      artifacthub.io/recommendations: |
+        - url: https://artifacthub.io/packages/olm/community-operators/hpe-csi-operator
+        - url: https://artifacthub.io/packages/helm/hpe-storage/hpe-csi-info-metrics
+        - url: https://artifacthub.io/packages/helm/hpe-storage/hpe-array-exporter
+    apiVersion: v1
+    appVersion: 3.1.0-14012026
+    created: "2026-01-19T10:35:40.021075+05:30"
+    description: A Helm chart for installing the HPE CSI Driver for Kubernetes
+    digest: e72ed2ce9095355d0e4670ce60fb571262c3eccdcd067b533cfb98ceaddc138f
+    home: https://hpe.com/storage/containers
+    icon: https://raw.githubusercontent.com/hpe-storage/co-deployments/master/docs/assets/hpedev.png
+    keywords:
+    - HPE
+    - Storage
+    - CSI
+    maintainers:
+    - email: dev-hi-containers@hpe.com
+      name: datamattsson
+    name: hpe-csi-driver
+    sources:
+    - https://github.com/hpe-storage/csi-driver
+    urls:
+    - hpe-csi-driver-3.1.0-14012026.tgz
+    version: 3.1.0-14012026
+  - annotations:
+      artifacthub.io/category: storage
+      artifacthub.io/containsSecurityUpdates: "false"
+      artifacthub.io/license: Apache-2.0
+      artifacthub.io/links: |
+        - name: Release Highlights
+          url: https://scod.hpedev.io/csi_driver/index.html#latest_release
+        - name: Release Notes
+          url: https://github.com/hpe-storage/csi-driver/tree/master/release-notes
+        - name: Documentation
+          url: https://scod.hpedev.io/csi_driver
+        - name: Chart Source
+          url: https://github.com/hpe-storage/co-deployments
+      artifacthub.io/prerelease: "false"
+      artifacthub.io/recommendations: |
+        - url: https://artifacthub.io/packages/olm/community-operators/hpe-csi-operator
+        - url: https://artifacthub.io/packages/helm/hpe-storage/hpe-csi-info-metrics
+        - url: https://artifacthub.io/packages/helm/hpe-storage/hpe-array-exporter
+    apiVersion: v1
     appVersion: 3.0.2
     created: "2025-11-28T06:57:07.648723764Z"
     description: A Helm chart for installing the HPE CSI Driver for Kubernetes
@@ -1889,4 +2003,4 @@ entries:
     urls:
     - hpe-greenlake-file-csi-driver-1.0.0-beta.tgz
     version: 1.0.0-beta
-generated: "2025-12-12T22:35:07.028848244+05:30"
+generated: "2026-02-01T13:18:50.457396+05:30"
