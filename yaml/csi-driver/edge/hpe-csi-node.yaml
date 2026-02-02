@@ -31,7 +31,7 @@ spec:
             value: "1"
       initContainers:
         - name: hpe-csi-node-init
-          image: "quay.io/hpestorage/csi-driver:v3.0.2"
+          image: "quay.io/hpestorage/csi-driver:3.1.0-beta"
           resources:
             limits:
               cpu: 2000m
@@ -60,6 +60,7 @@ spec:
             - name: plugin-dir
               mountPath: /csi
             - name: pods-mount-dir
+              
               mountPath: /var/lib/kubelet
             - name: log-dir
               mountPath: /var/log
@@ -76,7 +77,7 @@ spec:
             allowPrivilegeEscalation: true
       containers:
         - name: csi-node-driver-registrar
-          image: "registry.k8s.io/sig-storage/csi-node-driver-registrar:v2.14.0"
+          image: "registry.k8s.io/sig-storage/csi-node-driver-registrar:v2.15.0"
           resources:
             limits:
               cpu: 2000m
@@ -105,7 +106,7 @@ spec:
             - name: registration-dir
               mountPath: /registration
         - name: hpe-csi-driver
-          image: "quay.io/hpestorage/csi-driver:v3.0.2"
+          image: "quay.io/hpestorage/csi-driver:3.1.0-beta"
           resources:
             limits:
               cpu: 2000m
