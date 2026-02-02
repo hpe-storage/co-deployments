@@ -51,6 +51,11 @@ spec:
                   items: 
                     type: string
                   type: array
+                nqns: 
+                  description: "List of NQNs configured on the node."
+                  items: 
+                    type: string
+                  type: array
               required: 
                 - uuid
                 - networks
@@ -64,3 +69,4 @@ status:
     plural: ""
   conditions: []
   storedVersions: []
+
