@@ -101,6 +101,8 @@ spec:
             - name: DISABLE_HOST_DELETION
               value: "true"
             {{- end }}
+            - name: LOG_LEVEL
+              value: {{ .Values.logLevel }}
           ports:
             - containerPort: 8080
           volumeMounts:
