@@ -45,6 +45,9 @@ spec:
           resources:
             {{- toYaml .Values.csp.resources | nindent 12 }}
           imagePullPolicy: {{ .Values.imagePullPolicy | quote }}
+          env:
+            - name: LOG_LEVEL
+              value: {{ .Values.logLevel }}
           ports:
             - containerPort: 8080
           volumeMounts:
