@@ -36,7 +36,7 @@ spec:
       priorityClassName: system-cluster-critical
       containers:
         - name: alletrastoragemp-b10000-nfs-csp
-          image: "quay.io/hpestorage/alletrastoragemp-b10000-nfs-csp:1.1.0-beta"
+          image: "quay.io/hpestorage/alletrastoragemp-b10000-nfs-csp:v1.1.0-beta2"
           resources:
             limits:
               cpu: 2000m
@@ -45,6 +45,9 @@ spec:
               cpu: 100m
               memory: 128Mi
           imagePullPolicy: "IfNotPresent"
+          env:
+            - name: LOG_LEVEL
+              value: info
           ports:
             - containerPort: 8080
           volumeMounts:
