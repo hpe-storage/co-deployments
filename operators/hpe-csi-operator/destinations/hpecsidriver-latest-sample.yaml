@@ -50,7 +50,7 @@ spec:
     csiNodeDriver: quay.io/hpestorage/csi-driver:v3.1.0-beta2
     csiNodeDriverRegistrar: registry.k8s.io/sig-storage/csi-node-driver-registrar:v2.15.0
     csiProvisioner: registry.k8s.io/sig-storage/csi-provisioner:v6.1.0
-    csiResizer: registry.k8s.io/sig-storage/csi-resizer:v1.14.0
+    csiResizer: registry.k8s.io/sig-storage/csi-resizer:v2.0.0
     csiSnapshotter: registry.k8s.io/sig-storage/csi-snapshotter:v8.4.0
     csiVolumeGroupProvisioner: quay.io/hpestorage/volume-group-provisioner:v1.0.9-beta2
     csiVolumeGroupSnapshotter: quay.io/hpestorage/volume-group-snapshotter:v1.0.9-beta2
