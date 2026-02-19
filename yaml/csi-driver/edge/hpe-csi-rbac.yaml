@@ -67,10 +67,13 @@ rules:
     verbs: ["get", "list"]
   - apiGroups: [""]
     resources: ["pods"]
-    verbs: ["get", "list", "delete"]
+    verbs: ["get", "list", "delete", "watch"]
   - apiGroups: ["storage.k8s.io"]
     resources: ["volumeattachments"]
     verbs: ["get", "list", "watch", "update", "patch", "delete"]
+  - apiGroups: ["storage.k8s.io"]
+    resources: ["volumeattributesclasses"]
+    verbs: ["list", "watch"]
 ---
 # Source: hpe-csi-driver/templates/hpe-csi-rbac.yaml
 kind: ClusterRole

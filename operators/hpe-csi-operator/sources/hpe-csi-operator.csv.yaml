@@ -30,7 +30,7 @@ metadata:
     operatorhub.io/ui-metadata-max-k8s-version: "1.35"
 spec:
   minKubeVersion: 1.29.0
-  replaces: hpe-csi-operator.v3.0.2
+  replaces: hpe-csi-operator.v3.1.0-beta
   # <<< for each new release
   apiservicedefinitions: {}
   install:
