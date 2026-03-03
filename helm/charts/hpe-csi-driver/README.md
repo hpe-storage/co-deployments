@@ -95,6 +95,18 @@ helm install --create-namespace -n hpe-storage my-hpe-csi-driver hpe-storage/hpe
 Due to the [helm limitation](https://helm.sh/docs/chart_best_practices/custom_resource_definitions/#some-caveats-and-explanations) to not support upgrade of CRDs between different chart versions, helm chart upgrade is not supported.
 Our recommendation is to uninstall the existing chart and install the chart with the desired version. CRDs will be preserved between uninstall and install.
 
+#### Upgrading from any version below 3.1.0
+
+This step is only necessary for NVMe/TCP environments.
+
+Clusters running any version prior to 3.1.0 needs to first uninstall the chart (see below) and then delete the `HPENodeInfo` CRD. The information stored in the CRD is transient and recreated at each node driver start.
+
+```
+kubectl delete crd/hpenodeinfos.storage.hpe.com
+```
+
+The CRD will be recreated at install with the new CRD containing the "nqns" field needed for NVMe/TCP.
+
 #### Uninstalling the chart
 
 To uninstall the `my-hpe-csi-driver` chart:
