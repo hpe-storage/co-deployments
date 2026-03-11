@@ -25,6 +25,7 @@ BUNDLE_CHANNELS ?= stable
 PLATFORMS ?= linux/arm64,linux/amd64
 OPERATOR_SDK_IMG_NAME ?= helm-operator
 OPERATOR_SDK_URL ?= $(REPO_NAME)/$(OPERATOR_SDK_IMG_NAME):$(OPERATOR_SDK_TAG)
+OTEL_VERSION ?= v1.40.0
 
 undeploy:
 	# Remove Operator from cluster
@@ -53,7 +54,18 @@ init:
 
         # Build & push our base Helm Operator with latest UBI images
 	git clone https://github.com/operator-framework/operator-sdk
-	cd operator-sdk; git checkout $(OPERATOR_SDK_TAG); docker-buildx build --progress=plain --no-cache \
+	cd operator-sdk; git checkout $(OPERATOR_SDK_TAG)
+
+	# Force patched OpenTelemetry version in helm-operator binary dependencies.
+	cd operator-sdk; go get \
+		go.opentelemetry.io/otel@$(OTEL_VERSION) \
+		go.opentelemetry.io/otel/metric@$(OTEL_VERSION) \
+		go.opentelemetry.io/otel/trace@$(OTEL_VERSION) \
+		go.opentelemetry.io/otel/sdk@$(OTEL_VERSION) \
+		go.opentelemetry.io/otel/sdk/metric@$(OTEL_VERSION)
+	cd operator-sdk; go mod tidy
+
+	cd operator-sdk; docker-buildx build --progress=plain --no-cache \
 	--provenance=false --push --platform=$(PLATFORMS) --tag $(OPERATOR_SDK_URL) -f images/helm-operator/Dockerfile \
 	--build-arg https_proxy=$(https_proxy) --build-arg http_proxy=$(http_proxy) --build-arg no_proxy=$(no_proxy) \
 	.
