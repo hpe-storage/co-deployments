@@ -77,7 +77,6 @@
       }
     },
     "resources": {
-      "$id": "#/properties/resources",
       "type": "object",
       "title": "resource requests and limits",
       "additionalProperties": false,
