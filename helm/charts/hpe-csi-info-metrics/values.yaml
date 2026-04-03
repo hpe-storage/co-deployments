@@ -14,7 +14,7 @@ image:
   pullPolicy: "IfNotPresent"
 
 images:
-  metricsProvider: hpestorage/csi-info-metrics:v1.0.4
+  metricsProvider: hpestorage/csi-info-metrics:v1.0.5
 
 # Minimum severity of messages to output
 logLevel: "info"

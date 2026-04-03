@@ -19,7 +19,7 @@ image:
   pullPolicy: "IfNotPresent"
 
 images:
-  arrayExporter: hpestorage/array-exporter:v1.0.4
+  arrayExporter: hpestorage/array-exporter:v1.0.5
 
 # Minimum severity of messages to output
 logLevel: "info"
