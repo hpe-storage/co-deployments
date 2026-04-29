@@ -15,7 +15,7 @@
     },
     "namespace": {
       "type": "string",
-      "pattern": "^(default)$"
+      "maxLength": 253
     },
     "deployment": {
       "type": "object",
