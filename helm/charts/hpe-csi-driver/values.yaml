@@ -10,6 +10,7 @@ disable:
   alletra9000: false
   alletraStorageMP: false
   b10000FileService: false
+  x10000FileService: false
 
 # For controlling automatic iscsi/multipath package installation
 disableNodeConformance: false
@@ -110,16 +111,17 @@ node:
 
 # Release images
 images:
-  csiNodeDriver: quay.io/hpestorage/csi-driver:v3.1.0
-  csiControllerDriver: quay.io/hpestorage/csi-driver:v3.1.0
-  nimbleCSP: quay.io/hpestorage/alletra-6000-and-nimble-csp:v3.1.0
-  primera3parCSP: quay.io/hpestorage/alletra-9000-primera-and-3par-csp:v3.1.0
-  b10000FileServiceCSP: quay.io/hpestorage/alletrastoragemp-b10000-nfs-csp:v1.1.0
-  nfsProvisioner: quay.io/hpestorage/nfs-provisioner:v3.0.9
-  csiExtensions: quay.io/hpestorage/csi-extensions:v1.2.10
-  csiVolumeGroupProvisioner: quay.io/hpestorage/volume-group-provisioner:v1.0.9
-  csiVolumeGroupSnapshotter: quay.io/hpestorage/volume-group-snapshotter:v1.0.9
-  csiVolumeMutator: quay.io/hpestorage/volume-mutator:v1.3.9
+  csiNodeDriver: quay.io/hpestorage/csi-driver:v3.2.0-beta
+  csiControllerDriver: quay.io/hpestorage/csi-driver:v3.2.0-beta
+  nimbleCSP: quay.io/hpestorage/alletra-6000-and-nimble-csp:v3.2.0-beta
+  primera3parCSP: quay.io/hpestorage/alletra-9000-primera-and-3par-csp:v3.2.0-beta
+  b10000FileServiceCSP: quay.io/hpestorage/alletrastoragemp-b10000-nfs-csp:v1.2.0-beta
+  x10000FileServiceCSP: quay.io/hpestorage/alletrastoragemp-x10000-nfs-csp:v1.0.0-beta
+  nfsProvisioner: quay.io/hpestorage/nfs-provisioner:v3.0.10-beta
+  csiExtensions: quay.io/hpestorage/csi-extensions:v1.2.11-beta
+  csiVolumeGroupProvisioner: quay.io/hpestorage/volume-group-provisioner:v1.0.10-beta
+  csiVolumeGroupSnapshotter: quay.io/hpestorage/volume-group-snapshotter:v1.0.10-beta
+  csiVolumeMutator: quay.io/hpestorage/volume-mutator:v1.3.10-beta
   csiAttacher: registry.k8s.io/sig-storage/csi-attacher:v4.11.0
   csiNodeDriverRegistrar: registry.k8s.io/sig-storage/csi-node-driver-registrar:v2.16.0
   csiProvisioner: registry.k8s.io/sig-storage/csi-provisioner:v6.2.0
