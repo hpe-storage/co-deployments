@@ -53,7 +53,7 @@ kubectl kustomize "github.com/kubernetes-sigs/container-object-storage-interface
 | kubectl apply -f -
 ```
 
-Note: Replace <namespace> with your custom namespace or default one as per the needs.
+Note: Replace with your custom namespace or default as per the need.
 
 
 **Note:** The SIG Storage resourcs are deployed in the "default" `Namespace` and the HPE COSI Driver needs to be deployed there as well. See [known limitations](https://scod.hpedev.io/cosi_driver/index.html#known_limitations) for more information.
