@@ -49,11 +49,11 @@ Learn how to specify resource limits and requests in the official documentation 
 
 ```
 kubectl kustomize "github.com/kubernetes-sigs/container-object-storage-interface//?ref=release-0.2" \
-| sed -e "s/container-object-storage-system/default/g" \
+| sed -e "s/container-object-storage-system/<namespace>/g" \
 | kubectl apply -f -
 ```
 
-Note: These commands assume installation in the default namespace, replace it if using a different one.
+Note: Replace <namespace> with your custom namespace or default one as per the needs.
 
 
 **Note:** The SIG Storage resourcs are deployed in the "default" `Namespace` and the HPE COSI Driver needs to be deployed there as well. See [known limitations](https://scod.hpedev.io/cosi_driver/index.html#known_limitations) for more information.
