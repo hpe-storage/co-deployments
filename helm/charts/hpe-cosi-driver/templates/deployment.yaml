@@ -4,7 +4,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{ .Values.deployment.name }}
-  namespace: {{ .Values.Namespace }}
+  namespace: {{ .Values.namespace }}
   labels:
     {{- include "hpe-cosi-driver.labels" . | nindent 4 }}
 spec:
