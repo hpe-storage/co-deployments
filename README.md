@@ -30,6 +30,8 @@ We provide the [raw YAML files](yaml) to deploy the [HPE CSI Driver](https://git
 - YAML files for the [HPE CSI Driver for Kubernetes](yaml/csi-driver)
 - YAML files for the [HPE Storage Array Exporter for Prometheus](yaml/array-exporter)
 - YAML files for the [HPE CSI Info Metrics Provider for Prometheus](yaml/csi-info-metrics)
+- YAML files for the [HPE COSI Driver for Kubernetes](yaml/cosi-driver)
+
 
 How to perform an [advanced manual install](https://scod.hpedev.io/csi_driver/deployment.html#advanced_install) of the CSI driver.
 
