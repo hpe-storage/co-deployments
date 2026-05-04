@@ -30,13 +30,12 @@ The following parameters are supported by the Helm chart. During normal circumst
 | containers.cosiDriver.image | string | `"quay.io/hpestorage/cosi-driver:v1.0.0"` | Fully qualified registry path of cosiDriver |
 | containers.cosiDriver.imagePullPolicy | string | `"IfNotPresent"` | cosiDriver image pull policy |
 | containers.cosiDriver.name | string | `"hpe-cosi-driver"` | Name of the driver's container within the deployment |
-| containers.sideCar.image | string | `"registry.k8s.io/sig-storage/objectstorage-sidecar:v0.2.2"` | Fully qualified registry path of sidecar |
+| containers.sideCar.image | string | `"registry.k8s.io/sig-storage/objectstorage-sidecar:v0.2.2"` | Fully qualified registry path of sideCar |
 | containers.sideCar.imagePullPolicy | string | `"IfNotPresent"` | sideCar image pull policy |
 | containers.sideCar.name | string | `"hpe-cosi-provisioner-sidecar"` | Name of the driver's side car container within the deployment |
 | containers.sideCar.verbosityLevel | int | `5` | Specifies the verbosity of the logs that will be printed by the sidecar container |
 | deployment.name | string | `"hpe-cosi-provisioner"` | The name of the driver's Kubernetes deployment |
 | fullnameOverride | string | `"hpe-cosi-driver"` | Name of deployment |
-| namespace | string | `"default"` | Namespace must remain default |
 | podEvictionToleration | int | `300` | Pod Toleration time in seconds |
 | regSecretName | string | `""` | Secret that contains the private image registry credentials to pull the cosiDriver image |
 | resources | object | `{}` | Resources such as CPU limits, Memory limits, CPU request and Memory request applied to the COSI driver and the COSI sidecar individually. |
