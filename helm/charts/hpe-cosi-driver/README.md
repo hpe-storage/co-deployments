@@ -30,7 +30,7 @@ The following parameters are supported by the Helm chart. During normal circumst
 | containers.cosiDriver.image | string | `"quay.io/hpestorage/cosi-driver:v1.0.0"` | Fully qualified registry path of cosiDriver |
 | containers.cosiDriver.imagePullPolicy | string | `"IfNotPresent"` | cosiDriver image pull policy |
 | containers.cosiDriver.name | string | `"hpe-cosi-driver"` | Name of the driver's container within the deployment |
-| containers.sideCar.image | string | `"registry.k8s.io/sig-storage/objectstorage-sidecar:v0.2.2"` | Fully qualified registry path of sideCar |
+| containers.sideCar.image | string | `"registry.k8s.io/sig-storage/objectstorage-sidecar:v0.2.2"` | Fully qualified registry path of sidecar |
 | containers.sideCar.imagePullPolicy | string | `"IfNotPresent"` | sideCar image pull policy |
 | containers.sideCar.name | string | `"hpe-cosi-provisioner-sidecar"` | Name of the driver's side car container within the deployment |
 | containers.sideCar.verbosityLevel | int | `5` | Specifies the verbosity of the logs that will be printed by the sidecar container |
@@ -53,8 +53,7 @@ kubectl kustomize "github.com/kubernetes-sigs/container-object-storage-interface
 | kubectl apply -f -
 ```
 
-Note: Replace with your custom namespace or default as per the need.
-
+**Note:** Replace `<namespace>` with the installation Namespace.
 
 **Note:** The SIG Storage resourcs are deployed in the "default" `Namespace` and the HPE COSI Driver needs to be deployed there as well. See [known limitations](https://scod.hpedev.io/cosi_driver/index.html#known_limitations) for more information.
 

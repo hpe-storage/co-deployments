@@ -5,8 +5,6 @@
 # fullnameOverride -- Name of deployment
 fullnameOverride: "hpe-cosi-driver"
 componentName: "container-object-storage-interface"
-# namespace -- Namespace where the COSI driver will be installed. Must already exist.
-namespace: default
 
 # deployment name of the provisioner
 deployment:
