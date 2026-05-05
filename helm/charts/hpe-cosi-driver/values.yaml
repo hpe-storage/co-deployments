@@ -25,7 +25,7 @@ containers:
   sideCar:
     # containers.sideCar.name -- Name of the driver's side car container within the deployment
     name: "hpe-cosi-provisioner-sidecar"
-    # containers.sideCar.image -- Fully qualified registry path of sideCar
+    # containers.sideCar.image -- Fully qualified registry path of sidecar
     image: "registry.k8s.io/sig-storage/objectstorage-sidecar:v0.2.2"
     # containers.sideCar.imagePullPolicy -- sideCar image pull policy
     imagePullPolicy: IfNotPresent
