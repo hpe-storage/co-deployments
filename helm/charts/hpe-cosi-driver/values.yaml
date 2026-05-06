@@ -5,8 +5,6 @@
 # fullnameOverride -- Name of deployment
 fullnameOverride: "hpe-cosi-driver"
 componentName: "container-object-storage-interface"
-# namespace -- Namespace must remain default
-namespace: default
 
 # deployment name of the provisioner
 deployment:
@@ -27,8 +25,8 @@ containers:
   sideCar:
     # containers.sideCar.name -- Name of the driver's side car container within the deployment
     name: "hpe-cosi-provisioner-sidecar"
-    # containers.sideCar.image -- Fully qualified registry path of sideCar
-    image: "registry.k8s.io/sig-storage/objectstorage-sidecar:v0.2.1"
+    # containers.sideCar.image -- Fully qualified registry path of sidecar
+    image: "registry.k8s.io/sig-storage/objectstorage-sidecar:v0.2.2"
     # containers.sideCar.imagePullPolicy -- sideCar image pull policy
     imagePullPolicy: IfNotPresent
     # Verbosity level: Small postive integer values are generally recommended.

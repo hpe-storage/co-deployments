@@ -10,6 +10,8 @@ This repository contains the source declarations to deploy CO drivers (CSI and F
 - Deploy the [HPE GreenLake for File Storage CSI Driver](helm/charts/hpe-greenlake-file-csi-driver)
 - Deploy the [HPE Storage Array Exporter for Prometheus](helm/charts/hpe-array-exporter)
 - Deploy the [HPE CSI Info Metrics Provider for Prometheus](helm/charts/hpe-csi-info-metrics)
+- Deploy the [HPE COSI Driver for Kubernetes](helm/charts/hpe-cosi-driver)
+
 
 The HPE CSI Driver for Kubernetes Helm chart is also rendered on [ArtifactHub.io](https://artifacthub.io/packages/helm/hpe-storage/hpe-csi-driver).
 
@@ -28,6 +30,8 @@ We provide the [raw YAML files](yaml) to deploy the [HPE CSI Driver](https://git
 - YAML files for the [HPE CSI Driver for Kubernetes](yaml/csi-driver)
 - YAML files for the [HPE Storage Array Exporter for Prometheus](yaml/array-exporter)
 - YAML files for the [HPE CSI Info Metrics Provider for Prometheus](yaml/csi-info-metrics)
+- YAML files for the [HPE COSI Driver for Kubernetes](yaml/cosi-driver)
+
 
 How to perform an [advanced manual install](https://scod.hpedev.io/csi_driver/deployment.html#advanced_install) of the CSI driver.
 

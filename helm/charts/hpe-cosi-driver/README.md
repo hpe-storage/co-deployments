@@ -30,13 +30,12 @@ The following parameters are supported by the Helm chart. During normal circumst
 | containers.cosiDriver.image | string | `"quay.io/hpestorage/cosi-driver:v1.0.0"` | Fully qualified registry path of cosiDriver |
 | containers.cosiDriver.imagePullPolicy | string | `"IfNotPresent"` | cosiDriver image pull policy |
 | containers.cosiDriver.name | string | `"hpe-cosi-driver"` | Name of the driver's container within the deployment |
-| containers.sideCar.image | string | `"registry.k8s.io/sig-storage/objectstorage-sidecar:v0.2.1"` | Fully qualified registry path of sideCar |
+| containers.sideCar.image | string | `"registry.k8s.io/sig-storage/objectstorage-sidecar:v0.2.2"` | Fully qualified registry path of sidecar |
 | containers.sideCar.imagePullPolicy | string | `"IfNotPresent"` | sideCar image pull policy |
 | containers.sideCar.name | string | `"hpe-cosi-provisioner-sidecar"` | Name of the driver's side car container within the deployment |
 | containers.sideCar.verbosityLevel | int | `5` | Specifies the verbosity of the logs that will be printed by the sidecar container |
 | deployment.name | string | `"hpe-cosi-provisioner"` | The name of the driver's Kubernetes deployment |
 | fullnameOverride | string | `"hpe-cosi-driver"` | Name of deployment |
-| namespace | string | `"default"` | Namespace must remain default |
 | podEvictionToleration | int | `300` | Pod Toleration time in seconds |
 | regSecretName | string | `""` | Secret that contains the private image registry credentials to pull the cosiDriver image |
 | resources | object | `{}` | Resources such as CPU limits, Memory limits, CPU request and Memory request applied to the COSI driver and the COSI sidecar individually. |
@@ -45,21 +44,17 @@ Learn how to specify resource limits and requests in the official documentation 
 
 ## Installation Steps
 
-1. Create the custom resource definitions (CRDs) for the COSI driver API resources.
+1. Create the custom resource definitions (CRDs) for the COSI driver API resources and deploy the object storage controller.
 
 ```
-kubectl apply -k github.com/kubernetes-sigs/container-object-storage-interface?ref=main
+kubectl kustomize "github.com/kubernetes-sigs/container-object-storage-interface//?ref=release-0.2" \
+| sed -e "s/container-object-storage-system/<namespace>/g" \
+| kubectl apply -f -
 ```
 
-2. Deploy the object storage controller.
+**Note:** Replace `<namespace>` with the installation Namespace.
 
-```
-kubectl kustomize github.com/kubernetes-sigs/container-object-storage-interface/controller | sed 's/namespace: container-object-storage-system/namespace: default/' | kubectl apply -f -
-```
-
-
-**Note:** The SIG Storage resourcs are deployed in the "default" `Namespace` and the HPE COSI Driver needs to be deployed there as well. See [known limitations](https://scod.hpedev.io/cosi_driver/index.html#known_limitations) for more information.
-
+**Note:** The SIG Storage resources can be deployed in any "namespace", and the HPE COSI Driver can also be deployed in any namespace. Refer to the [known limitations](https://scod.hpedev.io/cosi_driver/index.html#known_limitations) for more details.
 3. Installing the chart.
 
 To install the chart with the name "my-hpe-cosi-driver", follow this example.

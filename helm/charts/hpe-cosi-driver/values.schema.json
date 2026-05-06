@@ -13,10 +13,6 @@
       "type": "string",
       "maxLength": 128
     },
-    "namespace": {
-      "type": "string",
-      "pattern": "^(default)$"
-    },
     "deployment": {
       "type": "object",
       "additionalProperties": true,
