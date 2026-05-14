@@ -67,6 +67,7 @@ spec:
           args:
             - "--v=5"
             - "--csi-address=$(ADDRESS)"
+            - "--timeout=180s"
           env:
             - name: ADDRESS
               value: /var/lib/csi/sockets/pluginproxy/csi.sock
@@ -113,7 +114,7 @@ spec:
             - name: socket-dir
               mountPath: /var/lib/csi/sockets/pluginproxy
         - name: hpe-csi-driver
-          image: "quay.io/hpestorage/csi-driver:v3.1.0"
+          image: "quay.io/hpestorage/csi-driver:v3.2.0-beta1"
           resources:
             limits:
               cpu: 2000m
@@ -132,7 +133,7 @@ spec:
             - name: LOG_LEVEL
               value: info
             - name: RUNTIME_NFS_IMAGE
-              value: quay.io/hpestorage/nfs-provisioner:v3.0.9
+              value: quay.io/hpestorage/nfs-provisioner:v3.0.10-beta1
           imagePullPolicy: "IfNotPresent"
           volumeMounts:
             - name: socket-dir
@@ -146,7 +147,7 @@ spec:
             - name: root-dir
               mountPath: /host
         - name: csi-volume-mutator
-          image: "quay.io/hpestorage/volume-mutator:v1.3.9"
+          image: "quay.io/hpestorage/volume-mutator:v1.3.10-beta1"
           resources:
             limits:
               cpu: 2000m
@@ -165,7 +166,7 @@ spec:
             - name: socket-dir
               mountPath: /var/lib/csi/sockets/pluginproxy/
         - name: csi-volume-group-snapshotter
-          image: "quay.io/hpestorage/volume-group-snapshotter:v1.0.9"
+          image: "quay.io/hpestorage/volume-group-snapshotter:v1.0.10-beta1"
           resources:
             limits:
               cpu: 2000m
@@ -184,7 +185,7 @@ spec:
             - name: socket-dir
               mountPath: /var/lib/csi/sockets/pluginproxy/
         - name: csi-volume-group-provisioner
-          image: "quay.io/hpestorage/volume-group-provisioner:v1.0.9"
+          image: "quay.io/hpestorage/volume-group-provisioner:v1.0.10-beta1"
           resources:
             limits:
               cpu: 2000m
@@ -203,7 +204,7 @@ spec:
             - name: socket-dir
               mountPath: /var/lib/csi/sockets/pluginproxy/
         - name: csi-extensions
-          image: "quay.io/hpestorage/csi-extensions:v1.2.10"
+          image: "quay.io/hpestorage/csi-extensions:v1.2.11-beta1"
           resources:
             limits:
               cpu: 2000m
