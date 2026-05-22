@@ -1385,6 +1385,8 @@ spec:
                     type: boolean
                   primera:
                     type: boolean
+                  x10000FileService:
+                    type: boolean
                 required:
                 - alletra6000
                 - alletra9000
@@ -1392,6 +1394,7 @@ spec:
                 - primera
                 - alletraStorageMP
                 - b10000FileService
+                - x10000FileService
                 type: object
               disableHostDeletion:
                 description: Disables host deletion by the CSP when no volumes are
@@ -1452,12 +1455,15 @@ spec:
                     type: string
                   primera3parCSP:
                     type: string
+                  x10000FileServiceCSP:
+                    type: string
                 required:
                 - csiNodeDriver
                 - csiControllerDriver
                 - nimbleCSP
                 - primera3parCSP
                 - b10000FileServiceCSP
+                - x10000FileServiceCSP
                 - nfsProvisioner
                 - csiExtensions
                 - csiVolumeGroupProvisioner
