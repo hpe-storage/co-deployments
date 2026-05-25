@@ -89,6 +89,63 @@
           "default": {}
         }
       }
+    },
+    "podSecurityContext": {
+      "type": "object",
+      "title": "Pod-level security context",
+      "description": "Security context applied at the pod level. On OpenShift, leave runAsUser/runAsGroup/fsGroup unset to let the platform assign from namespace ranges.",
+      "additionalProperties": true,
+      "properties": {
+        "runAsNonRoot": {
+          "type": "boolean"
+        },
+        "runAsUser": {
+          "type": "integer"
+        },
+        "runAsGroup": {
+          "type": "integer"
+        },
+        "fsGroup": {
+          "type": "integer"
+        }
+      }
+    },
+    "containerSecurityContext": {
+      "type": "object",
+      "title": "Container-level security context",
+      "description": "Security context applied to each container. Defaults satisfy OpenShift restricted-v2 SCC.",
+      "additionalProperties": true,
+      "properties": {
+        "allowPrivilegeEscalation": {
+          "type": "boolean"
+        },
+        "readOnlyRootFilesystem": {
+          "type": "boolean"
+        },
+        "runAsNonRoot": {
+          "type": "boolean"
+        },
+        "capabilities": {
+          "type": "object",
+          "properties": {
+            "drop": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "seccompProfile": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
+              "pattern": "^(RuntimeDefault|Localhost|Unconfined)$"
+            }
+          }
+        }
+      }
     }
   },
   "required": [
