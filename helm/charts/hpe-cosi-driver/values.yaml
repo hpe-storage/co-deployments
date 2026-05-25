@@ -39,7 +39,7 @@ accessManagement:
   # accessManagement.proxy -- Proxy url if any to be used
   proxy: ""
   # accessManagement.glcpCommonCloud -- HPE GLCP common cloud URL
-  glcpCommonCloud: sso.common.cloud.hpe.com
+  glcpCommonCloud: global.api.greenlake.hpe.com
 
 # resources -- Resources such as CPU limits, Memory limits, CPU request and Memory request applied to the COSI driver and the COSI sidecar individually.
 resources: {}
