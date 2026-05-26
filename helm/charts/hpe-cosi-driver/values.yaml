@@ -41,26 +41,6 @@ accessManagement:
   # accessManagement.glcpCommonCloud -- HPE GLCP common cloud URL
   glcpCommonCloud: global.api.greenlake.hpe.com
 
-# podSecurityContext -- Pod-level security context for the COSI provisioner deployment.
-# On OpenShift, leave runAsUser/runAsGroup/fsGroup unset (or null) to let the platform
-# assign values from the namespace's allocated UID/GID ranges automatically.
-podSecurityContext:
-  runAsNonRoot: true
-  # runAsUser: 1000
-  # runAsGroup: 1000
-  # fsGroup: 2000
-
-# containerSecurityContext -- Container-level security context applied to both the COSI driver and sidecar containers.
-containerSecurityContext:
-  allowPrivilegeEscalation: false
-  capabilities:
-    drop:
-      - ALL
-  readOnlyRootFilesystem: true
-  runAsNonRoot: true
-  seccompProfile:
-    type: RuntimeDefault
-
 # resources -- Resources such as CPU limits, Memory limits, CPU request and Memory request applied to the COSI driver and the COSI sidecar individually.
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious
