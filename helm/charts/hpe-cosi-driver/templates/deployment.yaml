@@ -28,10 +28,10 @@ spec:
         {{- include "hpe-cosi-driver.selectorLabels" . | nindent 8 }}
     spec:
       serviceAccountName: {{ .Values.deployment.name }}-sa
+      {{- with .Values.podSecurityContext }}
       securityContext:
-        fsGroup: 2000
-        runAsUser: 1000
-        runAsGroup: 1000
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
       volumes:
       - name: socket
         emptyDir: {}
@@ -43,6 +43,10 @@ spec:
         - name: {{ .Values.containers.cosiDriver.name }}
           image: {{ .Values.containers.cosiDriver.image }}
           imagePullPolicy: {{ .Values.containers.cosiDriver.imagePullPolicy }}
+          {{- with .Values.containerSecurityContext }}
+          securityContext:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
           volumeMounts:
           - mountPath: /var/lib/cosi
             name: socket
@@ -62,6 +66,10 @@ spec:
         - name: {{ .Values.containers.sideCar.name }}
           image: {{ .Values.containers.sideCar.image }}
           imagePullPolicy: {{ .Values.containers.sideCar.imagePullPolicy }}
+          {{- with .Values.containerSecurityContext }}
+          securityContext:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
           args:
           - "--v={{ .Values.containers.sideCar.verbosityLevel }}"
           volumeMounts:

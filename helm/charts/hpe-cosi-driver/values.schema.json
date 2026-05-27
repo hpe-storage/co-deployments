@@ -89,6 +89,18 @@
           "default": {}
         }
       }
+    },
+    "podSecurityContext": {
+      "type": "object",
+      "title": "Pod security context",
+      "description": "Pod-level security context for the COSI provisioner pod. Avoid hardcoding runAsUser/fsGroup.",
+      "additionalProperties": true
+    },
+    "containerSecurityContext": {
+      "type": "object",
+      "title": "Container security context",
+      "description": "Container-level security context applied to all containers. Defaults satisfy the restricted Pod Security Standard.",
+      "additionalProperties": true
     }
   },
   "required": [
