@@ -60,6 +60,8 @@ podEvictionToleration: 300
 # On OpenShift, avoid setting runAsUser/fsGroup/runAsGroup to hardcoded values as they
 # conflict with namespace-assigned UID/GID ranges.
 podSecurityContext:
+  # podSecurityContext.runAsNonRoot -- Indicates that the container must run as a non-root user. 
+  # This is required to satisfy the 'restricted' Pod Security Standard and OpenShift restricted-v2 SCC.
   runAsNonRoot: true
   # runAsUser: 1000
   # runAsGroup: 1000
@@ -68,9 +70,12 @@ podSecurityContext:
 # containerSecurityContext -- Container-level security context applied to all containers.
 # These defaults satisfy the 'restricted' Pod Security Standard and OpenShift restricted-v2 SCC.
 containerSecurityContext:
+  # containerSecurityContext.allowPrivilegeEscalation -- Indicates if the container can gain more privileges than its parent process.
   allowPrivilegeEscalation: false
+  # containerSecurityContext.capabilities -- Linux capabilities to add or drop.
   capabilities:
     drop:
       - ALL
+  # containerSecurityContext.seccompProfile -- Seccomp profile to apply to the container.
   seccompProfile:
     type: RuntimeDefault
