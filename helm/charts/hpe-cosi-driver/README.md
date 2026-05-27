@@ -24,7 +24,7 @@ The following parameters are supported by the Helm chart. During normal circumst
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| accessManagement.glcpCommonCloud | string | `"sso.common.cloud.hpe.com"` | HPE GLCP common cloud URL |
+| accessManagement.glcpCommonCloud | string | `"global.api.greenlake.hpe.com"` | HPE GLCP common cloud URL |
 | accessManagement.proxy | string | `""` | Proxy url if any to be used |
 | componentName | string | `"container-object-storage-interface"` |  |
 | containers.cosiDriver.image | string | `"quay.io/hpestorage/cosi-driver:v1.0.0"` | Fully qualified registry path of cosiDriver |
