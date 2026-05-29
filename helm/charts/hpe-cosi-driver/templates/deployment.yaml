@@ -29,9 +29,7 @@ spec:
     spec:
       serviceAccountName: {{ .Values.deployment.name }}-sa
       securityContext:
-        fsGroup: 2000
-        runAsUser: 1000
-        runAsGroup: 1000
+        runAsNonRoot: true
       volumes:
       - name: socket
         emptyDir: {}
@@ -43,6 +41,13 @@ spec:
         - name: {{ .Values.containers.cosiDriver.name }}
           image: {{ .Values.containers.cosiDriver.image }}
           imagePullPolicy: {{ .Values.containers.cosiDriver.imagePullPolicy }}
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL
+            seccompProfile:
+              type: RuntimeDefault
           volumeMounts:
           - mountPath: /var/lib/cosi
             name: socket
@@ -62,6 +67,13 @@ spec:
         - name: {{ .Values.containers.sideCar.name }}
           image: {{ .Values.containers.sideCar.image }}
           imagePullPolicy: {{ .Values.containers.sideCar.imagePullPolicy }}
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL
+            seccompProfile:
+              type: RuntimeDefault
           args:
           - "--v={{ .Values.containers.sideCar.verbosityLevel }}"
           volumeMounts:
