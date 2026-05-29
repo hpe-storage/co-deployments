@@ -27,10 +27,6 @@ The following parameters are supported by the Helm chart. During normal circumst
 | accessManagement.glcpCommonCloud | string | `"global.api.greenlake.hpe.com"` | HPE GLCP common cloud URL |
 | accessManagement.proxy | string | `""` | Proxy url if any to be used |
 | componentName | string | `"container-object-storage-interface"` |  |
-| containerSecurityContext | object | `{"allowPrivilegeEscalation":false,"capabilities":{"drop":["ALL"]},"seccompProfile":{"type":"RuntimeDefault"}}` | Container-level security context applied to all containers. These defaults satisfy the 'restricted' Pod Security Standard and OpenShift restricted-v2 SCC. |
-| containerSecurityContext.allowPrivilegeEscalation | bool | `false` | Indicates if the container can gain more privileges than its parent process. |
-| containerSecurityContext.capabilities | object | `{"drop":["ALL"]}` | Linux capabilities to add or drop. |
-| containerSecurityContext.seccompProfile | object | `{"type":"RuntimeDefault"}` | Seccomp profile to apply to the container. |
 | containers.cosiDriver.image | string | `"quay.io/hpestorage/cosi-driver:v1.0.0"` | Fully qualified registry path of cosiDriver |
 | containers.cosiDriver.imagePullPolicy | string | `"IfNotPresent"` | cosiDriver image pull policy |
 | containers.cosiDriver.name | string | `"hpe-cosi-driver"` | Name of the driver's container within the deployment |
@@ -41,8 +37,6 @@ The following parameters are supported by the Helm chart. During normal circumst
 | deployment.name | string | `"hpe-cosi-provisioner"` | The name of the driver's Kubernetes deployment |
 | fullnameOverride | string | `"hpe-cosi-driver"` | Name of deployment |
 | podEvictionToleration | int | `300` | Pod Toleration time in seconds |
-| podSecurityContext | object | `{"runAsNonRoot":true}` | Pod-level security context applied to the COSI provisioner pod. On OpenShift, avoid setting runAsUser/fsGroup/runAsGroup to hardcoded values as they conflict with namespace-assigned UID/GID ranges. |
-| podSecurityContext.runAsNonRoot | bool | `true` | Indicates that the container must run as a non-root user.  This is required to satisfy the 'restricted' Pod Security Standard and OpenShift restricted-v2 SCC. |
 | regSecretName | string | `""` | Secret that contains the private image registry credentials to pull the cosiDriver image |
 | resources | object | `{}` | Resources such as CPU limits, Memory limits, CPU request and Memory request applied to the COSI driver and the COSI sidecar individually. |
 
