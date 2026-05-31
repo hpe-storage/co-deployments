@@ -27,10 +27,10 @@ metadata:
     repository: "https://github.com/hpe-storage/co-deployments"
     containerImage: %IMG%
     # Update >>>
-    operatorhub.io/ui-metadata-max-k8s-version: "1.35"
+    operatorhub.io/ui-metadata-max-k8s-version: "1.36"
 spec:
-  minKubeVersion: 1.29.0
-  replaces: hpe-csi-operator.v3.0.2
+  minKubeVersion: 1.32.0
+  replaces: hpe-csi-operator.v3.1.0
   # <<< for each new release
   apiservicedefinitions: {}
   install:
@@ -144,6 +144,11 @@ spec:
           - displayName: Alletra Storage MP B10000 File Service
             description: "Disable Alletra Storage MP B10000 File Service"
             path: disable.b10000FileService
+            x-descriptors:
+              - "urn:alm:descriptor:com.tectonic.ui:checkbox"
+          - displayName: Alletra Storage MP X10000 File Service
+            description: "Disable Alletra Storage MP X10000 File Service"
+            path: disable.x10000FileService
             x-descriptors:
               - "urn:alm:descriptor:com.tectonic.ui:checkbox"
           - displayName: Disable Node Conformance
@@ -286,6 +291,11 @@ spec:
           - displayName: Alletra Storage MP B10000 File Service Image
             description: The HPE Alletra Storage MP B10000 File Service Container Storage Provider container image
             path: images.b10000FileServiceCSP
+            x-descriptors:
+              - "urn:alm:descriptor:com.tectonic.ui:text"
+          - displayName: Alletra Storage MP X10000 File Service Image
+            description: The HPE Alletra Storage MP X10000 File Service Container Storage Provider container image
+            path: images.x10000FileServiceCSP
             x-descriptors:
               - "urn:alm:descriptor:com.tectonic.ui:text"
           - displayName: NFS Server Provisioner Image
