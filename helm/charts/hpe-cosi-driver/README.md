@@ -78,6 +78,25 @@ Monitor the deployment of the COSI driver `Pods`:
 kubectl -n default get pods -w
 ```
 
+## Upgrading from v1.x to v2.x
+
+Due to a change in the Deployment's `spec.selector.matchLabels` between chart versions 1.x and 2.x, a direct `helm upgrade` will fail with:
+
+```
+spec.selector: Invalid value: ... field is immutable
+```
+
+Kubernetes does not allow modification of a Deployment's selector after creation. To upgrade, delete the existing Deployment first:
+
+```
+kubectl delete deployment hpe-cosi-provisioner -n <namespace>
+helm upgrade <release-name> hpe-storage/hpe-cosi-driver -n <namespace>
+```
+
+Helm will recreate the Deployment with the corrected selector labels. Existing `BucketClaim` and `BucketAccess` resources are not affected.
+
+**Note:** There will be a brief period of unavailability for the COSI provisioner during the upgrade until the new Pod is running.
+
 ## Using
 
 Refer to the [HPE COSI Driver for Kubernetes](https://scod.hpedev.io/cosi_driver/deployment.html#add_an_hpe_storage_backend) documentation on SCOD. Also, it's helpful to be familiar with [object storage management](https://kubernetes.io/blog/2022/09/02/cosi-kubernetes-object-storage-management/) in Kubernetes prior to deploying workloads utilizing object storage.
