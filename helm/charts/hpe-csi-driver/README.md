@@ -22,6 +22,7 @@ Depending on which [Container Storage Provider](https://scod.hpedev.io/container
 
 - [HPE Alletra Storage MP B10000, Alletra 9000, Primera and 3PAR](https://scod.hpedev.io/container_storage_provider/hpe_alletra_storage_mp_b10000/index.html)
 - [HPE Alletra Storage MP B10000 File Service](https://scod.hpedev.io/container_storage_provider/hpe_alletra_storage_mp_b10000_file_service/index.html)
+- [HPE Alletra Storage MP X10000](https://scod.hpedev.io/csi_driver/container_storage_provider/hpe_alletra_storage_mp_x10000/index.html)
 - [HPE Alletra 5000/6000 and Nimble Storage](https://scod.hpedev.io/container_storage_provider/hpe_alletra_6000/index.html)
 
 ## Configuration and installation
