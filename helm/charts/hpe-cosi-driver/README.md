@@ -37,6 +37,9 @@ The following parameters are supported by the Helm chart. During normal circumst
 | deployment.name | string | `"hpe-cosi-provisioner"` | The name of the driver's Kubernetes deployment |
 | fullnameOverride | string | `"hpe-cosi-driver"` | Name of deployment |
 | podEvictionToleration | int | `300` | Pod Toleration time in seconds |
+| preUpgradeHook | object | `{"enabled":true,"image":"quay.io/hpestorage/cosi-driver:v1.0.0"}` | Configuration for the pre-upgrade hook that handles immutable selector field changes |
+| preUpgradeHook.enabled | bool | `true` | Enable the pre-upgrade hook to delete deployment before upgrade |
+| preUpgradeHook.image | string | `"quay.io/hpestorage/cosi-driver:v1.0.0"` | Image used for the pre-upgrade hook job (must have /bin/sh and wget or curl) Uses the COSI driver image by default |
 | regSecretName | string | `""` | Secret that contains the private image registry credentials to pull the cosiDriver image |
 | resources | object | `{}` | Resources such as CPU limits, Memory limits, CPU request and Memory request applied to the COSI driver and the COSI sidecar individually. |
 
@@ -80,22 +83,45 @@ kubectl -n default get pods -w
 
 ## Upgrading from v1.x to v2.x
 
-Due to a change in the Deployment's `spec.selector.matchLabels` between chart versions 1.x and 2.x, a direct `helm upgrade` will fail with:
+The chart includes a **pre-upgrade hook** that automatically handles the Deployment selector label changes between v1.x and v2.x. Simply run:
 
 ```
-spec.selector: Invalid value: ... field is immutable
+helm upgrade <release-name> hpe-storage/hpe-cosi-driver -n <namespace>
 ```
 
-Kubernetes does not allow modification of a Deployment's selector after creation. To upgrade, delete the existing Deployment first:
+The hook deletes the existing Deployment before the upgrade, allowing Helm to recreate it with the corrected selector labels. Existing `BucketClaim` and `BucketAccess` resources are not affected.
+
+**Note:** There will be a brief period of unavailability for the COSI provisioner during the upgrade until the new Pod is running.
+
+### Pre-upgrade Hook Configuration
+
+The hook requires an image with `/bin/sh` and either `wget` or `curl`. By default, it uses the COSI driver image.
+
+| Parameter | Default | Description |
+|-----------|---------|-------------|
+| `preUpgradeHook.enabled` | `true` | Enable/disable the pre-upgrade hook |
+| `preUpgradeHook.image` | `quay.io/hpestorage/cosi-driver:v2.0.0` | Image used for the hook job |
+
+To use an alternative image (e.g., if your registry doesn't have the COSI image):
+
+```
+helm upgrade <release-name> hpe-storage/hpe-cosi-driver -n <namespace> \
+  --set preUpgradeHook.image=curlimages/curl:8.7.1
+```
+
+To disable the hook and manually delete the Deployment:
+
+```
+helm upgrade <release-name> hpe-storage/hpe-cosi-driver -n <namespace> \
+  --set preUpgradeHook.enabled=false
+```
+
+If the hook is disabled, you must manually delete the Deployment before upgrading:
 
 ```
 kubectl delete deployment hpe-cosi-provisioner -n <namespace>
 helm upgrade <release-name> hpe-storage/hpe-cosi-driver -n <namespace>
 ```
-
-Helm will recreate the Deployment with the corrected selector labels. Existing `BucketClaim` and `BucketAccess` resources are not affected.
-
-**Note:** There will be a brief period of unavailability for the COSI provisioner during the upgrade until the new Pod is running.
 
 ## Using
 
