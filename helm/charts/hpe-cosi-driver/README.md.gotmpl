@@ -83,13 +83,6 @@ The hook requires an image with `/bin/sh` and either `wget` or `curl`. By defaul
 | `preUpgradeHook.enabled` | `true` | Enable/disable the pre-upgrade hook |
 | `preUpgradeHook.image` | `quay.io/hpestorage/cosi-driver:v2.0.0` | Image used for the hook job |
 
-To use an alternative image (e.g., if your registry doesn't have the COSI image):
-
-```
-helm upgrade <release-name> hpe-storage/hpe-cosi-driver -n <namespace> \
-  --set preUpgradeHook.image=curlimages/curl:8.7.1
-```
-
 To disable the hook and manually delete the Deployment:
 
 ```
