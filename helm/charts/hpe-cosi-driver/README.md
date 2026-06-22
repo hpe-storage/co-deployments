@@ -102,7 +102,7 @@ The hook requires an image with `/bin/sh` and either `wget` or `curl`. By defaul
 | `preUpgradeHook.enabled` | `true` | Enable/disable the pre-upgrade hook |
 | `preUpgradeHook.image` | `quay.io/hpestorage/cosi-driver:v2.0.0` | Image used for the hook job |
 
-To disable the hook and manually delete the Deployment:
+**Note:** To disable the hook and manually delete the Deployment:
 
 ```
 helm upgrade <release-name> hpe-storage/hpe-cosi-driver -n <namespace> \
