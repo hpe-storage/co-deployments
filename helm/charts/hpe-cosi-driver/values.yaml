@@ -19,7 +19,7 @@ containers:
     # containers.cosiDriver.name -- Name of the driver's container within the deployment
     name: "hpe-cosi-driver"
     # containers.cosiDriver.image --  Fully qualified registry path of cosiDriver
-    image: &cosiImage "quay.io/hpestorage/cosi-driver:v1.0.0"
+    image: "quay.io/hpestorage/cosi-driver:v1.0.0"
     # containers.cosiDriver.imagePullPolicy -- cosiDriver image pull policy
     imagePullPolicy: IfNotPresent
   sideCar:
@@ -60,6 +60,3 @@ podEvictionToleration: 300
 preUpgradeHook:
   # preUpgradeHook.enabled -- Enable the pre-upgrade hook to delete deployment before upgrade
   enabled: true
-  # preUpgradeHook.image -- Image used for the pre-upgrade hook job (must have /bin/sh and wget or curl)
-  # Uses the COSI driver image by default
-  image: *cosiImage

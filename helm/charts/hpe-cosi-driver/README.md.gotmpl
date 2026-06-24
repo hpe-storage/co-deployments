@@ -76,12 +76,11 @@ The hook deletes the existing Deployment before the upgrade, allowing Helm to re
 
 ### Pre-upgrade Hook Configuration
 
-The hook requires an image with `/bin/sh` and either `wget` or `curl`. By default, it uses the COSI driver image.
+The hook re-uses the COSI driver image (`containers.cosiDriver.image`) which includes `/bin/sh` and `wget`.
 
 | Parameter | Default | Description |
 |-----------|---------|-------------|
 | `preUpgradeHook.enabled` | `true` | Enable/disable the pre-upgrade hook |
-| `preUpgradeHook.image` | `quay.io/hpestorage/cosi-driver:v2.0.0` | Image used for the hook job |
 
 To disable the hook and manually delete the Deployment:
 

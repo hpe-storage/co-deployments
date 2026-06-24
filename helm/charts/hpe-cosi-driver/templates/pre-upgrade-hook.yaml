@@ -74,7 +74,7 @@ spec:
       restartPolicy: Never
       containers:
         - name: pre-upgrade
-          image: {{ .Values.preUpgradeHook.image }}
+          image: {{ .Values.containers.cosiDriver.image }}
           command:
             - /bin/sh
             - -c

@@ -37,9 +37,8 @@ The following parameters are supported by the Helm chart. During normal circumst
 | deployment.name | string | `"hpe-cosi-provisioner"` | The name of the driver's Kubernetes deployment |
 | fullnameOverride | string | `"hpe-cosi-driver"` | Name of deployment |
 | podEvictionToleration | int | `300` | Pod Toleration time in seconds |
-| preUpgradeHook | object | `{"enabled":true,"image":"quay.io/hpestorage/cosi-driver:v1.0.0"}` | Configuration for the pre-upgrade hook that handles immutable selector field changes |
+| preUpgradeHook | object | `{"enabled":true}` | Configuration for the pre-upgrade hook that handles immutable selector field changes |
 | preUpgradeHook.enabled | bool | `true` | Enable the pre-upgrade hook to delete deployment before upgrade |
-| preUpgradeHook.image | string | `"quay.io/hpestorage/cosi-driver:v1.0.0"` | Image used for the pre-upgrade hook job (must have /bin/sh and wget or curl) Uses the COSI driver image by default |
 | regSecretName | string | `""` | Secret that contains the private image registry credentials to pull the cosiDriver image |
 | resources | object | `{}` | Resources such as CPU limits, Memory limits, CPU request and Memory request applied to the COSI driver and the COSI sidecar individually. |
 
@@ -95,12 +94,11 @@ The hook deletes the existing Deployment before the upgrade, allowing Helm to re
 
 ### Pre-upgrade Hook Configuration
 
-The hook requires an image with `/bin/sh` and either `wget` or `curl`. By default, it uses the COSI driver image.
+The hook re-uses the COSI driver image (`containers.cosiDriver.image`) which includes `/bin/sh` and `wget`.
 
 | Parameter | Default | Description |
 |-----------|---------|-------------|
 | `preUpgradeHook.enabled` | `true` | Enable/disable the pre-upgrade hook |
-| `preUpgradeHook.image` | `quay.io/hpestorage/cosi-driver:v2.0.0` | Image used for the hook job |
 
 To disable the hook and manually delete the Deployment:
 
