@@ -56,7 +56,5 @@ resources: {}
 # podEvictionToleration -- Pod Toleration time in seconds
 podEvictionToleration: 300
 
-# preUpgradeHook -- Configuration for the pre-upgrade hook that handles immutable selector field changes
-preUpgradeHook:
-  # preUpgradeHook.enabled -- Enable the pre-upgrade hook to delete deployment before upgrade
-  enabled: true
+# preUpgradeHookEnabled -- Enable the pre-upgrade hook to delete deployment before upgrade
+preUpgradeHookEnabled: true

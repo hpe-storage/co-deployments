@@ -62,40 +62,6 @@ Monitor the deployment of the COSI driver `Pods`:
 kubectl -n default get pods -w
 ```
 
-## Upgrading from v1.x to v2.x
-
-The chart includes a **pre-upgrade hook** that automatically handles the Deployment selector label changes between v1.x and v2.x. Simply run:
-
-```
-helm upgrade <release-name> hpe-storage/hpe-cosi-driver -n <namespace>
-```
-
-The hook deletes the existing Deployment before the upgrade, allowing Helm to recreate it with the corrected selector labels. Existing `BucketClaim` and `BucketAccess` resources are not affected.
-
-**Note:** There will be a brief period of unavailability for the COSI provisioner during the upgrade until the new Pod is running.
-
-### Pre-upgrade Hook Configuration
-
-The hook re-uses the COSI driver image (`containers.cosiDriver.image`) which includes `/bin/sh` and `wget`.
-
-| Parameter | Default | Description |
-|-----------|---------|-------------|
-| `preUpgradeHook.enabled` | `true` | Enable/disable the pre-upgrade hook |
-
-To disable the hook and manually delete the Deployment:
-
-```
-helm upgrade <release-name> hpe-storage/hpe-cosi-driver -n <namespace> \
-  --set preUpgradeHook.enabled=false
-```
-
-**Note:** If the hook is disabled, you must manually delete the Deployment before upgrading:
-
-```
-kubectl delete deployment hpe-cosi-provisioner -n <namespace>
-helm upgrade <release-name> hpe-storage/hpe-cosi-driver -n <namespace>
-```
-
 ## Using
 
 Refer to the [HPE COSI Driver for Kubernetes](https://scod.hpedev.io/cosi_driver/deployment.html#add_an_hpe_storage_backend) documentation on SCOD. Also, it's helpful to be familiar with [object storage management](https://kubernetes.io/blog/2022/09/02/cosi-kubernetes-object-storage-management/) in Kubernetes prior to deploying workloads utilizing object storage.

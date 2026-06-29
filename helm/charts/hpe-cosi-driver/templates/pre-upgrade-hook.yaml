@@ -1,7 +1,7 @@
 # © Copyright Hewlett Packard Enterprise Development LP
 # Pre-upgrade hook to delete the deployment before upgrade
 # This prevents "spec.selector: field is immutable" errors
-{{- if .Values.preUpgradeHook.enabled }}
+{{- if .Values.preUpgradeHookEnabled }}
 ---
 apiVersion: v1
 kind: ServiceAccount

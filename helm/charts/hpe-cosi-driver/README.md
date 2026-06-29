@@ -37,8 +37,7 @@ The following parameters are supported by the Helm chart. During normal circumst
 | deployment.name | string | `"hpe-cosi-provisioner"` | The name of the driver's Kubernetes deployment |
 | fullnameOverride | string | `"hpe-cosi-driver"` | Name of deployment |
 | podEvictionToleration | int | `300` | Pod Toleration time in seconds |
-| preUpgradeHook | object | `{"enabled":true}` | Configuration for the pre-upgrade hook that handles immutable selector field changes |
-| preUpgradeHook.enabled | bool | `true` | Enable the pre-upgrade hook to delete deployment before upgrade |
+| preUpgradeHookEnabled | bool | `true` | Enable the pre-upgrade hook to delete deployment before upgrade |
 | regSecretName | string | `""` | Secret that contains the private image registry credentials to pull the cosiDriver image |
 | resources | object | `{}` | Resources such as CPU limits, Memory limits, CPU request and Memory request applied to the COSI driver and the COSI sidecar individually. |
 
@@ -78,40 +77,6 @@ Monitor the deployment of the COSI driver `Pods`:
 
 ```
 kubectl -n default get pods -w
-```
-
-## Upgrading from v1.x to v2.x
-
-The chart includes a **pre-upgrade hook** that automatically handles the Deployment selector label changes between v1.x and v2.x. Simply run:
-
-```
-helm upgrade <release-name> hpe-storage/hpe-cosi-driver -n <namespace>
-```
-
-The hook deletes the existing Deployment before the upgrade, allowing Helm to recreate it with the corrected selector labels. Existing `BucketClaim` and `BucketAccess` resources are not affected.
-
-**Note:** There will be a brief period of unavailability for the COSI provisioner during the upgrade until the new Pod is running.
-
-### Pre-upgrade Hook Configuration
-
-The hook re-uses the COSI driver image (`containers.cosiDriver.image`) which includes `/bin/sh` and `wget`.
-
-| Parameter | Default | Description |
-|-----------|---------|-------------|
-| `preUpgradeHook.enabled` | `true` | Enable/disable the pre-upgrade hook |
-
-To disable the hook and manually delete the Deployment:
-
-```
-helm upgrade <release-name> hpe-storage/hpe-cosi-driver -n <namespace> \
-  --set preUpgradeHook.enabled=false
-```
-
-**Note:** If the hook is disabled, you must manually delete the Deployment before upgrading:
-
-```
-kubectl delete deployment hpe-cosi-provisioner -n <namespace>
-helm upgrade <release-name> hpe-storage/hpe-cosi-driver -n <namespace>
 ```
 
 ## Using
