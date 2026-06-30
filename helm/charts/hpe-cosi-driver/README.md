@@ -37,6 +37,7 @@ The following parameters are supported by the Helm chart. During normal circumst
 | deployment.name | string | `"hpe-cosi-provisioner"` | The name of the driver's Kubernetes deployment |
 | fullnameOverride | string | `"hpe-cosi-driver"` | Name of deployment |
 | podEvictionToleration | int | `300` | Pod Toleration time in seconds |
+| preUpgradeHookEnabled | bool | `true` | Enable the pre-upgrade hook to delete deployment before upgrade |
 | regSecretName | string | `""` | Secret that contains the private image registry credentials to pull the cosiDriver image |
 | resources | object | `{}` | Resources such as CPU limits, Memory limits, CPU request and Memory request applied to the COSI driver and the COSI sidecar individually. |
 

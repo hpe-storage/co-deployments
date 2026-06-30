@@ -1,0 +1,116 @@
+# © Copyright Hewlett Packard Enterprise Development LP
+# Pre-upgrade hook to delete the deployment before upgrade
+# This prevents "spec.selector: field is immutable" errors
+{{- if .Values.preUpgradeHookEnabled }}
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: {{ .Values.deployment.name }}-pre-upgrade
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{- include "hpe-cosi-driver.labels" . | nindent 4 }}
+  annotations:
+    "helm.sh/hook": pre-upgrade
+    "helm.sh/hook-weight": "-5"
+    "helm.sh/hook-delete-policy": before-hook-creation,hook-succeeded
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: {{ .Values.deployment.name }}-pre-upgrade
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{- include "hpe-cosi-driver.labels" . | nindent 4 }}
+  annotations:
+    "helm.sh/hook": pre-upgrade
+    "helm.sh/hook-weight": "-5"
+    "helm.sh/hook-delete-policy": before-hook-creation,hook-succeeded
+rules:
+  - apiGroups: ["apps"]
+    resources: ["deployments"]
+    verbs: ["get", "delete"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: {{ .Values.deployment.name }}-pre-upgrade
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{- include "hpe-cosi-driver.labels" . | nindent 4 }}
+  annotations:
+    "helm.sh/hook": pre-upgrade
+    "helm.sh/hook-weight": "-5"
+    "helm.sh/hook-delete-policy": before-hook-creation,hook-succeeded
+subjects:
+  - kind: ServiceAccount
+    name: {{ .Values.deployment.name }}-pre-upgrade
+    namespace: {{ .Release.Namespace }}
+roleRef:
+  kind: Role
+  name: {{ .Values.deployment.name }}-pre-upgrade
+  apiGroup: rbac.authorization.k8s.io
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ .Values.deployment.name }}-pre-upgrade
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{- include "hpe-cosi-driver.labels" . | nindent 4 }}
+  annotations:
+    "helm.sh/hook": pre-upgrade
+    "helm.sh/hook-weight": "0"
+    "helm.sh/hook-delete-policy": before-hook-creation,hook-succeeded
+spec:
+  ttlSecondsAfterFinished: 60
+  template:
+    metadata:
+      name: {{ .Values.deployment.name }}-pre-upgrade
+      labels:
+        {{- include "hpe-cosi-driver.selectorLabels" . | nindent 8 }}
+    spec:
+      serviceAccountName: {{ .Values.deployment.name }}-pre-upgrade
+      restartPolicy: Never
+      containers:
+        - name: pre-upgrade
+          image: {{ .Values.containers.cosiDriver.image }}
+          command:
+            - /bin/sh
+            - -c
+            - |
+              set -e
+              APISERVER="https://kubernetes.default.svc"
+              TOKEN=$(cat /var/run/secrets/kubernetes.io/serviceaccount/token)
+              CACERT=/var/run/secrets/kubernetes.io/serviceaccount/ca.crt
+              NAMESPACE="{{ .Release.Namespace }}"
+              DEPLOYMENT="{{ .Values.deployment.name }}"
+              
+              # Function to make HTTP request (tries wget first, then curl)
+              http_request() {
+                METHOD=$1
+                URL=$2
+                if command -v wget > /dev/null 2>&1; then
+                  wget -q --ca-certificate=${CACERT} \
+                    --header="Authorization: Bearer ${TOKEN}" \
+                    --method=${METHOD} \
+                    -O - "${URL}" 2>/dev/null
+                elif command -v curl > /dev/null 2>&1; then
+                  curl -s --cacert ${CACERT} \
+                    -H "Authorization: Bearer ${TOKEN}" \
+                    -X ${METHOD} "${URL}"
+                else
+                  echo "ERROR: Neither wget nor curl found in image"
+                  exit 1
+                fi
+              }
+              
+              echo "Checking for existing deployment ${DEPLOYMENT}..."
+              if http_request GET "${APISERVER}/apis/apps/v1/namespaces/${NAMESPACE}/deployments/${DEPLOYMENT}" > /dev/null 2>&1; then
+                echo "Deleting deployment ${DEPLOYMENT} to handle immutable selector fields..."
+                http_request DELETE "${APISERVER}/apis/apps/v1/namespaces/${NAMESPACE}/deployments/${DEPLOYMENT}"
+                echo "Deployment deleted successfully"
+              else
+                echo "Deployment ${DEPLOYMENT} not found, skipping deletion"
+              fi
+{{- end }}

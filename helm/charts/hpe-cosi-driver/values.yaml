@@ -55,3 +55,6 @@ resources: {}
   #   memory: 128Mi
 # podEvictionToleration -- Pod Toleration time in seconds
 podEvictionToleration: 300
+
+# preUpgradeHookEnabled -- Enable the pre-upgrade hook to delete deployment before upgrade
+preUpgradeHookEnabled: true

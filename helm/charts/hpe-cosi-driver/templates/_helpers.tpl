@@ -38,6 +38,9 @@ Common labels
 {{- define "hpe-cosi-driver.labels" -}}
 helm.sh/chart: {{ include "hpe-cosi-driver.chart" . }}
 {{ include "hpe-cosi-driver.selectorLabels" . }}
+{{- if .Chart.AppVersion }}
+app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
+{{- end }}
 app.kubernetes.io/managed-by: {{ .Release.Service }}
 {{- end }}
 
@@ -46,9 +49,6 @@ Selector labels
 */}}
 {{- define "hpe-cosi-driver.selectorLabels" -}}
 app.kubernetes.io/name: {{ include "hpe-cosi-driver.name" . }}
-{{- if .Chart.AppVersion }}
-app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
-{{- end }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 app.kubernetes.io/part-of: {{ .Values.componentName | quote }}
 {{- end }}
