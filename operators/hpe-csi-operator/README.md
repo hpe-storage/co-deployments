@@ -39,7 +39,7 @@ o------------------------o           o-----------------------o
 
 ## Testing and building for OLM
 
-Install the `operator-sdk` binary on your computer, `docker`, `docker-buildx`, `make` and `sed` is also needed.
+Install the `operator-sdk` binary on your computer, `docker`, `docker-buildx`, `yq`, `make` and `sed` is also needed.
 
 On you cluster, install OLM (ensure your KUBECONFIG points to a cluster).
 

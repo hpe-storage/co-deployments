@@ -48,8 +48,7 @@ init:
 		--version v1 \
 		--kind HPECSIDriver \
 		--project-name $(VANITY_NAME) \
-                --helm-chart ../../../docs/$(CHART)-$(VERSION).tgz \
-                --helm-chart-version $(SOURCE_VERSION)
+                --helm-chart ../../../docs/$(CHART)-$(SOURCE_VERSION).tgz \
 
         # Build & push our base Helm Operator with latest UBI images
 	git clone https://github.com/operator-framework/operator-sdk
@@ -74,6 +73,10 @@ prep: init
 	# Fix memory on the manager.
 	sed -i.remove -e "s/memory: 128Mi/memory: 1Gi/g" $(IMAGE_NAME)/config/manager/manager.yaml && \
 		rm -f $(IMAGE_NAME)/config/manager/manager.yaml.remove
+
+        # Restrict manager to only watch installed Namespace
+	yq -i '.spec.template.spec.containers[0].env += [{"name": "WATCH_NAMESPACE", "valueFrom": {"fieldRef": {"fieldPath": "metadata.namespace"}}}]' \
+		$(IMAGE_NAME)/config/manager/manager.yaml
 	
 	# Dockerfile for operator
 	sed -e "s|%FROM%|FROM $(OPERATOR_SDK_URL)|" sources/operator.Dockerfile > $(IMAGE_NAME)/Dockerfile
