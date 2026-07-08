@@ -48,7 +48,7 @@ init:
 		--version v1 \
 		--kind HPECSIDriver \
 		--project-name $(VANITY_NAME) \
-                --helm-chart ../../../docs/$(CHART)-$(SOURCE_VERSION).tgz \
+                --helm-chart ../../../docs/$(CHART)-$(SOURCE_VERSION).tgz
 
         # Build & push our base Helm Operator with latest UBI images
 	git clone https://github.com/operator-framework/operator-sdk
