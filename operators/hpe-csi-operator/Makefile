@@ -3,7 +3,7 @@ VERSION ?= 0.0.0
 SOURCE_VERSION ?= $(VERSION)
 REPO_NAME ?= quay.io/myrepo
 # Do not use < 1.38.0
-OPERATOR_SDK_TAG = v1.42.2
+OPERATOR_SDK_TAG = v1.42.3
 OPERATOR_SDK = 'operator-sdk version: "$(OPERATOR_SDK_TAG)"'
 
 # Don't set these, preferably
@@ -48,7 +48,7 @@ init:
 		--version v1 \
 		--kind HPECSIDriver \
 		--project-name $(VANITY_NAME) \
-                --helm-chart ../../../docs/$(CHART)-$(SOURCE_VERSION).tgz \
+                --helm-chart ../../../docs/$(CHART)-$(SOURCE_VERSION).tgz
 
         # Build & push our base Helm Operator with latest UBI images
 	git clone https://github.com/operator-framework/operator-sdk
@@ -157,9 +157,6 @@ certified: prep
 	# Create certified-operators content
 	rm -rf $(CERTIFIED_OUTPUT)/*
 	cp -f -a $(IMAGE_NAME)/bundle/* $(CERTIFIED_OUTPUT)
-	sed -i.remove -e "s|$(REPO_NAME)/$(IMAGE_NAME)|$(RH_REPO_NAME)/$(IMAGE_NAME)|g" -e "/replaces: /d" \
-		$(CERTIFIED_OUTPUT)/manifests/hpe-csi-operator.clusterserviceversion.yaml && \
-		rm -f $(CERTIFIED_OUTPUT)/manifests/hpe-csi-operator.clusterserviceversion.yaml.remove
 
 	# Rename certified display name
 	sed -i.remove -e "s/$(COMMUNITY_DISPLAY_NAME)/$(CERTIFIED_DISPLAY_NAME)/g" \
