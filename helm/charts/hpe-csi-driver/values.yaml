@@ -33,6 +33,12 @@ disableHostDeletion: false
 # Disable pre-install hooks when the chart is rendered outside of Kubernetes, such as CI/CD systems
 disablePreInstallHooks: false
 
+# Set to true to generate a unique hash for storage backends that have hostname length limitations
+disableHostname: false
+
+# Max hostname length accepted by the storage backend when disableHostname is true
+maxHostnameLength: 31
+
 # imagePullPolicy applied for all hpe-csi-driver images
 imagePullPolicy: "IfNotPresent"
 

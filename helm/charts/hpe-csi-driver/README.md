@@ -44,6 +44,8 @@ The following table lists the configurable parameters of the chart and their def
 | disableNodeMonitor        | Disables the Node Monitor that manages stale storage resources.                                    | false            |
 | disableHostDeletion       | Disables host deletion by the CSP when no volumes are associated with the host.                    | false            |
 | disablePreInstallHooks    | Disable pre-install hooks when the chart is rendered outside of Kubernetes, such as CI/CD systems. | false            |
+| disableHostname           | Set to `true` to generate a unique hash for storage backends that have hostname length limitations. | false           |
+| maxHostnameLength         | Max hostname length accepted by the storage backend when `disableHostname` is true.                | 31               |
 | imagePullPolicy           | Image pull policy (`Always`, `IfNotPresent`, `Never`).                                             | IfNotPresent     |
 | iscsi.chapSecretName      | Secret containing chapUser and chapPassword for iSCSI                                              | ""               |
 | logLevel                  | Log level. Can be one of `info`, `debug`, `trace`, `warn` and `error`.                             | info             |

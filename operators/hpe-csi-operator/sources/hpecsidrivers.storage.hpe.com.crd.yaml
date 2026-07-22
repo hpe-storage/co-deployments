@@ -83,6 +83,12 @@ spec:
               disableHostDeletion:
                 description: Disables host deletion by the CSP when no volumes are associated with the host
                 type: boolean
+              disableHostname:
+                description: Set to true to generate a unique hash for storage backends that have hostname length limitations
+                type: boolean
+              maxHostnameLength:
+                description: Max hostname length accepted by the storage backend when disableHostname is true
+                type: integer
               imagePullPolicy:
                 description: Image Pull Policy for HPE CSI driver images
                 type: string

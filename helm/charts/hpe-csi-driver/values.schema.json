@@ -18,6 +18,8 @@
             "disableNodeConfiguration": false,
             "disableHostDeletion": false,
             "disablePreInstallHooks": false,
+            "disableHostname": false,
+            "maxHostnameLength": 31,
             "imagePullPolicy": "IfNotPresent",
             "iscsi": {
                 "chapSecretName": ""
@@ -61,6 +63,8 @@
         "kubeletRootDir",
         "disableNodeGetVolumeStats",
         "disableNodeMonitor",
+        "disableHostname",
+        "maxHostnameLength",
 	"maxVolumesPerNode",
         "csp",
         "controller",
@@ -165,6 +169,20 @@
             "description": "Disable pre-install hooks when the chart is rendered outside of Kubernetes, such as CI/CD systems.",
             "type": "boolean",
             "default": false
+        },
+        "disableHostname": {
+            "$id": "#/properties/disableHostname",
+            "title": "Disable hostname",
+            "description": "Set to true to generate a unique hash for storage backends that have hostname length limitations.",
+            "type": "boolean",
+            "default": false
+        },
+        "maxHostnameLength": {
+            "$id": "#/properties/maxHostnameLength",
+            "title": "Max hostname length",
+            "description": "Max hostname length accepted by the storage backend when disableHostname is true.",
+            "type": "integer",
+            "default": 31
         },
         "imagePullPolicy": {
             "$id": "#/properties/imagePullPolicy",
