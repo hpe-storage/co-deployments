@@ -118,6 +118,9 @@ spec:
             - name: CHAP_SECRET_NAMESPACE
               value: {{ .Release.Namespace }}
             {{- end }}
+            {{- if or .Values.goDebug .Values.goMemLimitPercent }}
+            {{- include "hpe-csi-driver.goRuntimeEnv" (dict "root" $ "resources" .Values.controller.resources) | nindent 12 }}
+            {{- end }}
           imagePullPolicy: {{ .Values.imagePullPolicy | quote }}
           volumeMounts:
             - name: socket-dir

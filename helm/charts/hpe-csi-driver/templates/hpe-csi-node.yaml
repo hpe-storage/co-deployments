@@ -80,6 +80,10 @@ spec:
             - name: DISABLE_NODE_MONITOR
               value: "true"
             {{- end }}
+            {{- if .Values.multipathUxsockTimeout }}
+            - name: MULTIPATH_UXSOCK_TIMEOUT
+              value: "{{ .Values.multipathUxsockTimeout }}"
+            {{- end }}
             - name: LOG_LEVEL
               value: {{ .Values.logLevel }}
           imagePullPolicy: {{ .Values.imagePullPolicy | quote }}
@@ -165,6 +169,9 @@ spec:
             {{- if .Values.disableNodeGetVolumeStats }}
             - name: DISABLE_NODE_GET_VOLUMESTATS
               value: "true"
+            {{- end }}
+            {{- if or .Values.goDebug .Values.goMemLimitPercent }}
+            {{- include "hpe-csi-driver.goRuntimeEnv" (dict "root" $ "resources" .Values.node.resources) | nindent 12 }}
             {{- end }}
           imagePullPolicy: {{ .Values.imagePullPolicy | quote }}
           securityContext:

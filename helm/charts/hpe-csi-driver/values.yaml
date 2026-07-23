@@ -27,6 +27,25 @@ disableNodeMonitor: false
 # The number of volumes the CSI controller will publish to an individual node
 maxVolumesPerNode: 100
 
+# multipathd unix-domain-socket timeout (uxsock_timeout) in milliseconds written to
+# /etc/multipath.conf during node init. Raise on heavily-loaded hosts to avoid
+# multipathd command timeouts. Consumed via the MULTIPATH_UXSOCK_TIMEOUT env var.
+multipathUxsockTimeout: 300000
+
+# Go runtime tuning for the long-running HPE Go containers (controller, node
+# hpe-csi-driver, and CSP). Opt-in: when left at the defaults below, no env var
+# is added and rendered manifests are unchanged. See ESC-17696.
+#
+# goDebug is applied verbatim as the GODEBUG env var. On hosts with Transparent
+# Huge Pages set to "always", set "madvdontneed=1" to prevent RSS bloat/OOM.
+goDebug: ""
+#
+# goMemLimitPercent, when > 0, sets GOMEMLIMIT for each container to that
+# percentage of the container's resources.limits.memory (e.g. 90). This makes the
+# Go GC run harder as it approaches the hard limit. Ignored if no memory limit is
+# set on the container. Recommended: 90.
+goMemLimitPercent: 0
+
 # Disables host deletion by the CSP when no volumes are associated with the host
 disableHostDeletion: false
 

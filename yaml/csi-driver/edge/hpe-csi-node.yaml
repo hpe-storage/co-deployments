@@ -67,6 +67,8 @@ spec:
           env:
             - name: CSI_ENDPOINT
               value: unix:///csi/csi.sock
+            - name: MULTIPATH_UXSOCK_TIMEOUT
+              value: "300000"
             - name: LOG_LEVEL
               value: info
           imagePullPolicy: "IfNotPresent"
