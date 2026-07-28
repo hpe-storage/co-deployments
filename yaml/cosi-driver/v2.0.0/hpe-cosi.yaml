@@ -1,0 +1,300 @@
+---
+# Source: hpe-cosi-driver/templates/serviceaccount.yaml
+# © Copyright Hewlett Packard Enterprise Development LP
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: hpe-cosi-provisioner-sa
+  namespace: default
+  labels:
+    helm.sh/chart: hpe-cosi-driver-2.0.0
+    app.kubernetes.io/name: hpe-cosi-driver
+    app.kubernetes.io/instance: hpe-cosi-driver
+    app.kubernetes.io/part-of: "container-object-storage-interface"
+    app.kubernetes.io/version: "2.0.0"
+    app.kubernetes.io/managed-by: Helm
+---
+# Source: hpe-cosi-driver/templates/rbac.yaml
+# © Copyright Hewlett Packard Enterprise Development LP
+kind: ClusterRole
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: hpe-cosi-provisioner-role
+  labels:
+    helm.sh/chart: hpe-cosi-driver-2.0.0
+    app.kubernetes.io/name: hpe-cosi-driver
+    app.kubernetes.io/instance: hpe-cosi-driver
+    app.kubernetes.io/part-of: "container-object-storage-interface"
+    app.kubernetes.io/version: "2.0.0"
+    app.kubernetes.io/managed-by: Helm
+rules:
+- apiGroups: ["objectstorage.k8s.io"]
+  resources: ["buckets", "bucketaccesses","buckets/status", "bucketaccesses/status", "bucketclaims", "bucketclaims/status", "bucketaccessclasses"]
+  verbs: ["get", "list", "watch", "update", "create", "delete"]
+- apiGroups: ["coordination.k8s.io"]
+  resources: ["leases"]
+  verbs: ["get", "watch", "list", "delete", "update", "create"]
+- apiGroups: [""]
+  resources: ["events"]
+  verbs: ["get", "delete", "update", "create", "patch"]
+- apiGroups: [""]
+  resources: ["secrets"]
+  verbs: ["get", "create", "update", "delete"]
+- apiGroups: [""]
+  resources: ["namespaces"]
+  verbs: ["get", "list"]
+---
+# Source: hpe-cosi-driver/templates/rbac.yaml
+kind: ClusterRoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: hpe-cosi-provisioner-role-binding
+  labels:
+    helm.sh/chart: hpe-cosi-driver-2.0.0
+    app.kubernetes.io/name: hpe-cosi-driver
+    app.kubernetes.io/instance: hpe-cosi-driver
+    app.kubernetes.io/part-of: "container-object-storage-interface"
+    app.kubernetes.io/version: "2.0.0"
+    app.kubernetes.io/managed-by: Helm
+subjects:
+  - kind: ServiceAccount
+    name: hpe-cosi-provisioner-sa
+    namespace: default
+roleRef:
+  kind: ClusterRole
+  name: hpe-cosi-provisioner-role
+  apiGroup: rbac.authorization.k8s.io
+---
+# Source: hpe-cosi-driver/templates/deployment.yaml
+# © Copyright Hewlett Packard Enterprise Development LP
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hpe-cosi-provisioner
+  namespace: default
+  labels:
+    helm.sh/chart: hpe-cosi-driver-2.0.0
+    app.kubernetes.io/name: hpe-cosi-driver
+    app.kubernetes.io/instance: hpe-cosi-driver
+    app.kubernetes.io/part-of: "container-object-storage-interface"
+    app.kubernetes.io/version: "2.0.0"
+    app.kubernetes.io/managed-by: Helm
+spec:
+  replicas: 1
+  minReadySeconds: 30
+  progressDeadlineSeconds: 600
+  revisionHistoryLimit: 3
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: hpe-cosi-driver
+      app.kubernetes.io/instance: hpe-cosi-driver
+      app.kubernetes.io/part-of: "container-object-storage-interface"
+  template:
+    metadata:
+      annotations:
+        kubectl.kubernetes.io/default-container: hpe-cosi-driver
+      labels:
+        app.kubernetes.io/name: hpe-cosi-driver
+        app.kubernetes.io/instance: hpe-cosi-driver
+        app.kubernetes.io/part-of: "container-object-storage-interface"
+    spec:
+      serviceAccountName: hpe-cosi-provisioner-sa
+      securityContext:
+        runAsNonRoot: true
+      volumes:
+      - name: socket
+        emptyDir: {}
+      containers:
+        - name: hpe-cosi-driver
+          image: quay.io/hpestorage/cosi-driver:v2.0.0
+          imagePullPolicy: IfNotPresent
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL
+            seccompProfile:
+              type: RuntimeDefault
+          volumeMounts:
+          - mountPath: /var/lib/cosi
+            name: socket
+          env:
+          - name: POD_NAMESPACE
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.namespace
+          - name: PROXY
+            value: ""
+          - name: GLCP_COMMON_CLOUD
+            value: "global.api.greenlake.hpe.com"
+        - name: hpe-cosi-provisioner-sidecar
+          image: registry.k8s.io/sig-storage/objectstorage-sidecar:v0.2.2
+          imagePullPolicy: IfNotPresent
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL
+            seccompProfile:
+              type: RuntimeDefault
+          args:
+          - "--v=5"
+          volumeMounts:
+          - mountPath: /var/lib/cosi
+            name: socket
+      tolerations:
+      - key: "node.kubernetes.io/not-ready"
+        operator: "Exists"
+        effect: "NoExecute"
+        tolerationSeconds: 300
+      - key: "node.kubernetes.io/unreachable"
+        operator: "Exists"
+        effect: "NoExecute"
+        tolerationSeconds: 300
+---
+# Source: hpe-cosi-driver/templates/pre-upgrade-hook.yaml
+# © Copyright Hewlett Packard Enterprise Development LP
+# Pre-upgrade hook to delete the deployment before upgrade
+# This prevents "spec.selector: field is immutable" errors
+---
+# Source: hpe-cosi-driver/templates/pre-upgrade-hook.yaml
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: hpe-cosi-provisioner-pre-upgrade
+  namespace: default
+  labels:
+    helm.sh/chart: hpe-cosi-driver-2.0.0
+    app.kubernetes.io/name: hpe-cosi-driver
+    app.kubernetes.io/instance: hpe-cosi-driver
+    app.kubernetes.io/part-of: "container-object-storage-interface"
+    app.kubernetes.io/version: "2.0.0"
+    app.kubernetes.io/managed-by: Helm
+  annotations:
+    "helm.sh/hook": pre-upgrade
+    "helm.sh/hook-weight": "-5"
+    "helm.sh/hook-delete-policy": before-hook-creation,hook-succeeded
+---
+# Source: hpe-cosi-driver/templates/pre-upgrade-hook.yaml
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: hpe-cosi-provisioner-pre-upgrade
+  namespace: default
+  labels:
+    helm.sh/chart: hpe-cosi-driver-2.0.0
+    app.kubernetes.io/name: hpe-cosi-driver
+    app.kubernetes.io/instance: hpe-cosi-driver
+    app.kubernetes.io/part-of: "container-object-storage-interface"
+    app.kubernetes.io/version: "2.0.0"
+    app.kubernetes.io/managed-by: Helm
+  annotations:
+    "helm.sh/hook": pre-upgrade
+    "helm.sh/hook-weight": "-5"
+    "helm.sh/hook-delete-policy": before-hook-creation,hook-succeeded
+rules:
+  - apiGroups: ["apps"]
+    resources: ["deployments"]
+    verbs: ["get", "delete"]
+---
+# Source: hpe-cosi-driver/templates/pre-upgrade-hook.yaml
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: hpe-cosi-provisioner-pre-upgrade
+  namespace: default
+  labels:
+    helm.sh/chart: hpe-cosi-driver-2.0.0
+    app.kubernetes.io/name: hpe-cosi-driver
+    app.kubernetes.io/instance: hpe-cosi-driver
+    app.kubernetes.io/part-of: "container-object-storage-interface"
+    app.kubernetes.io/version: "2.0.0"
+    app.kubernetes.io/managed-by: Helm
+  annotations:
+    "helm.sh/hook": pre-upgrade
+    "helm.sh/hook-weight": "-5"
+    "helm.sh/hook-delete-policy": before-hook-creation,hook-succeeded
+subjects:
+  - kind: ServiceAccount
+    name: hpe-cosi-provisioner-pre-upgrade
+    namespace: default
+roleRef:
+  kind: Role
+  name: hpe-cosi-provisioner-pre-upgrade
+  apiGroup: rbac.authorization.k8s.io
+---
+# Source: hpe-cosi-driver/templates/pre-upgrade-hook.yaml
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: hpe-cosi-provisioner-pre-upgrade
+  namespace: default
+  labels:
+    helm.sh/chart: hpe-cosi-driver-2.0.0
+    app.kubernetes.io/name: hpe-cosi-driver
+    app.kubernetes.io/instance: hpe-cosi-driver
+    app.kubernetes.io/part-of: "container-object-storage-interface"
+    app.kubernetes.io/version: "2.0.0"
+    app.kubernetes.io/managed-by: Helm
+  annotations:
+    "helm.sh/hook": pre-upgrade
+    "helm.sh/hook-weight": "0"
+    "helm.sh/hook-delete-policy": before-hook-creation,hook-succeeded
+spec:
+  ttlSecondsAfterFinished: 60
+  template:
+    metadata:
+      name: hpe-cosi-provisioner-pre-upgrade
+      labels:
+        app.kubernetes.io/name: hpe-cosi-driver
+        app.kubernetes.io/instance: hpe-cosi-driver
+        app.kubernetes.io/part-of: "container-object-storage-interface"
+    spec:
+      serviceAccountName: hpe-cosi-provisioner-pre-upgrade
+      restartPolicy: Never
+      containers:
+        - name: pre-upgrade
+          image: quay.io/hpestorage/cosi-driver:v2.0.0
+          command:
+            - /bin/sh
+            - -c
+            - |
+              set -e
+              APISERVER="https://kubernetes.default.svc"
+              TOKEN=$(cat /var/run/secrets/kubernetes.io/serviceaccount/token)
+              CACERT=/var/run/secrets/kubernetes.io/serviceaccount/ca.crt
+              NAMESPACE="default"
+              DEPLOYMENT="hpe-cosi-provisioner"
+              
+              # Function to make HTTP request (tries wget first, then curl)
+              http_request() {
+                METHOD=$1
+                URL=$2
+                if command -v wget > /dev/null 2>&1; then
+                  wget -q --ca-certificate=${CACERT} \
+                    --header="Authorization: Bearer ${TOKEN}" \
+                    --method=${METHOD} \
+                    -O - "${URL}" 2>/dev/null
+                elif command -v curl > /dev/null 2>&1; then
+                  curl -s --cacert ${CACERT} \
+                    -H "Authorization: Bearer ${TOKEN}" \
+                    -X ${METHOD} "${URL}"
+                else
+                  echo "ERROR: Neither wget nor curl found in image"
+                  exit 1
+                fi
+              }
+              
+              echo "Checking for existing deployment ${DEPLOYMENT}..."
+              if http_request GET "${APISERVER}/apis/apps/v1/namespaces/${NAMESPACE}/deployments/${DEPLOYMENT}" > /dev/null 2>&1; then
+                echo "Deleting deployment ${DEPLOYMENT} to handle immutable selector fields..."
+                http_request DELETE "${APISERVER}/apis/apps/v1/namespaces/${NAMESPACE}/deployments/${DEPLOYMENT}"
+                echo "Deployment deleted successfully"
+              else
+                echo "Deployment ${DEPLOYMENT} not found, skipping deletion"
+              fi

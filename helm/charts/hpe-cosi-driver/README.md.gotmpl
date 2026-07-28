@@ -1,6 +1,6 @@
 ## HPE COSI Driver for Kubernetes Helm Chart
 
-The HPE COSI Driver for Kubernetes leverages Hewlett Packard Enterprise object storage platforms to provide scalable S3 compatible object storage for workloads running on Kubernetes. Currently supported object storage platforms include HPE Alletra Storage MP X10000.
+The HPE COSI Driver for Kubernetes leverages Hewlett Packard Enterprise object storage platforms to provide scalable S3 compatible object storage for workloads running on Kubernetes. Currently supported object storage platforms include HPE Alletra Storage MP X10000 and HPE Alletra Storage MP Disconnected.
 
 ## Release Highlights
 
@@ -12,11 +12,12 @@ The HPE COSI Driver for Kubernetes Helm chart is the primary delivery vehicle fo
 
 ## Prerequisites
 
-1. Kubernetes version v1.25 or later
-2. Helm version v3.11 or later
-3. HPE Alletra Storage MP X10000 object storage details:
+1. Kubernetes version v1.31 to v1.36
+2. OpenShift version v4.19 to v4.21
+3. Helm version v3.11 or later
+4. HPE Alletra Storage MP X10000 or HPE Alletra Storage MP Disconnected object storage details:
 	- Backend protocol used: S3
-	- Features available to the COSI driver: Bucket creation and deletion, granting and revoking bucket access
+	- Features available to the COSI driver: Bucket creation and deletion with support for compression, locking, and versioning; granting and revoking bucket access
 
 ## Configuration and Installation
 
