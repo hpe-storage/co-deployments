@@ -1,11 +1,11 @@
 ---
 # Source: hpe-cosi-driver/templates/serviceaccount.yaml
-# © Copyright Hewlett Packard Enterprise Development LP
+# © Copyright 2025 Hewlett Packard Enterprise Development LP
 apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: hpe-cosi-provisioner-sa
-  namespace: default
+  namespace: hpe-storage
   labels:
     helm.sh/chart: hpe-cosi-driver-2.0.0
     app.kubernetes.io/name: hpe-cosi-driver
@@ -15,7 +15,7 @@ metadata:
     app.kubernetes.io/managed-by: Helm
 ---
 # Source: hpe-cosi-driver/templates/rbac.yaml
-# © Copyright Hewlett Packard Enterprise Development LP
+# © Copyright 2025 Hewlett Packard Enterprise Development LP
 kind: ClusterRole
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
@@ -59,19 +59,19 @@ metadata:
 subjects:
   - kind: ServiceAccount
     name: hpe-cosi-provisioner-sa
-    namespace: default
+    namespace: hpe-storage
 roleRef:
   kind: ClusterRole
   name: hpe-cosi-provisioner-role
   apiGroup: rbac.authorization.k8s.io
 ---
 # Source: hpe-cosi-driver/templates/deployment.yaml
-# © Copyright Hewlett Packard Enterprise Development LP
+# © Copyright 2025 Hewlett Packard Enterprise Development LP
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: hpe-cosi-provisioner
-  namespace: default
+  namespace: hpe-storage
   labels:
     helm.sh/chart: hpe-cosi-driver-2.0.0
     app.kubernetes.io/name: hpe-cosi-driver
@@ -167,7 +167,7 @@ apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: hpe-cosi-provisioner-pre-upgrade
-  namespace: default
+  namespace: hpe-storage
   labels:
     helm.sh/chart: hpe-cosi-driver-2.0.0
     app.kubernetes.io/name: hpe-cosi-driver
@@ -185,7 +185,7 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
   name: hpe-cosi-provisioner-pre-upgrade
-  namespace: default
+  namespace: hpe-storage
   labels:
     helm.sh/chart: hpe-cosi-driver-2.0.0
     app.kubernetes.io/name: hpe-cosi-driver
@@ -207,7 +207,7 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
   name: hpe-cosi-provisioner-pre-upgrade
-  namespace: default
+  namespace: hpe-storage
   labels:
     helm.sh/chart: hpe-cosi-driver-2.0.0
     app.kubernetes.io/name: hpe-cosi-driver
@@ -222,18 +222,36 @@ metadata:
 subjects:
   - kind: ServiceAccount
     name: hpe-cosi-provisioner-pre-upgrade
-    namespace: default
+    namespace: hpe-storage
 roleRef:
   kind: Role
   name: hpe-cosi-provisioner-pre-upgrade
   apiGroup: rbac.authorization.k8s.io
+---
+# Source: hpe-cosi-driver/templates/tests/test-hpe-cosi-driver.yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: "hpe-cosi-driver-test-deployment"
+  namespace: hpe-storage
+  labels:
+    app: hpe-cosi-driver
+  annotations:
+    "helm.sh/hook": test
+spec:
+  containers:
+    - name: hpe-cosi-driver
+      image: quay.io/hpestorage/cosi-driver:v2.0.0
+      imagePullPolicy: "IfNotPresent"
+      command: ['sh', '-c', 'echo test hook Pod has been run, nothing to test for now. && exit 0']
+  restartPolicy: Never
 ---
 # Source: hpe-cosi-driver/templates/pre-upgrade-hook.yaml
 apiVersion: batch/v1
 kind: Job
 metadata:
   name: hpe-cosi-provisioner-pre-upgrade
-  namespace: default
+  namespace: hpe-storage
   labels:
     helm.sh/chart: hpe-cosi-driver-2.0.0
     app.kubernetes.io/name: hpe-cosi-driver
@@ -268,7 +286,7 @@ spec:
               APISERVER="https://kubernetes.default.svc"
               TOKEN=$(cat /var/run/secrets/kubernetes.io/serviceaccount/token)
               CACERT=/var/run/secrets/kubernetes.io/serviceaccount/ca.crt
-              NAMESPACE="default"
+              NAMESPACE="hpe-storage"
               DEPLOYMENT="hpe-cosi-provisioner"
               
               # Function to make HTTP request (tries wget first, then curl)
