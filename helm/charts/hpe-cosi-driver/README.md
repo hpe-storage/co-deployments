@@ -16,7 +16,7 @@ The HPE COSI Driver for Kubernetes Helm chart is the primary delivery vehicle fo
 2. Helm version v3.11 or later
 3. HPE Alletra Storage MP X10000 object storage details:
 	- Backend protocol used: S3
-	- Features available to the COSI driver: Bucket creation and deletion, granting and revoking bucket access
+	- Features available to the COSI driver: Bucket creation and deletion with support for compression, locking, and versioning; granting and revoking bucket access
 
 ## Configuration and Installation
 
@@ -27,7 +27,7 @@ The following parameters are supported by the Helm chart. During normal circumst
 | accessManagement.glcpCommonCloud | string | `"global.api.greenlake.hpe.com"` | HPE GLCP common cloud URL |
 | accessManagement.proxy | string | `""` | Proxy url if any to be used |
 | componentName | string | `"container-object-storage-interface"` |  |
-| containers.cosiDriver.image | string | `"quay.io/hpestorage/cosi-driver:v1.0.0"` | Fully qualified registry path of cosiDriver |
+| containers.cosiDriver.image | string | `"quay.io/hpestorage/cosi-driver:v2.0.0"` | Fully qualified registry path of cosiDriver |
 | containers.cosiDriver.imagePullPolicy | string | `"IfNotPresent"` | cosiDriver image pull policy |
 | containers.cosiDriver.name | string | `"hpe-cosi-driver"` | Name of the driver's container within the deployment |
 | containers.sideCar.image | string | `"registry.k8s.io/sig-storage/objectstorage-sidecar:v0.2.2"` | Fully qualified registry path of sidecar |
