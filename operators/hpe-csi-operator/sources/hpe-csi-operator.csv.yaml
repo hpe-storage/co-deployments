@@ -175,6 +175,21 @@ spec:
             path: maxVolumesPerNode
             x-descriptors:
               - "urn:alm:descriptor:com.tectonic.ui:number"
+          - displayName: Multipath uxsock_timeout
+            description: "multipathd uxsock_timeout in milliseconds written to /etc/multipath.conf at node init; sets MULTIPATH_UXSOCK_TIMEOUT (default: 300000)"
+            path: multipathUxsockTimeout
+            x-descriptors:
+              - "urn:alm:descriptor:com.tectonic.ui:number"
+          - displayName: GODEBUG
+            description: "GODEBUG env var for the long-running HPE Go containers (controller, node, CSP). Empty disables. Use 'madvdontneed=1' on THP=always hosts (ESC-17696)."
+            path: goDebug
+            x-descriptors:
+              - "urn:alm:descriptor:com.tectonic.ui:text"
+          - displayName: GOMEMLIMIT percent
+            description: "When greater than 0, sets GOMEMLIMIT on those containers to this percent of their memory limit. 0 disables."
+            path: goMemLimitPercent
+            x-descriptors:
+              - "urn:alm:descriptor:com.tectonic.ui:number"
           - displayName: Disable pre-install hooks
             description: "Disable pre-install hooks when the chart is rendered outside of Kubernetes, such as CI/CD systems (default: false)"
             path: disablePreInstallHooks

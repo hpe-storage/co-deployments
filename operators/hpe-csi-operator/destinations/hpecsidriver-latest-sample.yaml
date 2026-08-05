@@ -65,6 +65,9 @@ spec:
   kubeletRootDir: /var/lib/kubelet
   logLevel: info
   maxVolumesPerNode: 100
+  multipathUxsockTimeout: 300000
+  goDebug: ""
+  goMemLimitPercent: 0
   node:
     affinity: {}
     labels: {}

@@ -27,6 +27,9 @@
             "disableNodeGetVolumeStats": false,
             "disableNodeMonitor": false,
 	    "maxVolumesPerNode": 100,
+	    "multipathUxsockTimeout": 300000,
+	    "goDebug": "",
+	    "goMemLimitPercent": 0,
             "csp": {
                 "nodeSelector": {},
                 "tolerations": [],
@@ -229,6 +232,27 @@
             "description": "The maximum amount of volumes the CSI controller will publish to a node.",
             "type": "integer",
             "default": 100
+	},
+	"multipathUxsockTimeout": {
+            "$id": "#/properties/multipathUxsockTimeout",
+            "title": "multipathd uxsock_timeout",
+            "description": "multipathd unix-domain-socket timeout (uxsock_timeout) in milliseconds written to /etc/multipath.conf during node init. Exposed to the node driver as the MULTIPATH_UXSOCK_TIMEOUT environment variable.",
+            "type": "integer",
+            "default": 300000
+	},
+	"goDebug": {
+            "$id": "#/properties/goDebug",
+            "title": "GODEBUG",
+            "description": "Value applied to the GODEBUG env var of the long-running HPE Go containers (controller, node, CSP). Empty disables. On THP=always hosts use 'madvdontneed=1' (ESC-17696).",
+            "type": "string",
+            "default": ""
+	},
+	"goMemLimitPercent": {
+            "$id": "#/properties/goMemLimitPercent",
+            "title": "GOMEMLIMIT percent of memory limit",
+            "description": "When greater than 0, sets GOMEMLIMIT on the long-running HPE Go containers to this percentage of the container's resources.limits.memory. 0 disables.",
+            "type": "integer",
+            "default": 0
 	},
         "csp": {
             "nodeSelector": {

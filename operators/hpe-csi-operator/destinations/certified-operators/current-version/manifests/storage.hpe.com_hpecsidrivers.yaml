@@ -1419,6 +1419,12 @@ spec:
                 description: Disable pre-install hooks when the chart is rendered
                   outside of Kubernetes, such as CI/CD systems
                 type: boolean
+              goDebug:
+                description: GODEBUG value for the long-running HPE Go containers (controller, node, CSP); empty disables. Use 'madvdontneed=1' on THP=always hosts (ESC-17696)
+                type: string
+              goMemLimitPercent:
+                description: When greater than 0, sets GOMEMLIMIT on those containers to this percentage of their memory limit; 0 disables
+                type: integer
               imagePullPolicy:
                 description: Image Pull Policy for HPE CSI driver images
                 type: string
@@ -1491,6 +1497,9 @@ spec:
                 type: string
               maxVolumesPerNode:
                 description: Max volumes per node
+                type: integer
+              multipathUxsockTimeout:
+                description: multipathd uxsock_timeout (in milliseconds) written to /etc/multipath.conf during node init; exposed to the node driver as the MULTIPATH_UXSOCK_TIMEOUT environment variable
                 type: integer
               node:
                 description: Node parameters to be configured
