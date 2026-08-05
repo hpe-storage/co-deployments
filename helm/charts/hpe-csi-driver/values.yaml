@@ -130,11 +130,11 @@ node:
 
 # Release images
 images:
-  csiNodeDriver: quay.io/hpestorage/csi-driver:v3.3.0-alpha2
-  csiControllerDriver: quay.io/hpestorage/csi-driver:v3.3.0-alpha2
+  csiNodeDriver: quay.io/hpestorage/csi-driver:v3.3.0-alpha3
+  csiControllerDriver: quay.io/hpestorage/csi-driver:v3.3.0-alpha3
   nimbleCSP: quay.io/hpestorage/alletra-6000-and-nimble-csp:v3.2.0
-  primera3parCSP: quay.io/hpestorage/alletra-9000-primera-and-3par-csp:v3.3.0-alpha2
-  b10000FileServiceCSP: quay.io/hpestorage/alletrastoragemp-b10000-nfs-csp:v1.3.0-alpha2
+  primera3parCSP: quay.io/hpestorage/alletra-9000-primera-and-3par-csp:v3.3.0-alpha3
+  b10000FileServiceCSP: quay.io/hpestorage/alletrastoragemp-b10000-nfs-csp:v1.3.0-alpha3
   x10000FileServiceCSP: quay.io/hpestorage/alletrastoragemp-x10000-nfs-csp:v1.1.0-alpha2
   nfsProvisioner: quay.io/hpestorage/nfs-provisioner:v3.0.11-alpha2
   csiExtensions: quay.io/hpestorage/csi-extensions:v1.3.0-alpha2
