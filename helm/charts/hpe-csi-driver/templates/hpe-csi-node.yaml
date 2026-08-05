@@ -166,6 +166,14 @@ spec:
             - name: DISABLE_NODE_GET_VOLUMESTATS
               value: "true"
             {{- end }}
+            {{- if .Values.disableHostname }}
+            - name: DISABLE_HOSTNAME
+              value: "true"
+            {{- end }}
+            {{- if and .Values.disableHostname .Values.maxHostnameLength }}
+            - name: MAX_HOSTNAME_LEN
+              value: "{{ .Values.maxHostnameLength }}"
+            {{- end }}
           imagePullPolicy: {{ .Values.imagePullPolicy | quote }}
           securityContext:
             privileged: true

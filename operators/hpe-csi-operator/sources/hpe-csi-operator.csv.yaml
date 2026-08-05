@@ -185,6 +185,16 @@ spec:
             path: disableHostDeletion
             x-descriptors:
               - "urn:alm:descriptor:com.tectonic.ui:booleanSwitch"
+          - displayName: Disable Hostname
+            description: "Set to true to generate a unique hash for storage backends that have hostname length limitations (default: false)"
+            path: disableHostname
+            x-descriptors:
+              - "urn:alm:descriptor:com.tectonic.ui:booleanSwitch"
+          - displayName: Max hostname length
+            description: "Max hostname length accepted by the storage backend when Disable Hostname is true (default: 31)"
+            path: maxHostnameLength
+            x-descriptors:
+              - "urn:alm:descriptor:com.tectonic.ui:number"
           - displayName: iSCSI Configuration
             description: "Configuration for iSCSI CHAP authenticaton"
             path: iscsi
