@@ -107,7 +107,7 @@ metadata:
     capabilities: Basic Install
     categories: Storage
     certified: "true"
-    containerImage: quay.io/hpestorage/csi-driver-operator@sha256:75459a7ff66b9b38fd2baf3cc8e43dffbe005a1bf7ece50220bd71d7bc69078b
+    containerImage: registry.connect.redhat.com/hpestorage/csi-driver-operator@sha256:75459a7ff66b9b38fd2baf3cc8e43dffbe005a1bf7ece50220bd71d7bc69078b
     createdAt: "2026-09-08T17:27:24Z"
     description: A Container Storage Interface (CSI) driver for HPE storage platforms. The CSI driver allows you to use HPE storage with your preferred container orchestrator.
     features.operators.openshift.io/cnf: "false"
@@ -855,7 +855,7 @@ spec:
                         valueFrom:
                           fieldRef:
                             fieldPath: metadata.annotations['olm.targetNamespaces']
-                    image: quay.io/hpestorage/csi-driver-operator@sha256:75459a7ff66b9b38fd2baf3cc8e43dffbe005a1bf7ece50220bd71d7bc69078b
+                    image: registry.connect.redhat.com/hpestorage/csi-driver-operator@sha256:75459a7ff66b9b38fd2baf3cc8e43dffbe005a1bf7ece50220bd71d7bc69078b
                     livenessProbe:
                       httpGet:
                         path: /healthz
@@ -951,13 +951,13 @@ spec:
       name: csi-provisioner-a4b0b1a37605b7b04a293e136edf7006ec1786a8eb3f4e5a945f81d667dcc371-annotation
     - image: registry.k8s.io/sig-storage/csi-node-driver-registrar@sha256:f9de845b170155199f2a2a3f9531cf13d78e31235e9db6b6582a8b0db0a50dad
       name: csi-node-driver-registrar-f9de845b170155199f2a2a3f9531cf13d78e31235e9db6b6582a8b0db0a50dad-annotation
-    - image: quay.io/hpestorage/csi-driver-operator@sha256:75459a7ff66b9b38fd2baf3cc8e43dffbe005a1bf7ece50220bd71d7bc69078b
+    - image: registry.connect.redhat.com/hpestorage/csi-driver-operator@sha256:75459a7ff66b9b38fd2baf3cc8e43dffbe005a1bf7ece50220bd71d7bc69078b
       name: manager
     - image: quay.io/hpestorage/alletra-9000-primera-and-3par-csp@sha256:046215e41416b50f9c1dcf2261109baf595c32e82284527c9f13ce6fbaadda12
       name: alletra-9000-primera-and-3par-csp-046215e41416b50f9c1dcf2261109baf595c32e82284527c9f13ce6fbaadda12-annotation
     - image: quay.io/hpestorage/volume-mutator@sha256:3890d0b3aa89bb3bba43b9b2965a2bfc974d49724cc65c698f03503216cc29d4
       name: volume-mutator-3890d0b3aa89bb3bba43b9b2965a2bfc974d49724cc65c698f03503216cc29d4-annotation
-    - image: quay.io/hpestorage/csi-driver-operator@sha256:75459a7ff66b9b38fd2baf3cc8e43dffbe005a1bf7ece50220bd71d7bc69078b
+    - image: registry.connect.redhat.com/hpestorage/csi-driver-operator@sha256:75459a7ff66b9b38fd2baf3cc8e43dffbe005a1bf7ece50220bd71d7bc69078b
       name: csi-driver-operator-75459a7ff66b9b38fd2baf3cc8e43dffbe005a1bf7ece50220bd71d7bc69078b-annotation
     - image: quay.io/hpestorage/csi-driver@sha256:e58e22427b385fb57177449df303c07f11650e21a0329e8ac0cf931f3d298ece
       name: csi-driver-e58e22427b385fb57177449df303c07f11650e21a0329e8ac0cf931f3d298ece-annotation
