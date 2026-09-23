@@ -54,6 +54,19 @@ kubeletRootDir: "/var/lib/kubelet"
 
 controller:
 
+  # Number of controller replicas for high availability (active-passive via leader election on
+  # csi-provisioner/csi-attacher/csi-snapshotter/csi-resizer). Default 1 for backward compatibility.
+  replicas: 1
+
+  # Leader election for the CSI controller sidecars (csi-provisioner/csi-attacher/csi-snapshotter/
+  # csi-resizer). Automatically active whenever controller.replicas > 1 — there is no supported
+  # configuration where multiple replicas run without it, so there is no separate enable/disable
+  # flag. Timings are standard client-go leaderelection defaults.
+  leaderElection:
+    leaseDuration: 15
+    renewDeadline: 10
+    retryPeriod: 5
+
   # These values map directly to yaml in the deployment spec, see the kubernetes docs for info
   labels: {}
 
