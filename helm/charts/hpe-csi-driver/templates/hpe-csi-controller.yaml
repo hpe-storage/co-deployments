@@ -168,6 +168,10 @@ spec:
           args:
             - "--v=5"
             - "--csi-address=$(ADDRESS)"
+            {{- if gt (int .Values.controller.replicas) 1 }}
+            - "--leader-election=true"
+            - "--leader-election-namespace={{ .Release.Namespace }}"
+            {{- end }}
           env:
             - name: ADDRESS
               value: /var/lib/csi/sockets/pluginproxy/csi-extensions.sock
@@ -182,6 +186,10 @@ spec:
           args:
             - "--v=5"
             - "--csi-address=$(ADDRESS)"
+            {{- if gt (int .Values.controller.replicas) 1 }}
+            - "--leader-election=true"
+            - "--leader-election-namespace={{ .Release.Namespace }}"
+            {{- end }}
           env:
             - name: ADDRESS
               value: /var/lib/csi/sockets/pluginproxy/csi-extensions.sock
@@ -196,6 +204,10 @@ spec:
           args:
             - "--v=5"
             - "--csi-address=$(ADDRESS)"
+            {{- if gt (int .Values.controller.replicas) 1 }}
+            - "--leader-election=true"
+            - "--leader-election-namespace={{ .Release.Namespace }}"
+            {{- end }}
           env:
             - name: ADDRESS
               value: /var/lib/csi/sockets/pluginproxy/csi-extensions.sock
