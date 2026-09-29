@@ -10,7 +10,7 @@ metadata:
   name: hpe-csi-controller
   namespace: {{ .Release.Namespace }}
 spec:
-  replicas: {{ .Values.controller.replicas | default 1 }}
+  replicas: {{ .Values.controller.replicas | default 3 }}
   selector:
     matchLabels:
       app: hpe-csi-controller

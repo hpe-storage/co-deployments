@@ -55,8 +55,9 @@ kubeletRootDir: "/var/lib/kubelet"
 controller:
 
   # Number of controller replicas for high availability (active-passive via leader election on
-  # csi-provisioner/csi-attacher/csi-snapshotter/csi-resizer). Default 1 for backward compatibility.
-  replicas: 1
+  # csi-provisioner/csi-attacher/csi-snapshotter/csi-resizer). Default 3 for HA; set to 1 to opt
+  # back into single-replica behavior.
+  replicas: 3
 
   # Leader election for the CSI controller sidecars (csi-provisioner/csi-attacher/csi-snapshotter/
   # csi-resizer). Automatically active whenever controller.replicas > 1 — there is no supported
