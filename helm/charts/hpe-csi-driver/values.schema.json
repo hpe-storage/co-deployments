@@ -41,6 +41,12 @@
                 "tolerations": [],
                 "affinity": {},
                 "labels": {},
+                "replicas": 3,
+                "leaderElection": {
+                    "leaseDuration": 15,
+                    "renewDeadline": 10,
+                    "retryPeriod": 5
+                },
 		"resources": {}
             },
             "node": {
@@ -298,6 +304,8 @@
             }
 	},
         "controller": {
+            "type": "object",
+            "properties": {
             "nodeSelector": {
                 "$id": "#/properties/controller/properties/nodeSelector",
                 "title": "Node selector to control the selection of nodes (optional).",
@@ -326,6 +334,40 @@
                 "type": "object",
                 "default": {}
             },
+            "replicas": {
+                "$id": "#/properties/controller/properties/replicas",
+                "title": "Controller replicas",
+                "description": "Number of controller replicas for HA. Leader election on the 7 leader-election-capable sidecars activates automatically when greater than 1.",
+                "type": "integer",
+                "minimum": 1,
+                "default": 3
+            },
+            "leaderElection": {
+                "$id": "#/properties/controller/properties/leaderElection",
+                "title": "Leader election Lease timings",
+                "description": "Lease timings (seconds) for the 4 standard sidecars only; the 3 custom sidecars use their own internal defaults and are not configurable here.",
+                "type": "object",
+                "properties": {
+                    "leaseDuration": {
+                        "type": "integer",
+                        "title": "Lease duration in seconds",
+                        "minimum": 1,
+                        "default": 15
+                    },
+                    "renewDeadline": {
+                        "type": "integer",
+                        "title": "Renew deadline in seconds",
+                        "minimum": 1,
+                        "default": 10
+                    },
+                    "retryPeriod": {
+                        "type": "integer",
+                        "title": "Retry period in seconds",
+                        "minimum": 1,
+                        "default": 5
+                    }
+                }
+            },
 	    "resources": {
                 "$id": "#/properties/controller/properties/resources",
                 "type": "object",
@@ -345,6 +387,7 @@
                         "default": {} }
                 }
 	    }
+            }
         },
         "node": {
             "nodeSelector": {

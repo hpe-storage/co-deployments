@@ -1,0 +1,56 @@
+#!/usr/bin/env bash
+# Helm template/lint rendering assertions for hpe-csi-driver (CON-4960-5).
+# Pure `helm lint`/`helm template` checks — no cluster required. Run from anywhere:
+#   bash helm/charts/hpe-csi-driver/tests/template_test.sh
+set -uo pipefail
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+CHART_DIR="$(cd "${SCRIPT_DIR}/.." && pwd)"
+
+PASS=0
+FAIL=0
+
+pass() { PASS=$((PASS + 1)); echo "  [PASS] $1"; }
+fail() { FAIL=$((FAIL + 1)); echo "  [FAIL] $1"; }
+
+# assert_count <description> <expected_count> <pattern> <template_selector> [extra helm args...]
+assert_count() {
+  local desc="$1" expected="$2" pattern="$3" selector="$4"
+  shift 4
+  local actual
+  actual=$(helm template "${CHART_DIR}" -s "${selector}" "$@" 2>/dev/null | grep -c -- "${pattern}")
+  if [[ "${actual}" -eq "${expected}" ]]; then
+    pass "${desc} (expected ${expected}, got ${actual})"
+  else
+    fail "${desc} (expected ${expected}, got ${actual})"
+  fi
+}
+
+echo "== helm lint (default values) =="
+if helm lint "${CHART_DIR}" >/tmp/hpe-csi-driver-lint.log 2>&1; then
+  pass "helm lint: default values"
+else
+  fail "helm lint: default values"
+  cat /tmp/hpe-csi-driver-lint.log
+fi
+
+echo "== Scenario: 3-replica HA (chart default) =="
+assert_count "controller Deployment renders replicas: 3" 1 "replicas: 3" templates/hpe-csi-controller.yaml
+assert_count "all 7 leader-election-capable sidecars get --leader-election=true" 7 "leader-election=true" templates/hpe-csi-controller.yaml
+assert_count "podAntiAffinity rendered" 1 "podAntiAffinity" templates/hpe-csi-controller.yaml
+assert_count "topologySpreadConstraints rendered" 1 "topologySpreadConstraints" templates/hpe-csi-controller.yaml
+
+echo "== Scenario: 1-replica back-compat (--set controller.replicas=1) =="
+assert_count "controller Deployment renders replicas: 1" 1 "replicas: 1" templates/hpe-csi-controller.yaml --set controller.replicas=1
+assert_count "no --leader-election=true when replicas=1" 0 "leader-election=true" templates/hpe-csi-controller.yaml --set controller.replicas=1
+assert_count "no podAntiAffinity when replicas=1" 0 "podAntiAffinity" templates/hpe-csi-controller.yaml --set controller.replicas=1
+
+echo "== Scenario: nimble CSP on (chart default) =="
+assert_count "nimble-csp Deployment rendered by default" 1 "^kind: Deployment$" templates/nimble-csp.yaml
+
+echo "== Scenario: nimble CSP off (--set disable.nimble=true --set disable.alletra6000=true) =="
+assert_count "nimble-csp Deployment absent when disabled" 0 "^kind: Deployment$" templates/nimble-csp.yaml --set disable.nimble=true --set disable.alletra6000=true
+
+echo
+echo "== Summary: ${PASS} passed, ${FAIL} failed =="
+[[ "${FAIL}" -eq 0 ]]

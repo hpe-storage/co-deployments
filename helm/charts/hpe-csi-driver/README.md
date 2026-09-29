@@ -55,6 +55,10 @@ The following table lists the configurable parameters of the chart and their def
 | controller.affinity       | Affinity rules for the HPE CSI Driver controller Pods.                                             | {}               |
 | controller.tolerations    | Node taints to tolerate for the HPE CSI Driver controller Pods.                                    | []               |
 | controller.resources      | A resource block with requests and limits for controller containers.                               | From [values.yaml](https://github.com/hpe-storage/co-deployments/blob/master/helm/values/csi-driver) |
+| controller.replicas       | Number of controller replicas for HA. Leader election on the 7 leader-election-capable sidecars activates automatically when greater than 1. | 3 |
+| controller.leaderElection.leaseDuration | Leader election Lease duration in seconds. Applies to the 4 standard sidecars only; the 3 custom sidecars use their own internal defaults. | 15 |
+| controller.leaderElection.renewDeadline | Leader election renew deadline in seconds. Applies to the 4 standard sidecars only.                | 10               |
+| controller.leaderElection.retryPeriod   | Leader election retry period in seconds. Applies to the 4 standard sidecars only.                  | 5                |
 | csp.labels                | Additional labels for CSP Pods.                                                                    | {}               |
 | csp.nodeSelector          | Node labels for CSP Pods assignment.                                                               | {}               |
 | csp.affinity              | Affinity rules for the CSP Pods.                                                                   | {}               |
