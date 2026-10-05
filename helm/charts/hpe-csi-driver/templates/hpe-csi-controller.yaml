@@ -259,14 +259,14 @@ spec:
 {{ toYaml .Values.controller.affinity | indent 8 }}
       {{- else if gt (int .Values.controller.replicas) 1 }}
       affinity:
+        # Hard: a replacement pod stays Pending rather than co-locate, and lands on a
+        # recovered/new node once one satisfying this constraint becomes schedulable.
         podAntiAffinity:
-          preferredDuringSchedulingIgnoredDuringExecution:
-            - weight: 100
-              podAffinityTerm:
-                labelSelector:
-                  matchLabels:
-                    app: hpe-csi-controller
-                topologyKey: kubernetes.io/hostname
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchLabels:
+                  app: hpe-csi-controller
+              topologyKey: kubernetes.io/hostname
       topologySpreadConstraints:
         - maxSkew: 1
           topologyKey: kubernetes.io/hostname
