@@ -62,6 +62,8 @@ The following table lists the configurable parameters of the chart and their def
 | controller.podMonitorLeaderElection.leaseDuration | hpe-csi-driver podMonitor leader election Lease duration in seconds. Always active regardless of `controller.replicas`. | 15 |
 | controller.podMonitorLeaderElection.renewDeadline | hpe-csi-driver podMonitor leader election renew deadline in seconds.                        | 10               |
 | controller.podMonitorLeaderElection.retryPeriod   | hpe-csi-driver podMonitor leader election retry period in seconds.                          | 2                |
+| controller.distributedDedup.ttl            | Cross-pod duplicate-request dedup Lease TTL in seconds. Used only when no `--dbserver` is configured. | 60 |
+| controller.distributedDedup.reaperInterval | Interval in seconds for garbage-collecting stale duplicate-request dedup Leases.                      | 900 |
 | csp.labels                | Additional labels for CSP Pods.                                                                    | {}               |
 | csp.nodeSelector          | Node labels for CSP Pods assignment.                                                               | {}               |
 | csp.affinity              | Affinity rules for the CSP Pods. When unset and `csp.replicas` > 1, a hard podAntiAffinity + topologySpreadConstraints is applied by default (one CSP pod per node). | {} |
