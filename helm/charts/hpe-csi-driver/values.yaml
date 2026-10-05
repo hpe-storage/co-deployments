@@ -76,6 +76,17 @@ controller:
     renewDeadline: 10
     retryPeriod: 2
 
+  # Cross-pod duplicate-request dedup for hpe-csi-driver's controller RPCs (CON-4960-26), used
+  # when no --dbserver is configured (the common case). Backed by one Kubernetes Lease per
+  # in-flight request key; ttl controls staleness/steal timing, reaperInterval controls how often
+  # orphaned stale Leases are garbage-collected. reaperInterval defaults much longer than ttl since
+  # the reaper is pure housekeeping, not correctness-critical (see TryAcquire's steal-on-acquire),
+  # and every replica runs its own reaper (not leader-elected), so a longer interval also limits
+  # redundant List calls.
+  distributedDedup:
+    ttl: 60
+    reaperInterval: 900
+
   # These values map directly to yaml in the deployment spec, see the kubernetes docs for info
   labels: {}
 

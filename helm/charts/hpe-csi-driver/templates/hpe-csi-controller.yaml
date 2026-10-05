@@ -145,6 +145,10 @@ spec:
               value: {{ printf "%ds" (int .Values.controller.podMonitorLeaderElection.renewDeadline) | quote }}
             - name: PODMONITOR_LEADER_ELECTION_RETRY_PERIOD
               value: {{ printf "%ds" (int .Values.controller.podMonitorLeaderElection.retryPeriod) | quote }}
+            - name: DEDUP_LOCK_TTL
+              value: {{ printf "%ds" (int .Values.controller.distributedDedup.ttl) | quote }}
+            - name: DEDUP_REAPER_INTERVAL
+              value: {{ printf "%ds" (int .Values.controller.distributedDedup.reaperInterval) | quote }}
             - name: CSI_ENDPOINT
               value: unix:///var/lib/csi/sockets/pluginproxy/csi.sock
             - name: LOG_LEVEL

@@ -61,6 +61,10 @@
                     "renewDeadline": 10,
                     "retryPeriod": 2
                 },
+                "distributedDedup": {
+                    "ttl": 60,
+                    "reaperInterval": 900
+                },
 		"resources": {}
             },
             "node": {
@@ -455,6 +459,26 @@
                         "title": "Retry period in seconds",
                         "minimum": 1,
                         "default": 2
+                    }
+                }
+            },
+            "distributedDedup": {
+                "$id": "#/properties/controller/properties/distributedDedup",
+                "title": "Distributed duplicate-request dedup timings",
+                "description": "TTL (seconds) for the per-request-key Lease and the reaper interval (seconds) that garbage-collects stale Leases. Used only when no --dbserver is configured.",
+                "type": "object",
+                "properties": {
+                    "ttl": {
+                        "type": "integer",
+                        "title": "Lease TTL in seconds",
+                        "minimum": 1,
+                        "default": 60
+                    },
+                    "reaperInterval": {
+                        "type": "integer",
+                        "title": "Reaper interval in seconds",
+                        "minimum": 1,
+                        "default": 900
                     }
                 }
             },
