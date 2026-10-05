@@ -238,6 +238,15 @@ spec:
             - "--v=5"
             - "--endpoint=$(CSI_ENDPOINT)"
           env:
+            # Required by the distributed duplicate-request dedup Lease client (CON-4960-28).
+            - name: POD_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+            - name: DEDUP_LOCK_TTL
+              value: {{ printf "%ds" (int .Values.controller.distributedDedup.ttl) | quote }}
+            - name: DEDUP_REAPER_INTERVAL
+              value: {{ printf "%ds" (int .Values.controller.distributedDedup.reaperInterval) | quote }}
             - name: CSI_ENDPOINT
               value: unix:///var/lib/csi/sockets/pluginproxy/csi-extensions.sock
             - name: LOG_LEVEL
