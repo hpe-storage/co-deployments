@@ -56,6 +56,11 @@
                     "renewDeadline": 10,
                     "retryPeriod": 5
                 },
+                "podMonitorLeaderElection": {
+                    "leaseDuration": 15,
+                    "renewDeadline": 10,
+                    "retryPeriod": 2
+                },
 		"resources": {}
             },
             "node": {
@@ -424,6 +429,32 @@
                         "title": "Retry period in seconds",
                         "minimum": 1,
                         "default": 5
+                    }
+                }
+            },
+            "podMonitorLeaderElection": {
+                "$id": "#/properties/controller/properties/podMonitorLeaderElection",
+                "title": "podMonitor leader election Lease timings",
+                "description": "Lease timings (seconds) for hpe-csi-driver's podMonitor loop. Always active regardless of controller.replicas.",
+                "type": "object",
+                "properties": {
+                    "leaseDuration": {
+                        "type": "integer",
+                        "title": "Lease duration in seconds",
+                        "minimum": 1,
+                        "default": 15
+                    },
+                    "renewDeadline": {
+                        "type": "integer",
+                        "title": "Renew deadline in seconds",
+                        "minimum": 1,
+                        "default": 10
+                    },
+                    "retryPeriod": {
+                        "type": "integer",
+                        "title": "Retry period in seconds",
+                        "minimum": 1,
+                        "default": 2
                     }
                 }
             },
