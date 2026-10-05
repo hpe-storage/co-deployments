@@ -41,11 +41,15 @@ assert_count "podAntiAffinity rendered" 1 "podAntiAffinity" templates/hpe-csi-co
 assert_count "podAntiAffinity is hard (requiredDuringScheduling)" 1 "requiredDuringSchedulingIgnoredDuringExecution" templates/hpe-csi-controller.yaml
 assert_count "no soft (preferredDuringScheduling) podAntiAffinity" 0 "preferredDuringSchedulingIgnoredDuringExecution" templates/hpe-csi-controller.yaml
 assert_count "topologySpreadConstraints rendered" 1 "topologySpreadConstraints" templates/hpe-csi-controller.yaml
+assert_count "hpe-csi-driver POD_NAMESPACE env rendered" 1 "POD_NAMESPACE" templates/hpe-csi-controller.yaml
+assert_count "hpe-csi-driver podMonitor Lease timing env vars rendered" 3 "PODMONITOR_LEADER_ELECTION_" templates/hpe-csi-controller.yaml
 
 echo "== Scenario: 1-replica back-compat (--set controller.replicas=1) =="
 assert_count "controller Deployment renders replicas: 1" 1 "replicas: 1" templates/hpe-csi-controller.yaml --set controller.replicas=1
 assert_count "no --leader-election=true when replicas=1" 0 "leader-election=true" templates/hpe-csi-controller.yaml --set controller.replicas=1
 assert_count "no podAntiAffinity when replicas=1" 0 "podAntiAffinity" templates/hpe-csi-controller.yaml --set controller.replicas=1
+assert_count "hpe-csi-driver POD_NAMESPACE still rendered at replicas=1 (unconditional)" 1 "POD_NAMESPACE" templates/hpe-csi-controller.yaml --set controller.replicas=1
+assert_count "hpe-csi-driver podMonitor Lease timing env vars still rendered at replicas=1 (unconditional)" 3 "PODMONITOR_LEADER_ELECTION_" templates/hpe-csi-controller.yaml --set controller.replicas=1
 
 echo "== Scenario: nimble CSP on (chart default) =="
 assert_count "nimble-csp Deployment rendered by default" 1 "^kind: Deployment$" templates/nimble-csp.yaml

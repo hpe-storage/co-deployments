@@ -59,6 +59,9 @@ The following table lists the configurable parameters of the chart and their def
 | controller.leaderElection.leaseDuration | Leader election Lease duration in seconds. Applies to the 4 standard sidecars only; the 3 custom sidecars use their own internal defaults. | 15 |
 | controller.leaderElection.renewDeadline | Leader election renew deadline in seconds. Applies to the 4 standard sidecars only.                | 10               |
 | controller.leaderElection.retryPeriod   | Leader election retry period in seconds. Applies to the 4 standard sidecars only.                  | 5                |
+| controller.podMonitorLeaderElection.leaseDuration | hpe-csi-driver podMonitor leader election Lease duration in seconds. Always active regardless of `controller.replicas`. | 15 |
+| controller.podMonitorLeaderElection.renewDeadline | hpe-csi-driver podMonitor leader election renew deadline in seconds.                        | 10               |
+| controller.podMonitorLeaderElection.retryPeriod   | hpe-csi-driver podMonitor leader election retry period in seconds.                          | 2                |
 | csp.labels                | Additional labels for CSP Pods.                                                                    | {}               |
 | csp.nodeSelector          | Node labels for CSP Pods assignment.                                                               | {}               |
 | csp.affinity              | Affinity rules for the CSP Pods. When unset and `csp.replicas` > 1, a hard podAntiAffinity + topologySpreadConstraints is applied by default (one CSP pod per node). | {} |

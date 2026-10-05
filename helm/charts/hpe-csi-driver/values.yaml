@@ -68,6 +68,14 @@ controller:
     renewDeadline: 10
     retryPeriod: 5
 
+  # Leader election Lease timings for hpe-csi-driver's podMonitor loop (always-on, independent of
+  # controller.replicas) — gates the loop to a single replica. Standard client-go leaderelection
+  # defaults.
+  podMonitorLeaderElection:
+    leaseDuration: 15
+    renewDeadline: 10
+    retryPeriod: 2
+
   # These values map directly to yaml in the deployment spec, see the kubernetes docs for info
   labels: {}
 
