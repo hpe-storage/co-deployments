@@ -34,7 +34,16 @@
                 "tolerations": [],
                 "affinity": {},
                 "labels": {},
-		"resources": {}
+		"resources": {},
+                "replicas": 3,
+                "podDisruptionBudget": {
+                    "enabled": true
+                },
+                "leaderElection": {
+                    "leaseDuration": 15,
+                    "renewDeadline": 10,
+                    "retryPeriod": 2
+                }
             },
             "controller": {
                 "nodeSelector": {},
@@ -255,6 +264,8 @@
             "default": 250
 	},
         "csp": {
+            "type": "object",
+            "properties": {
             "nodeSelector": {
                 "$id": "#/properties/csp/properties/nodeSelector",
                 "title": "Node selector to control the selection of nodes (optional).",
@@ -283,6 +294,27 @@
                 "type": "object",
                 "default": {}
             },
+            "replicas": {
+                "$id": "#/properties/csp/properties/replicas",
+                "title": "CSP replicas",
+                "description": "Number of primera3par-csp replicas for HA (active-passive via the primera3par-csp-leader Lease).",
+                "type": "integer",
+                "minimum": 1,
+                "default": 3
+            },
+            "podDisruptionBudget": {
+                "$id": "#/properties/csp/properties/podDisruptionBudget",
+                "title": "CSP PodDisruptionBudget",
+                "description": "Optional PodDisruptionBudget (minAvailable: 1) for the primera3par-csp Deployment. Only rendered when replicas > 1.",
+                "type": "object",
+                "properties": {
+                    "enabled": {
+                        "type": "boolean",
+                        "title": "Enable the CSP PodDisruptionBudget",
+                        "default": true
+                    }
+                }
+            },
 	    "resources": {
                 "$id": "#/properties/csp/properties/resources",
                 "type": "object",
@@ -301,8 +333,35 @@
                         "title": "resource requests",
                         "default": {} }
                 }
+            },
+            "leaderElection": {
+                "$id": "#/properties/csp/properties/leaderElection",
+                "title": "Leader election Lease timings",
+                "description": "Lease timings (seconds) for the primera3par-csp active-passive leader election. Always active regardless of replica count.",
+                "type": "object",
+                "properties": {
+                    "leaseDuration": {
+                        "type": "integer",
+                        "title": "Lease duration in seconds",
+                        "minimum": 1,
+                        "default": 15
+                    },
+                    "renewDeadline": {
+                        "type": "integer",
+                        "title": "Renew deadline in seconds",
+                        "minimum": 1,
+                        "default": 10
+                    },
+                    "retryPeriod": {
+                        "type": "integer",
+                        "title": "Retry period in seconds",
+                        "minimum": 1,
+                        "default": 2
+                    }
+                }
             }
-	},
+	}
+        },
         "controller": {
             "type": "object",
             "properties": {

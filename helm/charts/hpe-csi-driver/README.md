@@ -61,9 +61,14 @@ The following table lists the configurable parameters of the chart and their def
 | controller.leaderElection.retryPeriod   | Leader election retry period in seconds. Applies to the 4 standard sidecars only.                  | 5                |
 | csp.labels                | Additional labels for CSP Pods.                                                                    | {}               |
 | csp.nodeSelector          | Node labels for CSP Pods assignment.                                                               | {}               |
-| csp.affinity              | Affinity rules for the CSP Pods.                                                                   | {}               |
+| csp.affinity              | Affinity rules for the CSP Pods. When unset and `csp.replicas` > 1, a hard podAntiAffinity + topologySpreadConstraints is applied by default (one CSP pod per node). | {} |
 | csp.tolerations           | Node taints to tolerate for the CSP Pods.                                                          | []               |
 | csp.resources             | A resource block with requests and limits for CSP containers.                                      | From [values.yaml](https://github.com/hpe-storage/co-deployments/blob/master/helm/values/csi-driver) |
+| csp.replicas              | Number of primera3par-csp replicas for HA. Active-passive via the primera3par-csp-leader Lease (always on, regardless of replica count). | 3 |
+| csp.podDisruptionBudget.enabled | Enable a PodDisruptionBudget (minAvailable: 1) for the primera3par-csp Deployment. Only rendered when `csp.replicas` > 1. | true |
+| csp.leaderElection.leaseDuration | Primera/3PAR CSP leader election Lease duration in seconds. Always active regardless of replica count. | 15 |
+| csp.leaderElection.renewDeadline | Primera/3PAR CSP leader election renew deadline in seconds.                                        | 10               |
+| csp.leaderElection.retryPeriod   | Primera/3PAR CSP leader election retry period in seconds.                                          | 2                |
 | node.labels               | Additional labels for HPE CSI Driver node Pods.                                                    | {}               |
 | node.nodeSelector         | Node labels for HPE CSI Driver node Pods assignment.                                               | {}               |
 | node.affinity             | Affinity rules for the HPE CSI Driver node Pods.                                                   | {}               |
@@ -74,6 +79,8 @@ The following table lists the configurable parameters of the chart and their def
 
 `*` = Disabling node conformance and configuration may prevent the CSI driver from functioning properly. See the [manual node configuration](https://scod.hpedev.io/csi_driver/operations.html#manual_node_configuration) section on SCOD to understand the consequences.
 <br />`**` = The default value is the current well tested upper limit. Do not increase the default value unless the use case has been well tested and is within the [Known Limitations](https://scod.hpedev.io/csi_driver/index.html#known_limitations) for how many paths that are allowed.
+
+**Note:** the primera3par-csp Deployment always injects a `POD_NAMESPACE` downward-API env var and `/healthz` (liveness) + `/readyz` (leadership-gated readiness) probes — these are not configurable toggles, and apply regardless of `csp.replicas`.
 
 It's recommended to create a [values.yaml](https://github.com/hpe-storage/co-deployments/blob/master/helm/values/csi-driver) file from the corresponding release of the chart and edit it to fit the environment the chart is being deployed to. Download and edit [a sample file](https://github.com/hpe-storage/co-deployments/blob/master/helm/values/csi-driver).
 

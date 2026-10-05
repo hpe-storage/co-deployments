@@ -38,6 +38,8 @@ echo "== Scenario: 3-replica HA (chart default) =="
 assert_count "controller Deployment renders replicas: 3" 1 "replicas: 3" templates/hpe-csi-controller.yaml
 assert_count "all 7 leader-election-capable sidecars get --leader-election=true" 7 "leader-election=true" templates/hpe-csi-controller.yaml
 assert_count "podAntiAffinity rendered" 1 "podAntiAffinity" templates/hpe-csi-controller.yaml
+assert_count "podAntiAffinity is hard (requiredDuringScheduling)" 1 "requiredDuringSchedulingIgnoredDuringExecution" templates/hpe-csi-controller.yaml
+assert_count "no soft (preferredDuringScheduling) podAntiAffinity" 0 "preferredDuringSchedulingIgnoredDuringExecution" templates/hpe-csi-controller.yaml
 assert_count "topologySpreadConstraints rendered" 1 "topologySpreadConstraints" templates/hpe-csi-controller.yaml
 
 echo "== Scenario: 1-replica back-compat (--set controller.replicas=1) =="
@@ -50,6 +52,23 @@ assert_count "nimble-csp Deployment rendered by default" 1 "^kind: Deployment$" 
 
 echo "== Scenario: nimble CSP off (--set disable.nimble=true --set disable.alletra6000=true) =="
 assert_count "nimble-csp Deployment absent when disabled" 0 "^kind: Deployment$" templates/nimble-csp.yaml --set disable.nimble=true --set disable.alletra6000=true
+
+echo "== Scenario: CSP 3-replica HA (chart default) =="
+assert_count "CSP Deployment renders replicas: 3" 1 "replicas: 3" templates/primera-3par-csp.yaml
+assert_count "POD_NAMESPACE env rendered" 1 "POD_NAMESPACE" templates/primera-3par-csp.yaml
+assert_count "CSP podAntiAffinity rendered" 1 "podAntiAffinity" templates/primera-3par-csp.yaml
+assert_count "CSP podAntiAffinity is hard (requiredDuringScheduling)" 1 "requiredDuringSchedulingIgnoredDuringExecution" templates/primera-3par-csp.yaml
+assert_count "CSP topologySpreadConstraints rendered" 1 "topologySpreadConstraints" templates/primera-3par-csp.yaml
+assert_count "CSP livenessProbe rendered" 1 "livenessProbe" templates/primera-3par-csp.yaml
+assert_count "CSP readinessProbe rendered" 1 "readinessProbe" templates/primera-3par-csp.yaml
+assert_count "CSP PodDisruptionBudget rendered" 1 "kind: PodDisruptionBudget" templates/primera-3par-csp.yaml
+
+echo "== Scenario: CSP 1-replica back-compat (--set csp.replicas=1) =="
+assert_count "CSP Deployment renders replicas: 1" 1 "replicas: 1" templates/primera-3par-csp.yaml --set csp.replicas=1
+assert_count "POD_NAMESPACE still rendered at replicas=1 (unconditional)" 1 "POD_NAMESPACE" templates/primera-3par-csp.yaml --set csp.replicas=1
+assert_count "CSP probes still rendered at replicas=1 (unconditional)" 1 "livenessProbe" templates/primera-3par-csp.yaml --set csp.replicas=1
+assert_count "no CSP podAntiAffinity when replicas=1" 0 "podAntiAffinity" templates/primera-3par-csp.yaml --set csp.replicas=1
+assert_count "no CSP PodDisruptionBudget when replicas=1" 0 "kind: PodDisruptionBudget" templates/primera-3par-csp.yaml --set csp.replicas=1
 
 echo
 echo "== Summary: ${PASS} passed, ${FAIL} failed =="
