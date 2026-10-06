@@ -56,14 +56,23 @@ The following table lists the configurable parameters of the chart and their def
 | controller.tolerations    | Node taints to tolerate for the HPE CSI Driver controller Pods.                                    | []               |
 | controller.resources      | A resource block with requests and limits for controller containers.                               | From [values.yaml](https://github.com/hpe-storage/co-deployments/blob/master/helm/values/csi-driver) |
 | controller.replicas       | Number of controller replicas for HA. Leader election on the 7 leader-election-capable sidecars activates automatically when greater than 1. | 3 |
-| controller.leaderElection.leaseDuration | Leader election Lease duration in seconds. Applies to the 4 standard sidecars only; the 3 custom sidecars use their own internal defaults. | 15 |
-| controller.leaderElection.renewDeadline | Leader election renew deadline in seconds. Applies to the 4 standard sidecars only.                | 10               |
-| controller.leaderElection.retryPeriod   | Leader election retry period in seconds. Applies to the 4 standard sidecars only.                  | 5                |
+| controller.leaderElection.leaseDuration | Leader election Lease duration in seconds. Applies to the 4 standard sidecars (csi-provisioner/csi-attacher/csi-snapshotter/csi-resizer). | 15 |
+| controller.leaderElection.renewDeadline | Leader election renew deadline in seconds. Applies to the 4 standard sidecars.                | 10               |
+| controller.leaderElection.retryPeriod   | Leader election retry period in seconds. Applies to the 4 standard sidecars.                  | 2                |
 | controller.podMonitorLeaderElection.leaseDuration | hpe-csi-driver podMonitor leader election Lease duration in seconds. Always active regardless of `controller.replicas`. | 15 |
 | controller.podMonitorLeaderElection.renewDeadline | hpe-csi-driver podMonitor leader election renew deadline in seconds.                        | 10               |
 | controller.podMonitorLeaderElection.retryPeriod   | hpe-csi-driver podMonitor leader election retry period in seconds.                          | 2                |
 | controller.distributedDedup.ttl            | Cross-pod duplicate-request dedup Lease TTL in seconds. Used only when no `--dbserver` is configured. | 60 |
 | controller.distributedDedup.reaperInterval | Interval in seconds for garbage-collecting stale duplicate-request dedup Leases.                      | 900 |
+| controller.volumeMutatorLeaderElection.leaseDuration | csi-volume-mutator leader election Lease duration in seconds. Active whenever `controller.replicas > 1`. | 15 |
+| controller.volumeMutatorLeaderElection.renewDeadline | csi-volume-mutator leader election renew deadline in seconds.                                     | 10 |
+| controller.volumeMutatorLeaderElection.retryPeriod   | csi-volume-mutator leader election retry period in seconds.                                       | 2  |
+| controller.volumeGroupProvisionerLeaderElection.leaseDuration | csi-volume-group-provisioner leader election Lease duration in seconds. Active whenever `controller.replicas > 1`. | 15 |
+| controller.volumeGroupProvisionerLeaderElection.renewDeadline | csi-volume-group-provisioner leader election renew deadline in seconds.                                     | 10 |
+| controller.volumeGroupProvisionerLeaderElection.retryPeriod   | csi-volume-group-provisioner leader election retry period in seconds.                                       | 2  |
+| controller.volumeGroupSnapshotterLeaderElection.leaseDuration | csi-volume-group-snapshotter leader election Lease duration in seconds. Active whenever `controller.replicas > 1`. | 15 |
+| controller.volumeGroupSnapshotterLeaderElection.renewDeadline | csi-volume-group-snapshotter leader election renew deadline in seconds.                                     | 10 |
+| controller.volumeGroupSnapshotterLeaderElection.retryPeriod   | csi-volume-group-snapshotter leader election retry period in seconds.                                       | 2  |
 | csp.labels                | Additional labels for CSP Pods.                                                                    | {}               |
 | csp.nodeSelector          | Node labels for CSP Pods assignment.                                                               | {}               |
 | csp.affinity              | Affinity rules for the CSP Pods. When unset and `csp.replicas` > 1, a hard podAntiAffinity + topologySpreadConstraints is applied by default (one CSP pod per node). | {} |

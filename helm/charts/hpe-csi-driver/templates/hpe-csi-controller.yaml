@@ -193,6 +193,9 @@ spec:
             {{- if gt (int .Values.controller.replicas) 1 }}
             - "--leader-election=true"
             - "--leader-election-namespace={{ .Release.Namespace }}"
+            - "--leader-election-lease-duration={{ .Values.controller.volumeMutatorLeaderElection.leaseDuration }}s"
+            - "--leader-election-renew-deadline={{ .Values.controller.volumeMutatorLeaderElection.renewDeadline }}s"
+            - "--leader-election-retry-period={{ .Values.controller.volumeMutatorLeaderElection.retryPeriod }}s"
             {{- end }}
           env:
             - name: ADDRESS
@@ -211,6 +214,9 @@ spec:
             {{- if gt (int .Values.controller.replicas) 1 }}
             - "--leader-election=true"
             - "--leader-election-namespace={{ .Release.Namespace }}"
+            - "--leader-election-lease-duration={{ .Values.controller.volumeGroupSnapshotterLeaderElection.leaseDuration }}s"
+            - "--leader-election-renew-deadline={{ .Values.controller.volumeGroupSnapshotterLeaderElection.renewDeadline }}s"
+            - "--leader-election-retry-period={{ .Values.controller.volumeGroupSnapshotterLeaderElection.retryPeriod }}s"
             {{- end }}
           env:
             - name: ADDRESS
@@ -229,6 +235,9 @@ spec:
             {{- if gt (int .Values.controller.replicas) 1 }}
             - "--leader-election=true"
             - "--leader-election-namespace={{ .Release.Namespace }}"
+            - "--leader-election-lease-duration={{ .Values.controller.volumeGroupProvisionerLeaderElection.leaseDuration }}s"
+            - "--leader-election-renew-deadline={{ .Values.controller.volumeGroupProvisionerLeaderElection.renewDeadline }}s"
+            - "--leader-election-retry-period={{ .Values.controller.volumeGroupProvisionerLeaderElection.retryPeriod }}s"
             {{- end }}
           env:
             - name: ADDRESS
