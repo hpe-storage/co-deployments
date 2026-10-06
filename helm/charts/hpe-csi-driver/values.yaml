@@ -59,19 +59,12 @@ controller:
   # back into single-replica behavior.
   replicas: 3
 
-  # Leader election for the CSI controller sidecars (csi-provisioner/csi-attacher/csi-snapshotter/
-  # csi-resizer). Automatically active whenever controller.replicas > 1 — there is no supported
-  # configuration where multiple replicas run without it, so there is no separate enable/disable
-  # flag. Timings standardized on Kubernetes' own kube-scheduler/kube-controller-manager defaults.
+  # Leader election for every leader-election-capable container in this pod (4 standard CSI
+  # sidecars, 3 custom sidecars, and hpe-csi-driver's podMonitor loop). Automatically active
+  # whenever controller.replicas > 1 (podMonitor is the exception — always-on regardless of
+  # replica count, since it gates a single-replica-only loop). Timings standardized on
+  # Kubernetes' own kube-scheduler/kube-controller-manager defaults.
   leaderElection:
-    leaseDuration: 15
-    renewDeadline: 10
-    retryPeriod: 2
-
-  # Leader election Lease timings for hpe-csi-driver's podMonitor loop (always-on, independent of
-  # controller.replicas) — gates the loop to a single replica. Standard client-go leaderelection
-  # defaults.
-  podMonitorLeaderElection:
     leaseDuration: 15
     renewDeadline: 10
     retryPeriod: 2
@@ -86,26 +79,6 @@ controller:
   distributedDedup:
     ttl: 60
     reaperInterval: 900
-
-  # Leader election Lease timings for the 3 custom sidecars (csi-volume-mutator/
-  # csi-volume-group-provisioner/csi-volume-group-snapshotter), active whenever
-  # controller.replicas > 1 (same gate as controller.leaderElection). Each gets its own block
-  # since they're independently tunable, even though all 3 now default to the same
-  # 15s/10s/2s standard as every other Lease in this chart.
-  volumeMutatorLeaderElection:
-    leaseDuration: 15
-    renewDeadline: 10
-    retryPeriod: 2
-
-  volumeGroupProvisionerLeaderElection:
-    leaseDuration: 15
-    renewDeadline: 10
-    retryPeriod: 2
-
-  volumeGroupSnapshotterLeaderElection:
-    leaseDuration: 15
-    renewDeadline: 10
-    retryPeriod: 2
 
   # These values map directly to yaml in the deployment spec, see the kubernetes docs for info
   labels: {}

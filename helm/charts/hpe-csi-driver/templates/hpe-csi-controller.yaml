@@ -147,11 +147,11 @@ spec:
                 fieldRef:
                   fieldPath: metadata.namespace
             - name: PODMONITOR_LEADER_ELECTION_LEASE_DURATION
-              value: {{ printf "%ds" (int .Values.controller.podMonitorLeaderElection.leaseDuration) | quote }}
+              value: {{ printf "%ds" (int .Values.controller.leaderElection.leaseDuration) | quote }}
             - name: PODMONITOR_LEADER_ELECTION_RENEW_DEADLINE
-              value: {{ printf "%ds" (int .Values.controller.podMonitorLeaderElection.renewDeadline) | quote }}
+              value: {{ printf "%ds" (int .Values.controller.leaderElection.renewDeadline) | quote }}
             - name: PODMONITOR_LEADER_ELECTION_RETRY_PERIOD
-              value: {{ printf "%ds" (int .Values.controller.podMonitorLeaderElection.retryPeriod) | quote }}
+              value: {{ printf "%ds" (int .Values.controller.leaderElection.retryPeriod) | quote }}
             - name: DEDUP_LOCK_TTL
               value: {{ printf "%ds" (int .Values.controller.distributedDedup.ttl) | quote }}
             - name: DEDUP_REAPER_INTERVAL
@@ -193,9 +193,9 @@ spec:
             {{- if gt (int .Values.controller.replicas) 1 }}
             - "--leader-election=true"
             - "--leader-election-namespace={{ .Release.Namespace }}"
-            - "--leader-election-lease-duration={{ .Values.controller.volumeMutatorLeaderElection.leaseDuration }}s"
-            - "--leader-election-renew-deadline={{ .Values.controller.volumeMutatorLeaderElection.renewDeadline }}s"
-            - "--leader-election-retry-period={{ .Values.controller.volumeMutatorLeaderElection.retryPeriod }}s"
+            - "--leader-election-lease-duration={{ .Values.controller.leaderElection.leaseDuration }}s"
+            - "--leader-election-renew-deadline={{ .Values.controller.leaderElection.renewDeadline }}s"
+            - "--leader-election-retry-period={{ .Values.controller.leaderElection.retryPeriod }}s"
             {{- end }}
           env:
             - name: ADDRESS
@@ -214,9 +214,9 @@ spec:
             {{- if gt (int .Values.controller.replicas) 1 }}
             - "--leader-election=true"
             - "--leader-election-namespace={{ .Release.Namespace }}"
-            - "--leader-election-lease-duration={{ .Values.controller.volumeGroupSnapshotterLeaderElection.leaseDuration }}s"
-            - "--leader-election-renew-deadline={{ .Values.controller.volumeGroupSnapshotterLeaderElection.renewDeadline }}s"
-            - "--leader-election-retry-period={{ .Values.controller.volumeGroupSnapshotterLeaderElection.retryPeriod }}s"
+            - "--leader-election-lease-duration={{ .Values.controller.leaderElection.leaseDuration }}s"
+            - "--leader-election-renew-deadline={{ .Values.controller.leaderElection.renewDeadline }}s"
+            - "--leader-election-retry-period={{ .Values.controller.leaderElection.retryPeriod }}s"
             {{- end }}
           env:
             - name: ADDRESS
@@ -235,9 +235,9 @@ spec:
             {{- if gt (int .Values.controller.replicas) 1 }}
             - "--leader-election=true"
             - "--leader-election-namespace={{ .Release.Namespace }}"
-            - "--leader-election-lease-duration={{ .Values.controller.volumeGroupProvisionerLeaderElection.leaseDuration }}s"
-            - "--leader-election-renew-deadline={{ .Values.controller.volumeGroupProvisionerLeaderElection.renewDeadline }}s"
-            - "--leader-election-retry-period={{ .Values.controller.volumeGroupProvisionerLeaderElection.retryPeriod }}s"
+            - "--leader-election-lease-duration={{ .Values.controller.leaderElection.leaseDuration }}s"
+            - "--leader-election-renew-deadline={{ .Values.controller.leaderElection.renewDeadline }}s"
+            - "--leader-election-retry-period={{ .Values.controller.leaderElection.retryPeriod }}s"
             {{- end }}
           env:
             - name: ADDRESS
@@ -254,7 +254,7 @@ spec:
             - "--v=5"
             - "--endpoint=$(CSI_ENDPOINT)"
           env:
-            # Required by the distributed duplicate-request dedup Lease client (CON-4960-28).
+            # Required by the distributed duplicate-request dedup Lease client (CON-4979).
             - name: POD_NAMESPACE
               valueFrom:
                 fieldRef:
