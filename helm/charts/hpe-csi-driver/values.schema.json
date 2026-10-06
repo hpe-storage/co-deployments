@@ -54,7 +54,7 @@
                 "leaderElection": {
                     "leaseDuration": 15,
                     "renewDeadline": 10,
-                    "retryPeriod": 5
+                    "retryPeriod": 2
                 },
                 "podMonitorLeaderElection": {
                     "leaseDuration": 15,
@@ -64,6 +64,21 @@
                 "distributedDedup": {
                     "ttl": 60,
                     "reaperInterval": 900
+                },
+                "volumeMutatorLeaderElection": {
+                    "leaseDuration": 15,
+                    "renewDeadline": 10,
+                    "retryPeriod": 2
+                },
+                "volumeGroupProvisionerLeaderElection": {
+                    "leaseDuration": 15,
+                    "renewDeadline": 10,
+                    "retryPeriod": 2
+                },
+                "volumeGroupSnapshotterLeaderElection": {
+                    "leaseDuration": 15,
+                    "renewDeadline": 10,
+                    "retryPeriod": 2
                 },
 		"resources": {}
             },
@@ -413,7 +428,7 @@
             "leaderElection": {
                 "$id": "#/properties/controller/properties/leaderElection",
                 "title": "Leader election Lease timings",
-                "description": "Lease timings (seconds) for the 4 standard sidecars only; the 3 custom sidecars use their own internal defaults and are not configurable here.",
+                "description": "Lease timings (seconds) for the 4 standard sidecars (csi-provisioner/csi-attacher/csi-snapshotter/csi-resizer). The 3 custom sidecars have their own blocks below (volumeMutatorLeaderElection/volumeGroupProvisionerLeaderElection/volumeGroupSnapshotterLeaderElection).",
                 "type": "object",
                 "properties": {
                     "leaseDuration": {
@@ -432,7 +447,7 @@
                         "type": "integer",
                         "title": "Retry period in seconds",
                         "minimum": 1,
-                        "default": 5
+                        "default": 2
                     }
                 }
             },
@@ -479,6 +494,84 @@
                         "title": "Reaper interval in seconds",
                         "minimum": 1,
                         "default": 900
+                    }
+                }
+            },
+            "volumeMutatorLeaderElection": {
+                "$id": "#/properties/controller/properties/volumeMutatorLeaderElection",
+                "title": "csi-volume-mutator leader election Lease timings",
+                "description": "Lease timings (seconds) for the csi-volume-mutator custom sidecar. Active whenever controller.replicas > 1.",
+                "type": "object",
+                "properties": {
+                    "leaseDuration": {
+                        "type": "integer",
+                        "title": "Lease duration in seconds",
+                        "minimum": 1,
+                        "default": 15
+                    },
+                    "renewDeadline": {
+                        "type": "integer",
+                        "title": "Renew deadline in seconds",
+                        "minimum": 1,
+                        "default": 10
+                    },
+                    "retryPeriod": {
+                        "type": "integer",
+                        "title": "Retry period in seconds",
+                        "minimum": 1,
+                        "default": 2
+                    }
+                }
+            },
+            "volumeGroupProvisionerLeaderElection": {
+                "$id": "#/properties/controller/properties/volumeGroupProvisionerLeaderElection",
+                "title": "csi-volume-group-provisioner leader election Lease timings",
+                "description": "Lease timings (seconds) for the csi-volume-group-provisioner custom sidecar. Active whenever controller.replicas > 1.",
+                "type": "object",
+                "properties": {
+                    "leaseDuration": {
+                        "type": "integer",
+                        "title": "Lease duration in seconds",
+                        "minimum": 1,
+                        "default": 15
+                    },
+                    "renewDeadline": {
+                        "type": "integer",
+                        "title": "Renew deadline in seconds",
+                        "minimum": 1,
+                        "default": 10
+                    },
+                    "retryPeriod": {
+                        "type": "integer",
+                        "title": "Retry period in seconds",
+                        "minimum": 1,
+                        "default": 2
+                    }
+                }
+            },
+            "volumeGroupSnapshotterLeaderElection": {
+                "$id": "#/properties/controller/properties/volumeGroupSnapshotterLeaderElection",
+                "title": "csi-volume-group-snapshotter leader election Lease timings",
+                "description": "Lease timings (seconds) for the csi-volume-group-snapshotter custom sidecar. Active whenever controller.replicas > 1.",
+                "type": "object",
+                "properties": {
+                    "leaseDuration": {
+                        "type": "integer",
+                        "title": "Lease duration in seconds",
+                        "minimum": 1,
+                        "default": 15
+                    },
+                    "renewDeadline": {
+                        "type": "integer",
+                        "title": "Renew deadline in seconds",
+                        "minimum": 1,
+                        "default": 10
+                    },
+                    "retryPeriod": {
+                        "type": "integer",
+                        "title": "Retry period in seconds",
+                        "minimum": 1,
+                        "default": 2
                     }
                 }
             },
