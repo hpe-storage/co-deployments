@@ -11,6 +11,13 @@ metadata:
   namespace: {{ .Release.Namespace }}
 spec:
   replicas: {{ .Values.controller.replicas | default 3 }}
+  # Kill-then-create instead of surge-then-kill: with hard pod anti-affinity, a surge pod can
+  # never schedule once every node already hosts a replica, deadlocking the rollout.
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 0
   selector:
     matchLabels:
       app: hpe-csi-controller

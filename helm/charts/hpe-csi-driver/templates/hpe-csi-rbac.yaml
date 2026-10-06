@@ -543,7 +543,7 @@ metadata:
   namespace: {{ .Release.Namespace }}
 
 ---
-# hpe-csp-sa needs its own Lease for the primera3par-csp-leader election (CON-4960).
+# hpe-csp-sa needs its own Lease for the alletra-9000-primera-and-3par-csp-leader election (CON-4960).
 # Scoped to hpe-csp-sa only; hpe-csi-driver-role is also bound to hpe-csi-node-sa, which has no
 # business creating Leases.
 kind: Role

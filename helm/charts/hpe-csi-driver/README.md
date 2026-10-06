@@ -69,7 +69,7 @@ The following table lists the configurable parameters of the chart and their def
 | csp.affinity              | Affinity rules for the CSP Pods. When unset and `csp.replicas` > 1, a hard podAntiAffinity + topologySpreadConstraints is applied by default (one CSP pod per node). | {} |
 | csp.tolerations           | Node taints to tolerate for the CSP Pods.                                                          | []               |
 | csp.resources             | A resource block with requests and limits for CSP containers.                                      | From [values.yaml](https://github.com/hpe-storage/co-deployments/blob/master/helm/values/csi-driver) |
-| csp.replicas              | Number of primera3par-csp replicas for HA. Active-passive via the primera3par-csp-leader Lease (always on, regardless of replica count). | 3 |
+| csp.replicas              | Number of primera3par-csp replicas for HA. Active-passive via the alletra-9000-primera-and-3par-csp-leader Lease (always on, regardless of replica count). | 3 |
 | csp.podDisruptionBudget.enabled | Enable a PodDisruptionBudget (minAvailable: 1) for the primera3par-csp Deployment. Only rendered when `csp.replicas` > 1. | true |
 | csp.leaderElection.leaseDuration | Primera/3PAR CSP leader election Lease duration in seconds. Always active regardless of replica count. | 15 |
 | csp.leaderElection.renewDeadline | Primera/3PAR CSP leader election renew deadline in seconds.                                        | 10               |

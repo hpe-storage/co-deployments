@@ -70,6 +70,13 @@ spec:
     matchLabels:
       app: primera3par-csp
   replicas: {{ .Values.csp.replicas | default 3 }}
+  # Kill-then-create instead of surge-then-kill: with hard pod anti-affinity, a surge pod can
+  # never schedule once every node already hosts a replica, deadlocking the rollout.
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 0
   template:
     metadata:
       labels:
@@ -87,7 +94,7 @@ spec:
             {{- toYaml .Values.csp.resources | nindent 12 }}
           imagePullPolicy: {{ .Values.imagePullPolicy | quote }}
           env:
-            # Required by the primera3par-csp-leader Lease client (always-on, regardless of replica count).
+            # Required by the alletra-9000-primera-and-3par-csp-leader Lease client (always-on, regardless of replica count).
             - name: POD_NAMESPACE
               valueFrom:
                 fieldRef:
