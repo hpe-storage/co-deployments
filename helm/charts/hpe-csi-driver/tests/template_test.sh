@@ -45,6 +45,8 @@ assert_count "POD_NAMESPACE env rendered (hpe-csi-driver + csi-extensions)" 2 "P
 assert_count "hpe-csi-driver podMonitor Lease timing env vars rendered" 3 "PODMONITOR_LEADER_ELECTION_" templates/hpe-csi-controller.yaml
 assert_count "distributed dedup lock TTL env var rendered (hpe-csi-driver + csi-extensions)" 2 "DEDUP_LOCK_TTL" templates/hpe-csi-controller.yaml
 assert_count "distributed dedup reaper interval env var rendered (hpe-csi-driver + csi-extensions)" 2 "DEDUP_REAPER_INTERVAL" templates/hpe-csi-controller.yaml
+assert_count "controller rollout strategy maxUnavailable:1 rendered" 1 "maxUnavailable: 1" templates/hpe-csi-controller.yaml
+assert_count "controller rollout strategy maxSurge:0 rendered" 1 "maxSurge: 0" templates/hpe-csi-controller.yaml
 
 echo "== Scenario: 1-replica back-compat (--set controller.replicas=1) =="
 assert_count "controller Deployment renders replicas: 1" 1 "replicas: 1" templates/hpe-csi-controller.yaml --set controller.replicas=1
@@ -53,6 +55,7 @@ assert_count "no podAntiAffinity when replicas=1" 0 "podAntiAffinity" templates/
 assert_count "POD_NAMESPACE still rendered at replicas=1, both containers (unconditional)" 2 "POD_NAMESPACE" templates/hpe-csi-controller.yaml --set controller.replicas=1
 assert_count "hpe-csi-driver podMonitor Lease timing env vars still rendered at replicas=1 (unconditional)" 3 "PODMONITOR_LEADER_ELECTION_" templates/hpe-csi-controller.yaml --set controller.replicas=1
 assert_count "distributed dedup env vars still rendered at replicas=1, both containers (unconditional)" 2 "DEDUP_LOCK_TTL" templates/hpe-csi-controller.yaml --set controller.replicas=1
+assert_count "controller rollout strategy still rendered at replicas=1 (unconditional)" 1 "maxUnavailable: 1" templates/hpe-csi-controller.yaml --set controller.replicas=1
 
 echo "== Scenario: nimble CSP on (chart default) =="
 assert_count "nimble-csp Deployment rendered by default" 1 "^kind: Deployment$" templates/nimble-csp.yaml
@@ -69,6 +72,8 @@ assert_count "CSP topologySpreadConstraints rendered" 1 "topologySpreadConstrain
 assert_count "CSP livenessProbe rendered" 1 "livenessProbe" templates/primera-3par-csp.yaml
 assert_count "CSP readinessProbe rendered" 1 "readinessProbe" templates/primera-3par-csp.yaml
 assert_count "CSP PodDisruptionBudget rendered" 1 "kind: PodDisruptionBudget" templates/primera-3par-csp.yaml
+assert_count "CSP rollout strategy maxUnavailable:1 rendered" 1 "maxUnavailable: 1" templates/primera-3par-csp.yaml
+assert_count "CSP rollout strategy maxSurge:0 rendered" 1 "maxSurge: 0" templates/primera-3par-csp.yaml
 
 echo "== Scenario: CSP 1-replica back-compat (--set csp.replicas=1) =="
 assert_count "CSP Deployment renders replicas: 1" 1 "replicas: 1" templates/primera-3par-csp.yaml --set csp.replicas=1
@@ -76,6 +81,7 @@ assert_count "POD_NAMESPACE still rendered at replicas=1 (unconditional)" 1 "POD
 assert_count "CSP probes still rendered at replicas=1 (unconditional)" 1 "livenessProbe" templates/primera-3par-csp.yaml --set csp.replicas=1
 assert_count "no CSP podAntiAffinity when replicas=1" 0 "podAntiAffinity" templates/primera-3par-csp.yaml --set csp.replicas=1
 assert_count "no CSP PodDisruptionBudget when replicas=1" 0 "kind: PodDisruptionBudget" templates/primera-3par-csp.yaml --set csp.replicas=1
+assert_count "CSP rollout strategy still rendered at replicas=1 (unconditional)" 1 "maxUnavailable: 1" templates/primera-3par-csp.yaml --set csp.replicas=1
 
 echo
 echo "== Summary: ${PASS} passed, ${FAIL} failed =="

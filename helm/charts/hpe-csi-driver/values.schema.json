@@ -306,7 +306,7 @@
             "replicas": {
                 "$id": "#/properties/csp/properties/replicas",
                 "title": "CSP replicas",
-                "description": "Number of primera3par-csp replicas for HA (active-passive via the primera3par-csp-leader Lease).",
+                "description": "Number of primera3par-csp replicas for HA (active-passive via the alletra-9000-primera-and-3par-csp-leader Lease).",
                 "type": "integer",
                 "minimum": 1,
                 "default": 3

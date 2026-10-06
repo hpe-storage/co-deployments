@@ -108,7 +108,7 @@ controller:
 
 csp:
 
-  # Number of CSP replicas for high availability (active-passive via the primera3par-csp-leader
+  # Number of CSP replicas for high availability (active-passive via the alletra-9000-primera-and-3par-csp-leader
   # Lease). Default 3 to match the controller; set to 1 to opt back into single-replica behavior.
   replicas: 3
 
