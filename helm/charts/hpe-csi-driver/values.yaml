@@ -54,6 +54,35 @@ kubeletRootDir: "/var/lib/kubelet"
 
 controller:
 
+  # Number of controller replicas for high availability (active-passive via leader election on
+  # csi-provisioner/csi-attacher/csi-snapshotter/csi-resizer). Default 3 for HA; set to 1 to opt
+  # back into single-replica behavior.
+  replicas: 3
+
+  podDisruptionBudget:
+    enabled: true
+
+  # Leader election for every leader-election-capable container in this pod (4 standard CSI
+  # sidecars, 3 custom sidecars, and hpe-csi-driver's podMonitor loop). Automatically active
+  # whenever controller.replicas > 1 (podMonitor is the exception — always-on regardless of
+  # replica count, since it gates a single-replica-only loop). Timings standardized on
+  # Kubernetes' own kube-scheduler/kube-controller-manager defaults.
+  leaderElection:
+    leaseDuration: 15
+    renewDeadline: 10
+    retryPeriod: 2
+
+  # Cross-pod duplicate-request dedup for hpe-csi-driver's controller RPCs (CON-4960-26), used
+  # when no --dbserver is configured (the common case). Backed by one Kubernetes Lease per
+  # in-flight request key; ttl controls staleness/steal timing, reaperInterval controls how often
+  # orphaned stale Leases are garbage-collected. reaperInterval defaults much longer than ttl since
+  # the reaper is pure housekeeping, not correctness-critical (see TryAcquire's steal-on-acquire),
+  # and every replica runs its own reaper (not leader-elected), so a longer interval also limits
+  # redundant List calls.
+  distributedDedup:
+    ttl: 60
+    reaperInterval: 900
+
   # These values map directly to yaml in the deployment spec, see the kubernetes docs for info
   labels: {}
 
@@ -75,6 +104,13 @@ controller:
 
 csp:
 
+  # Number of CSP replicas for high availability (active-passive via the alletra-9000-primera-and-3par-csp-leader
+  # Lease). Default 3 to match the controller; set to 1 to opt back into single-replica behavior.
+  replicas: 3
+
+  podDisruptionBudget:
+    enabled: true
+
   # These values map directly to yaml in the deployment spec, see the kubernetes docs for info
   labels: {}
 
@@ -93,6 +129,13 @@ csp:
     requests:
       cpu: 100m
       memory: 128Mi
+
+  # Leader election Lease timings for the primera3par-csp active-passive leader (always-on,
+  # independent of csp.replicas). Standard client-go leaderelection defaults.
+  leaderElection:
+    leaseDuration: 15
+    renewDeadline: 10
+    retryPeriod: 2
 
 node:
 

@@ -69,7 +69,14 @@ spec:
   selector:
     matchLabels:
       app: primera3par-csp
-  replicas: 1
+  replicas: {{ .Values.csp.replicas | default 3 }}
+  # Kill-then-create instead of surge-then-kill: with hard pod anti-affinity, a surge pod can
+  # never schedule once every node already hosts a replica, deadlocking the rollout.
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 0
   template:
     metadata:
       labels:
@@ -87,6 +94,11 @@ spec:
             {{- toYaml .Values.csp.resources | nindent 12 }}
           imagePullPolicy: {{ .Values.imagePullPolicy | quote }}
           env:
+            # Required by the alletra-9000-primera-and-3par-csp-leader Lease client (always-on, regardless of replica count).
+            - name: POD_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
             - name: CRD_CLIENT_CONFIG_QPS
               value: "35"
             - name: CRD_CLIENT_CONFIG_BURST
@@ -106,6 +118,12 @@ spec:
             # GOMEMLIMIT set to 850MiB (~83% of this container's 1Gi memory limit) to run the Go GC before the hard limit (ESC-17696).
             - name: GOMEMLIMIT
               value: "850MiB"
+            - name: CSP_LEADER_ELECTION_LEASE_DURATION
+              value: {{ printf "%ds" (int .Values.csp.leaderElection.leaseDuration) | quote }}
+            - name: CSP_LEADER_ELECTION_RENEW_DEADLINE
+              value: {{ printf "%ds" (int .Values.csp.leaderElection.renewDeadline) | quote }}
+            - name: CSP_LEADER_ELECTION_RETRY_PERIOD
+              value: {{ printf "%ds" (int .Values.csp.leaderElection.retryPeriod) | quote }}
             {{- if gt (int .Values.maxVolumesPerNode) 253 }}
             # When a node may attach more than 253 volumes, start auto-assigned VLUN IDs
             # above the reserved SES LUN (254) so FC/iSCSI VLUN IDs do not collide (CON-4873).
@@ -114,6 +132,19 @@ spec:
             - name: ISCSI_AUTO_LUN_START_ID
               value: "255"
             {{- end }}
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: 8080
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          readinessProbe:
+            httpGet:
+              path: /readyz
+              port: 8080
+            initialDelaySeconds: 5
+            periodSeconds: 5
+            failureThreshold: 2
           ports:
             - containerPort: 8080
           volumeMounts:
@@ -134,5 +165,37 @@ spec:
       {{- if .Values.csp.affinity }}
       affinity:
 {{ toYaml .Values.csp.affinity | indent 8 }}
+      {{- else if gt (int .Values.csp.replicas) 1 }}
+      affinity:
+        # Hard: a replacement pod stays Pending rather than co-locate, and lands on a
+        # recovered/new node once one satisfying this constraint becomes schedulable.
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchLabels:
+                  app: primera3par-csp
+              topologyKey: kubernetes.io/hostname
+      topologySpreadConstraints:
+        - maxSkew: 1
+          topologyKey: kubernetes.io/hostname
+          whenUnsatisfiable: ScheduleAnyway
+          labelSelector:
+            matchLabels:
+              app: primera3par-csp
       {{- end }}
+
+{{- if and .Values.csp.podDisruptionBudget.enabled (gt (int .Values.csp.replicas) 1) }}
+---
+### CSP PodDisruptionBudget ###
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: primera3par-csp-pdb
+  namespace: {{ .Release.Namespace }}
+spec:
+  minAvailable: 1
+  selector:
+    matchLabels:
+      app: primera3par-csp
+{{- end }}
 {{- end }}

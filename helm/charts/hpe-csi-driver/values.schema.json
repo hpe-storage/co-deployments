@@ -34,13 +34,35 @@
                 "tolerations": [],
                 "affinity": {},
                 "labels": {},
-		"resources": {}
+		"resources": {},
+                "replicas": 3,
+                "podDisruptionBudget": {
+                    "enabled": true
+                },
+                "leaderElection": {
+                    "leaseDuration": 15,
+                    "renewDeadline": 10,
+                    "retryPeriod": 2
+                }
             },
             "controller": {
                 "nodeSelector": {},
                 "tolerations": [],
                 "affinity": {},
                 "labels": {},
+                "replicas": 3,
+                "podDisruptionBudget": {
+                    "enabled": true
+                },
+                "leaderElection": {
+                    "leaseDuration": 15,
+                    "renewDeadline": 10,
+                    "retryPeriod": 2
+                },
+                "distributedDedup": {
+                    "ttl": 60,
+                    "reaperInterval": 900
+                },
 		"resources": {}
             },
             "node": {
@@ -249,6 +271,8 @@
             "default": 250
 	},
         "csp": {
+            "type": "object",
+            "properties": {
             "nodeSelector": {
                 "$id": "#/properties/csp/properties/nodeSelector",
                 "title": "Node selector to control the selection of nodes (optional).",
@@ -277,6 +301,27 @@
                 "type": "object",
                 "default": {}
             },
+            "replicas": {
+                "$id": "#/properties/csp/properties/replicas",
+                "title": "CSP replicas",
+                "description": "Number of primera3par-csp replicas for HA (active-passive via the alletra-9000-primera-and-3par-csp-leader Lease).",
+                "type": "integer",
+                "minimum": 1,
+                "default": 3
+            },
+            "podDisruptionBudget": {
+                "$id": "#/properties/csp/properties/podDisruptionBudget",
+                "title": "CSP PodDisruptionBudget",
+                "description": "Optional PodDisruptionBudget (minAvailable: 1) for the primera3par-csp Deployment. Only rendered when replicas > 1.",
+                "type": "object",
+                "properties": {
+                    "enabled": {
+                        "type": "boolean",
+                        "title": "Enable the CSP PodDisruptionBudget",
+                        "default": true
+                    }
+                }
+            },
 	    "resources": {
                 "$id": "#/properties/csp/properties/resources",
                 "type": "object",
@@ -295,9 +340,38 @@
                         "title": "resource requests",
                         "default": {} }
                 }
+            },
+            "leaderElection": {
+                "$id": "#/properties/csp/properties/leaderElection",
+                "title": "Leader election Lease timings",
+                "description": "Lease timings (seconds) for the primera3par-csp active-passive leader election. Always active regardless of replica count.",
+                "type": "object",
+                "properties": {
+                    "leaseDuration": {
+                        "type": "integer",
+                        "title": "Lease duration in seconds",
+                        "minimum": 1,
+                        "default": 15
+                    },
+                    "renewDeadline": {
+                        "type": "integer",
+                        "title": "Renew deadline in seconds",
+                        "minimum": 1,
+                        "default": 10
+                    },
+                    "retryPeriod": {
+                        "type": "integer",
+                        "title": "Retry period in seconds",
+                        "minimum": 1,
+                        "default": 2
+                    }
+                }
             }
-	},
+	}
+        },
         "controller": {
+            "type": "object",
+            "properties": {
             "nodeSelector": {
                 "$id": "#/properties/controller/properties/nodeSelector",
                 "title": "Node selector to control the selection of nodes (optional).",
@@ -326,6 +400,73 @@
                 "type": "object",
                 "default": {}
             },
+            "replicas": {
+                "$id": "#/properties/controller/properties/replicas",
+                "title": "Controller replicas",
+                "description": "Number of controller replicas for HA. Leader election on the 7 leader-election-capable sidecars activates automatically when greater than 1.",
+                "type": "integer",
+                "minimum": 1,
+                "default": 3
+            },
+            "podDisruptionBudget": {
+                "$id": "#/properties/controller/properties/podDisruptionBudget",
+                "title": "Controller PodDisruptionBudget",
+                "description": "Optional PodDisruptionBudget (minAvailable: 1) for the hpe-csi-controller Deployment. Only rendered when replicas > 1.",
+                "type": "object",
+                "properties": {
+                    "enabled": {
+                        "type": "boolean",
+                        "title": "Enable the controller PodDisruptionBudget",
+                        "default": true
+                    }
+                }
+            },
+            "leaderElection": {
+                "$id": "#/properties/controller/properties/leaderElection",
+                "title": "Leader election Lease timings",
+                "description": "Lease timings (seconds) for every leader-election-capable container in this pod: the 4 standard sidecars (csi-provisioner/csi-attacher/csi-snapshotter/csi-resizer), the 3 custom sidecars (csi-volume-mutator/csi-volume-group-provisioner/csi-volume-group-snapshotter), and hpe-csi-driver's podMonitor loop.",
+                "type": "object",
+                "properties": {
+                    "leaseDuration": {
+                        "type": "integer",
+                        "title": "Lease duration in seconds",
+                        "minimum": 1,
+                        "default": 15
+                    },
+                    "renewDeadline": {
+                        "type": "integer",
+                        "title": "Renew deadline in seconds",
+                        "minimum": 1,
+                        "default": 10
+                    },
+                    "retryPeriod": {
+                        "type": "integer",
+                        "title": "Retry period in seconds",
+                        "minimum": 1,
+                        "default": 2
+                    }
+                }
+            },
+            "distributedDedup": {
+                "$id": "#/properties/controller/properties/distributedDedup",
+                "title": "Distributed duplicate-request dedup timings",
+                "description": "TTL (seconds) for the per-request-key Lease and the reaper interval (seconds) that garbage-collects stale Leases. Used only when no --dbserver is configured.",
+                "type": "object",
+                "properties": {
+                    "ttl": {
+                        "type": "integer",
+                        "title": "Lease TTL in seconds",
+                        "minimum": 1,
+                        "default": 60
+                    },
+                    "reaperInterval": {
+                        "type": "integer",
+                        "title": "Reaper interval in seconds",
+                        "minimum": 1,
+                        "default": 900
+                    }
+                }
+            },
 	    "resources": {
                 "$id": "#/properties/controller/properties/resources",
                 "type": "object",
@@ -345,6 +486,7 @@
                         "default": {} }
                 }
 	    }
+            }
         },
         "node": {
             "nodeSelector": {

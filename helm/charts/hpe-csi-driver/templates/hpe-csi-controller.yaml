@@ -10,7 +10,14 @@ metadata:
   name: hpe-csi-controller
   namespace: {{ .Release.Namespace }}
 spec:
-  replicas: 1
+  replicas: {{ .Values.controller.replicas | default 3 }}
+  # Kill-then-create instead of surge-then-kill: with hard pod anti-affinity, a surge pod can
+  # never schedule once every node already hosts a replica, deadlocking the rollout.
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 0
   selector:
     matchLabels:
       app: hpe-csi-controller
@@ -46,6 +53,13 @@ spec:
             - "--worker-threads=16"
             - "--feature-gates=Topology=true"
             - "--immediate-topology=false"
+            {{- if gt (int .Values.controller.replicas) 1 }}
+            - "--leader-election=true"
+            - "--leader-election-namespace={{ .Release.Namespace }}"
+            - "--leader-election-lease-duration={{ .Values.controller.leaderElection.leaseDuration }}s"
+            - "--leader-election-renew-deadline={{ .Values.controller.leaderElection.renewDeadline }}s"
+            - "--leader-election-retry-period={{ .Values.controller.leaderElection.retryPeriod }}s"
+            {{- end }}
           env:
             - name: ADDRESS
               value: /var/lib/csi/sockets/pluginproxy/csi.sock
@@ -61,6 +75,13 @@ spec:
             - "--v=5"
             - "--csi-address=$(ADDRESS)"
             - "--timeout=180s"
+            {{- if gt (int .Values.controller.replicas) 1 }}
+            - "--leader-election=true"
+            - "--leader-election-namespace={{ .Release.Namespace }}"
+            - "--leader-election-lease-duration={{ .Values.controller.leaderElection.leaseDuration }}s"
+            - "--leader-election-renew-deadline={{ .Values.controller.leaderElection.renewDeadline }}s"
+            - "--leader-election-retry-period={{ .Values.controller.leaderElection.retryPeriod }}s"
+            {{- end }}
           env:
             - name: ADDRESS
               value: /var/lib/csi/sockets/pluginproxy/csi.sock
@@ -75,6 +96,13 @@ spec:
           args:
             - "--v=5"
             - "--csi-address=$(ADDRESS)"
+            {{- if gt (int .Values.controller.replicas) 1 }}
+            - "--leader-election=true"
+            - "--leader-election-namespace={{ .Release.Namespace }}"
+            - "--leader-election-lease-duration={{ .Values.controller.leaderElection.leaseDuration }}s"
+            - "--leader-election-renew-deadline={{ .Values.controller.leaderElection.renewDeadline }}s"
+            - "--leader-election-retry-period={{ .Values.controller.leaderElection.retryPeriod }}s"
+            {{- end }}
           env:
             - name: ADDRESS
               value: /var/lib/csi/sockets/pluginproxy/csi.sock
@@ -89,6 +117,13 @@ spec:
           args:
             - "--csi-address=$(ADDRESS)"
             - "--v=5"
+            {{- if gt (int .Values.controller.replicas) 1 }}
+            - "--leader-election=true"
+            - "--leader-election-namespace={{ .Release.Namespace }}"
+            - "--leader-election-lease-duration={{ .Values.controller.leaderElection.leaseDuration }}s"
+            - "--leader-election-renew-deadline={{ .Values.controller.leaderElection.renewDeadline }}s"
+            - "--leader-election-retry-period={{ .Values.controller.leaderElection.retryPeriod }}s"
+            {{- end }}
           env:
             - name: ADDRESS
               value: /var/lib/csi/sockets/pluginproxy/csi.sock
@@ -106,6 +141,21 @@ spec:
             - "--pod-monitor"
             - "--pod-monitor-interval=30"
           env:
+            # Required by the hpe-csi-driver-podmonitor-leader Lease client (always-on, regardless of replica count).
+            - name: POD_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+            - name: PODMONITOR_LEADER_ELECTION_LEASE_DURATION
+              value: {{ printf "%ds" (int .Values.controller.leaderElection.leaseDuration) | quote }}
+            - name: PODMONITOR_LEADER_ELECTION_RENEW_DEADLINE
+              value: {{ printf "%ds" (int .Values.controller.leaderElection.renewDeadline) | quote }}
+            - name: PODMONITOR_LEADER_ELECTION_RETRY_PERIOD
+              value: {{ printf "%ds" (int .Values.controller.leaderElection.retryPeriod) | quote }}
+            - name: DEDUP_LOCK_TTL
+              value: {{ printf "%ds" (int .Values.controller.distributedDedup.ttl) | quote }}
+            - name: DEDUP_REAPER_INTERVAL
+              value: {{ printf "%ds" (int .Values.controller.distributedDedup.reaperInterval) | quote }}
             - name: CSI_ENDPOINT
               value: unix:///var/lib/csi/sockets/pluginproxy/csi.sock
             - name: LOG_LEVEL
@@ -140,6 +190,13 @@ spec:
           args:
             - "--v=5"
             - "--csi-address=$(ADDRESS)"
+            {{- if gt (int .Values.controller.replicas) 1 }}
+            - "--leader-election=true"
+            - "--leader-election-namespace={{ .Release.Namespace }}"
+            - "--leader-election-lease-duration={{ .Values.controller.leaderElection.leaseDuration }}s"
+            - "--leader-election-renew-deadline={{ .Values.controller.leaderElection.renewDeadline }}s"
+            - "--leader-election-retry-period={{ .Values.controller.leaderElection.retryPeriod }}s"
+            {{- end }}
           env:
             - name: ADDRESS
               value: /var/lib/csi/sockets/pluginproxy/csi-extensions.sock
@@ -154,6 +211,13 @@ spec:
           args:
             - "--v=5"
             - "--csi-address=$(ADDRESS)"
+            {{- if gt (int .Values.controller.replicas) 1 }}
+            - "--leader-election=true"
+            - "--leader-election-namespace={{ .Release.Namespace }}"
+            - "--leader-election-lease-duration={{ .Values.controller.leaderElection.leaseDuration }}s"
+            - "--leader-election-renew-deadline={{ .Values.controller.leaderElection.renewDeadline }}s"
+            - "--leader-election-retry-period={{ .Values.controller.leaderElection.retryPeriod }}s"
+            {{- end }}
           env:
             - name: ADDRESS
               value: /var/lib/csi/sockets/pluginproxy/csi-extensions.sock
@@ -168,6 +232,13 @@ spec:
           args:
             - "--v=5"
             - "--csi-address=$(ADDRESS)"
+            {{- if gt (int .Values.controller.replicas) 1 }}
+            - "--leader-election=true"
+            - "--leader-election-namespace={{ .Release.Namespace }}"
+            - "--leader-election-lease-duration={{ .Values.controller.leaderElection.leaseDuration }}s"
+            - "--leader-election-renew-deadline={{ .Values.controller.leaderElection.renewDeadline }}s"
+            - "--leader-election-retry-period={{ .Values.controller.leaderElection.retryPeriod }}s"
+            {{- end }}
           env:
             - name: ADDRESS
               value: /var/lib/csi/sockets/pluginproxy/csi-extensions.sock
@@ -183,6 +254,15 @@ spec:
             - "--v=5"
             - "--endpoint=$(CSI_ENDPOINT)"
           env:
+            # Required by the distributed duplicate-request dedup Lease client (CON-4979).
+            - name: POD_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+            - name: DEDUP_LOCK_TTL
+              value: {{ printf "%ds" (int .Values.controller.distributedDedup.ttl) | quote }}
+            - name: DEDUP_REAPER_INTERVAL
+              value: {{ printf "%ds" (int .Values.controller.distributedDedup.reaperInterval) | quote }}
             - name: CSI_ENDPOINT
               value: unix:///var/lib/csi/sockets/pluginproxy/csi-extensions.sock
             - name: LOG_LEVEL
@@ -217,4 +297,36 @@ spec:
       {{- if .Values.controller.affinity }}
       affinity:
 {{ toYaml .Values.controller.affinity | indent 8 }}
+      {{- else if gt (int .Values.controller.replicas) 1 }}
+      affinity:
+        # Hard: a replacement pod stays Pending rather than co-locate, and lands on a
+        # recovered/new node once one satisfying this constraint becomes schedulable.
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchLabels:
+                  app: hpe-csi-controller
+              topologyKey: kubernetes.io/hostname
+      topologySpreadConstraints:
+        - maxSkew: 1
+          topologyKey: kubernetes.io/hostname
+          whenUnsatisfiable: ScheduleAnyway
+          labelSelector:
+            matchLabels:
+              app: hpe-csi-controller
       {{- end }}
+
+{{- if and .Values.controller.podDisruptionBudget.enabled (gt (int .Values.controller.replicas) 1) }}
+---
+### Controller PodDisruptionBudget ###
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: hpe-csi-controller-pdb
+  namespace: {{ .Release.Namespace }}
+spec:
+  minAvailable: 1
+  selector:
+    matchLabels:
+      app: hpe-csi-controller
+{{- end }}
