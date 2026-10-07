@@ -51,6 +51,9 @@
                 "affinity": {},
                 "labels": {},
                 "replicas": 3,
+                "podDisruptionBudget": {
+                    "enabled": true
+                },
                 "leaderElection": {
                     "leaseDuration": 15,
                     "renewDeadline": 10,
@@ -404,6 +407,19 @@
                 "type": "integer",
                 "minimum": 1,
                 "default": 3
+            },
+            "podDisruptionBudget": {
+                "$id": "#/properties/controller/properties/podDisruptionBudget",
+                "title": "Controller PodDisruptionBudget",
+                "description": "Optional PodDisruptionBudget (minAvailable: 1) for the hpe-csi-controller Deployment. Only rendered when replicas > 1.",
+                "type": "object",
+                "properties": {
+                    "enabled": {
+                        "type": "boolean",
+                        "title": "Enable the controller PodDisruptionBudget",
+                        "default": true
+                    }
+                }
             },
             "leaderElection": {
                 "$id": "#/properties/controller/properties/leaderElection",

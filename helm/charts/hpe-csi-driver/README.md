@@ -56,6 +56,7 @@ The following table lists the configurable parameters of the chart and their def
 | controller.tolerations    | Node taints to tolerate for the HPE CSI Driver controller Pods.                                    | []               |
 | controller.resources      | A resource block with requests and limits for controller containers.                               | From [values.yaml](https://github.com/hpe-storage/co-deployments/blob/master/helm/values/csi-driver) |
 | controller.replicas       | Number of controller replicas for HA. Leader election on the 7 leader-election-capable sidecars activates automatically when greater than 1. | 3 |
+| controller.podDisruptionBudget.enabled | Enable a PodDisruptionBudget (minAvailable: 1) for the hpe-csi-controller Deployment. Only rendered when `controller.replicas` > 1. | true |
 | controller.leaderElection.leaseDuration | Leader election Lease duration in seconds. Applies to every leader-election-capable container in this pod (4 standard sidecars, 3 custom sidecars, and hpe-csi-driver's podMonitor loop). | 15 |
 | controller.leaderElection.renewDeadline | Leader election renew deadline in seconds. Same scope as above.                               | 10               |
 | controller.leaderElection.retryPeriod   | Leader election retry period in seconds. Same scope as above.                                 | 2                |

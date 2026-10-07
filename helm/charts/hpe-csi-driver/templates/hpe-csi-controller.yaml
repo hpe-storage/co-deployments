@@ -315,3 +315,18 @@ spec:
             matchLabels:
               app: hpe-csi-controller
       {{- end }}
+
+{{- if and .Values.controller.podDisruptionBudget.enabled (gt (int .Values.controller.replicas) 1) }}
+---
+### Controller PodDisruptionBudget ###
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: hpe-csi-controller-pdb
+  namespace: {{ .Release.Namespace }}
+spec:
+  minAvailable: 1
+  selector:
+    matchLabels:
+      app: hpe-csi-controller
+{{- end }}
