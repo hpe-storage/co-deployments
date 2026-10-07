@@ -59,6 +59,9 @@ controller:
   # back into single-replica behavior.
   replicas: 3
 
+  podDisruptionBudget:
+    enabled: true
+
   # Leader election for every leader-election-capable container in this pod (4 standard CSI
   # sidecars, 3 custom sidecars, and hpe-csi-driver's podMonitor loop). Automatically active
   # whenever controller.replicas > 1 (podMonitor is the exception — always-on regardless of
