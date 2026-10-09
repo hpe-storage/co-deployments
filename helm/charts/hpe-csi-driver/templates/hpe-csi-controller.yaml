@@ -156,6 +156,8 @@ spec:
               value: {{ printf "%ds" (int .Values.controller.distributedDedup.ttl) | quote }}
             - name: DEDUP_REAPER_INTERVAL
               value: {{ printf "%ds" (int .Values.controller.distributedDedup.reaperInterval) | quote }}
+            - name: DEDUP_MAX_HOLD_DURATION
+              value: {{ printf "%ds" (int .Values.controller.distributedDedup.maxHoldDuration) | quote }}
             - name: CSI_ENDPOINT
               value: unix:///var/lib/csi/sockets/pluginproxy/csi.sock
             - name: LOG_LEVEL
@@ -263,6 +265,8 @@ spec:
               value: {{ printf "%ds" (int .Values.controller.distributedDedup.ttl) | quote }}
             - name: DEDUP_REAPER_INTERVAL
               value: {{ printf "%ds" (int .Values.controller.distributedDedup.reaperInterval) | quote }}
+            - name: DEDUP_MAX_HOLD_DURATION
+              value: {{ printf "%ds" (int .Values.controller.distributedDedup.maxHoldDuration) | quote }}
             - name: CSI_ENDPOINT
               value: unix:///var/lib/csi/sockets/pluginproxy/csi-extensions.sock
             - name: LOG_LEVEL

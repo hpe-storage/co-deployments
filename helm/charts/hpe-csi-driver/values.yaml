@@ -56,7 +56,7 @@ controller:
 
   # Number of controller replicas for high availability (active-passive via leader election on
   # csi-provisioner/csi-attacher/csi-snapshotter/csi-resizer). Default 3 for HA; set to 1 to opt
-  # back into single-replica behavior.
+  # back into single-replica behavior. Must be between 1 and 3.
   replicas: 3
 
   podDisruptionBudget:
@@ -78,10 +78,13 @@ controller:
   # orphaned stale Leases are garbage-collected. reaperInterval defaults much longer than ttl since
   # the reaper is pure housekeeping, not correctness-critical (see TryAcquire's steal-on-acquire),
   # and every replica runs its own reaper (not leader-elected), so a longer interval also limits
-  # redundant List calls.
+  # redundant List calls. maxHoldDuration (csi-extensions' CON-4983 dedup only) bounds how long a
+  # Lease is kept renewed for one request, so a wedged handler that never calls Release still lets
+  # the Lease go stale and become stealable instead of blocking that key forever.
   distributedDedup:
     ttl: 60
     reaperInterval: 900
+    maxHoldDuration: 300
 
   # These values map directly to yaml in the deployment spec, see the kubernetes docs for info
   labels: {}
@@ -106,6 +109,7 @@ csp:
 
   # Number of CSP replicas for high availability (active-passive via the alletra-9000-primera-and-3par-csp-leader
   # Lease). Default 3 to match the controller; set to 1 to opt back into single-replica behavior.
+  # Must be between 1 and 3.
   replicas: 3
 
   podDisruptionBudget:

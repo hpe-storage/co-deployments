@@ -87,6 +87,9 @@ spec:
     spec:
       serviceAccountName: hpe-csp-sa
       priorityClassName: system-cluster-critical
+      # Must be >= shutdownDrainTimeout (cmd/main.go, hpe_3par_primera_csp) so a graceful
+      # shutdown's drain phase can't be cut short by kubelet's own SIGKILL deadline.
+      terminationGracePeriodSeconds: 90
       containers:
         - name: primera3par-csp
           image: {{ .Values.images.primera3parCSP | quote }}
@@ -137,7 +140,9 @@ spec:
               path: /healthz
               port: 8080
             initialDelaySeconds: 5
-            periodSeconds: 10
+            periodSeconds: 20
+            timeoutSeconds: 5
+            failureThreshold: 6
           readinessProbe:
             httpGet:
               path: /readyz

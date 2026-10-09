@@ -61,7 +61,8 @@
                 },
                 "distributedDedup": {
                     "ttl": 60,
-                    "reaperInterval": 900
+                    "reaperInterval": 900,
+                    "maxHoldDuration": 300
                 },
 		"resources": {}
             },
@@ -304,9 +305,10 @@
             "replicas": {
                 "$id": "#/properties/csp/properties/replicas",
                 "title": "CSP replicas",
-                "description": "Number of primera3par-csp replicas for HA (active-passive via the alletra-9000-primera-and-3par-csp-leader Lease).",
+                "description": "Number of primera3par-csp replicas for HA (active-passive via the alletra-9000-primera-and-3par-csp-leader Lease). Must be between 1 and 3.",
                 "type": "integer",
                 "minimum": 1,
+                "maximum": 3,
                 "default": 3
             },
             "podDisruptionBudget": {
@@ -403,9 +405,10 @@
             "replicas": {
                 "$id": "#/properties/controller/properties/replicas",
                 "title": "Controller replicas",
-                "description": "Number of controller replicas for HA. Leader election on the 7 leader-election-capable sidecars activates automatically when greater than 1.",
+                "description": "Number of controller replicas for HA. Leader election on the 7 leader-election-capable sidecars activates automatically when greater than 1. Must be between 1 and 3.",
                 "type": "integer",
                 "minimum": 1,
+                "maximum": 3,
                 "default": 3
             },
             "podDisruptionBudget": {
@@ -450,7 +453,7 @@
             "distributedDedup": {
                 "$id": "#/properties/controller/properties/distributedDedup",
                 "title": "Distributed duplicate-request dedup timings",
-                "description": "TTL (seconds) for the per-request-key Lease and the reaper interval (seconds) that garbage-collects stale Leases. Used only when no --dbserver is configured.",
+                "description": "TTL (seconds) for the per-request-key Lease, the reaper interval (seconds) that garbage-collects stale Leases, and maxHoldDuration (seconds, csi-extensions' CON-4983 dedup only) bounding how long one request keeps renewing its Lease. Used only when no --dbserver is configured.",
                 "type": "object",
                 "properties": {
                     "ttl": {
@@ -464,6 +467,12 @@
                         "title": "Reaper interval in seconds",
                         "minimum": 1,
                         "default": 900
+                    },
+                    "maxHoldDuration": {
+                        "type": "integer",
+                        "title": "Max Lease hold/renewal duration in seconds (csi-extensions only)",
+                        "minimum": 1,
+                        "default": 300
                     }
                 }
             },
