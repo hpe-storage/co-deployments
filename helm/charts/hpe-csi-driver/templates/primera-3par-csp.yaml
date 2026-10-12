@@ -70,13 +70,13 @@ spec:
     matchLabels:
       app: primera3par-csp
   replicas: {{ .Values.csp.replicas | default 3 }}
-  # Kill-then-create instead of surge-then-kill: with hard pod anti-affinity, a surge pod can
-  # never schedule once every node already hosts a replica, deadlocking the rollout.
+  # Recreate (not RollingUpdate): CSP is single-active-writer (active-passive) - /readyz is
+  # leadership-gated, so a standby structurally cannot satisfy RollingUpdate's maxUnavailable
+  # availability budget while the old leader is still healthy, permanently stalling the
+  # rollout (silent: new pod stuck 0/1, old pod never torn down). Recreate trades that silent
+  # stall for a brief, bounded full outage during upgrades instead.
   strategy:
-    type: RollingUpdate
-    rollingUpdate:
-      maxUnavailable: 1
-      maxSurge: 0
+    type: Recreate
   template:
     metadata:
       labels:
