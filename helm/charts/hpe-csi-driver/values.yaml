@@ -112,9 +112,6 @@ csp:
   # Must be between 1 and 3.
   replicas: 3
 
-  podDisruptionBudget:
-    enabled: true
-
   # These values map directly to yaml in the deployment spec, see the kubernetes docs for info
   labels: {}
 

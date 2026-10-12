@@ -188,19 +188,4 @@ spec:
             matchLabels:
               app: primera3par-csp
       {{- end }}
-
-{{- if and .Values.csp.podDisruptionBudget.enabled (gt (int .Values.csp.replicas) 1) }}
----
-### CSP PodDisruptionBudget ###
-apiVersion: policy/v1
-kind: PodDisruptionBudget
-metadata:
-  name: primera3par-csp-pdb
-  namespace: {{ .Release.Namespace }}
-spec:
-  minAvailable: 1
-  selector:
-    matchLabels:
-      app: primera3par-csp
-{{- end }}
 {{- end }}

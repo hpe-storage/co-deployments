@@ -311,19 +311,6 @@
                 "maximum": 3,
                 "default": 3
             },
-            "podDisruptionBudget": {
-                "$id": "#/properties/csp/properties/podDisruptionBudget",
-                "title": "CSP PodDisruptionBudget",
-                "description": "Optional PodDisruptionBudget (minAvailable: 1) for the primera3par-csp Deployment. Only rendered when replicas > 1.",
-                "type": "object",
-                "properties": {
-                    "enabled": {
-                        "type": "boolean",
-                        "title": "Enable the CSP PodDisruptionBudget",
-                        "default": true
-                    }
-                }
-            },
 	    "resources": {
                 "$id": "#/properties/csp/properties/resources",
                 "type": "object",
