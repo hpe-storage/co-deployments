@@ -40,8 +40,8 @@
                     "enabled": true
                 },
                 "leaderElection": {
-                    "leaseDuration": 15,
-                    "renewDeadline": 10,
+                    "leaseDuration": 20,
+                    "renewDeadline": 8,
                     "retryPeriod": 2
                 }
             },
@@ -55,8 +55,8 @@
                     "enabled": true
                 },
                 "leaderElection": {
-                    "leaseDuration": 15,
-                    "renewDeadline": 10,
+                    "leaseDuration": 20,
+                    "renewDeadline": 8,
                     "retryPeriod": 2
                 },
                 "distributedDedup": {
@@ -340,13 +340,13 @@
                         "type": "integer",
                         "title": "Lease duration in seconds",
                         "minimum": 1,
-                        "default": 15
+                        "default": 20
                     },
                     "renewDeadline": {
                         "type": "integer",
                         "title": "Renew deadline in seconds",
                         "minimum": 1,
-                        "default": 10
+                        "default": 8
                     },
                     "retryPeriod": {
                         "type": "integer",
@@ -421,13 +421,13 @@
                         "type": "integer",
                         "title": "Lease duration in seconds",
                         "minimum": 1,
-                        "default": 15
+                        "default": 20
                     },
                     "renewDeadline": {
                         "type": "integer",
                         "title": "Renew deadline in seconds",
                         "minimum": 1,
-                        "default": 10
+                        "default": 8
                     },
                     "retryPeriod": {
                         "type": "integer",

@@ -68,8 +68,8 @@ controller:
   # replica count, since it gates a single-replica-only loop). Timings standardized on
   # Kubernetes' own kube-scheduler/kube-controller-manager defaults.
   leaderElection:
-    leaseDuration: 15
-    renewDeadline: 10
+    leaseDuration: 20
+    renewDeadline: 8
     retryPeriod: 2
 
   # Cross-pod duplicate-request dedup for hpe-csi-driver's controller RPCs (CON-4960-26), used
@@ -132,10 +132,10 @@ csp:
       memory: 128Mi
 
   # Leader election Lease timings for the primera3par-csp active-passive leader (always-on,
-  # independent of csp.replicas). Standard client-go leaderelection defaults.
+  # independent of csp.replicas).
   leaderElection:
-    leaseDuration: 15
-    renewDeadline: 10
+    leaseDuration: 20
+    renewDeadline: 8
     retryPeriod: 2
 
 node:

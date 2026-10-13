@@ -57,8 +57,8 @@ The following table lists the configurable parameters of the chart and their def
 | controller.resources      | A resource block with requests and limits for controller containers.                               | From [values.yaml](https://github.com/hpe-storage/co-deployments/blob/master/helm/values/csi-driver) |
 | controller.replicas       | Number of controller replicas for HA. Leader election on the 7 leader-election-capable sidecars activates automatically when greater than 1. Must be between 1 and 3. | 3 |
 | controller.podDisruptionBudget.enabled | Enable a PodDisruptionBudget (minAvailable: 1) for the hpe-csi-controller Deployment. Only rendered when `controller.replicas` > 1. | true |
-| controller.leaderElection.leaseDuration | Leader election Lease duration in seconds. Applies to every leader-election-capable container in this pod (4 standard sidecars, 3 custom sidecars, and hpe-csi-driver's podMonitor loop). | 15 |
-| controller.leaderElection.renewDeadline | Leader election renew deadline in seconds. Same scope as above.                               | 10               |
+| controller.leaderElection.leaseDuration | Leader election Lease duration in seconds. Applies to every leader-election-capable container in this pod (4 standard sidecars, 3 custom sidecars, and hpe-csi-driver's podMonitor loop). | 20 |
+| controller.leaderElection.renewDeadline | Leader election renew deadline in seconds. Same scope as above.                               | 8               |
 | controller.leaderElection.retryPeriod   | Leader election retry period in seconds. Same scope as above.                                 | 2                |
 | controller.distributedDedup.ttl            | Cross-pod duplicate-request dedup Lease TTL in seconds. Used only when no `--dbserver` is configured. | 60 |
 | controller.distributedDedup.reaperInterval | Interval in seconds for garbage-collecting stale duplicate-request dedup Leases.                      | 900 |
@@ -69,8 +69,8 @@ The following table lists the configurable parameters of the chart and their def
 | csp.tolerations           | Node taints to tolerate for the CSP Pods.                                                          | []               |
 | csp.resources             | A resource block with requests and limits for CSP containers.                                      | From [values.yaml](https://github.com/hpe-storage/co-deployments/blob/master/helm/values/csi-driver) |
 | csp.replicas              | Number of primera3par-csp replicas for HA. Active-passive via the alletra-9000-primera-and-3par-csp-leader Lease (always on, regardless of replica count). Must be between 1 and 3. | 3 |
-| csp.leaderElection.leaseDuration | Primera/3PAR CSP leader election Lease duration in seconds. Always active regardless of replica count. | 15 |
-| csp.leaderElection.renewDeadline | Primera/3PAR CSP leader election renew deadline in seconds.                                        | 10               |
+| csp.leaderElection.leaseDuration | Primera/3PAR CSP leader election Lease duration in seconds. Always active regardless of replica count. | 20 |
+| csp.leaderElection.renewDeadline | Primera/3PAR CSP leader election renew deadline in seconds.                                        | 8               |
 | csp.leaderElection.retryPeriod   | Primera/3PAR CSP leader election retry period in seconds.                                          | 2                |
 | node.labels               | Additional labels for HPE CSI Driver node Pods.                                                    | {}               |
 | node.nodeSelector         | Node labels for HPE CSI Driver node Pods assignment.                                               | {}               |
