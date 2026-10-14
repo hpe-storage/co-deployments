@@ -161,17 +161,17 @@ node:
 
 # Release images
 images:
-  csiNodeDriver: quay.io/hpestorage/csi-driver:v3.3.1
-  csiControllerDriver: quay.io/hpestorage/csi-driver:v3.3.1
+  csiNodeDriver: quay.io/prashant_hpe/csi-driver:v3.4.0-alpha1
+  csiControllerDriver: quay.io/prashant_hpe/csi-driver:v3.4.0-alpha1
   nimbleCSP: quay.io/hpestorage/alletra-6000-and-nimble-csp:v3.3.0
-  primera3parCSP: quay.io/hpestorage/alletra-9000-primera-and-3par-csp:v3.3.1
-  b10000FileServiceCSP: quay.io/hpestorage/alletrastoragemp-b10000-nfs-csp:v1.3.0
-  x10000FileServiceCSP: quay.io/hpestorage/alletrastoragemp-x10000-nfs-csp:v1.1.0
-  nfsProvisioner: quay.io/hpestorage/nfs-provisioner:v3.0.11
-  csiExtensions: quay.io/hpestorage/csi-extensions:v1.3.0
-  csiVolumeGroupProvisioner: quay.io/hpestorage/volume-group-provisioner:v1.1.0
-  csiVolumeGroupSnapshotter: quay.io/hpestorage/volume-group-snapshotter:v1.1.0
-  csiVolumeMutator: quay.io/hpestorage/volume-mutator:v1.4.0
+  primera3parCSP: quay.io/prashant_hpe/alletra-9000-primera-and-3par-csp:v3.4.0-alpha1
+  b10000FileServiceCSP: quay.io/prashant_hpe/alletrastoragemp-b10000-nfs-csp:v1.4.0-alpha1
+  x10000FileServiceCSP: quay.io/prashant_hpe/alletrastoragemp-x10000-nfs-csp:v1.2.0-alpha1
+  nfsProvisioner: quay.io/prashant_hpe/nfs-provisioner:v3.0.12-alpha1
+  csiExtensions: quay.io/prashant_hpe/csi-extensions:v1.4.0-alpha1
+  csiVolumeGroupProvisioner: quay.io/prashant_hpe/volume-group-provisioner:v1.2.0-alpha1
+  csiVolumeGroupSnapshotter: quay.io/prashant_hpe/volume-group-snapshotter:v1.2.0-alpha1
+  csiVolumeMutator: quay.io/prashant_hpe/volume-mutator:v1.5.0-alpha1
   csiAttacher: registry.k8s.io/sig-storage/csi-attacher:v4.12.0
   csiNodeDriverRegistrar: registry.k8s.io/sig-storage/csi-node-driver-registrar:v2.17.0
   csiProvisioner: registry.k8s.io/sig-storage/csi-provisioner:v6.3.0
