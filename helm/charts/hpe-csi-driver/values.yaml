@@ -161,14 +161,14 @@ node:
 
 # Release images
 images:
-  csiNodeDriver: quay.io/prashant_hpe/csi-driver:v3.4.0-alpha1
-  csiControllerDriver: quay.io/prashant_hpe/csi-driver:v3.4.0-alpha1
+  csiNodeDriver: quay.io/prashant_hpe/csi-driver:v3.4.0-alpha2
+  csiControllerDriver: quay.io/prashant_hpe/csi-driver:v3.4.0-alpha2
   nimbleCSP: quay.io/hpestorage/alletra-6000-and-nimble-csp:v3.3.0
-  primera3parCSP: quay.io/prashant_hpe/alletra-9000-primera-and-3par-csp:v3.4.0-alpha1
+  primera3parCSP: quay.io/prashant_hpe/alletra-9000-primera-and-3par-csp:v3.4.0-alpha2
   b10000FileServiceCSP: quay.io/prashant_hpe/alletrastoragemp-b10000-nfs-csp:v1.4.0-alpha1
   x10000FileServiceCSP: quay.io/prashant_hpe/alletrastoragemp-x10000-nfs-csp:v1.2.0-alpha1
   nfsProvisioner: quay.io/prashant_hpe/nfs-provisioner:v3.0.12-alpha1
-  csiExtensions: quay.io/prashant_hpe/csi-extensions:v1.4.0-alpha1
+  csiExtensions: quay.io/prashant_hpe/csi-extensions:v1.4.0-alpha2
   csiVolumeGroupProvisioner: quay.io/prashant_hpe/volume-group-provisioner:v1.2.0-alpha1
   csiVolumeGroupSnapshotter: quay.io/prashant_hpe/volume-group-snapshotter:v1.2.0-alpha1
   csiVolumeMutator: quay.io/prashant_hpe/volume-mutator:v1.5.0-alpha1
