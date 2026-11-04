@@ -131,6 +131,13 @@ spec:
               value: "8s"
             - name: CSP_LEADER_ELECTION_RETRY_PERIOD
               value: "2s"
+            {{- if gt (int .Values.csp.replicas) 1 }}
+            # Leader gets no readinessProbe for 30s (6 x 5s): exit without releasing the Lease, stay out for 35s (CON-5035).
+            - name: CSP_READINESS_WATCHDOG_TIMEOUT
+              value: "30s"
+            - name: CSP_LEADER_ELECTION_REJOIN_HOLDOFF
+              value: "35s"
+            {{- end }}
             {{- if gt (int .Values.maxVolumesPerNode) 253 }}
             # When a node may attach more than 253 volumes, start auto-assigned VLUN IDs
             # above the reserved SES LUN (254) so FC/iSCSI VLUN IDs do not collide (CON-4873).
