@@ -56,9 +56,9 @@ spec:
             {{- if gt (int .Values.controller.replicas) 1 }}
             - "--leader-election=true"
             - "--leader-election-namespace={{ .Release.Namespace }}"
-            - "--leader-election-lease-duration={{ .Values.controller.leaderElection.leaseDuration }}s"
-            - "--leader-election-renew-deadline={{ .Values.controller.leaderElection.renewDeadline }}s"
-            - "--leader-election-retry-period={{ .Values.controller.leaderElection.retryPeriod }}s"
+            - "--leader-election-lease-duration=20s"
+            - "--leader-election-renew-deadline=8s"
+            - "--leader-election-retry-period=2s"
             {{- end }}
           env:
             - name: ADDRESS
@@ -78,9 +78,9 @@ spec:
             {{- if gt (int .Values.controller.replicas) 1 }}
             - "--leader-election=true"
             - "--leader-election-namespace={{ .Release.Namespace }}"
-            - "--leader-election-lease-duration={{ .Values.controller.leaderElection.leaseDuration }}s"
-            - "--leader-election-renew-deadline={{ .Values.controller.leaderElection.renewDeadline }}s"
-            - "--leader-election-retry-period={{ .Values.controller.leaderElection.retryPeriod }}s"
+            - "--leader-election-lease-duration=20s"
+            - "--leader-election-renew-deadline=8s"
+            - "--leader-election-retry-period=2s"
             {{- end }}
           env:
             - name: ADDRESS
@@ -99,9 +99,9 @@ spec:
             {{- if gt (int .Values.controller.replicas) 1 }}
             - "--leader-election=true"
             - "--leader-election-namespace={{ .Release.Namespace }}"
-            - "--leader-election-lease-duration={{ .Values.controller.leaderElection.leaseDuration }}s"
-            - "--leader-election-renew-deadline={{ .Values.controller.leaderElection.renewDeadline }}s"
-            - "--leader-election-retry-period={{ .Values.controller.leaderElection.retryPeriod }}s"
+            - "--leader-election-lease-duration=20s"
+            - "--leader-election-renew-deadline=8s"
+            - "--leader-election-retry-period=2s"
             {{- end }}
           env:
             - name: ADDRESS
@@ -120,9 +120,9 @@ spec:
             {{- if gt (int .Values.controller.replicas) 1 }}
             - "--leader-election=true"
             - "--leader-election-namespace={{ .Release.Namespace }}"
-            - "--leader-election-lease-duration={{ .Values.controller.leaderElection.leaseDuration }}s"
-            - "--leader-election-renew-deadline={{ .Values.controller.leaderElection.renewDeadline }}s"
-            - "--leader-election-retry-period={{ .Values.controller.leaderElection.retryPeriod }}s"
+            - "--leader-election-lease-duration=20s"
+            - "--leader-election-renew-deadline=8s"
+            - "--leader-election-retry-period=2s"
             {{- end }}
           env:
             - name: ADDRESS
@@ -147,11 +147,11 @@ spec:
                 fieldRef:
                   fieldPath: metadata.namespace
             - name: PODMONITOR_LEADER_ELECTION_LEASE_DURATION
-              value: {{ printf "%ds" (int .Values.controller.leaderElection.leaseDuration) | quote }}
+              value: "20s"
             - name: PODMONITOR_LEADER_ELECTION_RENEW_DEADLINE
-              value: {{ printf "%ds" (int .Values.controller.leaderElection.renewDeadline) | quote }}
+              value: "8s"
             - name: PODMONITOR_LEADER_ELECTION_RETRY_PERIOD
-              value: {{ printf "%ds" (int .Values.controller.leaderElection.retryPeriod) | quote }}
+              value: "2s"
             - name: DEDUP_LOCK_TTL
               value: {{ printf "%ds" (int .Values.controller.distributedDedup.ttl) | quote }}
             - name: DEDUP_REAPER_INTERVAL
@@ -195,9 +195,9 @@ spec:
             {{- if gt (int .Values.controller.replicas) 1 }}
             - "--leader-election=true"
             - "--leader-election-namespace={{ .Release.Namespace }}"
-            - "--leader-election-lease-duration={{ .Values.controller.leaderElection.leaseDuration }}s"
-            - "--leader-election-renew-deadline={{ .Values.controller.leaderElection.renewDeadline }}s"
-            - "--leader-election-retry-period={{ .Values.controller.leaderElection.retryPeriod }}s"
+            - "--leader-election-lease-duration=20s"
+            - "--leader-election-renew-deadline=8s"
+            - "--leader-election-retry-period=2s"
             {{- end }}
           env:
             - name: ADDRESS
@@ -216,9 +216,9 @@ spec:
             {{- if gt (int .Values.controller.replicas) 1 }}
             - "--leader-election=true"
             - "--leader-election-namespace={{ .Release.Namespace }}"
-            - "--leader-election-lease-duration={{ .Values.controller.leaderElection.leaseDuration }}s"
-            - "--leader-election-renew-deadline={{ .Values.controller.leaderElection.renewDeadline }}s"
-            - "--leader-election-retry-period={{ .Values.controller.leaderElection.retryPeriod }}s"
+            - "--leader-election-lease-duration=20s"
+            - "--leader-election-renew-deadline=8s"
+            - "--leader-election-retry-period=2s"
             {{- end }}
           env:
             - name: ADDRESS
@@ -237,9 +237,9 @@ spec:
             {{- if gt (int .Values.controller.replicas) 1 }}
             - "--leader-election=true"
             - "--leader-election-namespace={{ .Release.Namespace }}"
-            - "--leader-election-lease-duration={{ .Values.controller.leaderElection.leaseDuration }}s"
-            - "--leader-election-renew-deadline={{ .Values.controller.leaderElection.renewDeadline }}s"
-            - "--leader-election-retry-period={{ .Values.controller.leaderElection.retryPeriod }}s"
+            - "--leader-election-lease-duration=20s"
+            - "--leader-election-renew-deadline=8s"
+            - "--leader-election-retry-period=2s"
             {{- end }}
           env:
             - name: ADDRESS

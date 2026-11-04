@@ -38,11 +38,6 @@
                 "replicas": 3,
                 "podDisruptionBudget": {
                     "enabled": true
-                },
-                "leaderElection": {
-                    "leaseDuration": 20,
-                    "renewDeadline": 8,
-                    "retryPeriod": 2
                 }
             },
             "controller": {
@@ -53,11 +48,6 @@
                 "replicas": 3,
                 "podDisruptionBudget": {
                     "enabled": true
-                },
-                "leaderElection": {
-                    "leaseDuration": 20,
-                    "renewDeadline": 8,
-                    "retryPeriod": 2
                 },
                 "distributedDedup": {
                     "ttl": 60,
@@ -329,32 +319,6 @@
                         "title": "resource requests",
                         "default": {} }
                 }
-            },
-            "leaderElection": {
-                "$id": "#/properties/csp/properties/leaderElection",
-                "title": "Leader election Lease timings",
-                "description": "Lease timings (seconds) for the primera3par-csp active-passive leader election. Always active regardless of replica count.",
-                "type": "object",
-                "properties": {
-                    "leaseDuration": {
-                        "type": "integer",
-                        "title": "Lease duration in seconds",
-                        "minimum": 1,
-                        "default": 20
-                    },
-                    "renewDeadline": {
-                        "type": "integer",
-                        "title": "Renew deadline in seconds",
-                        "minimum": 1,
-                        "default": 8
-                    },
-                    "retryPeriod": {
-                        "type": "integer",
-                        "title": "Retry period in seconds",
-                        "minimum": 1,
-                        "default": 2
-                    }
-                }
             }
 	}
         },
@@ -408,32 +372,6 @@
                         "type": "boolean",
                         "title": "Enable the controller PodDisruptionBudget",
                         "default": true
-                    }
-                }
-            },
-            "leaderElection": {
-                "$id": "#/properties/controller/properties/leaderElection",
-                "title": "Leader election Lease timings",
-                "description": "Lease timings (seconds) for every leader-election-capable container in this pod: the 4 standard sidecars (csi-provisioner/csi-attacher/csi-snapshotter/csi-resizer), the 3 custom sidecars (csi-volume-mutator/csi-volume-group-provisioner/csi-volume-group-snapshotter), and hpe-csi-driver's podMonitor loop.",
-                "type": "object",
-                "properties": {
-                    "leaseDuration": {
-                        "type": "integer",
-                        "title": "Lease duration in seconds",
-                        "minimum": 1,
-                        "default": 20
-                    },
-                    "renewDeadline": {
-                        "type": "integer",
-                        "title": "Renew deadline in seconds",
-                        "minimum": 1,
-                        "default": 8
-                    },
-                    "retryPeriod": {
-                        "type": "integer",
-                        "title": "Retry period in seconds",
-                        "minimum": 1,
-                        "default": 2
                     }
                 }
             },
