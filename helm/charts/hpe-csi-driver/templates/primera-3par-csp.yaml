@@ -121,12 +121,16 @@ spec:
             # GOMEMLIMIT set to 850MiB (~83% of this container's 1Gi memory limit) to run the Go GC before the hard limit (ESC-17696).
             - name: GOMEMLIMIT
               value: "850MiB"
+            # Fixed Lease timings (not configurable): renewDeadline + release timeout (2 x 8s) plus
+            # retryPeriod must stay below leaseDuration so a leader that cannot renew stops before a
+            # standby can acquire (single-writer guarantee). Keep in sync with the defaults in
+            # hpe_3par_primera_csp cmd/main.go.
             - name: CSP_LEADER_ELECTION_LEASE_DURATION
-              value: {{ printf "%ds" (int .Values.csp.leaderElection.leaseDuration) | quote }}
+              value: "20s"
             - name: CSP_LEADER_ELECTION_RENEW_DEADLINE
-              value: {{ printf "%ds" (int .Values.csp.leaderElection.renewDeadline) | quote }}
+              value: "8s"
             - name: CSP_LEADER_ELECTION_RETRY_PERIOD
-              value: {{ printf "%ds" (int .Values.csp.leaderElection.retryPeriod) | quote }}
+              value: "2s"
             {{- if gt (int .Values.maxVolumesPerNode) 253 }}
             # When a node may attach more than 253 volumes, start auto-assigned VLUN IDs
             # above the reserved SES LUN (254) so FC/iSCSI VLUN IDs do not collide (CON-4873).

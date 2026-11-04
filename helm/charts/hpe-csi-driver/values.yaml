@@ -62,16 +62,6 @@ controller:
   podDisruptionBudget:
     enabled: true
 
-  # Leader election for every leader-election-capable container in this pod (4 standard CSI
-  # sidecars, 3 custom sidecars, and hpe-csi-driver's podMonitor loop). Automatically active
-  # whenever controller.replicas > 1 (podMonitor is the exception — always-on regardless of
-  # replica count, since it gates a single-replica-only loop). Timings standardized on
-  # Kubernetes' own kube-scheduler/kube-controller-manager defaults.
-  leaderElection:
-    leaseDuration: 20
-    renewDeadline: 8
-    retryPeriod: 2
-
   # Cross-pod duplicate-request dedup for hpe-csi-driver's controller RPCs (CON-4960-26), used
   # when no --dbserver is configured (the common case). Backed by one Kubernetes Lease per
   # in-flight request key; ttl controls staleness/steal timing, reaperInterval controls how often
@@ -130,13 +120,6 @@ csp:
     requests:
       cpu: 100m
       memory: 128Mi
-
-  # Leader election Lease timings for the primera3par-csp active-passive leader (always-on,
-  # independent of csp.replicas).
-  leaderElection:
-    leaseDuration: 20
-    renewDeadline: 8
-    retryPeriod: 2
 
 node:
 
