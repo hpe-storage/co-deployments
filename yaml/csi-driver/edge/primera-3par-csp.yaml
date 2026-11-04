@@ -74,7 +74,7 @@ spec:
       priorityClassName: system-cluster-critical
       containers:
         - name: primera3par-csp
-          image: "quay.io/hpestorage/alletra-9000-primera-and-3par-csp:v3.3.0"
+          image: "quay.io/hpestorage/alletra-9000-primera-and-3par-csp:v3.4.0-alpha1"
           resources:
             limits:
               cpu: 2000m

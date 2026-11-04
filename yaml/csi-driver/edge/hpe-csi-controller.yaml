@@ -114,7 +114,7 @@ spec:
             - name: socket-dir
               mountPath: /var/lib/csi/sockets/pluginproxy
         - name: hpe-csi-driver
-          image: "quay.io/hpestorage/csi-driver:v3.3.0"
+          image: "quay.io/hpestorage/csi-driver:v3.4.0-alpha1"
           resources:
             limits:
               cpu: 2000m
@@ -133,7 +133,7 @@ spec:
             - name: LOG_LEVEL
               value: info
             - name: RUNTIME_NFS_IMAGE
-              value: quay.io/hpestorage/nfs-provisioner:v3.0.11
+              value: quay.io/hpestorage/nfs-provisioner:v3.0.12-alpha1
             # GOMEMLIMIT set to 850MiB (~83% of this container's 1Gi memory limit) to run the Go GC before the hard limit (ESC-17696).
             - name: GOMEMLIMIT
               value: "850MiB"
@@ -150,7 +150,7 @@ spec:
             - name: root-dir
               mountPath: /host
         - name: csi-volume-mutator
-          image: "quay.io/hpestorage/volume-mutator:v1.4.0"
+          image: "quay.io/hpestorage/volume-mutator:v1.5.0-alpha1"
           resources:
             limits:
               cpu: 2000m
@@ -169,7 +169,7 @@ spec:
             - name: socket-dir
               mountPath: /var/lib/csi/sockets/pluginproxy/
         - name: csi-volume-group-snapshotter
-          image: "quay.io/hpestorage/volume-group-snapshotter:v1.1.0"
+          image: "quay.io/hpestorage/volume-group-snapshotter:v1.2.0-alpha1"
           resources:
             limits:
               cpu: 2000m
@@ -188,7 +188,7 @@ spec:
             - name: socket-dir
               mountPath: /var/lib/csi/sockets/pluginproxy/
         - name: csi-volume-group-provisioner
-          image: "quay.io/hpestorage/volume-group-provisioner:v1.1.0"
+          image: "quay.io/hpestorage/volume-group-provisioner:v1.2.0-alpha1"
           resources:
             limits:
               cpu: 2000m
@@ -207,7 +207,7 @@ spec:
             - name: socket-dir
               mountPath: /var/lib/csi/sockets/pluginproxy/
         - name: csi-extensions
-          image: "quay.io/hpestorage/csi-extensions:v1.3.0"
+          image: "quay.io/hpestorage/csi-extensions:v1.4.0-alpha1"
           resources:
             limits:
               cpu: 2000m

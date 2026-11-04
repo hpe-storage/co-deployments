@@ -55,11 +55,17 @@ The following table lists the configurable parameters of the chart and their def
 | controller.affinity       | Affinity rules for the HPE CSI Driver controller Pods.                                             | {}               |
 | controller.tolerations    | Node taints to tolerate for the HPE CSI Driver controller Pods.                                    | []               |
 | controller.resources      | A resource block with requests and limits for controller containers.                               | From [values.yaml](https://github.com/hpe-storage/co-deployments/blob/master/helm/values/csi-driver) |
+| controller.replicas       | Number of controller replicas for HA. Leader election on the 7 leader-election-capable sidecars activates automatically when greater than 1. Must be between 1 and 3. | 3 |
+| controller.podDisruptionBudget.enabled | Enable a PodDisruptionBudget (minAvailable: 1) for the hpe-csi-controller Deployment. Only rendered when `controller.replicas` > 1. | true |
+| controller.distributedDedup.ttl            | Cross-pod duplicate-request dedup Lease TTL in seconds. Used only when no `--dbserver` is configured. | 60 |
+| controller.distributedDedup.reaperInterval | Interval in seconds for garbage-collecting stale duplicate-request dedup Leases.                      | 900 |
+| controller.distributedDedup.maxHoldDuration | Max seconds a single request keeps renewing its duplicate-request dedup Lease (csi-extensions only); bounds how long a wedged handler can block retries for the same key. | 300 |
 | csp.labels                | Additional labels for CSP Pods.                                                                    | {}               |
 | csp.nodeSelector          | Node labels for CSP Pods assignment.                                                               | {}               |
-| csp.affinity              | Affinity rules for the CSP Pods.                                                                   | {}               |
+| csp.affinity              | Affinity rules for the CSP Pods. When unset and `csp.replicas` > 1, a hard podAntiAffinity + topologySpreadConstraints is applied by default (one CSP pod per node). | {} |
 | csp.tolerations           | Node taints to tolerate for the CSP Pods.                                                          | []               |
 | csp.resources             | A resource block with requests and limits for CSP containers.                                      | From [values.yaml](https://github.com/hpe-storage/co-deployments/blob/master/helm/values/csi-driver) |
+| csp.replicas              | Number of primera3par-csp replicas for HA. Active-passive via the alletra-9000-primera-and-3par-csp-leader Lease (always on, regardless of replica count). Must be between 1 and 3. | 3 |
 | node.labels               | Additional labels for HPE CSI Driver node Pods.                                                    | {}               |
 | node.nodeSelector         | Node labels for HPE CSI Driver node Pods assignment.                                               | {}               |
 | node.affinity             | Affinity rules for the HPE CSI Driver node Pods.                                                   | {}               |
@@ -70,6 +76,8 @@ The following table lists the configurable parameters of the chart and their def
 
 `*` = Disabling node conformance and configuration may prevent the CSI driver from functioning properly. See the [manual node configuration](https://scod.hpedev.io/csi_driver/operations.html#manual_node_configuration) section on SCOD to understand the consequences.
 <br />`**` = The default value is the current well tested upper limit. Do not increase the default value unless the use case has been well tested and is within the [Known Limitations](https://scod.hpedev.io/csi_driver/index.html#known_limitations) for how many paths that are allowed.
+
+**Note:** the primera3par-csp Deployment always injects a `POD_NAMESPACE` downward-API env var and `/healthz` (liveness) + `/readyz` (leadership-gated readiness) probes — these are not configurable toggles, and apply regardless of `csp.replicas`.
 
 It's recommended to create a [values.yaml](https://github.com/hpe-storage/co-deployments/blob/master/helm/values/csi-driver) file from the corresponding release of the chart and edit it to fit the environment the chart is being deployed to. Download and edit [a sample file](https://github.com/hpe-storage/co-deployments/blob/master/helm/values/csi-driver).
 

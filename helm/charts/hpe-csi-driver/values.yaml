@@ -54,6 +54,28 @@ kubeletRootDir: "/var/lib/kubelet"
 
 controller:
 
+  # Number of controller replicas for high availability (active-passive via leader election on
+  # csi-provisioner/csi-attacher/csi-snapshotter/csi-resizer). Default 3 for HA; set to 1 to opt
+  # back into single-replica behavior. Must be between 1 and 3.
+  replicas: 3
+
+  podDisruptionBudget:
+    enabled: true
+
+  # Cross-pod duplicate-request dedup for hpe-csi-driver's controller RPCs (CON-4960-26), used
+  # when no --dbserver is configured (the common case). Backed by one Kubernetes Lease per
+  # in-flight request key; ttl controls staleness/steal timing, reaperInterval controls how often
+  # orphaned stale Leases are garbage-collected. reaperInterval defaults much longer than ttl since
+  # the reaper is pure housekeeping, not correctness-critical (see TryAcquire's steal-on-acquire),
+  # and every replica runs its own reaper (not leader-elected), so a longer interval also limits
+  # redundant List calls. maxHoldDuration (csi-extensions' CON-4983 dedup only) bounds how long a
+  # Lease is kept renewed for one request, so a wedged handler that never calls Release still lets
+  # the Lease go stale and become stealable instead of blocking that key forever.
+  distributedDedup:
+    ttl: 60
+    reaperInterval: 900
+    maxHoldDuration: 300
+
   # These values map directly to yaml in the deployment spec, see the kubernetes docs for info
   labels: {}
 
@@ -74,6 +96,11 @@ controller:
       memory: 128Mi
 
 csp:
+
+  # Number of CSP replicas for high availability (active-passive via the alletra-9000-primera-and-3par-csp-leader
+  # Lease). Default 3 to match the controller; set to 1 to opt back into single-replica behavior.
+  # Must be between 1 and 3.
+  replicas: 3
 
   # These values map directly to yaml in the deployment spec, see the kubernetes docs for info
   labels: {}
@@ -117,17 +144,17 @@ node:
 
 # Release images
 images:
-  csiNodeDriver: quay.io/hpestorage/csi-driver:v3.3.0
-  csiControllerDriver: quay.io/hpestorage/csi-driver:v3.3.0
+  csiNodeDriver: quay.io/prashant_hpe/csi-driver:v3.4.0-alpha2
+  csiControllerDriver: quay.io/prashant_hpe/csi-driver:v3.4.0-alpha2
   nimbleCSP: quay.io/hpestorage/alletra-6000-and-nimble-csp:v3.3.0
-  primera3parCSP: quay.io/hpestorage/alletra-9000-primera-and-3par-csp:v3.3.0
-  b10000FileServiceCSP: quay.io/hpestorage/alletrastoragemp-b10000-nfs-csp:v1.3.0
-  x10000FileServiceCSP: quay.io/hpestorage/alletrastoragemp-x10000-nfs-csp:v1.1.0
-  nfsProvisioner: quay.io/hpestorage/nfs-provisioner:v3.0.11
-  csiExtensions: quay.io/hpestorage/csi-extensions:v1.3.0
-  csiVolumeGroupProvisioner: quay.io/hpestorage/volume-group-provisioner:v1.1.0
-  csiVolumeGroupSnapshotter: quay.io/hpestorage/volume-group-snapshotter:v1.1.0
-  csiVolumeMutator: quay.io/hpestorage/volume-mutator:v1.4.0
+  primera3parCSP: quay.io/prashant_hpe/alletra-9000-primera-and-3par-csp:v3.4.0-alpha2
+  b10000FileServiceCSP: quay.io/prashant_hpe/alletrastoragemp-b10000-nfs-csp:v1.4.0-alpha1
+  x10000FileServiceCSP: quay.io/prashant_hpe/alletrastoragemp-x10000-nfs-csp:v1.2.0-alpha1
+  nfsProvisioner: quay.io/prashant_hpe/nfs-provisioner:v3.0.12-alpha1
+  csiExtensions: quay.io/prashant_hpe/csi-extensions:v1.4.0-alpha2
+  csiVolumeGroupProvisioner: quay.io/prashant_hpe/volume-group-provisioner:v1.2.0-alpha1
+  csiVolumeGroupSnapshotter: quay.io/prashant_hpe/volume-group-snapshotter:v1.2.0-alpha1
+  csiVolumeMutator: quay.io/prashant_hpe/volume-mutator:v1.5.0-alpha1
   csiAttacher: registry.k8s.io/sig-storage/csi-attacher:v4.12.0
   csiNodeDriverRegistrar: registry.k8s.io/sig-storage/csi-node-driver-registrar:v2.17.0
   csiProvisioner: registry.k8s.io/sig-storage/csi-provisioner:v6.3.0

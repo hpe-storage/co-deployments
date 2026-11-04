@@ -69,7 +69,14 @@ spec:
   selector:
     matchLabels:
       app: primera3par-csp
-  replicas: 1
+  replicas: {{ .Values.csp.replicas | default 3 }}
+  # Recreate (not RollingUpdate): CSP is single-active-writer (active-passive) - /readyz is
+  # leadership-gated, so a standby structurally cannot satisfy RollingUpdate's maxUnavailable
+  # availability budget while the old leader is still healthy, permanently stalling the
+  # rollout (silent: new pod stuck 0/1, old pod never torn down). Recreate trades that silent
+  # stall for a brief, bounded full outage during upgrades instead.
+  strategy:
+    type: Recreate
   template:
     metadata:
       labels:
@@ -80,6 +87,9 @@ spec:
     spec:
       serviceAccountName: hpe-csp-sa
       priorityClassName: system-cluster-critical
+      # Must be >= shutdownDrainTimeout (cmd/main.go, hpe_3par_primera_csp) so a graceful
+      # shutdown's drain phase can't be cut short by kubelet's own SIGKILL deadline.
+      terminationGracePeriodSeconds: 90
       containers:
         - name: primera3par-csp
           image: {{ .Values.images.primera3parCSP | quote }}
@@ -87,6 +97,11 @@ spec:
             {{- toYaml .Values.csp.resources | nindent 12 }}
           imagePullPolicy: {{ .Values.imagePullPolicy | quote }}
           env:
+            # Required by the alletra-9000-primera-and-3par-csp-leader Lease client (always-on, regardless of replica count).
+            - name: POD_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
             - name: CRD_CLIENT_CONFIG_QPS
               value: "35"
             - name: CRD_CLIENT_CONFIG_BURST
@@ -106,6 +121,23 @@ spec:
             # GOMEMLIMIT set to 850MiB (~83% of this container's 1Gi memory limit) to run the Go GC before the hard limit (ESC-17696).
             - name: GOMEMLIMIT
               value: "850MiB"
+            # Fixed Lease timings (not configurable): renewDeadline + release timeout (2 x 8s) plus
+            # retryPeriod must stay below leaseDuration so a leader that cannot renew stops before a
+            # standby can acquire (single-writer guarantee). Keep in sync with the defaults in
+            # hpe_3par_primera_csp cmd/main.go.
+            - name: CSP_LEADER_ELECTION_LEASE_DURATION
+              value: "20s"
+            - name: CSP_LEADER_ELECTION_RENEW_DEADLINE
+              value: "8s"
+            - name: CSP_LEADER_ELECTION_RETRY_PERIOD
+              value: "2s"
+            {{- if gt (int .Values.csp.replicas) 1 }}
+            # Leader gets no readinessProbe for 30s (6 x 5s): exit without releasing the Lease, stay out for 35s (CON-5035).
+            - name: CSP_READINESS_WATCHDOG_TIMEOUT
+              value: "30s"
+            - name: CSP_LEADER_ELECTION_REJOIN_HOLDOFF
+              value: "35s"
+            {{- end }}
             {{- if gt (int .Values.maxVolumesPerNode) 253 }}
             # When a node may attach more than 253 volumes, start auto-assigned VLUN IDs
             # above the reserved SES LUN (254) so FC/iSCSI VLUN IDs do not collide (CON-4873).
@@ -114,6 +146,21 @@ spec:
             - name: ISCSI_AUTO_LUN_START_ID
               value: "255"
             {{- end }}
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: 8080
+            initialDelaySeconds: 5
+            periodSeconds: 20
+            timeoutSeconds: 5
+            failureThreshold: 6
+          readinessProbe:
+            httpGet:
+              path: /readyz
+              port: 8080
+            initialDelaySeconds: 5
+            periodSeconds: 5
+            failureThreshold: 2
           ports:
             - containerPort: 8080
           volumeMounts:
@@ -134,5 +181,22 @@ spec:
       {{- if .Values.csp.affinity }}
       affinity:
 {{ toYaml .Values.csp.affinity | indent 8 }}
+      {{- else if gt (int .Values.csp.replicas) 1 }}
+      affinity:
+        # Hard: a replacement pod stays Pending rather than co-locate, and lands on a
+        # recovered/new node once one satisfying this constraint becomes schedulable.
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchLabels:
+                  app: primera3par-csp
+              topologyKey: kubernetes.io/hostname
+      topologySpreadConstraints:
+        - maxSkew: 1
+          topologyKey: kubernetes.io/hostname
+          whenUnsatisfiable: ScheduleAnyway
+          labelSelector:
+            matchLabels:
+              app: primera3par-csp
       {{- end }}
 {{- end }}

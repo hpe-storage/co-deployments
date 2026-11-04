@@ -34,13 +34,26 @@
                 "tolerations": [],
                 "affinity": {},
                 "labels": {},
-		"resources": {}
+		"resources": {},
+                "replicas": 3,
+                "podDisruptionBudget": {
+                    "enabled": true
+                }
             },
             "controller": {
                 "nodeSelector": {},
                 "tolerations": [],
                 "affinity": {},
                 "labels": {},
+                "replicas": 3,
+                "podDisruptionBudget": {
+                    "enabled": true
+                },
+                "distributedDedup": {
+                    "ttl": 60,
+                    "reaperInterval": 900,
+                    "maxHoldDuration": 300
+                },
 		"resources": {}
             },
             "node": {
@@ -249,6 +262,8 @@
             "default": 250
 	},
         "csp": {
+            "type": "object",
+            "properties": {
             "nodeSelector": {
                 "$id": "#/properties/csp/properties/nodeSelector",
                 "title": "Node selector to control the selection of nodes (optional).",
@@ -277,6 +292,15 @@
                 "type": "object",
                 "default": {}
             },
+            "replicas": {
+                "$id": "#/properties/csp/properties/replicas",
+                "title": "CSP replicas",
+                "description": "Number of primera3par-csp replicas for HA (active-passive via the alletra-9000-primera-and-3par-csp-leader Lease). Must be between 1 and 3.",
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 3,
+                "default": 3
+            },
 	    "resources": {
                 "$id": "#/properties/csp/properties/resources",
                 "type": "object",
@@ -296,8 +320,11 @@
                         "default": {} }
                 }
             }
-	},
+	}
+        },
         "controller": {
+            "type": "object",
+            "properties": {
             "nodeSelector": {
                 "$id": "#/properties/controller/properties/nodeSelector",
                 "title": "Node selector to control the selection of nodes (optional).",
@@ -326,6 +353,54 @@
                 "type": "object",
                 "default": {}
             },
+            "replicas": {
+                "$id": "#/properties/controller/properties/replicas",
+                "title": "Controller replicas",
+                "description": "Number of controller replicas for HA. Leader election on the 7 leader-election-capable sidecars activates automatically when greater than 1. Must be between 1 and 3.",
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 3,
+                "default": 3
+            },
+            "podDisruptionBudget": {
+                "$id": "#/properties/controller/properties/podDisruptionBudget",
+                "title": "Controller PodDisruptionBudget",
+                "description": "Optional PodDisruptionBudget (minAvailable: 1) for the hpe-csi-controller Deployment. Only rendered when replicas > 1.",
+                "type": "object",
+                "properties": {
+                    "enabled": {
+                        "type": "boolean",
+                        "title": "Enable the controller PodDisruptionBudget",
+                        "default": true
+                    }
+                }
+            },
+            "distributedDedup": {
+                "$id": "#/properties/controller/properties/distributedDedup",
+                "title": "Distributed duplicate-request dedup timings",
+                "description": "TTL (seconds) for the per-request-key Lease, the reaper interval (seconds) that garbage-collects stale Leases, and maxHoldDuration (seconds, csi-extensions' CON-4983 dedup only) bounding how long one request keeps renewing its Lease. Used only when no --dbserver is configured.",
+                "type": "object",
+                "properties": {
+                    "ttl": {
+                        "type": "integer",
+                        "title": "Lease TTL in seconds",
+                        "minimum": 1,
+                        "default": 60
+                    },
+                    "reaperInterval": {
+                        "type": "integer",
+                        "title": "Reaper interval in seconds",
+                        "minimum": 1,
+                        "default": 900
+                    },
+                    "maxHoldDuration": {
+                        "type": "integer",
+                        "title": "Max Lease hold/renewal duration in seconds (csi-extensions only)",
+                        "minimum": 1,
+                        "default": 300
+                    }
+                }
+            },
 	    "resources": {
                 "$id": "#/properties/controller/properties/resources",
                 "type": "object",
@@ -345,6 +420,7 @@
                         "default": {} }
                 }
 	    }
+            }
         },
         "node": {
             "nodeSelector": {
