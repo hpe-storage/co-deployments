@@ -1,0 +1,83 @@
+apiVersion: storage.hpe.com/v1
+kind: HPECSIDriver
+metadata:
+  name: hpecsidriver-sample
+spec:
+  # Default values copied from <project_dir>/helm-charts/hpe-csi-driver/values.yaml
+  controller:
+    affinity: {}
+    labels: {}
+    nodeSelector: {}
+    resources:
+      limits:
+        cpu: 2000m
+        memory: 1Gi
+      requests:
+        cpu: 100m
+        memory: 128Mi
+    tolerations: []
+  csp:
+    affinity: {}
+    labels: {}
+    nodeSelector: {}
+    resources:
+      limits:
+        cpu: 2000m
+        memory: 1Gi
+      requests:
+        cpu: 100m
+        memory: 128Mi
+    tolerations: []
+  disable:
+    alletra6000: false
+    alletra9000: false
+    alletraStorageMP: false
+    b10000FileService: false
+    nimble: false
+    primera: false
+    x10000FileService: false
+  disableHostDeletion: false
+  disableHostname: false
+  disableNodeConfiguration: false
+  disableNodeConformance: false
+  disableNodeGetVolumeStats: false
+  disableNodeMonitor: false
+  disablePreInstallHooks: false
+  imagePullPolicy: IfNotPresent
+  images:
+    b10000FileServiceCSP: quay.io/hpestorage/alletrastoragemp-b10000-nfs-csp:v1.3.0
+    csiAttacher: registry.k8s.io/sig-storage/csi-attacher:v4.12.0
+    csiControllerDriver: quay.io/hpestorage/csi-driver:v3.3.1
+    csiExtensions: quay.io/hpestorage/csi-extensions:v1.3.0
+    csiNodeDriver: quay.io/hpestorage/csi-driver:v3.3.1
+    csiNodeDriverRegistrar: registry.k8s.io/sig-storage/csi-node-driver-registrar:v2.17.0
+    csiProvisioner: registry.k8s.io/sig-storage/csi-provisioner:v6.3.0
+    csiResizer: registry.k8s.io/sig-storage/csi-resizer:v2.2.1
+    csiSnapshotter: registry.k8s.io/sig-storage/csi-snapshotter:v8.6.0
+    csiVolumeGroupProvisioner: quay.io/hpestorage/volume-group-provisioner:v1.1.0
+    csiVolumeGroupSnapshotter: quay.io/hpestorage/volume-group-snapshotter:v1.1.0
+    csiVolumeMutator: quay.io/hpestorage/volume-mutator:v1.4.0
+    nfsProvisioner: quay.io/hpestorage/nfs-provisioner:v3.0.11
+    nimbleCSP: quay.io/hpestorage/alletra-6000-and-nimble-csp:v3.3.0
+    primera3parCSP: quay.io/hpestorage/alletra-9000-primera-and-3par-csp:v3.3.1
+    x10000FileServiceCSP: quay.io/hpestorage/alletrastoragemp-x10000-nfs-csp:v1.1.0
+  iscsi:
+    chapSecretName: ""
+  kubeletRootDir: /var/lib/kubelet
+  logLevel: info
+  maxHostnameLength: 31
+  maxVolumesPerNode: 250
+  node:
+    affinity: {}
+    labels: {}
+    nodeSelector: {}
+    resources:
+      limits:
+        cpu: 2000m
+        memory: 1Gi
+      requests:
+        cpu: 100m
+        memory: 128Mi
+    tolerations: []
+  
+  
