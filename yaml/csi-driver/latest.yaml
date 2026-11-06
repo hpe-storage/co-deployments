@@ -1,0 +1,2809 @@
+---
+# Source: hpe-csi-driver/crds/hpe-nodeinfo-crd.yaml
+---
+#############################################
+############  HPE Node Info CRD  ############
+#############################################
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata: 
+  creationTimestamp: null
+  name: hpenodeinfos.storage.hpe.com
+spec: 
+  group: storage.hpe.com
+  names: 
+    kind: HPENodeInfo
+    plural: hpenodeinfos
+  scope: Cluster
+  versions: 
+    - name: v1
+      # Each version can be enabled/disabled by Served flag.
+      served: true
+      # One and only one version must be marked as the storage version.
+      storage: true
+      schema: 
+        openAPIV3Schema: 
+          properties: 
+            apiVersion: 
+              description: "APIVersion defines the versioned schema of this representation of an object."
+              type: string
+            kind: 
+              description: "Kind is a string value representing the REST resource this object represents"
+              type: string
+            spec: 
+              description: "spec defines the desired characteristics of a HPE nodeinfo requested by a user."
+              properties: 
+                iqns: 
+                  description: "List of IQNs configured on the node."
+                  items: 
+                    type: string
+                  type: array
+                networks: 
+                  description: "List of networks configured on the node."
+                  items: 
+                    type: string
+                  type: array
+                uuid: 
+                  description: "The UUID of the node."
+                  type: string
+                wwpns: 
+                  description: "List of WWPNs configured on the node."
+                  items: 
+                    type: string
+                  type: array
+                nqns: 
+                  description: "List of NQNs configured on the node."
+                  items: 
+                    type: string
+                  type: array
+              required: 
+                - uuid
+                - networks
+              type: object
+          required: 
+            - spec
+          type: object
+status: 
+  acceptedNames: 
+    kind: ""
+    plural: ""
+  conditions: []
+  storedVersions: []
+
+---
+# Source: hpe-csi-driver/crds/hpereplicated_deviceinfo_v2_crd.yaml
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  creationTimestamp: null
+  name: hpereplicationdeviceinfos.storage.hpe.com
+spec:
+  group: storage.hpe.com
+  names:
+    kind: HPEReplicationDeviceInfo
+    plural: hpereplicationdeviceinfos
+    shortNames:
+      - hperdi
+
+  scope: Cluster
+  versions:
+    - name: v1
+      # Each version can be enabled/disabled by Served flag.
+      served: true
+      # One and only one version must be marked as the storage version.
+      storage: false
+      schema:
+        openAPIV3Schema:
+          type: object
+          #x-kubernetes-preserve-unknown-fields: true
+          properties:
+            hpeReplicationDeviceInfos:
+              description: List of HPE Replicated Device Information
+              type: object
+              items:
+                type: object
+                properties:
+                  targets:
+                    description: List of Target Array Details
+                    type: object
+                    items:
+                      description: Target Array Details
+                      type: object
+                      properties:
+                        targetName: 
+                          description: Target Name of the array
+                          type: string
+                        targetCpg:
+                          description: Target CPG of the array
+                          type: string
+                        targetSnapCpg:
+                          description: Target Snap CPG of the array
+                          type: string
+                        targetSecret:
+                          description: Secret of the replicated array 
+                          type: string
+                        targetMode:
+                          description: Replication Mode
+                          type: string
+                        targetSecretNamespace:
+                          description: Namespace of secret
+                          type: string
+                      required:
+                        - targetName
+                        - targetCpg
+                        - targetSecret
+                        - targetSecretNamespace
+    - name: v2
+      # Each version can be enabled/disabled by Served flag.
+      served: true
+      # One and only one version must be marked as the storage version.
+      storage: true
+      schema:
+        openAPIV3Schema:
+          type: object
+          x-kubernetes-preserve-unknown-fields: true
+          properties:
+            hpeReplicationDeviceInfos:
+              description: List of HPE Replicated Device Information
+              type: object
+              items:
+                type: object
+                properties:
+                  targets:
+                    description: List of Target Array Details
+                    type: object
+                    items:
+                      description: Target Array Details
+                      type: object
+                      properties:
+                        targetName: 
+                          description: Target Name of the array
+                          type: string
+                        targetCpg:
+                          description: Target CPG of the array
+                          type: string
+                        targetSnapCpg:
+                          description: Target Snap CPG of the array
+                          type: string
+                        targetSecret:
+                          description: Secret of the replicated array 
+                          type: string
+                        targetMode:
+                          description: Replication Mode
+                          type: string
+                        targetSecretNamespace:
+                          description: Namespace of secret
+                          type: string
+                      required:
+                        - targetName
+                        - targetCpg
+                        - targetSecret
+                        - targetSecretNamespace                        
+status:
+  acceptedNames:
+    kind: ""
+    plural: ""
+  conditions: []
+  storedVersions: []                        
+
+
+
+---
+# Source: hpe-csi-driver/crds/hpevolumegroupinfos_v2_crd.yaml
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  creationTimestamp: null
+  name: hpevolumegroupinfos.storage.hpe.com
+spec:
+  group: storage.hpe.com
+  names:
+    kind: HPEVolumeGroupInfo
+    plural: hpevolumegroupinfos
+    shortNames: 
+      - hpevgi
+  scope: Cluster
+  versions:
+    - name: v1
+      # Each version can be enabled/disabled by Served flag.
+      served: true
+      # One and only one version must be marked as the storage version.
+      storage: false 
+      schema:       
+        openAPIV3Schema:
+          type: object
+          #x-kubernetes-preserve-unknown-fields: true
+          properties:
+            hpeVolumeGroupInfos:
+              description: List of HPE volume groups configured for 3PAR/Primera arrays.
+              items:
+                type: object
+                properties:
+                  uuid:
+                    description: The UUID of the node.
+                    type: string
+          
+                  record:
+                    description: Metadata for the volume group
+                    type: object
+
+                  snapshotGroups:
+                    description: Snapshot groups that are linked to this volume group
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          description: ID of the snapshot group
+                          type: string
+
+                        name:
+                          description: Name of the snapshot group
+                          type: string
+                    type: object      
+                  volumes:
+                    description: Volumes that are members in this volume group
+                    
+                    items:
+                      type: object
+                      properties:
+                        volumeId:
+                          description: ID of the member volume 
+                          type: string
+
+                        volumeName:
+                          description: Name of the member volume
+                          type: string
+                    type: object      
+              type: object
+    - name: v2
+      # Each version can be enabled/disabled by Served flag.
+      served: true
+      # One and only one version must be marked as the storage version.
+      storage: true 
+      schema:       
+        openAPIV3Schema:
+          type: object
+          x-kubernetes-preserve-unknown-fields: true
+          properties:
+            hpeVolumeGroupInfos:
+              description: List of HPE volume groups configured for 3PAR/Primera arrays.
+              items:
+                type: object
+                properties:
+                  uuid:
+                    description: The UUID of the node.
+                    type: string
+          
+                  record:
+                    description: Metadata for the volume group
+                    type: object
+
+                  snapshotGroups:
+                    description: Snapshot groups that are linked to this volume group
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          description: ID of the snapshot group
+                          type: string
+
+                        name:
+                          description: Name of the snapshot group
+                          type: string
+                    type: object      
+                  volumes:
+                    description: Volumes that are members in this volume group
+                    
+                    items:
+                      type: object
+                      properties:
+                        volumeId:
+                          description: ID of the member volume 
+                          type: string
+
+                        volumeName:
+                          description: Name of the member volume
+                          type: string
+                    type: object      
+              type: object
+
+status:
+  acceptedNames:
+    kind: ""
+    plural: ""
+  conditions: []
+  storedVersions: []
+
+
+---
+# Source: hpe-csi-driver/crds/hpevolumeinfos_v2_crd.yaml
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  creationTimestamp: null
+  name: hpevolumeinfos.storage.hpe.com
+spec:
+  group: storage.hpe.com
+  names:
+    kind: HPEVolumeInfo
+    plural: hpevolumeinfos
+  scope: Cluster
+  # list of versions supported by this CustomResourceDefinition
+  versions:
+    - name: v1
+      # Each version can be enabled/disabled by Served flag.
+      served: true
+      # One and only one version must be marked as the storage version.
+      storage: false  
+      schema:
+        openAPIV3Schema:
+          type: object
+          #x-kubernetes-preserve-unknown-fields: true
+          properties:
+            hpeVolumes:
+              description: List of HPE volumes configured for 3PAR/Primera arrays.
+              type: object
+              items:
+                type: object
+                properties:
+                  uuid:
+                    description: The UUID of the node.
+                    type: string
+          
+                  record:
+                    description: Metadata for the volume
+                    type: object
+    - name: v2
+      # Each version can be enabled/disabled by Served flag.
+      served: true
+      # One and only one version must be marked as the storage version.
+      storage: true  
+      schema:
+        openAPIV3Schema:
+          type: object
+          x-kubernetes-preserve-unknown-fields: true
+
+          properties:
+            hpeVolumes:
+              description: List of HPE volumes configured for 3PAR/Primera arrays.
+              type: object
+              items:
+                type: object
+                properties:
+                  uuid:
+                    description: The UUID of the node.
+                    type: string
+          
+                  record:
+                    description: Metadata for the volume
+                    type: object                    
+
+status:
+  acceptedNames:
+    kind: ""
+    plural: ""
+  conditions: []
+  storedVersions: []
+
+
+---
+# Source: hpe-csi-driver/crds/snapshotgroupinfos_v2_crd.yaml
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  creationTimestamp: null
+  name: hpesnapshotgroupinfos.storage.hpe.com
+spec:
+  group: storage.hpe.com
+  names:
+    kind: HPESnapshotGroupInfo
+    plural: hpesnapshotgroupinfos
+    shortNames: 
+      - hpesgi
+  scope: Cluster
+  versions:
+    - name: v1
+      # Each version can be enabled/disabled by Served flag.
+      served: true
+      # One and only one version must be marked as the storage version.
+      storage: false  
+      schema:
+        openAPIV3Schema:
+          type: object
+          #x-kubernetes-preserve-unknown-fields: true
+          properties:
+            hpeSnapshotGroupInfos:
+              description: List of HPE snapshot groups created for 3PAR/Primera arrays.
+              type: object
+              items:
+                type: object
+                properties:
+                  uuid:
+                    description: The UUID of the node.
+                    type: string
+          
+                  record:
+                    description: Metadata for the volume group
+                    type: object
+
+                  snapshotVolumes:
+                    description: Snapshot volumes that are part of this snapshot group
+                    type: object
+                    items:
+                      type: object
+                      properties:
+                        srcVolumeId:
+                          description: ID of the volume that is the source of this snapshot volume 
+                          type: string
+
+                        srcVolumeName:
+                          description: Name of the volume that is the source of this snapshot volume
+                          type: string
+
+                        snapshotId:
+                          description: Snapshot volume Id
+                          type: string
+
+                        snapshotName:
+                          description: Snapshot volume name
+                          type: string
+    - name: v2
+      # Each version can be enabled/disabled by Served flag.
+      served: true
+      # One and only one version must be marked as the storage version.
+      storage: true  
+      schema:
+        openAPIV3Schema:
+          type: object
+          x-kubernetes-preserve-unknown-fields: true
+          properties:
+            hpeSnapshotGroupInfos:
+              description: List of HPE snapshot groups created for 3PAR/Primera arrays.
+              type: object
+              items:
+                type: object
+                properties:
+                  uuid:
+                    description: The UUID of the node.
+                    type: string
+          
+                  record:
+                    description: Metadata for the volume group
+                    type: object
+
+                  snapshotVolumes:
+                    description: Snapshot volumes that are part of this snapshot group
+                    type: object
+                    items:
+                      type: object
+                      properties:
+                        srcVolumeId:
+                          description: ID of the volume that is the source of this snapshot volume 
+                          type: string
+
+                        srcVolumeName:
+                          description: Name of the volume that is the source of this snapshot volume
+                          type: string
+
+                        snapshotId:
+                          description: Snapshot volume Id
+                          type: string
+
+                        snapshotName:
+                          description: Snapshot volume name
+                          type: string                          
+
+status:
+  acceptedNames:
+    kind: ""
+    plural: ""
+  conditions: []
+  storedVersions: []
+
+
+---
+# Source: hpe-csi-driver/crds/storage.hpe.com_hpereplicationmappings.yaml
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.16.0
+  name: hpereplicationmappings.storage.hpe.com
+spec:
+  group: storage.hpe.com
+  names:
+    kind: HPEReplicationMapping
+    listKind: HPEReplicationMappingList
+    plural: hpereplicationmappings
+    shortNames:
+    - hperpm
+    singular: hpereplicationmapping
+  scope: Cluster
+  versions:
+  - name: v3
+    schema:
+      openAPIV3Schema:
+        description: HPEReplicationMapping defines the properties of a 3PAR/Primera
+          RCGs
+        properties:
+          apiVersion:
+            description: |-
+              APIVersion defines the versioned schema of this representation of an object.
+              Servers should convert recognized schemas to the latest internal value, and
+              may reject unrecognized values.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+            type: string
+          kind:
+            description: |-
+              Kind is a string value representing the REST resource this object represents.
+              Servers may infer this from the endpoint the client submits requests to.
+              Cannot be updated.
+              In CamelCase.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+            type: string
+          metadata:
+            type: object
+          spec:
+            description: HPEReplicationMappingSpec defines the properties listed on
+              an HPEReplicationMapping
+            properties:
+              primary_array_details:
+                properties:
+                  cpg:
+                    type: string
+                  name:
+                    type: string
+                  secret:
+                    type: string
+                  secretNamespace:
+                    type: string
+                type: object
+              rcg_details:
+                description: RCG Details
+                properties:
+                  rcgnames:
+                    items:
+                      type: string
+                    type: array
+                required:
+                - rcgnames
+                type: object
+              target_array_details:
+                properties:
+                  cpg:
+                    type: string
+                  name:
+                    type: string
+                  secret:
+                    type: string
+                  secretNamespace:
+                    type: string
+                type: object
+            required:
+            - primary_array_details
+            - rcg_details
+            - target_array_details
+            type: object
+        required:
+        - metadata
+        - spec
+        type: object
+    served: true
+    storage: true
+
+---
+# Source: hpe-csi-driver/crds/storage.hpe.com_snapshotgroupclasses.yaml
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  name: snapshotgroupclasses.storage.hpe.com
+spec:
+  conversion:
+    strategy: None
+  group: storage.hpe.com
+  names:
+    kind: SnapshotGroupClass
+    listKind: SnapshotGroupClassList
+    plural: snapshotgroupclasses
+    singular: snapshotgroupclass
+  scope: Cluster
+  versions:
+  - name: v1
+    schema:
+      openAPIV3Schema:
+        description: SnapshotGroupClass specifies parameters that a underlying
+          storage system uses when creating a volumegroup snapshot. A specific SnapshotGroupClass
+          is used by specifying its name in a VolumeGroupSnapshot object. SnapshotGroupClasses
+          are non-namespaced
+        properties:
+          apiVersion:
+            description: APIVersion defines the versioned schema of this representation
+              of an object.
+            type: string
+          deletionPolicy:
+            description: deletionPolicy determines whether a SnapshotGroupContent
+              created through the SnapshotGroupClass should be deleted when its
+              bound SnapshotGroup is deleted. Supported values are "Retain" and
+              "Delete". "Retain" means that the SnapshotGroupContent and its physical
+              snapshotGroup on underlying storage system are kept. "Delete" means that
+              the SnapshotGroupContent and its physical snapshotGroup on underlying
+              storage system are deleted. Required.
+            enum:
+            - Delete
+            - Retain
+            type: string
+          snapshotter:
+            description: snapshotter is the name of the storage driver that handles this
+              SnapshotGroupClass. Required.
+            type: string
+          kind:
+            description: Kind is a string value representing the REST resource
+              this object represents.
+            type: string
+          parameters:
+            additionalProperties:
+                type: string
+            description: parameters is a key-value map with storage driver specific
+              parameters for creating snapshotGroups. These values are opaque to Kubernetes.
+            type: object
+        required:
+        - deletionPolicy
+        - snapshotter
+        type: object
+    served: true
+    storage: true
+---
+# Source: hpe-csi-driver/crds/storage.hpe.com_snapshotgroupcontents.yaml
+--- 
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  name: snapshotgroupcontents.storage.hpe.com
+spec:
+  conversion:
+    strategy: None
+  group: storage.hpe.com
+  names:
+    kind: SnapshotGroupContent
+    listKind: SnapshotGroupContentList
+    plural: snapshotgroupcontents
+    singular: snapshotgroupcontent
+  scope: Cluster
+  versions:
+  - name: v1
+    schema:
+      openAPIV3Schema:
+        description: SnapshotGroupContent represents the actual "on-disk" snapshotGroup
+          object in the underlying storage system
+        properties:
+          apiVersion:
+            description: 'APIVersion defines the versioned schema of this representation
+              of an object. Servers should convert recognized schemas to the latest
+              internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#resources'
+            type: string
+          kind:
+            description: 'Kind is a string value representing the REST resource
+              this object represents. Servers may infer this from the endpoint the
+              client submits requests to. Cannot be updated. In CamelCase. More
+              info: https://git.k8s.io/community/contributors/devel/api-conventions.md#types-kinds'
+            type: string
+          spec:
+            description: spec defines properties of a SnapshotGroupContent created
+              by the underlying storage system. Required.
+            properties:
+              deletionPolicy:
+                description: deletionPolicy determines whether this SnapshotGroupContent
+                  and its physical snapshotgroup on the underlying storage system should
+                  be deleted when its bound SnapshotGroup is deleted. Supported
+                  values are "Retain" and "Delete". "Retain" means that the SnapshotGroupContent
+                  and its physical snapshotGroup on underlying storage system are kept.
+                  "Delete" means that the SnapshotGroupContent and its physical
+                  snapshotGroup on underlying storage system are deleted.
+                  Required.
+                enum:
+                - Delete
+                - Retain
+                type: string
+              source:
+                description: source specifies from where a snapshotGroup will be created.Required.
+                properties:
+                  snapshotGroupHandle:
+                    description: snapshotGroupHandle specifies the snapshotGroup Id
+                      of a pre-existing snapshotGroup on the underlying storage system.
+                      This field is immutable.
+                    type: string
+                type: object
+              snapshotGroupClassName:
+                description: name of the SnapshotGroupClass to which this snapshotGroup belongs.
+                type: string
+              snapshotGroupRef:
+                description: snapshotGroupRef specifies the SnapshotGroup object
+                  to which this SnapshotGroupContent object is bound. SnapshotGroup.Spec.SnapshotGroupContentName
+                  field must reference to this SnapshotGroupContent's name for
+                  the bidirectional binding to be valid.
+                  Required.
+                properties:
+                  apiVersion:
+                    description: API version of the referent.
+                    type: string
+                  kind:
+                    description: 'Kind of the referent. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#types-kinds'
+                    type: string
+                  name:
+                    description: 'Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names'
+                    type: string
+                  namespace:
+                    description: 'Namespace of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/'
+                    type: string
+                  resourceVersion:
+                    description: 'Specific resourceVersion to which this reference
+                      is made, if any. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#concurrency-control-and-consistency'
+                    type: string
+                  uid:
+                    description: 'UID of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#uids'
+                    type: string
+                type: object
+              volumeSnapshotContentNames:
+                description: list of volumeSnapshotContentNames associated with this snapshotGroups
+                type: array
+                items: 
+                  type: string
+            required:
+            - deletionPolicy
+            - source
+            - snapshotGroupClassName
+            type: object
+        required:
+        - spec
+        type: object
+    served: true
+    storage: true
+---
+# Source: hpe-csi-driver/crds/storage.hpe.com_snapshotgroups.yaml
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  name: snapshotgroups.storage.hpe.com
+spec:
+  conversion:
+    strategy: None
+  group: storage.hpe.com
+  names:
+    kind: SnapshotGroup
+    listKind: SnapshotGroupList
+    plural: snapshotgroups
+    singular: snapshotgroup
+  scope: Namespaced
+  versions:
+  - name: v1
+    schema:
+      openAPIV3Schema:
+        description: SnapshotGroup is a user's request for creating a snapshotgroup
+        properties:
+          apiVersion:
+            description: APIVersion defines the versioned schema of this representation
+              of an object.
+            type: string
+          kind:
+            description: 'Kind is a string value representing the REST resource
+              this object represents'
+            type: string
+          spec:
+            description: spec defines the desired characteristics of a snapshotGroup
+              requested by a user.
+              Required.
+            properties:
+              source:
+                description: source specifies where a snapshotGroup will be created.
+                  This field is immutable after creation. Required.
+                properties:
+                  kind:
+                    description: kind of the source (VolumeGroup) is the only supported one.
+                    type: string
+                  apiGroup:
+                    description:  apiGroup of the source. Current supported is storage.hpe.com
+                    type: string
+                  name:
+                    description: name specifies the volumeGroupName of the VolumeGroup object in the same namespace as the SnapshotGroup object where the snapshotGroup should be dynamically taken from. This field is immutable.
+                    type: string
+                type: object
+              volumeSnapshotClassName:
+                description: name of the volumeSnapshotClass to create pre-provisioned snapshots
+                type: string
+              snapshotGroupClassName:
+                description: snapshotGroupClassName is the name of the SnapshotGroupClass requested by the SnapshotGroup.
+                type: string
+              snapshotGroupContentName:
+                description: snapshotGroupContentName is the name of the snapshotGroupContent the snapshotGroup is bound.
+                type: string
+            required:
+            - source
+            - volumeSnapshotClassName
+            - snapshotGroupClassName
+            type: object
+          status:
+            description: status represents the current information of a snapshotGroup.
+            properties:
+              creationTime:
+                description: creationTime is the timestamp when the point-in-time
+                  snapshotGroup is taken by the underlying storage system.
+                format: date-time
+                type: string
+              phase:
+                description: the state of the snapshotgroup
+                enum:
+                - Pending
+                - Ready
+                - Failed
+                type: string
+            type: object
+        required:
+        - spec
+        type: object
+    served: true
+    storage: true
+---
+# Source: hpe-csi-driver/crds/storage.hpe.com_volumegroupclasses.yaml
+--- 
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  name: volumegroupclasses.storage.hpe.com
+spec:
+  conversion:
+    strategy: None
+  group: storage.hpe.com
+  names:
+    kind: VolumeGroupClass
+    listKind: VolumeGroupClassList
+    plural: volumegroupclasses
+    singular: volumegroupclass
+  scope: Cluster
+  versions:
+  - name: v1
+    schema:
+        openAPIV3Schema:
+          description: VolumeGroupClass specifies parameters that a underlying
+            storage system uses when creating a volumegroup. A specific VolumeGroupClass
+            is used by specifying its name in a VolumeGroup object. VolumeGroupClasses
+            are non-namespaced
+          properties:
+            apiVersion:
+              description: APIVersion defines the versioned schema of this representation
+                of an object.
+              type: string
+            deletionPolicy:
+              description: deletionPolicy determines whether a VolumeGroupContent
+                created through the VolumeGroupClass should be deleted when its
+                bound VolumeGroup is deleted. Supported values are "Retain" and
+                "Delete". "Retain" means that the VolumeGroupContent and its physical
+                volumeGroup on underlying storage system are kept. "Delete" means that
+                the VolumeGroupContent and its physical volumeGroup on underlying
+                storage system are deleted. Required.
+              enum:
+              - Delete
+              - Retain
+              type: string
+            provisioner:
+              description: provisioner is the name of the storage driver that handles this
+                VolumeGroupClass. Required.
+              type: string
+            kind:
+              description: Kind is a string value representing the REST resource
+                this object represents.
+              type: string
+            parameters:
+              additionalProperties:
+                  type: string
+              description: parameters is a key-value map with storage driver specific
+                parameters for creating volumeGroups. These values are opaque to Kubernetes.
+              type: object
+          required:
+          - deletionPolicy
+          - provisioner
+          type: object
+    served: true
+    storage: true
+---
+# Source: hpe-csi-driver/crds/storage.hpe.com_volumegroupcontents.yaml
+--- 
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  name: volumegroupcontents.storage.hpe.com
+spec:
+  conversion:
+    strategy: None
+  group: storage.hpe.com
+  names:
+    kind: VolumeGroupContent
+    listKind: VolumeGroupContentList
+    plural: volumegroupcontents
+    singular: volumegroupcontent
+  scope: Cluster
+  versions:
+  - name: v1
+    schema:
+        openAPIV3Schema:
+          description: VolumeGroupContent represents the actual "on-disk" volumeGroup
+            object in the underlying storage system
+          properties:
+            apiVersion:
+              description: APIVersion defines the versioned schema of this representation
+                of an object.
+              type: string
+            kind:
+              description: Kind is a string value representing the REST resource
+                this object represents.
+              type: string
+            spec:
+              description: spec defines properties of a VolumeGroupContent created
+                by the underlying storage system. Required.
+              properties:
+                deletionPolicy:
+                  description: deletionPolicy determines whether this VolumeGroupContent
+                    and its physical volumegroup on the underlying storage system should
+                    be deleted when its bound VolumeGroup is deleted. Supported
+                    values are "Retain" and "Delete". "Retain" means that the VolumeGroupContent
+                    and its physical volumeGroup on underlying storage system are kept.
+                    "Delete" means that the VolumeGroupContent and its physical
+                    volumeGroup on underlying storage system are deleted.
+                    Required.
+                  enum:
+                  - Delete
+                  - Retain
+                  type: string
+                source:
+                  description: source specifies from where a volumeGroup will be created.Required.
+                  properties:
+                    volumeGroupHandle:
+                      description: volumeGroupHandle specifies the volumeGroup Id
+                        of a pre-existing volumeGroup on the underlying storage system.
+                        This field is immutable.
+                      type: string
+                  type: object
+                volumeGroupClassName:
+                  description: name of the VolumeGroupClass to which this volumeGroup belongs.
+                  type: string
+                volumeGroupRef:
+                  description: volumeGroupRef specifies the VolumeGroup object
+                    to which this VolumeGroupContent object is bound. VolumeGroup.Spec.VolumeGroupContentName
+                    field must reference to this VolumeGroupContent's name for
+                    the bidirectional binding to be valid.
+                    Required.
+                  properties:
+                    apiVersion:
+                      description: API version of the referent.
+                      type: string
+                    kind:
+                      description: 'Kind of the referent. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#types-kinds'
+                      type: string
+                    name:
+                      description: 'Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names'
+                      type: string
+                    namespace:
+                      description: 'Namespace of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/'
+                      type: string
+                    resourceVersion:
+                      description: 'Specific resourceVersion to which this reference
+                        is made, if any. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#concurrency-control-and-consistency'
+                      type: string
+                    uid:
+                      description: 'UID of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#uids'
+                      type: string
+                  type: object
+              required:
+              - deletionPolicy
+              - source
+              - volumeGroupClassName
+              type: object
+          required:
+          - spec
+          type: object
+    served: true
+    storage: true
+---
+# Source: hpe-csi-driver/crds/storage.hpe.com_volumegroups.yaml
+--- 
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  name: volumegroups.storage.hpe.com
+spec:
+  conversion:
+    strategy: None
+  group: storage.hpe.com
+  names:
+    kind: VolumeGroup
+    listKind: VolumeGroupList
+    plural: volumegroups
+    singular: volumegroup
+  scope: Namespaced
+  versions:
+  - name: v1
+    schema:
+      openAPIV3Schema:
+        description: VolumeGroup is a user's request for creating a volumegroup
+        properties:
+          apiVersion:
+            description: APIVersion defines the versioned schema of this representation
+              of an object.
+            type: string
+          kind:
+            description: 'Kind is a string value representing the REST resource
+              this object represents'
+            type: string
+          spec:
+            description: spec defines the desired characteristics of a volumeGroup
+              requested by a user.
+              Required.
+            properties:
+              volumeGroupClassName:
+                description: name of the volumeGroupClassName to create volumeGroups
+                type: string
+              persistentVolumeClaimNames:
+                description: persistentVolumeClaimNames are the name of the PVC associated with this volumeGroup.
+                type: array
+                items:
+                  type: string
+              volumeGroupContentName:
+                description: volumeGroupContentName is the name of the volumeGroupContent to which the volumeGroup is bound.
+                type: string
+            required:
+            - volumeGroupClassName
+            type: object
+          status:
+            description: status represents the current information of a volumeGroup.
+            properties:
+              creationTime:
+                description: creationTime is the timestamp when the point-in-time
+                  volumeGroup is taken by the underlying storage system.
+                format: date-time
+                type: string
+              phase:
+                description: the state of the volumegroup
+                enum:
+                - Pending
+                - Ready
+                - Failed
+                type: string
+            type: object
+        required:
+        - spec
+        type: object
+    served: true
+    storage: true
+---
+# Source: hpe-csi-driver/templates/hpe-csi-rbac.yaml
+kind: ServiceAccount
+apiVersion: v1
+metadata:
+  name: hpe-csi-controller-sa
+  namespace: hpe-storage
+---
+# Source: hpe-csi-driver/templates/hpe-csi-rbac.yaml
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: hpe-csi-node-sa
+  namespace: hpe-storage
+---
+# Source: hpe-csi-driver/templates/hpe-csi-rbac.yaml
+kind: ServiceAccount
+apiVersion: v1
+metadata:
+  name: hpe-csp-sa
+  namespace: hpe-storage
+---
+# Source: hpe-csi-driver/templates/hpe-linux-config.yaml
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: hpe-linux-config
+  namespace: hpe-storage
+data:
+  config.json: |-
+    {
+    	"Nimble": {
+    		"Default": [
+    			{
+    				"category": "iscsi",
+    				"severity": "warning",
+    				"description": "Manual startup of iSCSI nodes on boot. Can be set in /etc/iscsi/iscsid.conf",
+    				"parameter": "startup",
+    				"recommendation": "manual"
+    			},
+    			{
+    				"category": "iscsi",
+    				"severity": "warning",
+    				"description": "Replacement_timeout of 10 seconds is recommended for faster failover of I/O by multipath on path failures. Can be set in /etc/iscsi/iscsid.conf",
+    				"parameter": "replacement_timeout",
+    				"recommendation": "10"
+    			},
+    			{
+    				"category": "iscsi",
+    				"severity": "warning",
+    				"description": "Minimum login timeout of 15 seconds is recommended with iSCSI. Can be set in /etc/iscsi/iscsid.conf",
+    				"parameter": "login_timeout",
+    				"recommendation": "15"
+    			},
+    			{
+    				"category": "iscsi",
+    				"severity": "warning",
+    				"description": "Minimum timeout of 10 seconds is recommended with noop requests. Can be set in /etc/iscsi/iscsid.conf",
+    				"parameter": "noop_out_timeout",
+    				"recommendation": "10"
+    			},
+    			{
+    				"category": "iscsi",
+    				"severity": "warning",
+    				"description": "Minimum cmds_max of 512 is recommended for each session if handling multiple LUN's. Can be set in /etc/iscsi/iscsid.conf",
+    				"parameter": "cmds_max",
+    				"recommendation": "512"
+    			},
+    			{
+    				"category": "iscsi",
+    				"severity": "warning",
+    				"description": "Minimum queue_depth of 256 is recommended for each iSCSI session/path. Can be set in /etc/iscsi/iscsid.conf",
+    				"parameter": "queue_depth",
+    				"recommendation": "256"
+    			},
+    			{
+    				"category": "iscsi",
+    				"severity": "warning",
+    				"description": "Minimum number of sessions per iSCSI login is recommended to be 1 by default. If additional sessions are needed this can be set in /etc/iscsi/iscsid.conf. If NCM is running, please change min_session_per_array in /etc/ncm.conf and restart nlt service instead",
+    				"parameter": "nr_sessions",
+    				"recommendation": "1"
+    			},
+    			{
+    				"category": "multipath",
+    				"severity": "critical",
+    				"description": "product attribute recommended to be set to Server in /etc/multipath.conf",
+    				"parameter": "product",
+    				"recommendation": "\"Server\""
+    			},
+    			{
+    				"category": "multipath",
+    				"severity": "critical",
+    				"description": "alua prioritizer is recommended. Can be set in /etc/multipath.conf",
+    				"parameter": "prio",
+    				"recommendation": "alua"
+    			},
+    			{
+    				"category": "multipath",
+    				"severity": "critical",
+    				"description": "scsi_dh_alua device handler is recommended. Can be set in /etc/multipath.conf",
+    				"parameter": "hardware_handler",
+    				"recommendation": "\"1 alua\""
+    			},
+    			{
+    				"category": "multipath",
+    				"severity": "warning",
+    				"description": "immediate failback setting is recommended. Can be set in /etc/multipath.conf",
+    				"parameter": "failback",
+    				"recommendation": "immediate"
+    			},
+    			{
+    				"category": "multipath",
+    				"severity": "critical",
+    				"description": "immediately fail i/o on transient path failures to retry on other paths, value=1. Can be set in /etc/multipath.conf",
+    				"parameter": "fast_io_fail_tmo",
+    				"recommendation": "5"
+    			},
+    			{
+    				"category": "multipath",
+    				"severity": "critical",
+    				"description": "queueing is recommended for 150 seconds, with no_path_retry value of 30. Can be set in /etc/multipath.conf",
+    				"parameter": "no_path_retry",
+    				"recommendation": "30"
+    			},
+    			{
+    				"category": "multipath",
+    				"severity": "warning",
+    				"description": "service-time path selector is recommended. Can be set in /etc/multipath.conf",
+    				"parameter": "path_selector",
+    				"recommendation": "\"service-time 0\""
+    			},
+    			{
+    				"category": "multipath",
+    				"severity": "critical",
+    				"description": "vendor attribute recommended to be set to Nimble in /etc/multipath.conf",
+    				"parameter": "vendor",
+    				"recommendation": "\"Nimble\""
+    			},
+    			{
+    				"category": "multipath",
+    				"severity": "critical",
+    				"description": "group paths according to ALUA path priority of active/standby. Recommended to be set to group_by_prio in /etc/multipath.conf",
+    				"parameter": "path_grouping_policy",
+    				"recommendation": "group_by_prio"
+    			},
+    			{
+    				"category": "multipath",
+    				"severity": "critical",
+    				"description": "tur path checker is recommended. Can be set in /etc/multipath.conf",
+    				"parameter": "path_checker",
+    				"recommendation": "tur"
+    			},
+    			{
+    				"category": "multipath",
+    				"severity": "critical",
+    				"description": "infinite value is recommended for timeout in cases of device loss for FC. Can be set in /etc/multipath.conf",
+    				"parameter": "dev_loss_tmo",
+    				"recommendation": "infinity"
+    			}
+    		],
+    		"Ubuntu": null
+    	},
+    	"3PARdata": {
+    		"Default": [
+    			{
+    				"category": "iscsi",
+    				"severity": "warning",
+    				"description": "Manual startup of iSCSI nodes on boot. Can be set in /etc/iscsi/iscsid.conf",
+    				"parameter": "startup",
+    				"recommendation": "manual"
+    			},
+    			{
+    				"category": "iscsi",
+    				"severity": "warning",
+    				"description": "Replacement_timeout of 10 seconds is recommended for faster failover of I/O by multipath on path failures. Can be set in /etc/iscsi/iscsid.conf",
+    				"parameter": "replacement_timeout",
+    				"recommendation": "10"
+    			},
+    			{
+    				"category": "iscsi",
+    				"severity": "warning",
+    				"description": "Minimum login timeout of 15 seconds is recommended with iSCSI. Can be set in /etc/iscsi/iscsid.conf",
+    				"parameter": "login_timeout",
+    				"recommendation": "15"
+    			},
+    			{
+    				"category": "iscsi",
+    				"severity": "warning",
+    				"description": "Minimum timeout of 10 seconds is recommended with noop requests. Can be set in /etc/iscsi/iscsid.conf",
+    				"parameter": "noop_out_timeout",
+    				"recommendation": "10"
+    			},
+    			{
+    				"category": "iscsi",
+    				"severity": "warning",
+    				"description": "Minimum cmds_max of 512 is recommended for each session if handling multiple LUN's. Can be set in /etc/iscsi/iscsid.conf",
+    				"parameter": "cmds_max",
+    				"recommendation": "512"
+    			},
+    			{
+    				"category": "iscsi",
+    				"severity": "warning",
+    				"description": "Minimum queue_depth of 256 is recommended for each iSCSI session/path. Can be set in /etc/iscsi/iscsid.conf",
+    				"parameter": "queue_depth",
+    				"recommendation": "256"
+    			},
+    			{
+    				"category": "iscsi",
+    				"severity": "warning",
+    				"description": "Minimum number of sessions per iSCSI login is recommended to be 1 by default. If additional sessions are needed this can be set in /etc/iscsi/iscsid.conf. If NCM is running, please change min_session_per_array in /etc/ncm.conf and restart nlt service instead",
+    				"parameter": "nr_sessions",
+    				"recommendation": "1"
+    			},
+    			{
+    				"category": "multipath",
+    				"severity": "critical",
+    				"description": "product attribute recommended to be set to VV in /etc/multipath.conf",
+    				"parameter": "product",
+    				"recommendation": "\"VV\""
+    			},
+    			{
+    				"category": "multipath",
+    				"severity": "critical",
+    				"description": "alua prioritizer is recommended. Can be set in /etc/multipath.conf",
+    				"parameter": "prio",
+    				"recommendation": "alua"
+    			},
+    			{
+    				"category": "multipath",
+    				"severity": "critical",
+    				"description": "scsi_dh_alua device handler is recommended. Can be set in /etc/multipath.conf",
+    				"parameter": "hardware_handler",
+    				"recommendation": "\"1 alua\""
+    			},
+    			{
+    				"category": "multipath",
+    				"severity": "warning",
+    				"description": "immediate failback setting is recommended. Can be set in /etc/multipath.conf",
+    				"parameter": "failback",
+    				"recommendation": "immediate"
+    			},
+    			{
+    				"category": "multipath",
+    				"severity": "critical",
+    				"description": "immediately fail i/o on transient path failures to retry on other paths, value=1. Can be set in /etc/multipath.conf",
+    				"parameter": "fast_io_fail_tmo",
+    				"recommendation": "10"
+    			},
+    			{
+    				"category": "multipath",
+    				"severity": "critical",
+    				"description": "queueing is recommended for 150 seconds, with no_path_retry value of 18. Can be set in /etc/multipath.conf",
+    				"parameter": "no_path_retry",
+    				"recommendation": "18"
+    			},
+    			{
+    				"category": "multipath",
+    				"severity": "warning",
+    				"description": "round-robin 0 path selector is recommended. Can be set in /etc/multipath.conf",
+    				"parameter": "path_selector",
+    				"recommendation": "\"round-robin 0\""
+    			},
+    			{
+    				"category": "multipath",
+    				"severity": "critical",
+    				"description": "vendor attribute recommended to be set to 3PARdata. Can be set in /etc/multipath.conf",
+    				"parameter": "vendor",
+    				"recommendation": "\"3PARdata\""
+    			},
+    			{
+    				"category": "multipath",
+    				"severity": "critical",
+    				"description": "group paths according to ALUA path priority of active/standby. Recommended to be set to group_by_prio in /etc/multipath.conf",
+    				"parameter": "path_grouping_policy",
+    				"recommendation": "group_by_prio"
+    			},
+    			{
+    				"category": "multipath",
+    				"severity": "critical",
+    				"description": "infinite value is recommended for timeout in cases of device loss for FC. Can be set in /etc/multipath.conf",
+    				"parameter": "dev_loss_tmo",
+    				"recommendation": "infinity"
+    			},
+    			{
+    				"category": "multipath",
+    				"severity": "critical",
+    				"description": "tur path checker is recommended. Can be set in /etc/multipath.conf",
+    				"parameter": "path_checker",
+    				"recommendation": "tur"
+    			},
+    			{
+    				"category": "multipath",
+    				"severity": "critical",
+    				"description": "0 value is recommended for features. Can be set in /etc/multipath.conf",
+    				"parameter": "features",
+    				"recommendation": "\"0\""
+    			},
+    			{
+    				"category": "multipath",
+    				"severity": "critical",
+    				"description": "uniform rr_weight is recommended. Can be set in /etc/multipath.conf",
+    				"parameter": "rr_weight",
+    				"recommendation": "\"uniform\""
+    			},
+    			{
+    				"category": "multipath",
+    				"severity": "critical",
+    				"description": "rr_min_io_rq 1 is recommended. Can be set in /etc/multipath.conf",
+    				"parameter": "rr_min_io_rq",
+    				"recommendation": "1"
+    			},
+    			{
+    				"category": "multipath",
+    				"severity": "critical",
+    				"description": "detect_prio yes is recommended. Can be set in /etc/multipath.conf",
+    				"parameter": "detect_prio",
+    				"recommendation": "yes"
+    			}
+    		],
+    		"Ubuntu": [
+    			{
+    				"category": "iscsi",
+    				"severity": "warning",
+    				"description": "Automatic startup of iSCSI nodes on boot. Can be set in /etc/iscsi/iscsid.conf",
+    				"parameter": "startup",
+    				"recommendation": "automatic"
+    			},
+    			{
+    				"category": "iscsi",
+    				"severity": "warning",
+    				"description": "Replacement_timeout of 10 seconds is recommended for faster failover of I/O by multipath on path failures. Can be set in /etc/iscsi/iscsid.conf",
+    				"parameter": "replacement_timeout",
+    				"recommendation": "10"
+    			},
+    			{
+    				"category": "iscsi",
+    				"severity": "warning",
+    				"description": "Minimum interval of 10 seconds is recommended with noop requests. Can be set in /etc/iscsi/iscsid.conf",
+    				"parameter": "noop_out_interval",
+    				"recommendation": "10"
+    			},
+    			{
+    				"category": "multipath",
+    				"severity": "critical",
+    				"description": "product attribute recommended to be set to VV in /etc/multipath.conf",
+    				"parameter": "product",
+    				"recommendation": "\"VV\""
+    			},
+    			{
+    				"category": "multipath",
+    				"severity": "critical",
+    				"description": "alua prioritizer is recommended. Can be set in /etc/multipath.conf",
+    				"parameter": "prio",
+    				"recommendation": "alua"
+    			},
+    			{
+    				"category": "multipath",
+    				"severity": "critical",
+    				"description": "scsi_dh_alua device handler is recommended. Can be set in /etc/multipath.conf",
+    				"parameter": "hardware_handler",
+    				"recommendation": "\"1 alua\""
+    			},
+    			{
+    				"category": "multipath",
+    				"severity": "warning",
+    				"description": "immediate failback setting is recommended. Can be set in /etc/multipath.conf",
+    				"parameter": "failback",
+    				"recommendation": "immediate"
+    			},
+    			{
+    				"category": "multipath",
+    				"severity": "critical",
+    				"description": "queueing is recommended for 150 seconds, with no_path_retry value of 18. Can be set in /etc/multipath.conf",
+    				"parameter": "no_path_retry",
+    				"recommendation": "18"
+    			},
+    			{
+    				"category": "multipath",
+    				"severity": "warning",
+    				"description": "round-robin 0 path selector is recommended. Can be set in /etc/multipath.conf",
+    				"parameter": "path_selector",
+    				"recommendation": "\"round-robin 0\""
+    			},
+    			{
+    				"category": "multipath",
+    				"severity": "critical",
+    				"description": "vendor attribute recommended to be set to 3PARdata in /etc/multipath.conf",
+    				"parameter": "vendor",
+    				"recommendation": "\"3PARdata\""
+    			},
+    			{
+    				"category": "multipath",
+    				"severity": "critical",
+    				"description": "group paths according to ALUA path priority of active/standby. Recommended to be set to group_by_prio in /etc/multipath.conf",
+    				"parameter": "path_grouping_policy",
+    				"recommendation": "group_by_prio"
+    			},
+    			{
+    				"category": "multipath",
+    				"severity": "critical",
+    				"description": "getuid_callout whitelist is recommended. Can be set in /etc/multipath.conf",
+    				"parameter": "getuid_callout",
+    				"recommendation": "\"/lib/udev/scsi_id --whitelisted --device=/dev/%n\""
+    			},
+    			{
+    				"category": "multipath",
+    				"severity": "critical",
+    				"description": "rr_min_io is recommended with value as 100. Can be set in /etc/multipath.conf",
+    				"parameter": "rr_min_io",
+    				"recommendation": "100"
+    			},
+    			{
+    				"category": "multipath",
+    				"severity": "critical",
+    				"description": " tur checker is recommended. Can be set in /etc/multipath.conf",
+    				"parameter": "checker",
+    				"recommendation": "tur"
+    			},
+    			{
+    				"category": "multipath",
+    				"severity": "critical",
+    				"description": " tur path checker is recommended. Can be set in /etc/multipath.conf",
+    				"parameter": "path_checker",
+    				"recommendation": "tur"
+    			},
+    			{
+    				"category": "multipath",
+    				"severity": "critical",
+    				"description": " features 0 is recommended. Can be set in /etc/multipath.conf",
+    				"parameter": "features",
+    				"recommendation": "\"0\""
+    			}
+    		]
+    	}
+    }
+---
+# Source: hpe-csi-driver/templates/hpe-csi-rbac.yaml
+kind: ClusterRole
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: hpe-csi-provisioner-role
+rules:
+  - apiGroups: [""]
+    resources: ["secrets"]
+    verbs: ["get", "list"]
+  - apiGroups: [""]
+    resources: ["namespaces"]
+    verbs: ["get", "list", "create"]
+  - apiGroups: [""]
+    resources: ["nodes"]
+    verbs: ["get", "list"]
+  - apiGroups: [""]
+    resources: ["serviceaccounts"]
+    verbs: ["get", "list", "create"]
+  - apiGroups: [""]
+    resources: ["configmaps"]
+    verbs: ["get", "create", "update", "patch"]
+  - apiGroups: [""]
+    resources: ["persistentvolumes"]
+    verbs: ["get", "list", "watch", "create", "delete", "update"]
+  - apiGroups: [""]
+    resources: ["persistentvolumeclaims"]
+    verbs: ["create", "get", "list", "watch", "update", "delete", "patch"]
+  - apiGroups: [""]
+    resources: ["services"]
+    verbs: ["create", "get", "list", "watch", "update", "delete"]
+  - apiGroups: ["apps"]
+    resources: ["deployments"]
+    verbs: ["create", "get", "list", "watch", "update", "delete"]
+  - apiGroups: ["storage.k8s.io"]
+    resources: ["storageclasses"]
+    verbs: ["get", "list", "watch"]
+  - apiGroups: [""]
+    resources: ["events"]
+    verbs: ["list", "watch", "create", "update", "patch"]
+  - apiGroups: ["snapshot.storage.k8s.io"]
+    resources: ["volumesnapshots"]
+    verbs: ["get", "list"]
+  - apiGroups: ["snapshot.storage.k8s.io"]
+    resources: ["volumesnapshotcontents"]
+    verbs: ["get", "list"]
+  - apiGroups: [""]
+    resources: ["pods"]
+    verbs: ["get", "list", "delete", "watch"]
+  - apiGroups: ["storage.k8s.io"]
+    resources: ["volumeattachments"]
+    verbs: ["get", "list", "watch", "update", "patch", "delete"]
+  - apiGroups: ["storage.k8s.io"]
+    resources: ["volumeattributesclasses"]
+    verbs: ["list", "watch"]
+---
+# Source: hpe-csi-driver/templates/hpe-csi-rbac.yaml
+kind: ClusterRole
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: hpe-csi-attacher-role
+rules:
+  - apiGroups: [""]
+    resources: ["persistentvolumes"]
+    verbs: ["get", "list", "watch", "update", "patch"]
+  - apiGroups: [""]
+    resources: ["nodes"]
+    verbs: ["get", "list", "watch"]
+  - apiGroups: ["storage.k8s.io"]
+    resources: ["volumeattachments"]
+    verbs: ["get", "list", "watch", "update", "patch"]
+  - apiGroups: ["storage.k8s.io"]
+    resources: ["volumeattachments/status"]
+    verbs: ["get", "list", "watch", "update", "create", "delete", "patch"]
+  - apiGroups: [""]
+    resources: ["secrets"]
+    verbs: ["get", "watch", "list"]
+  - apiGroups: ["storage.k8s.io"]
+    resources: ["csinodes"]
+    verbs: ["get", "list", "watch"]
+---
+# Source: hpe-csi-driver/templates/hpe-csi-rbac.yaml
+kind: ClusterRole
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: hpe-csi-snapshotter-role
+rules:
+  - apiGroups: [""]
+    resources: ["secrets"]
+    verbs: ["get", "list"]
+  - apiGroups: [""]
+    resources: ["persistentvolumes"]
+    verbs: ["get", "list", "watch", "create", "delete"]
+  - apiGroups: [""]
+    resources: ["persistentvolumeclaims"]
+    verbs: ["get", "list", "watch", "update"]
+  - apiGroups: ["storage.k8s.io"]
+    resources: ["storageclasses"]
+    verbs: ["get", "list", "watch"]
+  - apiGroups: [""]
+    resources: ["events"]
+    verbs: ["list", "watch", "create", "update", "patch"]
+  - apiGroups: ["snapshot.storage.k8s.io"]
+    resources: ["volumesnapshots"]
+    verbs: ["create", "update", "delete", "get", "list", "watch"]
+  - apiGroups: ["snapshot.storage.k8s.io"]
+    resources: ["volumesnapshots/status"]
+    verbs: ["update"]
+  - apiGroups: ["snapshot.storage.k8s.io"]
+    resources: ["volumesnapshotcontents"]
+    verbs: ["create", "update", "delete", "get", "list", "watch", "patch"]
+  - apiGroups: ["snapshot.storage.k8s.io"]
+    resources: ["volumesnapshotcontents/status"]
+    verbs: ["create", "get", "list", "watch", "update", "delete", "patch"]
+  - apiGroups: ["snapshot.storage.k8s.io"]
+    resources: ["volumesnapshotclasses"]
+    verbs: ["get", "list", "watch"]
+  - apiGroups: ["apiextensions.k8s.io"]
+    resources: ["customresourcedefinitions"]
+    verbs: ["get", "list", "watch", "create", "delete", "update"]
+---
+# Source: hpe-csi-driver/templates/hpe-csi-rbac.yaml
+# Resizer must be able to work with PVCs, PVs, SCs.
+kind: ClusterRole
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: hpe-external-resizer-role
+rules:
+  - apiGroups: [""]
+    resources: ["secrets"]
+    verbs: ["get", "list", "watch"]
+  - apiGroups: [""]
+    resources: ["persistentvolumes"]
+    verbs: ["get", "list", "watch", "update", "patch"]
+  - apiGroups: [""]
+    resources: ["persistentvolumeclaims"]
+    verbs: ["get", "list", "watch"]
+  - apiGroups: [""]
+    resources: ["persistentvolumeclaims/status"]
+    verbs: ["update", "patch"]
+  - apiGroups: ["storage.k8s.io"]
+    resources: ["storageclasses"]
+    verbs: ["get", "list", "watch"]
+  - apiGroups: [""]
+    resources: ["events"]
+    verbs: ["list", "watch", "create", "update", "patch"]
+---
+# Source: hpe-csi-driver/templates/hpe-csi-rbac.yaml
+# cluster role to support volumegroup
+kind: ClusterRole
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: hpe-csi-volumegroup-role
+rules:
+  - apiGroups: ["storage.hpe.com"]
+    resources: ["volumegroups"]
+    verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+  - apiGroups: ["storage.hpe.com"]
+    resources: ["volumegroupcontents"]
+    verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+  - apiGroups: ["storage.hpe.com"]
+    resources: ["volumegroupclasses"]
+    verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+  - apiGroups: ["storage.hpe.com"]
+    resources: ["volumegroups/status"]
+    verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+  - apiGroups: ["storage.hpe.com"]
+    resources: ["volumegroupcontents/status"]
+    verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+  - apiGroups: [""]
+    resources: ["namespaces"]
+    verbs: ["get", "list", "create"]
+  - apiGroups: [""]
+    resources: ["persistentvolumes"]
+    verbs: ["get", "list", "watch", "create", "delete"]
+  - apiGroups: [""]
+    resources: ["persistentvolumeclaims"]
+    verbs: ["create", "get", "list", "watch", "update", "delete"]
+  - apiGroups: [""]
+    resources: ["persistentvolumeclaims/status"]
+    verbs: ["update", "patch"]
+  - apiGroups: [""]
+    resources: ["events"]
+    verbs: ["list", "watch", "create", "update", "patch"]
+  - apiGroups: [""]
+    resources: ["secrets"]
+    verbs: ["get"]
+  - apiGroups: ["apiextensions.k8s.io"]
+    resources: ["customresourcedefinitions"]
+    verbs: ["create", "list", "watch", "delete", "get", "update"]
+  - apiGroups: ["coordination.k8s.io"]
+    resources: ["leases"]
+    verbs: ["get", "watch", "list", "delete", "update", "create"]
+---
+# Source: hpe-csi-driver/templates/hpe-csi-rbac.yaml
+# cluster role to support snapshotgroup
+kind: ClusterRole
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: hpe-csi-snapshotgroup-role
+rules:
+  - apiGroups: ["storage.hpe.com"]
+    resources: ["snapshotgroups"]
+    verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+  - apiGroups: ["storage.hpe.com"]
+    resources: ["snapshotgroupcontents"]
+    verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+  - apiGroups: ["storage.hpe.com"]
+    resources: ["snapshotgroupclasses"]
+    verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+  - apiGroups: ["storage.hpe.com"]
+    resources: ["snapshotgroups/status"]
+    verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+  - apiGroups: ["storage.hpe.com"]
+    resources: ["snapshotgroupcontents/status"]
+    verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+  - apiGroups: [""]
+    resources: ["namespaces"]
+    verbs: ["get", "list", "create"]
+  - apiGroups: [""]
+    resources: ["persistentvolumes"]
+    verbs: ["get", "list", "watch", "create", "delete"]
+  - apiGroups: [""]
+    resources: ["persistentvolumeclaims"]
+    verbs: ["create", "get", "list", "watch", "update", "delete"]
+  - apiGroups: [""]
+    resources: ["persistentvolumeclaims/status"]
+    verbs: ["update", "patch"]
+  - apiGroups: [""]
+    resources: ["events"]
+    verbs: ["list", "watch", "create", "update", "patch"]
+  - apiGroups: [""]
+    resources: ["secrets"]
+    verbs: ["get"]
+  - apiGroups: ["apiextensions.k8s.io"]
+    resources: ["customresourcedefinitions"]
+    verbs: ["create", "list", "watch", "delete", "get", "update"]
+  - apiGroups: ["coordination.k8s.io"]
+    resources: ["leases"]
+    verbs: ["get", "watch", "list", "delete", "update", "create"]
+  - apiGroups: ["storage.hpe.com"]
+    resources: ["volumegroups"]
+    verbs: ["get", "list", "watch"]
+  - apiGroups: ["storage.hpe.com"]
+    resources: ["volumegroupcontents"]
+    verbs: ["get", "list", "watch"]
+  - apiGroups: ["storage.hpe.com"]
+    resources: ["volumegroupclasses"]
+    verbs: ["get", "list", "watch"]
+  - apiGroups: ["snapshot.storage.k8s.io"]
+    resources: ["volumesnapshotcontents"]
+    verbs: ["create", "get", "list", "watch", "update", "delete", "patch"]
+  - apiGroups: ["snapshot.storage.k8s.io"]
+    resources: ["volumesnapshotcontents/status"]
+    verbs: ["create", "get", "list", "watch", "update", "delete", "patch"]
+  - apiGroups: ["snapshot.storage.k8s.io"]
+    resources: ["volumesnapshots"]
+    verbs: ["create", "get", "list", "watch", "update", "delete"]
+  - apiGroups: ["snapshot.storage.k8s.io"]
+    resources: ["volumesnapshots/status"]
+    verbs: ["update"]
+  - apiGroups: ["snapshot.storage.k8s.io"]
+    resources: ["volumesnapshotclasses"]
+    verbs: ["get", "list"]
+---
+# Source: hpe-csi-driver/templates/hpe-csi-rbac.yaml
+# mutator must be able to work with PVCs, PVs, SCs.
+kind: ClusterRole
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: hpe-csi-mutator-role
+rules:
+  - apiGroups: [""]
+    resources: ["secrets"]
+    verbs: ["get", "list", "watch"]
+  - apiGroups: [""]
+    resources: ["persistentvolumes"]
+    verbs: ["get", "list", "watch", "update", "patch"]
+  - apiGroups: [""]
+    resources: ["persistentvolumeclaims"]
+    verbs: ["get", "list", "watch"]
+  - apiGroups: ["storage.k8s.io"]
+    resources: ["storageclasses"]
+    verbs: ["get", "list", "watch"]
+  - apiGroups: [""]
+    resources: ["persistentvolumeclaims/status"]
+    verbs: ["update", "patch"]
+  - apiGroups: [""]
+    resources: ["events"]
+    verbs: ["list", "watch", "create", "update", "patch"]
+---
+# Source: hpe-csi-driver/templates/hpe-csi-rbac.yaml
+kind: ClusterRole
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: hpe-csi-driver-role
+rules:
+  - apiGroups: ["storage.hpe.com"]
+    resources: ["hpenodeinfos"]
+    verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+  - apiGroups: ["storage.hpe.com"]
+    resources: ["hpevolumeinfos"]
+    verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+  - apiGroups: ["storage.hpe.com"]
+    resources: ["hpereplicationdeviceinfos"]
+    verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+  - apiGroups: ["storage.hpe.com"]
+    resources: ["hpevolumegroupinfos"]
+    verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+  - apiGroups: ["storage.hpe.com"]
+    resources: ["hpesnapshotgroupinfos"]
+    verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+  - apiGroups: ["storage.hpe.com"]
+    resources: ["hpereplicationmappings"]
+    verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+  - apiGroups: [""]
+    resources: ["pods"]
+    verbs: ["get", "list"]
+  - apiGroups: [""]
+    resources: ["secrets"]
+    verbs: ["get", "list"]
+  - apiGroups: [""]
+    resources: ["services"]
+    verbs: ["get"]
+  - apiGroups: [""]
+    resources: ["persistentvolumes"]
+    verbs: ["get", "list"]
+  - apiGroups: [""]
+    resources: ["nodes"]
+    verbs: ["get", "list"]
+  - apiGroups: [""]
+    resources: ["persistentvolumeclaims"]
+    verbs: ["get", "list"]
+  - apiGroups: [""]
+    resources: ["namespaces"]
+    verbs: ["get", "list"]
+  - apiGroups: ["storage.k8s.io"]
+    resources: ["storageclasses"]
+    verbs: ["get", "list", "watch"]
+  - apiGroups: ["storage.k8s.io"]
+    resources: ["volumeattachments"]
+    verbs: ["get", "list", "watch"]
+  - apiGroups: ["rbac.authorization.k8s.io"]
+    resources: ["roles", "rolebindings"]
+    verbs: ["create", "delete", "list", "get"]
+  - apiGroups: ["apps"]
+    resources: ["deployments"]
+    verbs: ["create", "get", "list", "watch", "update", "delete", "patch"]
+---
+# Source: hpe-csi-driver/templates/hpe-csi-rbac.yaml
+kind: ClusterRoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: hpe-csi-provisioner-binding
+subjects:
+  - kind: ServiceAccount
+    name: hpe-csi-controller-sa
+    namespace: hpe-storage
+roleRef:
+  kind: ClusterRole
+  name: hpe-csi-provisioner-role
+  apiGroup: rbac.authorization.k8s.io
+---
+# Source: hpe-csi-driver/templates/hpe-csi-rbac.yaml
+kind: ClusterRoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: hpe-csi-attacher-binding
+subjects:
+  - kind: ServiceAccount
+    name: hpe-csi-controller-sa
+    namespace: hpe-storage
+roleRef:
+  kind: ClusterRole
+  name: hpe-csi-attacher-role
+  apiGroup: rbac.authorization.k8s.io
+---
+# Source: hpe-csi-driver/templates/hpe-csi-rbac.yaml
+kind: ClusterRoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: hpe-csi-snapshotter-binding
+subjects:
+  - kind: ServiceAccount
+    name: hpe-csi-controller-sa
+    namespace: hpe-storage
+roleRef:
+  kind: ClusterRole
+  name: hpe-csi-snapshotter-role
+  apiGroup: rbac.authorization.k8s.io
+---
+# Source: hpe-csi-driver/templates/hpe-csi-rbac.yaml
+kind: ClusterRoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: hpe-csi-resizer-role
+subjects:
+  - kind: ServiceAccount
+    name: hpe-csi-controller-sa
+    namespace: hpe-storage
+roleRef:
+  kind: ClusterRole
+  name: hpe-external-resizer-role
+  apiGroup: rbac.authorization.k8s.io
+---
+# Source: hpe-csi-driver/templates/hpe-csi-rbac.yaml
+kind: ClusterRoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: hpe-csi-volumegroup-binding
+subjects:
+  - kind: ServiceAccount
+    name: hpe-csi-controller-sa
+    namespace: hpe-storage
+roleRef:
+  kind: ClusterRole
+  name: hpe-csi-volumegroup-role
+  apiGroup: rbac.authorization.k8s.io
+---
+# Source: hpe-csi-driver/templates/hpe-csi-rbac.yaml
+kind: ClusterRoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: hpe-csi-snapshotgroup-binding
+subjects:
+  - kind: ServiceAccount
+    name: hpe-csi-controller-sa
+    namespace: hpe-storage
+roleRef:
+  kind: ClusterRole
+  name: hpe-csi-snapshotgroup-role
+  apiGroup: rbac.authorization.k8s.io
+---
+# Source: hpe-csi-driver/templates/hpe-csi-rbac.yaml
+kind: ClusterRoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: hpe-csi-mutator-binding
+subjects:
+  - kind: ServiceAccount
+    name: hpe-csi-controller-sa
+    # replace with non-default namespace name
+    namespace: hpe-storage
+roleRef:
+  kind: ClusterRole
+  name: hpe-csi-mutator-role
+  apiGroup: rbac.authorization.k8s.io
+---
+# Source: hpe-csi-driver/templates/hpe-csi-rbac.yaml
+kind: ClusterRoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: hpe-csi-driver-binding
+subjects:
+  - kind: ServiceAccount
+    name: hpe-csi-controller-sa
+    namespace: hpe-storage
+  - kind: ServiceAccount
+    name: hpe-csi-node-sa
+    namespace: hpe-storage
+  - kind: ServiceAccount
+    name: hpe-csp-sa
+    namespace: hpe-storage
+roleRef:
+  kind: ClusterRole
+  name: hpe-csi-driver-role
+  apiGroup: rbac.authorization.k8s.io
+---
+# Source: hpe-csi-driver/templates/hpe-csi-rbac.yaml
+# Resizer must be able to work with end point in current namespace
+# if (and only if) leadership election is enabled
+kind: Role
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  namespace: hpe-storage
+  name: hpe-external-resizer-cfg
+rules:
+  - apiGroups: ["coordination.k8s.io"]
+    resources: ["leases"]
+    verbs: ["get", "watch", "list", "delete", "update", "create"]
+---
+# Source: hpe-csi-driver/templates/hpe-csi-rbac.yaml
+# mutator must be able to work with end point in current namespace
+# if (and only if) leadership election is enabled
+kind: Role
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  namespace: hpe-storage
+  name: hpe-csi-mutator-cfg
+rules:
+  - apiGroups: ["coordination.k8s.io"]
+    resources: ["leases"]
+    verbs: ["get", "watch", "list", "delete", "update", "create"]
+---
+# Source: hpe-csi-driver/templates/hpe-csi-rbac.yaml
+kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: hpe-csi-resizer-role-cfg
+  namespace: hpe-storage
+subjects:
+  - kind: ServiceAccount
+    name: hpe-csi-controller-sa
+    namespace: hpe-storage
+roleRef:
+  kind: Role
+  name: hpe-external-resizer-cfg
+  apiGroup: rbac.authorization.k8s.io
+---
+# Source: hpe-csi-driver/templates/hpe-csi-rbac.yaml
+kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: hpe-csi-mutator-role-cfg
+  namespace: hpe-storage
+subjects:
+  - kind: ServiceAccount
+    name: hpe-csi-controller-sa
+    namespace: hpe-storage
+roleRef:
+  kind: Role
+  name: hpe-csi-mutator-cfg
+  apiGroup: rbac.authorization.k8s.io
+---
+# Source: hpe-csi-driver/templates/b10000-nfs-csp.yaml
+### AlletraMP B10000 NFS CSP Service ###
+kind: Service
+apiVersion: v1
+metadata:
+  name: alletrastoragemp-b10000-nfs-csp-svc
+  namespace: hpe-storage
+  labels:
+    app: alletrastoragemp-b10000-nfs-csp-svc
+spec:
+  ports:
+  - port: 8080
+    protocol: TCP
+  selector:
+    app: alletrastoragemp-b10000-nfs-csp
+---
+# Source: hpe-csi-driver/templates/nimble-csp.yaml
+### Alletra 5000/6000 CSP Service ###
+kind: Service
+apiVersion: v1
+metadata:
+  name: alletra6000-csp-svc
+  namespace: hpe-storage
+  labels:
+    app: alletra6000-csp-svc
+spec:
+  ports:
+  - port: 8080
+    protocol: TCP
+  selector:
+    app:  nimble-csp
+---
+# Source: hpe-csi-driver/templates/nimble-csp.yaml
+### Nimble CSP Service ###
+kind: Service
+apiVersion: v1
+metadata:
+  name: nimble-csp-svc
+  namespace: hpe-storage
+  labels:
+    app: nimble-csp-svc
+spec:
+  ports:
+  - port: 8080
+    protocol: TCP
+  selector:
+    app: nimble-csp
+---
+# Source: hpe-csi-driver/templates/primera-3par-csp.yaml
+### Alletra Storage MP B10000 CSP Service ###
+kind: Service
+apiVersion: v1
+metadata:
+  name: alletrastoragemp-csp-svc
+  namespace: hpe-storage
+  labels:
+    app: alletrastoragemp-csp-svc
+spec:
+  ports:
+  - port: 8080
+    protocol: TCP
+  selector:
+    app: primera3par-csp
+---
+# Source: hpe-csi-driver/templates/primera-3par-csp.yaml
+### Alletra9000 CSP Service ###
+kind: Service
+apiVersion: v1
+metadata:
+  name: alletra9000-csp-svc
+  namespace: hpe-storage
+  labels:
+    app: alletra9000-csp-svc
+spec:
+  ports:
+  - port: 8080
+    protocol: TCP
+  selector:
+    app: primera3par-csp
+---
+# Source: hpe-csi-driver/templates/primera-3par-csp.yaml
+### Primera3par CSP Service ###
+kind: Service
+apiVersion: v1
+metadata:
+  name: primera3par-csp-svc
+  namespace: hpe-storage
+  labels:
+    app: primera3par-csp-svc
+spec:
+  ports:
+  - port: 8080
+    protocol: TCP
+  selector:
+    app: primera3par-csp
+---
+# Source: hpe-csi-driver/templates/x10000-nfs-csp.yaml
+### AlletraMP X10000 NFS CSP Service ###
+kind: Service
+apiVersion: v1
+metadata:
+  name: alletrastoragemp-x10000-nfs-csp-svc
+  namespace: hpe-storage
+  labels:
+    app: alletrastoragemp-x10000-nfs-csp-svc
+spec:
+  ports:
+  - port: 8080
+    protocol: TCP
+  selector:
+    app: alletrastoragemp-x10000-nfs-csp
+---
+# Source: hpe-csi-driver/templates/hpe-csi-node.yaml
+#######################################
+############  Node driver  ############
+#######################################
+
+kind: DaemonSet
+apiVersion: apps/v1
+metadata:
+  name: hpe-csi-node
+  namespace: hpe-storage
+spec:
+  selector:
+    matchLabels:
+      app: hpe-csi-node
+  template:
+    metadata:
+      labels:
+        app: hpe-csi-node
+        role: hpe-csi
+      annotations:
+        kubectl.kubernetes.io/default-container: hpe-csi-driver
+    spec:
+      serviceAccountName: hpe-csi-node-sa
+      priorityClassName: system-node-critical
+      hostNetwork: true
+      dnsPolicy: ClusterFirstWithHostNet
+      dnsConfig:
+        options:
+          - name: ndots
+            value: "1"
+      initContainers:
+        - name: hpe-csi-node-init
+          image: "quay.io/hpestorage/csi-driver:v3.3.1"
+          resources:
+            limits:
+              cpu: 2000m
+              memory: 1Gi
+            requests:
+              cpu: 100m
+              memory: 128Mi
+          args:
+            - --node-init
+            - --endpoint=$(CSI_ENDPOINT)
+            - --flavor=kubernetes
+          volumeMounts:
+            - name: root-dir
+              mountPath: /host
+              mountPropagation: "Bidirectional"
+            - name: device-dir
+              mountPath: /dev
+            - name: sys
+              mountPath: /sys
+            - name: etc-hpe-storage-dir
+              mountPath: /etc/hpe-storage
+            - name: runsystemd
+              mountPath: /run/systemd
+            - name: etcsystemd
+              mountPath: /etc/systemd/system
+            - name: plugin-dir
+              mountPath: /csi
+            - name: pods-mount-dir
+              
+              mountPath: /var/lib/kubelet
+            - name: log-dir
+              mountPath: /var/log
+          env:
+            - name: CSI_ENDPOINT
+              value: unix:///csi/csi.sock
+            # GOMEMLIMIT set to 850MiB (~83% of this container's 1Gi memory limit) to run the Go GC before the hard limit (ESC-17696).
+            - name: GOMEMLIMIT
+              value: "850MiB"
+            - name: MULTIPATH_UXSOCK_TIMEOUT
+              value: "300000"
+            - name: LOG_LEVEL
+              value: info
+          imagePullPolicy: "IfNotPresent"
+          securityContext:
+            privileged: true
+            capabilities:
+              add: ["SYS_ADMIN"]
+            allowPrivilegeEscalation: true
+      containers:
+        - name: csi-node-driver-registrar
+          image: "registry.k8s.io/sig-storage/csi-node-driver-registrar:v2.17.0"
+          resources:
+            limits:
+              cpu: 2000m
+              memory: 1Gi
+            requests:
+              cpu: 100m
+              memory: 128Mi
+          args:
+            - "--csi-address=$(ADDRESS)"
+            - "--kubelet-registration-path=$(DRIVER_REG_SOCK_PATH)"
+            - "--v=5"
+          env:
+            - name: ADDRESS
+              value: /csi/csi.sock
+            - name: DRIVER_REG_SOCK_PATH
+              value: /var/lib/kubelet/plugins/csi.hpe.com/csi.sock
+            - name: KUBE_NODE_NAME
+              valueFrom:
+                fieldRef:
+                  apiVersion: v1
+                  fieldPath: spec.nodeName
+          imagePullPolicy: "IfNotPresent"
+          volumeMounts:
+            - name: plugin-dir
+              mountPath: /csi
+            - name: registration-dir
+              mountPath: /registration
+        - name: hpe-csi-driver
+          image: "quay.io/hpestorage/csi-driver:v3.3.1"
+          resources:
+            limits:
+              cpu: 2000m
+              memory: 1Gi
+            requests:
+              cpu: 100m
+              memory: 128Mi
+          args :
+            - "--endpoint=$(CSI_ENDPOINT)"
+            - "--node-service"
+            - "--flavor=kubernetes"
+            - "--node-monitor"
+            - "--node-monitor-interval=90"
+          env:
+            - name: CSI_ENDPOINT
+              value: unix:///csi/csi.sock
+            - name: LOG_LEVEL
+              value: info
+            - name: NODE_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: spec.nodeName
+            - name: MAX_VOLUMES_PER_NODE
+              value: "250"
+            - name: KUBELET_ROOT_DIR
+              value: /var/lib/kubelet
+            # GOMEMLIMIT set to 850MiB (~83% of this container's 1Gi memory limit) to run the Go GC before the hard limit (ESC-17696).
+            - name: GOMEMLIMIT
+              value: "850MiB"
+            # Sizes the node driver's multipathd executor timeout above uxsock_timeout in /etc/multipath.conf; must match the init container.
+            - name: MULTIPATH_UXSOCK_TIMEOUT
+              value: "300000"
+          imagePullPolicy: "IfNotPresent"
+          securityContext:
+            privileged: true
+            capabilities:
+              add: ["SYS_ADMIN"]
+            allowPrivilegeEscalation: true
+          volumeMounts:
+            - name: plugin-dir
+              mountPath: /csi
+            - name: pods-mount-dir
+              mountPath:  /var/lib/kubelet
+              # needed so that any mounts setup inside this container are
+              # propagated back to the host machine.
+              mountPropagation: "Bidirectional"
+            - name: root-dir
+              mountPath: /host
+              mountPropagation: "Bidirectional"
+            - name: device-dir
+              mountPath: /dev
+            - name: log-dir
+              mountPath: /var/log
+            - name: etc-hpe-storage-dir
+              mountPath: /etc/hpe-storage
+            - name: etc-kubernetes
+              mountPath: /etc/kubernetes
+            - name: sys
+              mountPath: /sys
+            - name: runsystemd
+              mountPath: /run/systemd
+            - name: etcsystemd
+              mountPath: /etc/systemd/system
+            - name: linux-config-file
+              mountPath: /opt/hpe-storage/nimbletune/config.json
+              subPath: config.json
+      volumes:
+        - name: registration-dir
+          hostPath:
+          
+            path: /var/lib/kubelet/plugins_registry
+            type: Directory
+        - name: plugin-dir
+          hostPath:
+          
+            path: /var/lib/kubelet/plugins/csi.hpe.com
+            type: DirectoryOrCreate
+        - name: pods-mount-dir
+          hostPath:
+          
+            path: /var/lib/kubelet
+        - name: root-dir
+          hostPath:
+            path: /
+        - name: device-dir
+          hostPath:
+            path: /dev
+        - name: log-dir
+          hostPath:
+            path: /var/log
+        - name: etc-hpe-storage-dir
+          hostPath:
+            path: /etc/hpe-storage
+        - name: etc-kubernetes
+          hostPath:
+            path: /etc/kubernetes
+        - name: runsystemd
+          hostPath:
+            path: /run/systemd
+        - name: etcsystemd
+          hostPath:
+            path: /etc/systemd/system
+        - name: sys
+          hostPath:
+            path: /sys
+        - name: linux-config-file
+          configMap:
+            name: hpe-linux-config
+      tolerations:
+        - effect: NoSchedule
+          key: csi.hpe.com/hpe-nfs
+          operator: Exists
+---
+# Source: hpe-csi-driver/templates/b10000-nfs-csp.yaml
+### CSP deployment ###
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: alletrastoragemp-b10000-nfs-csp
+  namespace: hpe-storage
+spec:
+  selector:
+    matchLabels:
+      app: alletrastoragemp-b10000-nfs-csp
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: alletrastoragemp-b10000-nfs-csp
+    spec:
+      serviceAccountName: hpe-csp-sa
+      priorityClassName: system-cluster-critical
+      containers:
+        - name: alletrastoragemp-b10000-nfs-csp
+          image: "quay.io/hpestorage/alletrastoragemp-b10000-nfs-csp:v1.3.0"
+          resources:
+            limits:
+              cpu: 2000m
+              memory: 1Gi
+            requests:
+              cpu: 100m
+              memory: 128Mi
+          imagePullPolicy: "IfNotPresent"
+          env:
+            - name: LOG_LEVEL
+              value: info
+          ports:
+            - containerPort: 8080
+          volumeMounts:
+            - name: log-dir
+              mountPath: /var/log
+      volumes:
+        - name: log-dir
+          hostPath:
+            path: /var/log
+---
+# Source: hpe-csi-driver/templates/hpe-csi-controller.yaml
+#############################################
+############  Controller driver  ############
+#############################################
+
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: hpe-csi-controller
+  namespace: hpe-storage
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hpe-csi-controller
+  template:
+    metadata:
+      labels:
+        app: hpe-csi-controller
+        role: hpe-csi
+      annotations:
+        kubectl.kubernetes.io/default-container: hpe-csi-driver
+    spec:
+      serviceAccountName: hpe-csi-controller-sa
+      priorityClassName: system-cluster-critical
+      hostNetwork: true
+      dnsPolicy: ClusterFirstWithHostNet
+      dnsConfig:
+        options:
+          - name: ndots
+            value: "1"
+      containers:
+        - name: csi-provisioner
+          image: "registry.k8s.io/sig-storage/csi-provisioner:v6.3.0"
+          resources:
+            limits:
+              cpu: 2000m
+              memory: 1Gi
+            requests:
+              cpu: 100m
+              memory: 128Mi
+          args:
+            - "--csi-address=$(ADDRESS)"
+            - "--v=5"
+            - "--extra-create-metadata"
+            - "--timeout=30s"
+            - "--worker-threads=16"
+            - "--feature-gates=Topology=true"
+            - "--immediate-topology=false"
+          env:
+            - name: ADDRESS
+              value: /var/lib/csi/sockets/pluginproxy/csi.sock
+          imagePullPolicy: "IfNotPresent"
+          volumeMounts:
+            - name: socket-dir
+              mountPath: /var/lib/csi/sockets/pluginproxy
+        - name: csi-attacher
+          image: "registry.k8s.io/sig-storage/csi-attacher:v4.12.0"
+          resources:
+            limits:
+              cpu: 2000m
+              memory: 1Gi
+            requests:
+              cpu: 100m
+              memory: 128Mi
+          args:
+            - "--v=5"
+            - "--csi-address=$(ADDRESS)"
+            - "--timeout=180s"
+          env:
+            - name: ADDRESS
+              value: /var/lib/csi/sockets/pluginproxy/csi.sock
+          imagePullPolicy: "IfNotPresent"
+          volumeMounts:
+            - name: socket-dir
+              mountPath: /var/lib/csi/sockets/pluginproxy
+        - name: csi-snapshotter
+          image: "registry.k8s.io/sig-storage/csi-snapshotter:v8.6.0"
+          resources:
+            limits:
+              cpu: 2000m
+              memory: 1Gi
+            requests:
+              cpu: 100m
+              memory: 128Mi
+          args:
+            - "--v=5"
+            - "--csi-address=$(ADDRESS)"
+          env:
+            - name: ADDRESS
+              value: /var/lib/csi/sockets/pluginproxy/csi.sock
+          imagePullPolicy: "IfNotPresent"
+          volumeMounts:
+            - name: socket-dir
+              mountPath: /var/lib/csi/sockets/pluginproxy/
+        - name: csi-resizer
+          image: "registry.k8s.io/sig-storage/csi-resizer:v2.2.1"
+          resources:
+            limits:
+              cpu: 2000m
+              memory: 1Gi
+            requests:
+              cpu: 100m
+              memory: 128Mi
+          args:
+            - "--csi-address=$(ADDRESS)"
+            - "--v=5"
+          env:
+            - name: ADDRESS
+              value: /var/lib/csi/sockets/pluginproxy/csi.sock
+          imagePullPolicy: "IfNotPresent"
+          volumeMounts:
+            - name: socket-dir
+              mountPath: /var/lib/csi/sockets/pluginproxy
+        - name: hpe-csi-driver
+          image: "quay.io/hpestorage/csi-driver:v3.3.1"
+          resources:
+            limits:
+              cpu: 2000m
+              memory: 1Gi
+            requests:
+              cpu: 100m
+              memory: 128Mi
+          args :
+            - "--endpoint=$(CSI_ENDPOINT)"
+            - "--flavor=kubernetes"
+            - "--pod-monitor"
+            - "--pod-monitor-interval=30"
+          env:
+            - name: CSI_ENDPOINT
+              value: unix:///var/lib/csi/sockets/pluginproxy/csi.sock
+            - name: LOG_LEVEL
+              value: info
+            - name: RUNTIME_NFS_IMAGE
+              value: quay.io/hpestorage/nfs-provisioner:v3.0.11
+            # GOMEMLIMIT set to 850MiB (~83% of this container's 1Gi memory limit) to run the Go GC before the hard limit (ESC-17696).
+            - name: GOMEMLIMIT
+              value: "850MiB"
+          imagePullPolicy: "IfNotPresent"
+          volumeMounts:
+            - name: socket-dir
+              mountPath: /var/lib/csi/sockets/pluginproxy
+            - name: log-dir
+              mountPath: /var/log
+            - name: k8s
+              mountPath: /etc/kubernetes
+            - name: hpeconfig
+              mountPath: /etc/hpe-storage
+            - name: root-dir
+              mountPath: /host
+        - name: csi-volume-mutator
+          image: "quay.io/hpestorage/volume-mutator:v1.4.0"
+          resources:
+            limits:
+              cpu: 2000m
+              memory: 1Gi
+            requests:
+              cpu: 100m
+              memory: 128Mi
+          args:
+            - "--v=5"
+            - "--csi-address=$(ADDRESS)"
+          env:
+            - name: ADDRESS
+              value: /var/lib/csi/sockets/pluginproxy/csi-extensions.sock
+          imagePullPolicy: "IfNotPresent"
+          volumeMounts:
+            - name: socket-dir
+              mountPath: /var/lib/csi/sockets/pluginproxy/
+        - name: csi-volume-group-snapshotter
+          image: "quay.io/hpestorage/volume-group-snapshotter:v1.1.0"
+          resources:
+            limits:
+              cpu: 2000m
+              memory: 1Gi
+            requests:
+              cpu: 100m
+              memory: 128Mi
+          args:
+            - "--v=5"
+            - "--csi-address=$(ADDRESS)"
+          env:
+            - name: ADDRESS
+              value: /var/lib/csi/sockets/pluginproxy/csi-extensions.sock
+          imagePullPolicy: "IfNotPresent"
+          volumeMounts:
+            - name: socket-dir
+              mountPath: /var/lib/csi/sockets/pluginproxy/
+        - name: csi-volume-group-provisioner
+          image: "quay.io/hpestorage/volume-group-provisioner:v1.1.0"
+          resources:
+            limits:
+              cpu: 2000m
+              memory: 1Gi
+            requests:
+              cpu: 100m
+              memory: 128Mi
+          args:
+            - "--v=5"
+            - "--csi-address=$(ADDRESS)"
+          env:
+            - name: ADDRESS
+              value: /var/lib/csi/sockets/pluginproxy/csi-extensions.sock
+          imagePullPolicy: "IfNotPresent"
+          volumeMounts:
+            - name: socket-dir
+              mountPath: /var/lib/csi/sockets/pluginproxy/
+        - name: csi-extensions
+          image: "quay.io/hpestorage/csi-extensions:v1.3.0"
+          resources:
+            limits:
+              cpu: 2000m
+              memory: 1Gi
+            requests:
+              cpu: 100m
+              memory: 128Mi
+          args:
+            - "--v=5"
+            - "--endpoint=$(CSI_ENDPOINT)"
+          env:
+            - name: CSI_ENDPOINT
+              value: unix:///var/lib/csi/sockets/pluginproxy/csi-extensions.sock
+            - name: LOG_LEVEL
+              value: info
+          imagePullPolicy: "IfNotPresent"
+          volumeMounts:
+            - name: socket-dir
+              mountPath: /var/lib/csi/sockets/pluginproxy/
+      volumes:
+        - name: socket-dir
+          emptyDir: {}
+        - name: log-dir
+          hostPath:
+            path: /var/log
+        - name: k8s
+          hostPath:
+            path: /etc/kubernetes
+        - name: hpeconfig
+          hostPath:
+            path: /etc/hpe-storage
+        - name: root-dir
+          hostPath:
+            path: /
+---
+# Source: hpe-csi-driver/templates/nimble-csp.yaml
+### CSP deployment ###
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: nimble-csp
+  namespace: hpe-storage
+spec:
+  selector:
+    matchLabels:
+      app: nimble-csp
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: nimble-csp
+    spec:
+      serviceAccountName: hpe-csp-sa
+      priorityClassName: system-cluster-critical
+      containers:
+        - name: nimble-csp
+          image: "quay.io/hpestorage/alletra-6000-and-nimble-csp:v3.3.0"
+          resources:
+            limits:
+              cpu: 2000m
+              memory: 1Gi
+            requests:
+              cpu: 100m
+              memory: 128Mi
+          imagePullPolicy: "IfNotPresent"
+          env:
+          ports:
+            - containerPort: 8080
+          volumeMounts:
+            - name: log-dir
+              mountPath: /var/log
+      volumes:
+        - name: log-dir
+          hostPath:
+            path: /var/log
+---
+# Source: hpe-csi-driver/templates/primera-3par-csp.yaml
+### CSP deployment ###
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: primera3par-csp
+  labels:
+    app: primera3par-csp
+  namespace: hpe-storage
+spec:
+  selector:
+    matchLabels:
+      app: primera3par-csp
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: primera3par-csp
+    spec:
+      serviceAccountName: hpe-csp-sa
+      priorityClassName: system-cluster-critical
+      containers:
+        - name: primera3par-csp
+          image: "quay.io/hpestorage/alletra-9000-primera-and-3par-csp:v3.3.1"
+          resources:
+            limits:
+              cpu: 2000m
+              memory: 1Gi
+            requests:
+              cpu: 100m
+              memory: 128Mi
+          imagePullPolicy: "IfNotPresent"
+          env:
+            - name: CRD_CLIENT_CONFIG_QPS
+              value: "35"
+            - name: CRD_CLIENT_CONFIG_BURST
+              value: "20"
+            - name: LOG_LEVEL
+              value: info
+            # GOMEMLIMIT set to 850MiB (~83% of this container's 1Gi memory limit) to run the Go GC before the hard limit (ESC-17696).
+            - name: GOMEMLIMIT
+              value: "850MiB"
+          ports:
+            - containerPort: 8080
+          volumeMounts:
+            - name: log-dir
+              mountPath: /var/log
+      volumes:
+        - name: log-dir
+          hostPath:
+            path: /var/log
+---
+# Source: hpe-csi-driver/templates/x10000-nfs-csp.yaml
+### CSP deployment ###
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: alletrastoragemp-x10000-nfs-csp
+  namespace: hpe-storage
+spec:
+  selector:
+    matchLabels:
+      app: alletrastoragemp-x10000-nfs-csp
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: alletrastoragemp-x10000-nfs-csp
+    spec:
+      serviceAccountName: hpe-csp-sa
+      priorityClassName: system-cluster-critical
+      containers:
+        - name: alletrastoragemp-x10000-nfs-csp
+          image: "quay.io/hpestorage/alletrastoragemp-x10000-nfs-csp:v1.1.0"
+          resources:
+            limits:
+              cpu: 2000m
+              memory: 1Gi
+            requests:
+              cpu: 100m
+              memory: 128Mi
+          imagePullPolicy: "IfNotPresent"
+          env:
+            - name: LOG_LEVEL
+              value: info
+          ports:
+            - containerPort: 8080
+          volumeMounts:
+            - name: log-dir
+              mountPath: /var/log
+      volumes:
+        - name: log-dir
+          hostPath:
+            path: /var/log
+---
+# Source: hpe-csi-driver/templates/csi-driver-crd.yaml
+################# CSI Driver ###########
+apiVersion: storage.k8s.io/v1
+kind: CSIDriver
+metadata:
+  name: csi.hpe.com
+spec:
+  podInfoOnMount: true
+  volumeLifecycleModes:
+  - Persistent
+  - Ephemeral
