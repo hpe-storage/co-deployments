@@ -156,6 +156,27 @@
             "type": "boolean",
             "default": false
         },
+        "disableNodeISCSIConfiguration": {
+            "$id": "#/properties/disableNodeISCSIConfiguration",
+            "title": "Disable iscsid configuration",
+            "description": "Never configure or start iscsid from the node init container (FC/NVMe-only clusters). By default iscsid is configured only when the host shows iSCSI in use.",
+            "type": "boolean",
+            "default": false
+        },
+        "forceNodeISCSIConfiguration": {
+            "$id": "#/properties/forceNodeISCSIConfiguration",
+            "title": "Force iscsid configuration",
+            "description": "Always configure and start iscsid from the node init container, even when no iSCSI session, HBA or initiator name is found on the host.",
+            "type": "boolean",
+            "default": false
+        },
+        "nodeServiceConfigurationFatal": {
+            "$id": "#/properties/nodeServiceConfigurationFatal",
+            "title": "Abort node init when host services cannot be configured",
+            "description": "By default a failure to reach or configure the host's systemd services (iscsid, multipathd) is logged as a warning and the node init container continues. Set to true to abort the init container instead (pre-3.4.0 behaviour).",
+            "type": "boolean",
+            "default": false
+        },
         "disableHostDeletion": {
             "$id": "#/properties/disableHostDeletion",
             "title": "Disable host deletion",
