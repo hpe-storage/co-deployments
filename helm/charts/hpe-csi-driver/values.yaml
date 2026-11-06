@@ -18,6 +18,23 @@ disableNodeConformance: false
 # For controlling automatic iscsi/multipath service configuration
 disableNodeConfiguration: false
 
+# ESC-18251: the node init container configures iscsid only when the host shows
+# iSCSI in use (sessions/HBAs in sysfs, an open-iscsi node database or an
+# initiator name). Set disableNodeISCSIConfiguration to never touch iscsid, or
+# forceNodeISCSIConfiguration to always configure it (e.g. first boot of a node
+# that has no sessions yet).
+disableNodeISCSIConfiguration: false
+forceNodeISCSIConfiguration: false
+
+# ESC-18251: since 3.4.0 the node init container no longer aborts when the host's
+# systemd cannot be reached or is slow to answer; it logs a WARNING "... SKIPPED"
+# line (also in /var/log/hpe-csi-node.log on the node) and continues. A node can
+# therefore become Ready while hpe-storage-node, iscsid or multipathd were not
+# (re)started by the driver. Set to true to restore the previous behaviour and
+# abort the init container instead. Covers the iscsid/multipathd step only; the
+# conformance unit install in the entrypoint is always best-effort.
+nodeServiceConfigurationFatal: false
+
 # NodeGetVolumestats will be called by default, set true to disable the call
 disableNodeGetVolumeStats: false
 
