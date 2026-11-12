@@ -166,6 +166,9 @@ certified: prep
 		$(CERTIFIED_OUTPUT)/manifests/hpe-csi-operator.clusterserviceversion.yaml && \
 		rm -f $(CERTIFIED_OUTPUT)/manifests/hpe-csi-operator.clusterserviceversion.yaml.remove
 
+	# Remove replaces from certified content
+	yq -i 'del(.spec.replaces)' $(CERTIFIED_OUTPUT)/manifests/hpe-csi-operator.clusterserviceversion.yaml
+
 certified-deploy:
 	# Run certified bundle
 	- oc create ns $(NAMESPACE)
