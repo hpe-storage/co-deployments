@@ -132,11 +132,11 @@ spec:
             - name: CSP_LEADER_ELECTION_RETRY_PERIOD
               value: "2s"
             {{- if gt (int .Values.csp.replicas) 1 }}
-            # Leader gets no readinessProbe for 30s (6 x 5s): exit without releasing the Lease, stay out for 35s (CON-5035).
-            - name: CSP_READINESS_WATCHDOG_TIMEOUT
-              value: "30s"
-            - name: CSP_LEADER_ELECTION_REJOIN_HOLDOFF
-              value: "35s"
+            # Leader gets no readinessProbe for 30s: exit without releasing the Lease; after that or an
+            # unexpected Lease loss, stay out of the election for 35s (CON-5035/CON-5045). Needs the
+            # /readyz readinessProbe below and the leader-state volume.
+            - name: CSP_LEADER_FAILOVER_ENABLED
+              value: "true"
             {{- end }}
             {{- if gt (int .Values.maxVolumesPerNode) 253 }}
             # When a node may attach more than 253 volumes, start auto-assigned VLUN IDs
@@ -166,10 +166,17 @@ spec:
           volumeMounts:
             - name: log-dir
               mountPath: /var/log
+            - name: leader-state
+              mountPath: /run/hpe-csp
       volumes:
         - name: log-dir
           hostPath:
             path: /var/log
+        # Demotion marker for the rejoin hold-off (CON-5035/CON-5045): must survive container restarts, not the pod.
+        - name: leader-state
+          emptyDir:
+            medium: Memory
+            sizeLimit: 1Mi
       {{- if .Values.csp.nodeSelector }}
       nodeSelector:
 {{ toYaml .Values.csp.nodeSelector | indent 8 }}

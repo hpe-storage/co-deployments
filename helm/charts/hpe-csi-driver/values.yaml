@@ -62,15 +62,15 @@ controller:
   podDisruptionBudget:
     enabled: true
 
-  # Cross-pod duplicate-request dedup for hpe-csi-driver's controller RPCs (CON-4960-26), used
-  # when no --dbserver is configured (the common case). Backed by one Kubernetes Lease per
-  # in-flight request key; ttl controls staleness/steal timing, reaperInterval controls how often
-  # orphaned stale Leases are garbage-collected. reaperInterval defaults much longer than ttl since
-  # the reaper is pure housekeeping, not correctness-critical (see TryAcquire's steal-on-acquire),
-  # and every replica runs its own reaper (not leader-elected), so a longer interval also limits
-  # redundant List calls. maxHoldDuration (csi-extensions' CON-4983 dedup only) bounds how long a
-  # Lease is kept renewed for one request, so a wedged handler that never calls Release still lets
-  # the Lease go stale and become stealable instead of blocking that key forever.
+  # Cross-pod duplicate-request dedup for hpe-csi-driver and csi-extensions controller RPCs
+  # used when no --dbserver is configured (the common case). Backed by one
+  # Kubernetes Lease per in-flight request key; ttl controls staleness/steal timing, reaperInterval
+  # controls how often orphaned stale Leases are garbage-collected. reaperInterval defaults much
+  # longer than ttl since the reaper is pure housekeeping, not correctness-critical (see
+  # TryAcquire's steal-on-acquire), and every replica runs its own reaper (not leader-elected), so a
+  # longer interval also limits redundant List calls. maxHoldDuration bounds how long a Lease is
+  # kept renewed for one request, so a wedged handler that never calls Release still lets the Lease
+  # go stale and become stealable instead of blocking that key forever.
   distributedDedup:
     ttl: 60
     reaperInterval: 900

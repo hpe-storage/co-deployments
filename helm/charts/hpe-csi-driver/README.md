@@ -59,7 +59,7 @@ The following table lists the configurable parameters of the chart and their def
 | controller.podDisruptionBudget.enabled | Enable a PodDisruptionBudget (minAvailable: 1) for the hpe-csi-controller Deployment. Only rendered when `controller.replicas` > 1. | true |
 | controller.distributedDedup.ttl            | Cross-pod duplicate-request dedup Lease TTL in seconds. Used only when no `--dbserver` is configured. | 60 |
 | controller.distributedDedup.reaperInterval | Interval in seconds for garbage-collecting stale duplicate-request dedup Leases.                      | 900 |
-| controller.distributedDedup.maxHoldDuration | Max seconds a single request keeps renewing its duplicate-request dedup Lease (csi-extensions only); bounds how long a wedged handler can block retries for the same key. | 300 |
+| controller.distributedDedup.maxHoldDuration | Max seconds a single request keeps renewing its duplicate-request dedup Lease (hpe-csi-driver and csi-extensions); bounds how long a wedged handler can block retries for the same key. | 300 |
 | csp.labels                | Additional labels for CSP Pods.                                                                    | {}               |
 | csp.nodeSelector          | Node labels for CSP Pods assignment.                                                               | {}               |
 | csp.affinity              | Affinity rules for the CSP Pods. When unset and `csp.replicas` > 1, a hard podAntiAffinity + topologySpreadConstraints is applied by default (one CSP pod per node). | {} |
