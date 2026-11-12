@@ -35,10 +35,7 @@
                 "affinity": {},
                 "labels": {},
 		"resources": {},
-                "replicas": 3,
-                "podDisruptionBudget": {
-                    "enabled": true
-                }
+                "replicas": 3
             },
             "controller": {
                 "nodeSelector": {},
@@ -378,7 +375,7 @@
             "distributedDedup": {
                 "$id": "#/properties/controller/properties/distributedDedup",
                 "title": "Distributed duplicate-request dedup timings",
-                "description": "TTL (seconds) for the per-request-key Lease, the reaper interval (seconds) that garbage-collects stale Leases, and maxHoldDuration (seconds, csi-extensions' CON-4983 dedup only) bounding how long one request keeps renewing its Lease. Used only when no --dbserver is configured.",
+                "description": "TTL (seconds) for the per-request-key Lease, the reaper interval (seconds) that garbage-collects stale Leases, and maxHoldDuration (seconds) bounding how long one request keeps renewing its Lease. Applies to hpe-csi-driver and csi-extensions. Used only when no --dbserver is configured.",
                 "type": "object",
                 "properties": {
                     "ttl": {
@@ -395,7 +392,7 @@
                     },
                     "maxHoldDuration": {
                         "type": "integer",
-                        "title": "Max Lease hold/renewal duration in seconds (csi-extensions only)",
+                        "title": "Max Lease hold/renewal duration in seconds",
                         "minimum": 1,
                         "default": 300
                     }
