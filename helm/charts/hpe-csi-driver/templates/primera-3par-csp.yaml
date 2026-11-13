@@ -1,3 +1,5 @@
+{{- /* Single source for the replica count so replicas: and every HA gate always agree. */ -}}
+{{- $cspReplicas := int (.Values.csp.replicas | default 1) }}
 {{- if not .Values.disable.alletraStorageMP }}
 ---
 ### Alletra Storage MP B10000 CSP Service ###
@@ -69,7 +71,7 @@ spec:
   selector:
     matchLabels:
       app: primera3par-csp
-  replicas: {{ .Values.csp.replicas | default 3 }}
+  replicas: {{ $cspReplicas }}
   # Recreate (not RollingUpdate): CSP is single-active-writer (active-passive) - /readyz is
   # leadership-gated, so a standby structurally cannot satisfy RollingUpdate's maxUnavailable
   # availability budget while the old leader is still healthy, permanently stalling the
@@ -97,7 +99,7 @@ spec:
             {{- toYaml .Values.csp.resources | nindent 12 }}
           imagePullPolicy: {{ .Values.imagePullPolicy | quote }}
           env:
-            # Required by the alletra-9000-primera-and-3par-csp-leader Lease client (always-on, regardless of replica count).
+            # Used by Lease clients when replicas > 1.
             - name: POD_NAMESPACE
               valueFrom:
                 fieldRef:
@@ -121,6 +123,7 @@ spec:
             # GOMEMLIMIT set to 850MiB (~83% of this container's 1Gi memory limit) to run the Go GC before the hard limit (ESC-17696).
             - name: GOMEMLIMIT
               value: "850MiB"
+            {{- if gt $cspReplicas 1 }}
             # Fixed Lease timings (not configurable): renewDeadline + release timeout (2 x 8s) plus
             # retryPeriod must stay below leaseDuration so a leader that cannot renew stops before a
             # standby can acquire (single-writer guarantee). Keep in sync with the defaults in
@@ -131,12 +134,15 @@ spec:
               value: "8s"
             - name: CSP_LEADER_ELECTION_RETRY_PERIOD
               value: "2s"
-            {{- if gt (int .Values.csp.replicas) 1 }}
-            # Leader gets no readinessProbe for 30s: exit without releasing the Lease; after that or an
-            # unexpected Lease loss, stay out of the election for 35s (CON-5035/CON-5045). Needs the
+            # Leader gets no readinessProbe for 30s: drain, release the Lease and exit; after that or an
+            # unexpected Lease loss, stay out of the election for 40s (CON-5035/CON-5045). Needs the
             # /readyz readinessProbe below and the leader-state volume.
             - name: CSP_LEADER_FAILOVER_ENABLED
               value: "true"
+            {{- else if eq $cspReplicas 1 }}
+            # Single replica: no Lease, always ready (pre-HA behaviour).
+            - name: CSP_LEADER_ELECTION_ENABLED
+              value: "false"
             {{- end }}
             {{- if gt (int .Values.maxVolumesPerNode) 253 }}
             # When a node may attach more than 253 volumes, start auto-assigned VLUN IDs
@@ -188,7 +194,7 @@ spec:
       {{- if .Values.csp.affinity }}
       affinity:
 {{ toYaml .Values.csp.affinity | indent 8 }}
-      {{- else if gt (int .Values.csp.replicas) 1 }}
+      {{- else if gt $cspReplicas 1 }}
       affinity:
         # Hard: a replacement pod stays Pending rather than co-locate, and lands on a
         # recovered/new node once one satisfying this constraint becomes schedulable.
