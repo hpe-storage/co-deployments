@@ -35,14 +35,14 @@
                 "affinity": {},
                 "labels": {},
 		"resources": {},
-                "replicas": 3
+                "replicas": 1
             },
             "controller": {
                 "nodeSelector": {},
                 "tolerations": [],
                 "affinity": {},
                 "labels": {},
-                "replicas": 3,
+                "replicas": 1,
                 "podDisruptionBudget": {
                     "enabled": true
                 },
@@ -292,11 +292,11 @@
             "replicas": {
                 "$id": "#/properties/csp/properties/replicas",
                 "title": "CSP replicas",
-                "description": "Number of primera3par-csp replicas for HA (active-passive via the alletra-9000-primera-and-3par-csp-leader Lease). Must be between 1 and 3.",
+                "description": "Number of primera3par-csp replicas for HA (active-passive via the alletra-9000-primera-and-3par-csp-leader Lease when greater than 1). Must be between 1 and 3.",
                 "type": "integer",
                 "minimum": 1,
                 "maximum": 3,
-                "default": 3
+                "default": 1
             },
 	    "resources": {
                 "$id": "#/properties/csp/properties/resources",
@@ -353,11 +353,11 @@
             "replicas": {
                 "$id": "#/properties/controller/properties/replicas",
                 "title": "Controller replicas",
-                "description": "Number of controller replicas for HA. Leader election on the 7 leader-election-capable sidecars activates automatically when greater than 1. Must be between 1 and 3.",
+                "description": "Number of controller replicas for HA. Leader election on the 7 leader-election-capable sidecars, the pod-monitor Lease and cross-pod request dedup activate automatically when greater than 1. Must be between 1 and 3.",
                 "type": "integer",
                 "minimum": 1,
                 "maximum": 3,
-                "default": 3
+                "default": 1
             },
             "podDisruptionBudget": {
                 "$id": "#/properties/controller/properties/podDisruptionBudget",

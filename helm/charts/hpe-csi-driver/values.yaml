@@ -54,16 +54,16 @@ kubeletRootDir: "/var/lib/kubelet"
 
 controller:
 
-  # Number of controller replicas for high availability (active-passive via leader election on
-  # csi-provisioner/csi-attacher/csi-snapshotter/csi-resizer). Default 3 for HA; set to 1 to opt
-  # back into single-replica behavior. Must be between 1 and 3.
-  replicas: 3
+  # Number of controller replicas. Default 1: single replica, no leader election, no pod-monitor
+  # Lease, in-process dedup only. Set 2 or 3 for high availability (active-passive via leader
+  # election on the sidecars). Must be between 1 and 3.
+  replicas: 1
 
   podDisruptionBudget:
     enabled: true
 
   # Cross-pod duplicate-request dedup for hpe-csi-driver and csi-extensions controller RPCs
-  # used when no --dbserver is configured (the common case). Backed by one
+  # used when no --dbserver is configured (the common case) and controller.replicas > 1. Backed by one
   # Kubernetes Lease per in-flight request key; ttl controls staleness/steal timing, reaperInterval
   # controls how often orphaned stale Leases are garbage-collected. reaperInterval defaults much
   # longer than ttl since the reaper is pure housekeeping, not correctness-critical (see
@@ -97,10 +97,10 @@ controller:
 
 csp:
 
-  # Number of CSP replicas for high availability (active-passive via the alletra-9000-primera-and-3par-csp-leader
-  # Lease). Default 3 to match the controller; set to 1 to opt back into single-replica behavior.
+  # Number of CSP replicas. Default 1: single replica, no leader election. Set 2 or 3 for high
+  # availability (active-passive via the alletra-9000-primera-and-3par-csp-leader Lease).
   # Must be between 1 and 3.
-  replicas: 3
+  replicas: 1
 
   # These values map directly to yaml in the deployment spec, see the kubernetes docs for info
   labels: {}
