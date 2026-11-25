@@ -202,7 +202,7 @@ spec:
             path: /etc/kubernetes
         - name: hpeconfig
           hostPath:
-            path: /etc/hpe-storage
+            path: {{ .Values.nodeIdentityDir }}
         - name: root-dir
           hostPath:
             path: /

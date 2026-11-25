@@ -208,6 +208,10 @@ spec:
             description: "The kubelet root directory path"
             path: kubeletRootDir
             x-descriptors:
+          - displayName: Relocate the node identity directory
+            description: "If /etc isn't writable, move this directory to a writable path that preferably survives a reboot"
+            path: nodeIdentityDir
+            x-descriptors:
               - "urn:alm:descriptor:com.tectonic.ui:text"
           - displayName: CSI controller configuration
             description: "Configure CSI controller decorations"
