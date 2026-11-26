@@ -146,7 +146,7 @@ node:
 images:
   csiNodeDriver: quay.io/prashant_hpe/csi-driver:v3.4.0-beta1
   csiControllerDriver: quay.io/prashant_hpe/csi-driver:v3.4.0-beta1
-  nimbleCSP: quay.io/balakroh/alletra-6000-and-nimble-csp:v3.4.0-alpha3/alletra-6000-and-nimble-csp:v3.4.0-alpha3
+  nimbleCSP: quay.io/balakroh/alletra-6000-and-nimble-csp:v3.4.0-alpha3
   primera3parCSP: quay.io/prashant_hpe/alletra-9000-primera-and-3par-csp:v3.4.0-beta1
   b10000FileServiceCSP: quay.io/prashant_hpe/alletrastoragemp-b10000-nfs-csp:v1.4.0-beta1
   x10000FileServiceCSP: quay.io/prashant_hpe/alletrastoragemp-x10000-nfs-csp:v1.2.0-beta1
