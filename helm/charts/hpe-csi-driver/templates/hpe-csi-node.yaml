@@ -51,10 +51,12 @@ spec:
               mountPath: /sys
             - name: etc-hpe-storage-dir
               mountPath: /etc/hpe-storage
+            {{- if or .Values.disableNodeConformance .Values.NodeConfiguration }}
             - name: runsystemd
               mountPath: /run/systemd
             - name: etcsystemd
               mountPath: /etc/systemd/system
+            {{- end }}
             - name: plugin-dir
               mountPath: /csi
             - name: pods-mount-dir
@@ -220,10 +222,12 @@ spec:
               mountPath: /etc/kubernetes
             - name: sys
               mountPath: /sys
+            {{- if or .Values.disableNodeConformance .Values.NodeConfiguration }}
             - name: runsystemd
               mountPath: /run/systemd
             - name: etcsystemd
               mountPath: /etc/systemd/system
+            {{- end }}
             - name: linux-config-file
               mountPath: /opt/hpe-storage/nimbletune/config.json
               subPath: config.json
@@ -262,16 +266,18 @@ spec:
             path: /var/log
         - name: etc-hpe-storage-dir
           hostPath:
-            path: /etc/hpe-storage
+            path: {{ .Values.nodeIdentityDir }}
         - name: etc-kubernetes
           hostPath:
             path: /etc/kubernetes
+        {{- if or .Values.disableNodeConformance .Values.NodeConfiguration }}
         - name: runsystemd
           hostPath:
             path: /run/systemd
         - name: etcsystemd
           hostPath:
             path: /etc/systemd/system
+        {{- end }}
         - name: sys
           hostPath:
             path: /sys

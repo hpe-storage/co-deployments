@@ -25,7 +25,8 @@
                 "chapSecretName": ""
             },
             "logLevel": "info",
-            "kubeletRootDir": "/var/lib/kubelet/",
+            "kubeletRootDir": "/var/lib/kubelet",
+            "nodeIdentityDir": "/etc/hpe-storage",
             "disableNodeGetVolumeStats": false,
             "disableNodeMonitor": false,
 	    "maxVolumesPerNode": 250,
@@ -61,6 +62,7 @@
         "iscsi",
         "logLevel",
         "kubeletRootDir",
+	"nodeIdentityDir",
         "disableNodeGetVolumeStats",
         "disableNodeMonitor",
         "disableHostname",
@@ -225,6 +227,14 @@
             "description": "Only change this if the kubelet root dir has been altered by the Kubernetes platform installer.",
             "type": "string",
             "default": "/var/lib/kubelet",
+            "pattern": "^/"
+        },
+        "nodeIdentityDir": {
+            "$id": "#/properties/nodeIdentityDir",
+            "title": "Relocate the node identity directory",
+            "description": "If /etc isn't writable, move this directory to a writable path that preferably survives a reboot.",
+            "type": "string",
+            "default": "/etc/hpe-storage",
             "pattern": "^/"
         },
         "disableNodeGetVolumeStats": {

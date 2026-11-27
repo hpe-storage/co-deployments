@@ -52,6 +52,9 @@ logLevel: "info"
 # Kubelet root directory path
 kubeletRootDir: "/var/lib/kubelet"
 
+# Relocate the /etc/hpe-storage directory (prefers to survive reboots)
+nodeIdentityDir: "/etc/hpe-storage"
+
 controller:
 
   # These values map directly to yaml in the deployment spec, see the kubernetes docs for info
